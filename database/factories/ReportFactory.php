@@ -2,22 +2,27 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Review;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Report>
- */
 class ReportFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $reportable = fake()->randomElement([
+            User::factory()->create(),
+            Review::factory()->create(),
+            Image::factory()->create(),
+        ]);
+
         return [
-            //
+            'user_id' => User::factory(),
+            'reportable_id' => $reportable->id,
+            'reportable_type' => get_class($reportable),
+            'reason' => fake()->sentence(),
+            'status' => fake()->randomElement(['pendiente', 'resuelto']),
         ];
     }
 }

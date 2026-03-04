@@ -11,7 +11,7 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
+    protected $fillable = ['title', 'synopsis', 'cover_url', 'is_multiplayer', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
 
     public function platforms(): BelongsToMany
     {

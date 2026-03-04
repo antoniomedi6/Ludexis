@@ -2,22 +2,25 @@
 
 namespace Database\Factories;
 
+use App\Models\Like;
+use App\Models\User;
+use App\Models\Review;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Like>
- */
 class LikeFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $likeable = fake()->randomElement([
+            Review::factory()->create(),
+            Image::factory()->create(),
+        ]);
+
         return [
-            //
+            'user_id' => User::factory(),
+            'likeable_id' => $likeable->id,
+            'likeable_type' => get_class($likeable),
         ];
     }
 }

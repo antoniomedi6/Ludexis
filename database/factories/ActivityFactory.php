@@ -2,22 +2,34 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Game;
+use App\Models\Review;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Activity>
- */
 class ActivityFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $activable = fake()->randomElement([
+            Game::factory()->create(),
+            Review::factory()->create(),
+            Image::factory()->create(),
+        ]);
+
         return [
-            //
+            'user_id' => User::factory(),
+            'activable_id' => $activable->id,
+            'activable_type' => get_class($activable),
+            'action_type' => fake()->randomElement([
+                'started_playing',
+                'uploaded_image',
+                'wrote_review',
+                'added_to_list',
+                'made_friend'
+            ]),
+            'created_at' => fake()->dateTimeBetween('-6 months', 'now'),
         ];
     }
 }
