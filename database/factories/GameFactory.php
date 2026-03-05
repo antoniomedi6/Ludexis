@@ -5,17 +5,23 @@ namespace Database\Factories;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Platform;
+use Bilions\FakerImages\FakerImageProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class GameFactory extends Factory
 {
     public function definition(): array
     {
+        fake()->addProvider(new FakerImageProvider(fake()));
+        $image = fake()->image(sys_get_temp_dir(), 640, 480);
+
         return [
             'igdb_id' => fake()->unique()->numberBetween(1000, 999999),
             'title' => fake()->words(3, true),
             'synopsis' => fake()->paragraphs(3, true),
-            'cover_image' => fake()->imageUrl(200, 300, 'games', true),
+            'cover_image' => Storage::putFileAs('images/gameCovers/', new File($image), basename($image)),
             'is_multiplayer' => fake()->boolean(40),
             'community_avg_time' => fake()->numberBetween(5, 100),
             'igdb_avg_time' => fake()->numberBetween(5, 100),

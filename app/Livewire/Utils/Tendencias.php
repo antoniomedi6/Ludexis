@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Livewire\Utils;
+
+use App\Models\Game;
+use Cache;
+use Livewire\Component;
+
+class Tendencias extends Component
+{
+    public function render()
+    {
+        $popularGames = Cache::remember('popular_games_weekly', 3600, function () {
+            return Game::select('games.id', 'games.title', 'games.cover_image', 'games.weighted_score')
+                ->join('game_user', 'games.id', '=', 'game_user.game_id')
+                ->where('game_user.created_at', '>=', now()->subWeek())
+                ->groupBy('games.id', 'games.title', 'games.cover_image', 'games.weighted_score')
+                ->orderByRaw('COUNT(game_user.game_id) DESC')
+                ->limit(5)
+                ->get();
+        });
+        return view('livewire.utils.tendencias', compact('popularGames'));
+    }
+}

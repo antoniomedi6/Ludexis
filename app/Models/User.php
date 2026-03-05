@@ -77,4 +77,30 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Game::class);
     }
+
+    /**
+     * Sobrescribe la foto de perfil por defecto para asignar colores por rol.
+     *
+     * @return string
+     */
+    protected function defaultProfilePhotoUrl()
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(''));
+
+        $background = match ($this->role) {
+            'admin' => 'DC2626',
+            'journalist' => '4F46E5',
+            'veteran' => 'EAB308',
+            default => '374151',
+        };
+
+        $color = match ($this->role) {
+            'veteran' => '713F12',
+            default => 'FFFFFF',
+        };
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=' . $color . '&background=' . $background;
+    }
 }
