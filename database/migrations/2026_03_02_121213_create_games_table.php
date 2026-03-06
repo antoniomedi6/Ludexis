@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('synopsis')->nullable();
-            $table->string('cover_image')->nullable();
+            $table->string('cover_url')->nullable();
             $table->integer('igdb_avg_time')->nullable();
             $table->boolean('is_multiplayer');
             $table->integer('community_avg_time')->nullable();

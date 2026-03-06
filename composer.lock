@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11a6faa4d586a3ee498c428d085ccdab",
+    "content-hash": "18ec7aa5c49d3901aa8f9812a856e353",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1799,16 +1799,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.8.0",
+            "version": "2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "4efa10c1e56488e658d10adf7b7b7dcd19940bfb"
+                "reference": "84b1ca48347efdbe775426f108622a42735a6579"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/4efa10c1e56488e658d10adf7b7b7dcd19940bfb",
-                "reference": "4efa10c1e56488e658d10adf7b7b7dcd19940bfb",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/84b1ca48347efdbe775426f108622a42735a6579",
+                "reference": "84b1ca48347efdbe775426f108622a42735a6579",
                 "shasum": ""
             },
             "require": {
@@ -1833,9 +1833,9 @@
                 "phpstan/phpstan": "^1.8.2",
                 "phpunit/phpunit": "^9.5.21 || ^10.5.9 || ^11.0.0",
                 "scrutinizer/ocular": "^1.8.1",
-                "symfony/finder": "^5.3 | ^6.0 | ^7.0",
-                "symfony/process": "^5.4 | ^6.0 | ^7.0",
-                "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0 | ^7.0",
+                "symfony/finder": "^5.3 | ^6.0 | ^7.0 || ^8.0",
+                "symfony/process": "^5.4 | ^6.0 | ^7.0 || ^8.0",
+                "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0 | ^7.0 || ^8.0",
                 "unleashedtech/php-coding-standard": "^3.1.1",
                 "vimeo/psalm": "^4.24.0 || ^5.0.0 || ^6.0.0"
             },
@@ -1902,7 +1902,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-26T21:48:24+00:00"
+            "time": "2026-03-05T21:37:03+00:00"
         },
         {
             "name": "league/config",
@@ -2431,6 +2431,75 @@
                 }
             ],
             "time": "2026-02-26T00:58:19+00:00"
+        },
+        {
+            "name": "marcreichel/igdb-laravel",
+            "version": "5.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marcreichel/igdb-laravel.git",
+                "reference": "59632c0c76a20731dd40a4399c1ed0a8cea8aa0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marcreichel/igdb-laravel/zipball/59632c0c76a20731dd40a4399c1ed0a8cea8aa0c",
+                "reference": "59632c0c76a20731dd40a4399c1ed0a8cea8aa0c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.0|~7.0",
+                "illuminate/support": "^11.0|^12.0",
+                "nesbot/carbon": "^2.53.1|^3.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0.2",
+                "laravel/pint": "^1.13",
+                "nunomaduro/collision": "^8.0",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.7.4",
+                "pestphp/pest-plugin-type-coverage": "^3.2.3",
+                "rector/rector": "^2.0.7",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MarcReichel\\IGDBLaravel\\IGDBLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarcReichel\\IGDBLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Reichel",
+                    "email": "mail@marcreichel.de"
+                }
+            ],
+            "description": "A Laravel wrapper for version 4 of the IGDB API (Apicalypse) including webhook handling",
+            "keywords": [
+                "api-wrapper",
+                "apicalypse",
+                "igdb",
+                "igdb-api",
+                "laravel",
+                "wrapper"
+            ],
+            "support": {
+                "issues": "https://github.com/marcreichel/igdb-laravel/issues",
+                "source": "https://github.com/marcreichel/igdb-laravel/tree/5.3.1"
+            },
+            "time": "2025-06-03T05:44:58+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -8981,5 +9050,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

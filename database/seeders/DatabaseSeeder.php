@@ -39,7 +39,8 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('images/userImages/');
         Storage::createDirectory('images/userImages/');
 
-        $games = Game::factory(100)->create();
+        /* $games = Game::factory(100)->create(); */
+        $games = Game::all();
 
         foreach ($users as $user) {
             $userGames = $games->random(rand(3, 6));
