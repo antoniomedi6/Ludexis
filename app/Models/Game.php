@@ -11,7 +11,7 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'is_multiplayer', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
+    protected $fillable = ['title', 'synopsis', 'cover_url', 'first_release_date', 'slug', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
 
     public function platforms(): BelongsToMany
     {
@@ -30,6 +30,6 @@ class Game extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 }

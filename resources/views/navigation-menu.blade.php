@@ -5,7 +5,7 @@
         <div class="flex items-center">
             <a href="{{ route('dashboard') }}"
                 class="text-2xl font-black text-indigo-600 dark:text-indigo-500 tracking-tighter shrink-0 transition-colors duration-300">
-                GAME<span class="text-gray-900 dark:text-white transition-colors duration-300">TRACKER</span>
+                <x-miscomponentes.application-logo-name />
             </a>
         </div>
 

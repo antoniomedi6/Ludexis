@@ -14,7 +14,7 @@
         @foreach ($popularGames as $item)
             <a href="#"
                 class="relative aspect-[3/4] rounded-xl overflow-hidden group border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition shadow-md dark:shadow-lg">
-                <img src="{{ Storage::url($item->cover_image) }}"
+                <img src="{{ $item->cover_url }}"
                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 <div
                     class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent flex flex-col justify-end p-3">

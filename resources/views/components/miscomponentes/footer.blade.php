@@ -6,7 +6,9 @@
             <div class="space-y-4">
                 <a href="{{ route('dashboard') }}"
                     class="text-2xl font-black text-indigo-600 dark:text-indigo-500 tracking-tighter transition-colors duration-300 block">
-                    GAME<span class="text-gray-900 dark:text-white transition-colors duration-300">TRACKER</span>
+                    <div class="flex items-center">
+                        <x-miscomponentes.application-logo-name />
+                    </div>
                 </a>
                 <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed transition-colors duration-300">
                     Tu biblioteca definitiva. Descubre qué jugar, trackea tus horas exactas y lee reseñas ponderadas por
@@ -90,7 +92,7 @@
         <div
             class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors duration-300">
             <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                &copy; {{ date('Y') }} GameTracker. Todos los derechos reservados.
+                &copy; {{ date('Y') }} Ludexis. Todos los derechos reservados.
             </div>
 
             <div class="flex items-center gap-6">

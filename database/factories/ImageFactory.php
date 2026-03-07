@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Image;
 use App\Models\User;
 use App\Models\Game;
 use Bilions\FakerImages\FakerImageProvider;
