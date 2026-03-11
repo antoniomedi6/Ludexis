@@ -16,10 +16,18 @@
                 class="relative aspect-[3/4] rounded-xl overflow-hidden group border border-gray-200 dark:border-gray-800 hover:border-cyan-500 dark:hover:border-cyan-500 transition shadow-md dark:shadow-lg">
                 <img src="{{ $item->cover_url }}"
                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-[#0f1117] via-[#0f1117]/40 to-transparent flex flex-col justify-end p-3">
+
+                {{-- Nota en la parte superior derecha --}}
+                <div class="absolute top-2 right-2">
                     <span
-                        class="text-xl font-black text-cyan-400 mb-0.5 drop-shadow-md">{{ $item->weighted_score }}</span>
+                        class="bg-[#0f1117]/90 backdrop-blur text-cyan-400 font-black text-sm px-2 py-0.5 rounded-lg border border-gray-700 shadow-lg drop-shadow-md">
+                        {{ $item->rating ?? $item->weighted_score }}
+                    </span>
+                </div>
+
+                {{-- Título en la parte inferior --}}
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-[#0f1117] via-[#0f1117]/40 to-transparent flex flex-col justify-end p-3 pointer-events-none">
                     <h3 class="font-bold text-xs leading-tight text-white drop-shadow-md">
                         {{ $item->title }}
                     </h3>

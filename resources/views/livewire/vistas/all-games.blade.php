@@ -1,15 +1,24 @@
-<div class="bg-[#0f1117] flex-1 flex flex-col min-h-screen">
+<div class="bg-[#0f1117] flex-1 flex flex-col min-h-screen" x-data="{ mobileFiltersOpen: false }">
     <div class="flex-1 flex overflow-hidden">
-        <aside class="w-72 bg-[#151821] border-r border-gray-800 shrink-0 overflow-y-auto">
+
+        <aside
+            :class="mobileFiltersOpen ? 'fixed inset-0 z-50 w-full h-full' : 'hidden lg:block lg:static lg:w-72 lg:h-auto'"
+            class="bg-[#151821] border-r border-gray-800 shrink-0 overflow-y-auto transition-all duration-300">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-6 border-b border-gray-800 pb-4">
                     <h2 class="font-black text-white text-lg tracking-tight">
                         Filtros
                     </h2>
-                    <button wire:click="clearFilters"
-                        class="text-[10px] font-bold text-cyan-500 uppercase hover:text-cyan-400 transition focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded px-1">
-                        Limpiar
-                    </button>
+                    <div class="flex items-center gap-4">
+                        <button wire:click="clearFilters"
+                            class="text-[10px] font-bold text-cyan-500 uppercase hover:text-cyan-400 transition focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded px-1">
+                            Limpiar
+                        </button>
+                        <button @click="mobileFiltersOpen = false"
+                            class="lg:hidden text-gray-400 hover:text-white transition">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="mb-8" x-data="{ search: '' }">
@@ -38,23 +47,22 @@
                     </div>
                 </div>
 
-                {{-- Nota con Slider --}}
                 <div class="mb-8">
                     <h3 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-3">
                         Nota LUDEXIS Mínima
                     </h3>
-                    <div class="px-2">
-                        <input type="range" min="0" max="100" value="80"
+                    <div class="px-2" x-data="{ nota: $wire.minRatingFilter }">
+                        <input type="range" min="0" max="100"
+                            wire:model.live.debounce.300ms="minRatingFilter" x-on:input="nota = $event.target.value"
                             class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-cyan-500" />
                         <div class="flex justify-between mt-2 text-[10px] font-bold text-gray-500">
                             <span>0</span>
-                            <span class="text-cyan-400">> 80</span>
+                            <span class="text-cyan-400">> <span x-text="nota"></span></span>
                             <span>100</span>
                         </div>
                     </div>
                 </div>
 
-                {{-- AQUI VAN LOS FILTROS DE GENEROS --}}
                 <div class="mb-8" x-data="{ expanded: false }">
                     <h3 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-3">
                         Géneros
@@ -93,23 +101,34 @@
                             :class="expanded ? 'rotate-180' : ''"></i>
                     </button>
                 </div>
+
+                <div class="lg:hidden mt-8 border-t border-gray-800 pt-6">
+                    <button @click="mobileFiltersOpen = false"
+                        class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-3 rounded-xl transition shadow-lg">
+                        Aplicar Filtros
+                    </button>
+                </div>
             </div>
         </aside>
 
         <main class="flex-1 overflow-y-auto p-6 md:p-8 bg-[#0f1117]">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                <div>
+                <div class="flex items-center gap-4">
+                    <button @click="mobileFiltersOpen = true"
+                        class="lg:hidden bg-[#1a1d27] border border-gray-800 hover:bg-gray-800 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition shadow-lg">
+                        <i class="fa-solid fa-filter text-cyan-500"></i> Filtros
+                    </button>
                     <p class="text-sm text-gray-400 font-medium mt-1">
                         Mostrando {{ count($allGames) }} títulos sincronizados con IGDB
                     </p>
                 </div>
                 <select wire:model.live="orderBy"
-                    class="bg-[#1a1d27] border border-gray-800 text-white text-sm rounded-xl px-7 py-2.5 font-bold focus:outline-none focus:border-cyan-500/50 appearance-none cursor-pointer">
+                    class="bg-[#1a1d27] border border-gray-800 text-white text-sm rounded-xl px-7 py-2.5 font-bold focus:outline-none focus:border-cyan-500/50 appearance-none cursor-pointer w-full sm:w-auto">
                     <option value="rating">Ordenar por: Puntuación</option>
-                    {{-- <option>Ordenar por: Populares</option> --}}
                     <option value="first_release_date">Ordenar por: Más recientes</option>
                 </select>
             </div>
+
             <div class="relative min-h-[400px]">
                 <x-miscomponentes.loading-spinner />
                 @if (count($allGames))
@@ -122,8 +141,23 @@
                                 <div
                                     class="absolute inset-0 flex flex-col justify-between p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div class="flex justify-between items-start">
-                                        <span
-                                            class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">{{ $item->first_release_date->year }}</span>
+                                        @if ($item->first_release_date && $item->first_release_date->isFuture())
+                                            <div>
+                                                <span
+                                                    class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">
+                                                    {{ $item->first_release_date->year }}
+                                                </span>
+                                                <span
+                                                    class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">
+                                                    Próximamente
+                                                </span>
+                                            </div>
+                                        @elseif($item->first_release_date)
+                                            <span
+                                                class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">
+                                                {{ $item->first_release_date->year }}
+                                            </span>
+                                        @endif
                                         <span
                                             class="bg-[#0f1117]/90 backdrop-blur text-cyan-400 font-black text-xl px-3 py-1 rounded-lg border border-gray-700">
                                             @if ($item->rating)
@@ -134,11 +168,22 @@
                                         </span>
                                     </div>
 
-                                    {{-- Información base de la tarjeta --}}
                                     <div>
                                         <h3 class="font-black text-white text-base leading-tight mb-1">
                                             {{ $item->title }}
                                         </h3>
+                                        @php
+                                            $developer = $item->companies->first(function ($company) {
+                                                return (bool) $company->pivot->is_developer;
+                                            });
+                                        @endphp
+
+                                        @if ($developer)
+                                            <p
+                                                class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-3 truncate">
+                                                {{ $developer->name }}
+                                            </p>
+                                        @endif
 
                                         <div class="flex flex-wrap gap-1.5 mb-4">
                                             @foreach ($item->genres as $genre)
@@ -176,14 +221,13 @@
                 @endif
 
             </div>
+        </main>
     </div>
-    <div class="mt-12 flex justify-center">
+    <div class="mt-12 flex justify-center pb-8">
         <button
             class="bg-[#1a1d27] border border-gray-800 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold transition flex items-center gap-2 shadow-lg">
             Cargar más resultados <i class="fa-solid fa-spinner"></i>
         </button>
     </div>
-    </main>
-</div>
-<x-miscomponentes.footer />
+    <x-miscomponentes.footer />
 </div>

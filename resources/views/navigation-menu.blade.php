@@ -23,8 +23,8 @@
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-user-plus"></i> Regístrate Gratis
+                            class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 sm:block hidden">
+                            <i class="fa-solid fa-user-plus"></i> Regístrate
                         </a>
                     @endif
                 @endguest
@@ -100,8 +100,11 @@
         <div :class="{ 'block': open, 'hidden': !open }"
             class="hidden sm:hidden bg-white dark:bg-[#0f1117] border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
             <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                    {{ __('Registrate') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Log In') }}
                 </x-responsive-nav-link>
             </div>
 

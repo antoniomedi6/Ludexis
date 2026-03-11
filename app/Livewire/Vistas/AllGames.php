@@ -11,13 +11,14 @@ use Livewire\WithPagination;
 class AllGames extends Component
 {
     use WithPagination;
-    public string $orderBy = 'rating';
+    public string $orderBy = 'first_release_date';
     public array $platformsFilter = [];
+    public int $minRatingFilter = 0;
     public array $genresFilter = [];
 
     public function render()
     {
-        $query = Game::with(['genres', 'platforms'])
+        $query = Game::with(['genres', 'platforms', 'companies'])
             ->select([
                 'id',
                 'cover_url',
@@ -26,7 +27,8 @@ class AllGames extends Component
                 'weighted_score',
                 'rating',
                 'slug'
-            ]);
+            ])
+            ->where('rating', '>=', $this->minRatingFilter);
 
         if (!empty($this->platformsFilter)) {
             $query->whereHas('platforms', function ($q) {
@@ -60,6 +62,6 @@ class AllGames extends Component
 
     public function clearFilters()
     {
-        $this->reset(['platformsFilter', 'genresFilter']);
+        $this->reset(['platformsFilter', 'genresFilter', 'minRatingFilter']);
     }
 }

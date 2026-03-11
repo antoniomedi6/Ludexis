@@ -12,7 +12,7 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'first_release_date', 'slug', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
+    protected $fillable = ['title', 'synopsis', 'cover_url', 'first_release_date', 'slug', 'rating', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
 
     public function platforms(): BelongsToMany
     {
@@ -34,11 +34,24 @@ class Game extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'company_game', 'game_id', 'company_id')
+            ->withPivot('is_developer', 'is_publisher')
+            ->withTimestamps();
+    }
     protected $casts = [
         'first_release_date' => 'date',
     ];
 
     public function weighted_score(): Attribute
+    {
+        return Attribute::make(
+            get: fn($v) => (int) $v,
+        );
+    }
+
+    public function rating(): Attribute
     {
         return Attribute::make(
             get: fn($v) => (int) $v,
