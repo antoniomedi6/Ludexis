@@ -11,10 +11,10 @@ class Tendencias extends Component
     public function render()
     {
         $popularGames = Cache::remember('popular_games_weekly', 3600, function () {
-            return Game::select('games.id', 'games.title', 'games.cover_url', 'games.rating')
+            return Game::select('games.id', 'games.title', 'games.cover_url', 'games.rating', 'games.slug')
                 ->join('game_user', 'games.id', '=', 'game_user.game_id')
                 ->where('game_user.created_at', '>=', now()->subWeek())
-                ->groupBy('games.id', 'games.title', 'games.cover_url', 'games.rating')
+                ->groupBy('games.id', 'games.title', 'games.cover_url', 'games.rating', 'games.slug')
                 ->orderByRaw('COUNT(game_user.game_id) DESC')
                 ->limit(5)
                 ->get();

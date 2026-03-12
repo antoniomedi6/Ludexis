@@ -12,7 +12,7 @@
 
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         @foreach ($popularGames as $item)
-            <a href="#"
+            <a href="{{ route('games.show', $item->slug) }}"
                 class="relative aspect-[3/4] rounded-xl overflow-hidden group border border-gray-200 dark:border-gray-800 hover:border-cyan-500 dark:hover:border-cyan-500 transition shadow-md dark:shadow-lg">
                 <img src="{{ $item->cover_url }}"
                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />

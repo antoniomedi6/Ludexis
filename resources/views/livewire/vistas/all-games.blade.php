@@ -1,9 +1,11 @@
 <div class="bg-[#0f1117] flex-1 flex flex-col min-h-screen" x-data="{ mobileFiltersOpen: false }">
-    <div class="flex-1 flex overflow-hidden">
+    {{-- Aquí está la clave: quitamos overflow-hidden y añadimos items-start --}}
+    <div class="flex-1 flex flex-col lg:flex-row items-start relative">
 
         <aside
-            :class="mobileFiltersOpen ? 'fixed inset-0 z-50 w-full h-full' : 'hidden lg:block lg:static lg:w-72 lg:h-auto'"
-            class="bg-[#151821] border-r border-gray-800 shrink-0 overflow-y-auto transition-all duration-300">
+            :class="mobileFiltersOpen ? 'fixed inset-0 z-50 w-full h-full' :
+                'hidden lg:block lg:sticky lg:top-0 lg:w-72 lg:h-screen lg:shrink-0'"
+            class="bg-[#151821] border-r border-gray-800 overflow-y-auto transition-all duration-300 custom-scrollbar">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-6 border-b border-gray-800 pb-4">
                     <h2 class="font-black text-white text-lg tracking-tight">
@@ -111,7 +113,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto p-6 md:p-8 bg-[#0f1117]">
+        <div class="flex-1 p-6 md:p-8 bg-[#0f1117]">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div class="flex items-center gap-4">
                     <button @click="mobileFiltersOpen = true"
@@ -134,7 +136,7 @@
                 @if (count($allGames))
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
                         @foreach ($allGames as $item)
-                            <div
+                            <a href="{{ route('games.show', $item->slug) }}"
                                 class="relative group aspect-[3/4] rounded-2xl overflow-hidden bg-[#1a1d27] border border-gray-800 cursor-pointer shadow-lg">
                                 <img src="{{ $item->cover_url }}"
                                     class="w-full h-full object-cover transition duration-700 group-hover:scale-105 group-hover:opacity-20" />
@@ -198,36 +200,30 @@
                                             </button>
                                         @endauth
                                     </div>
-
                                 </div>
-                            </div>
+                            </a>
                         @endforeach
-                    @else
+                    </div>
+                @else
+                    <div
+                        class="col-span-full flex flex-col items-center justify-center py-20 px-6 border-2 border-dashed border-gray-800 rounded-3xl bg-[#151821]/50">
                         <div
-                            class="col-span-full flex flex-col items-center justify-center py-20 px-6 border-2 border-dashed border-gray-800 rounded-3xl bg-[#151821]/50">
-                            <div
-                                class="mb-4 bg-gray-800/50 w-20 h-20 flex items-center justify-center rounded-full border border-gray-700">
-                                <i class="fa-solid fa-magnifying-glass text-3xl text-gray-600"></i>
-                            </div>
-                            <h3 class="text-xl font-black text-white mb-2">No se han encontrado resultados</h3>
-                            <p class="text-gray-500 text-sm font-medium text-center max-w-xs">
-                                Intenta cambiar los filtros o limpiar la búsqueda para encontrar lo que buscas.
-                            </p>
-                            <button wire:click="clearFilters"
-                                class="mt-6 text-cyan-500 hover:text-cyan-400 font-black text-xs uppercase tracking-widest transition">
-                                Limpiar todos los filtros
-                            </button>
+                            class="mb-4 bg-gray-800/50 w-20 h-20 flex items-center justify-center rounded-full border border-gray-700">
+                            <i class="fa-solid fa-magnifying-glass text-3xl text-gray-600"></i>
                         </div>
+                        <h3 class="text-xl font-black text-white mb-2">No se han encontrado resultados</h3>
+                        <p class="text-gray-500 text-sm font-medium text-center max-w-xs">
+                            Intenta cambiar los filtros o limpiar la búsqueda para encontrar lo que buscas.
+                        </p>
+                        <button wire:click="clearFilters"
+                            class="mt-6 text-cyan-500 hover:text-cyan-400 font-black text-xs uppercase tracking-widest transition">
+                            Limpiar todos los filtros
+                        </button>
+                    </div>
                 @endif
-
+                <x-miscomponentes.back-to-top />
             </div>
-        </main>
-    </div>
-    <div class="mt-12 flex justify-center pb-8">
-        <button
-            class="bg-[#1a1d27] border border-gray-800 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold transition flex items-center gap-2 shadow-lg">
-            Cargar más resultados <i class="fa-solid fa-spinner"></i>
-        </button>
+        </div>
     </div>
     <x-miscomponentes.footer />
 </div>

@@ -13,6 +13,9 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'synopsis', 'cover_url', 'first_release_date', 'slug', 'rating', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
+    protected $casts = [
+        'first_release_date' => 'date',
+    ];
 
     public function platforms(): BelongsToMany
     {
@@ -40,16 +43,18 @@ class Game extends Model
             ->withPivot('is_developer', 'is_publisher')
             ->withTimestamps();
     }
-    protected $casts = [
-        'first_release_date' => 'date',
-    ];
 
-    public function weighted_score(): Attribute
+    public function getRouteKeyName(): string
     {
-        return Attribute::make(
-            get: fn($v) => (int) $v,
-        );
+        return 'slug';
     }
+
+    /*     public function weighted_score(): Attribute
+        {
+            return Attribute::make(
+                get: fn($v) => (int) $v,
+            );
+        } */
 
     public function rating(): Attribute
     {

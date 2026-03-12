@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Vistas\AllGames;
+use App\Livewire\Vistas\ShowGame;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,4 +18,5 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('allGames', AllGames::class)->name('allGames');
+Route::get('/allGames', AllGames::class)->name('allGames');
+Route::get('/game/{game}', ShowGame::class)->name('games.show');
