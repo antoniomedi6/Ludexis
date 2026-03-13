@@ -29,6 +29,7 @@ class ImportPopularGames extends Command
             'hypes'
         ])
             ->with([
+                'videos' => ['video_id'],
                 'cover' => ['url'],
                 'genres' => ['name'],
                 'platforms' => ['name'],
@@ -59,6 +60,13 @@ class ImportPopularGames extends Command
 
             $releaseDate = data_get($igdbGame, 'first_release_date');
 
+            $videoUrl = null;
+            $videos = data_get($igdbGame, 'videos', []);
+
+            if (!empty($videos) && isset($videos[0]['video_id'])) {
+                $videoUrl = 'https://www.youtube.com/embed/' . $videos[0]['video_id'];
+            }
+
             $game = Game::updateOrCreate(
                 ['igdb_id' => $igdbGame->id],
                 [
@@ -71,6 +79,7 @@ class ImportPopularGames extends Command
                     'igdb_avg_time' => 0,
                     'community_avg_time' => 0,
                     'weighted_score' => 0,
+                    'video_url' => $videoUrl
                 ]
             );
 

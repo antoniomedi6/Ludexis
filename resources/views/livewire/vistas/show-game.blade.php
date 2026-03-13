@@ -46,9 +46,11 @@
                         </h2>
                         <div
                             class="aspect-video w-full bg-[#151821] rounded-lg overflow-hidden border border-gray-800 mb-4">
-                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/E3Huy2cdih0"
-                                frameborder="0" allowfullscreen></iframe>
+                            <iframe class="w-full h-full" src="{{ $game->video_url }}" frameborder="0"
+                                allowfullscreen></iframe>
                         </div>
+                        {{-- IMÁGENES --}}
+                        {{--
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             <div
                                 class="aspect-video bg-[#1a1d27] rounded-lg overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
@@ -69,7 +71,8 @@
                                 <img src="https://images.igdb.com/igdb/image/upload/t_720p/sc7fwc.jpg"
                                     class="w-full h-full object-cover" />
                             </div>
-                        </div>
+                        </div> 
+                        --}}
                     </section>
                 </div>
 
@@ -84,7 +87,8 @@
                     </div>
 
                     {{-- TU REGISTRO || CAMBIAR DISEÑO --}}
-                    {{--                     <div class="bg-[#151821] rounded-xl border border-gray-800 shadow-xl overflow-hidden">
+                    {{--
+                    <div class="bg-[#151821] rounded-xl border border-gray-800 shadow-xl overflow-hidden">
                         <div
                             class="bg-cyan-600/10 py-2 px-4 border-b border-gray-800/50 flex justify-between items-center">
                             <h2
@@ -141,7 +145,8 @@
                                 Actualizar Registro
                             </button>
                         </div>
-                    </div> --}}
+                    </div>
+                    --}}
                 </div>
 
                 <div class="bg-[#151821] border border-gray-800 rounded-xl overflow-hidden shadow-lg">

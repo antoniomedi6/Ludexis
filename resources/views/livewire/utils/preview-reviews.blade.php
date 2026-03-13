@@ -12,8 +12,11 @@
 
             <div
                 class="w-24 h-32 bg-gray-100 dark:bg-gray-900 rounded-lg shrink-0 border border-gray-200 dark:border-gray-600 overflow-hidden shadow-sm dark:shadow-md hidden sm:block">
-                <img src="{{ Storage::url($item->game->cover_image) }}" class="w-full h-full object-cover"
-                    alt="Portada de {{ $item->game->title }}" />
+                <a href="{{ route('games.show', $item->game->slug) }}">
+                    <img src="{{ $item->game->cover_url }}"
+                        class="w-full h-full object-cover hover:scale-105 transition duration-500"
+                        alt="Portada de {{ $item->game->title }}" />
+                </a>
             </div>
 
             <div class="flex-1">

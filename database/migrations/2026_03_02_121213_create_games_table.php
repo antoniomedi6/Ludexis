@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('synopsis')->nullable();
             $table->string('cover_url')->nullable();
+            $table->string('video_url')->nullable();
             $table->date('first_release_date')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->integer('igdb_avg_time')->nullable();
