@@ -144,14 +144,10 @@
                                     class="absolute inset-0 flex flex-col justify-between p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div class="flex justify-between items-start">
                                         @if ($item->first_release_date && $item->first_release_date->isFuture())
-                                            <div>
+                                            <div class="flex flex-col">
                                                 <span
                                                     class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">
-                                                    {{ $item->first_release_date->year }}
-                                                </span>
-                                                <span
-                                                    class="bg-[#0f1117]/90 text-gray-300 border border-gray-700 text-[10px] font-black uppercase px-2 py-1 rounded">
-                                                    Próximamente
+                                                    Próximamente ({{ $item->first_release_date->year }})
                                                 </span>
                                             </div>
                                         @elseif($item->first_release_date)
@@ -160,13 +156,12 @@
                                                 {{ $item->first_release_date->year }}
                                             </span>
                                         @endif
-                                        <span
-                                            class="bg-[#0f1117]/90 backdrop-blur text-cyan-400 font-black text-xl px-3 py-1 rounded-lg border border-gray-700">
-                                            @if ($item->rating)
+                                        @if ($item->rating)
+                                            <span
+                                                class="bg-[#0f1117]/90 backdrop-blur text-cyan-400 font-black text-xl px-3 py-1 rounded-lg border border-gray-700">
                                                 {{ $item->rating }}
                                             @else
-                                                {{ $item->weighted_score }}
-                                            @endif
+                                        @endif
                                         </span>
                                     </div>
 

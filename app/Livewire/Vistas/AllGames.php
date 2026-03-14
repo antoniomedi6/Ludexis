@@ -30,12 +30,20 @@ class AllGames extends Component
             'name',
             'first_release_date',
             'total_rating',
+            'total_rating_count',
+            'game_type',
             'slug'
         ])
             ->with([
                 'cover' => ['url'],
+                'genres' => ['name'],
+                'platforms' => ['name'],
+                'involved_companies' => ['developer', 'publisher'],
+                'involved_companies.company' => ['name']
             ])
-            ->where('total_rating', '>=', $this->minRatingFilter);
+            ->where('total_rating', '>=', $this->minRatingFilter)
+            ->where('total_rating_count', '>=', 50)
+            ->where('game_type', '=', 0);
 
         if (!empty($this->platformsFilter)) {
             $platformNames = Platform::whereIn('id', $this->platformsFilter)->pluck('name')->toArray();
