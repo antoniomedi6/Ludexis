@@ -31,8 +31,9 @@ class DatabaseSeeder extends Seeder
                     'banned_at' => null,
                 ]);
          */
-        $users = User::factory(30)->create();
+        $this->call(GameUserSeeder::class);
 
+        $users = User::factory(30)->create();
 
         /*         Storage::deleteDirectory('images/gameCovers');
                 Storage::createDirectory('images/gameCovers'); */

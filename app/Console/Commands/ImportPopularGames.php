@@ -7,6 +7,8 @@ use App\Models\Genre;
 use App\Models\Platform;
 use Illuminate\Console\Command;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
+use MarcReichel\IGDBLaravel\Models\Genre as IGDBGenre;
+use MarcReichel\IGDBLaravel\Models\Platform as IGDBPlatform;
 
 class ImportPopularGames extends Command
 {
@@ -15,6 +17,18 @@ class ImportPopularGames extends Command
 
     public function handle()
     {
+        $this->info("Sincronizando metadatos (Géneros y Plataformas)...");
+
+        $igdbGenres = IGDBGenre::select(['name'])->limit(500)->get();
+        foreach ($igdbGenres as $igdbGenre) {
+            Genre::firstOrCreate(['name' => $igdbGenre->name]);
+        }
+
+        $igdbPlatforms = IGDBPlatform::select(['name'])->limit(500)->get();
+        foreach ($igdbPlatforms as $igdbPlatform) {
+            Platform::firstOrCreate(['name' => $igdbPlatform->name]);
+        }
+
         $limit = $this->argument('limit');
         $this->info("Importando {$limit} juegos populares...");
 
@@ -41,7 +55,9 @@ class ImportPopularGames extends Command
             ->orderBy('hypes', 'desc')
             ->limit($limit)
             ->get();
+
         // dd($igdbGames->toArray());
+
         if ($igdbGames->isEmpty()) {
             $this->error('No se pudo importar ningún juego. Revisa tu conexión y credenciales.');
             return;

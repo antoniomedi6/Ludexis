@@ -121,22 +121,22 @@
                         <i class="fa-solid fa-filter text-cyan-500"></i> Filtros
                     </button>
                     <p class="text-sm text-gray-400 font-medium mt-1">
-                        Mostrando {{ count($allGames) }} títulos sincronizados con IGDB
+                        Mostrando {{ count($games) }} títulos sincronizados con IGDB
                     </p>
                 </div>
                 <select wire:model.live="orderBy"
                     class="bg-[#1a1d27] border border-gray-800 text-white text-sm rounded-xl px-7 py-2.5 font-bold focus:outline-none focus:border-cyan-500/50 appearance-none cursor-pointer w-full sm:w-auto">
-                    <option value="rating">Ordenar por: Puntuación</option>
                     <option value="first_release_date">Ordenar por: Más recientes</option>
+                    <option value="rating">Ordenar por: Puntuación</option>
                 </select>
             </div>
 
             <div class="relative min-h-[400px]">
                 <x-miscomponentes.loading-spinner />
-                @if (count($allGames))
+                @if (count($games))
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
-                        @foreach ($allGames as $item)
-                            <a href="{{ route('games.show', $item->slug) }}"
+                        @foreach ($games as $item)
+                            <div wire:click="addToDb('{{ $item->slug }}')"
                                 class="relative group aspect-[3/4] rounded-2xl overflow-hidden bg-[#1a1d27] border border-gray-800 cursor-pointer shadow-lg">
                                 <img src="{{ $item->cover_url }}"
                                     class="w-full h-full object-cover transition duration-700 group-hover:scale-105 group-hover:opacity-20" />
@@ -176,7 +176,7 @@
                                         </h3>
                                         @php
                                             $developer = $item->companies->first(function ($company) {
-                                                return (bool) $company->pivot->is_developer;
+                                                return $company->pivot ? (bool) $company->pivot->is_developer : true;
                                             });
                                         @endphp
 
@@ -201,7 +201,7 @@
                                         @endauth
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                 @else
@@ -221,6 +221,12 @@
                         </button>
                     </div>
                 @endif
+                <div class="flex justify-center pt-10">
+                    <button class="px-5 py-4 rounded-lg text-white bg-[#1b1b18] hover:bg-[#1b1b18]"
+                        wire:click="moreLimit()">
+                        Cargar Más
+                    </button>
+                </div>
                 <x-miscomponentes.back-to-top />
             </div>
         </div>
