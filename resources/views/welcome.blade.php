@@ -63,7 +63,7 @@
                 @livewire('utils.preview-reviews')
 
                 <div class="space-y-6">
-                    <div
+                    {{--                     <div
                         class="bg-gradient-to-br from-cyan-600 to-teal-700 dark:from-cyan-900/40 dark:to-teal-900/40 dark:bg-[#1a1d27] p-8 rounded-2xl border border-cyan-400/50 dark:border-cyan-500/30 shadow-xl text-center transition-colors duration-300">
                         <i class="fa-solid fa-layer-group text-4xl text-cyan-100 dark:text-cyan-400 mb-4"></i>
                         <h3 class="text-xl font-black text-white mb-2">
@@ -76,7 +76,7 @@
                             class="block w-full text-center bg-white text-cyan-900 hover:bg-cyan-50 font-black py-3 rounded-xl shadow-lg transition">
                             Crear Cuenta Gratis
                         </a>
-                    </div>
+                    </div> --}}
 
                     @livewire('utils.preview-images')
                 </div>

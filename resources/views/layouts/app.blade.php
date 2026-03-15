@@ -38,6 +38,7 @@
     @stack('modals')
 
     @livewireScripts
+    <x-miscomponentes.auth-modal />
 </body>
 
 </html>

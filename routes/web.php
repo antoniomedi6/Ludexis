@@ -13,10 +13,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 });
 
 Route::get('/allGames', AllGames::class)->name('allGames');
 Route::get('/game/{game}', ShowGame::class)->name('games.show');
+
+Route::redirect('/register', '/');
+Route::redirect('/login', '/');

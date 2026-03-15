@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
             <div class="space-y-4">
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('welcome') }}"
                     class="text-2xl font-black text-cyan-600 dark:text-cyan-500 tracking-tighter transition-colors duration-300 block">
                     <div class="flex items-center">
                         <x-miscomponentes.application-logo-name />
