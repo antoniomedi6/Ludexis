@@ -216,14 +216,27 @@
                         </button>
                     </div>
                 @endif
-                <div class="flex justify-center pt-10">
-                    <button class="px-5 py-4 rounded-lg text-white bg-[#1b1b18] hover:bg-[#1b1b18]"
-                        wire:click="moreLimit()">
-                        Cargar Más
-                    </button>
+                <div x-data="{
+                    dispatched: false,
+                    checkScroll() {
+                        const scrollPosition = window.scrollY;
+                        const windowHeight = window.innerHeight;
+                        const documentHeight = document.documentElement.scrollHeight;
+                        const percentage = (scrollPosition / (documentHeight - windowHeight)) * 100;
+                
+                        if (percentage >= 90) {
+                            if (!this.dispatched) {
+                                this.$dispatch('evtScroll');
+                                this.dispatched = true;
+                            }
+                        } else {
+                            this.dispatched = false;
+                        }
+                    }
+                }" @scroll.window.throttle.50ms="checkScroll()">
                 </div>
-                <x-miscomponentes.back-to-top />
             </div>
+            <x-miscomponentes.back-to-top />
         </div>
     </div>
     <x-miscomponentes.footer />

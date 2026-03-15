@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Vistas;
 
+use App\Actions\SaveGameAction;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Platform;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
@@ -149,6 +151,7 @@ class AllGames extends Component
         $this->reset(['platformsFilter', 'genresFilter', 'minRatingFilter']);
     }
 
+    #[On('evtScroll')]
     public function moreLimit()
     {
         $this->limit += 48;
@@ -156,7 +159,7 @@ class AllGames extends Component
 
     public function addToDb(string $slug)
     {
-        $saveGameAction = new \App\Actions\SaveGameAction();
+        $saveGameAction = new SaveGameAction();
 
         $game = $saveGameAction($slug);
 
