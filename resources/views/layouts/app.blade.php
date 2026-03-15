@@ -21,7 +21,7 @@
 
     <div class="min-h-screen bg-[#0f1117]">
         @livewire('navigation-menu')
-
+        <x-miscomponentes.roadmap-link />
         @if (isset($header))
             <header>
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
