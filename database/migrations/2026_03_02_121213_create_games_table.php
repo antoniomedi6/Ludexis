@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('slug')->unique()->nullable();
             $table->integer('avg_time')->nullable();
             $table->float('rating')->nullable();
+            $table->json('screenshots')->nullable();
+            $table->json('artworks')->nullable();
             $table->integer('igdb_id')->unique();
             $table->timestamps();
         });

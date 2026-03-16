@@ -12,9 +12,11 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'video_url', 'first_release_date', 'slug', 'rating', 'avg_time', 'igdb_id'];
+    protected $fillable = ['title', 'synopsis', 'cover_url', 'video_url', 'first_release_date', 'slug', 'rating', 'avg_time', 'screenshots', 'artworks', 'igdb_id'];
     protected $casts = [
         'first_release_date' => 'date',
+        'screenshots' => 'array',
+        'artworks' => 'array'
     ];
 
     public function platforms(): BelongsToMany
@@ -54,5 +56,16 @@ class Game extends Model
         return Attribute::make(
             get: fn($v) => (int) $v,
         );
+    }
+
+    public function getScreenshotUrlsAttribute()
+    {
+        if (!$this->screenshots) {
+            return [];
+        }
+
+        return array_map(function ($hash) {
+            return "https://images.igdb.com/igdb/image/upload/t_1080p/{$hash}.jpg";
+        }, $this->screenshots);
     }
 }

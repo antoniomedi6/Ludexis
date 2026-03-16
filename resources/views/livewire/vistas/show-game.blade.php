@@ -1,15 +1,15 @@
 <div class="min-h-screen bg-[#0f1117] text-white font-sans relative">
-    <div class="absolute top-0 w-full h-[60vh] z-0">
-        <img src="https://images.igdb.com/igdb/image/upload/t_1080p/sc8c26.jpg"
-            class="w-full h-full object-cover opacity-30"
+    <div class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden">
+        <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ $game->screenshots[0] ?? 'sc8c26' }}.jpg"
+            class="w-full h-full object-cover opacity-30 blur-md scale-105"
             style="
-            mask-image: linear-gradient(to bottom, black 40%, transparent);
-            -webkit-mask-image: linear-gradient(
-              to bottom,
-              black 40%,
-              transparent
-            );
-          " />
+        mask-image: linear-gradient(to bottom, black 40%, transparent);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 40%,
+            transparent
+        );
+        " />
     </div>
 
     <main class="relative z-10 max-w-7xl mx-auto px-6 py-12">
@@ -88,7 +88,7 @@
 
                 <div>
                     <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-photo-film text-cyan-500"></i> Galería
+                        <i class="fa-solid fa-photo-film text-cyan-500"></i> Multimedia
                     </h2>
 
                     <div
@@ -98,21 +98,13 @@
                     </div>
 
                     <div class="grid grid-cols-4 gap-3">
-                        <div
-                            class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_screenshot_med/sc8c26.jpg"
-                                class="w-full h-full object-cover" />
-                        </div>
-                        <div
-                            class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_screenshot_med/sc8c25.jpg"
-                                class="w-full h-full object-cover" />
-                        </div>
-                        <div
-                            class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_screenshot_med/sc8c24.jpg"
-                                class="w-full h-full object-cover" />
-                        </div>
+                        @foreach (array_slice($game->screenshots, 0, 3) as $image)
+                            <div
+                                class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
+                                <img src="{{ "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg" }}"
+                                    class="w-full h-full object-cover" />
+                            </div>
+                        @endforeach
                         <div
                             class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition flex items-center justify-center bg-[#1a1d27]">
                             <span class="text-xs font-black uppercase tracking-widest text-cyan-500">+ Ver todas</span>

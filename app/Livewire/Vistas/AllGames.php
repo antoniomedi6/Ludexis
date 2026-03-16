@@ -41,7 +41,8 @@ class AllGames extends Component
                 'genres' => ['name'],
                 'platforms' => ['name'],
                 'involved_companies' => ['developer', 'publisher'],
-                'involved_companies.company' => ['name']
+                'involved_companies.company' => ['name'],
+                'screenshots' => ['image_id']
             ])
             ->where('total_rating', '>=', $this->minRatingFilter)
             ->where('total_rating_count', '>=', 30)
@@ -87,6 +88,16 @@ class AllGames extends Component
                 $coverUrl = str_replace('t_thumb', 't_cover_big', $url);
             }
 
+            $screenshotHashes = [];
+            $screenshotsData = data_get($igdbGame, 'screenshots', []);
+            if (!empty($screenshotsData)) {
+                foreach ($screenshotsData as $screenshot) {
+                    if (isset($screenshot['image_id'])) {
+                        $screenshotHashes[] = $screenshot['image_id'];
+                    }
+                }
+            }
+
             $placeholder = new Game();
             $placeholder->igdb_id = $igdbGame->id;
             $placeholder->title = $igdbGame->name;
@@ -94,6 +105,8 @@ class AllGames extends Component
             $placeholder->rating = $igdbGame->total_rating ?? 0;
             $placeholder->slug = $igdbGame->slug;
             $placeholder->is_local = false;
+
+            $placeholder->screenshots = !empty($screenshotHashes) ? $screenshotHashes : null;
 
             $releaseDate = data_get($igdbGame, 'first_release_date');
             if ($releaseDate) {

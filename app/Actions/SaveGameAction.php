@@ -33,7 +33,8 @@ class SaveGameAction
                 'genres' => ['name'],
                 'platforms' => ['name'],
                 'involved_companies' => ['developer', 'publisher'],
-                'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date']
+                'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date'],
+                'screenshots' => ['image_id']
             ])
             ->where('slug', $slug)
             ->first();
@@ -62,6 +63,16 @@ class SaveGameAction
             $videoUrl = 'https://www.youtube.com/embed/' . $videos[0]['video_id'];
         }
 
+        $screenshotHashes = [];
+        $screenshotsData = data_get($igdbGame, 'screenshots', []);
+        if (!empty($screenshotsData)) {
+            foreach ($screenshotsData as $screenshot) {
+                if (isset($screenshot['image_id'])) {
+                    $screenshotHashes[] = $screenshot['image_id'];
+                }
+            }
+        }
+
         $game = Game::create([
             'igdb_id' => $igdbGame->id,
             'title' => $igdbGame->name,
@@ -71,7 +82,8 @@ class SaveGameAction
             'slug' => $igdbGame->slug,
             'rating' => $igdbGame->total_rating ?? 0,
             'avg_time' => 0,
-            'video_url' => $videoUrl
+            'video_url' => $videoUrl,
+            'screenshots' => !empty($screenshotHashes) ? $screenshotHashes : null
         ]);
 
         $genres = data_get($igdbGame, 'genres', []);

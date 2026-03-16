@@ -50,15 +50,14 @@ class ImportPopularGames extends Command
                 'genres' => ['name'],
                 'platforms' => ['name'],
                 'involved_companies' => ['developer', 'publisher'],
-                'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date']
+                'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date'],
+                'screenshots' => ['image_id']
             ])
             ->where('game_type', 0)
             ->whereHas('cover')
             ->orderBy('hypes', 'desc')
             ->limit($limit)
             ->get();
-
-        // dd($igdbGames->toArray());
 
         if ($igdbGames->isEmpty()) {
             $this->error('No se pudo importar ningún juego. Revisa tu conexión y credenciales.');
@@ -85,6 +84,17 @@ class ImportPopularGames extends Command
                 $videoUrl = 'https://www.youtube.com/embed/' . $videos[0]['video_id'];
             }
 
+            $screenshotsData = data_get($igdbGame, 'screenshots', []);
+            $screenshotHashes = [];
+
+            if (!empty($screenshotsData)) {
+                foreach ($screenshotsData as $screenshot) {
+                    if (isset($screenshot['image_id'])) {
+                        $screenshotHashes[] = $screenshot['image_id'];
+                    }
+                }
+            }
+
             $game = Game::updateOrCreate(
                 ['igdb_id' => $igdbGame->id],
                 [
@@ -95,7 +105,8 @@ class ImportPopularGames extends Command
                     'slug' => $igdbGame->slug,
                     'rating' => $igdbGame->total_rating,
                     'avg_time' => 0,
-                    'video_url' => $videoUrl
+                    'video_url' => $videoUrl,
+                    'screenshots' => !empty($screenshotHashes) ? $screenshotHashes : null
                 ]
             );
 
@@ -112,9 +123,9 @@ class ImportPopularGames extends Command
                 $game->genres()->sync($genreIds);
             }
 
+            $companiesPivotData = [];
             $companies = data_get($igdbGame, 'involved_companies', []);
             if (!empty($companies)) {
-                $companiesPivotData = [];
                 foreach ($companies as $involvedCompany) {
                     $companyData = data_get($involvedCompany, 'company');
 
