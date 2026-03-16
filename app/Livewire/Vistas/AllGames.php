@@ -8,7 +8,7 @@ use App\Models\Genre;
 use App\Models\Platform;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
@@ -22,7 +22,8 @@ class AllGames extends Component
     public int $minRatingFilter = 0;
     public array $genresFilter = [];
     public int $limit = 48;
-
+    #[Url]
+    public string $search = '';
     public function render()
     {
         $page = $this->getPage();
@@ -62,7 +63,8 @@ class AllGames extends Component
 
         $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
 
-        $igdbGames = $query->orderBy($sortField, 'desc')
+        $igdbGames = $query->where('name', 'like', "%{$this->search}%")
+            ->orderBy($sortField, 'desc')
             ->skip(($page - 1) * $this->limit)
             ->take($this->limit)
             ->get();

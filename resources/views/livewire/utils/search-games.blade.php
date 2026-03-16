@@ -46,8 +46,8 @@
             @endforeach
 
             <div class="p-3 bg-gray-50 dark:bg-[#151821] border-t border-gray-100 dark:border-gray-800 text-center">
-                <a href="#"
-                    class="text-[10px] font-black text-cyan-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
+                <a href="/allGames?search={{ urlencode($search) }}" wire:navigate
+                    class="text-[10px] font-black text-cyan-500 hover:text-cyan-400 transition-colors uppercase tracking-widest block w-full">
                     Ver todos los resultados para "{{ $search }}"
                 </a>
             </div>
