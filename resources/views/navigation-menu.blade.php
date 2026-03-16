@@ -14,6 +14,15 @@
         <div class="flex items-center gap-4 shrink-0">
             @guest
                 @if (Route::has('login'))
+                    <a href="{{ route('login') }}"
+                        class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 hidden sm:block">
+                        {{ __('Log in') }}
+                    </a>
+                    <a href="{{ route('register') }}"
+                        class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 sm:block hidden">
+                        <i class="fa-solid fa-user-plus"></i> Regístrate
+                    </a>
+                    {{-- 
                     <button @click="$dispatch('open-auth-modal', { login: true })"
                         class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 hidden sm:block">
                         {{ __('Log in') }}
@@ -23,6 +32,7 @@
                         class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 sm:block hidden">
                         <i class="fa-solid fa-user-plus"></i> Regístrate
                     </button>
+                     --}}
                 @endif
             @endguest
 
@@ -103,6 +113,17 @@
         class="hidden sm:hidden bg-white dark:bg-[#0f1117] border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
         <div class="pt-2 pb-3 space-y-1">
             @guest
+                <a href="{{ route('login') }}"
+                    class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 hidden sm:block">
+                    {{ __('Log in') }}
+                </a>
+                <a href="{{ route('register') }}
+                    class="bg-cyan-600 hover:bg-cyan-500 text-white
+                    text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 sm:block
+                    hidden">
+                    <i class="fa-solid fa-user-plus"></i> Regístrate
+                </a>
+                {{--                 
                 <button @click="$dispatch('open-auth-modal')"
                     class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 hidden sm:block">
                     {{ __('Log in') }}
@@ -112,6 +133,7 @@
                     class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black px-5 py-2.5 rounded-full shadow-lg transition flex items-center gap-2 sm:block hidden">
                     <i class="fa-solid fa-user-plus"></i> Regístrate
                 </button>
+                 --}}
             @endguest
         </div>
 
