@@ -12,7 +12,7 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'video_url', 'first_release_date', 'slug', 'rating', 'igdb_avg_time', 'community_avg_time', 'weighted_score', 'igdb_id'];
+    protected $fillable = ['title', 'synopsis', 'cover_url', 'video_url', 'first_release_date', 'slug', 'rating', 'avg_time', 'igdb_id'];
     protected $casts = [
         'first_release_date' => 'date',
     ];
@@ -48,13 +48,6 @@ class Game extends Model
     {
         return 'slug';
     }
-
-    /*     public function weighted_score(): Attribute
-        {
-            return Attribute::make(
-                get: fn($v) => (int) $v,
-            );
-        } */
 
     public function rating(): Attribute
     {

@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Company;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Platform;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
 use MarcReichel\IGDBLaravel\Models\Genre as IGDBGenre;
@@ -92,9 +94,7 @@ class ImportPopularGames extends Command
                     'first_release_date' => $releaseDate ? $releaseDate->format('Y-m-d') : null,
                     'slug' => $igdbGame->slug,
                     'rating' => $igdbGame->total_rating,
-                    'igdb_avg_time' => 0,
-                    'community_avg_time' => 0,
-                    'weighted_score' => 0,
+                    'avg_time' => 0,
                     'video_url' => $videoUrl
                 ]
             );
@@ -127,11 +127,11 @@ class ImportPopularGames extends Command
 
                         if ($startDate) {
                             $formattedDate = is_numeric($startDate)
-                                ? \Carbon\Carbon::createFromTimestamp($startDate)->format('Y-m-d')
-                                : \Carbon\Carbon::parse($startDate)->format('Y-m-d');
+                                ? Carbon::createFromTimestamp($startDate)->format('Y-m-d')
+                                : Carbon::parse($startDate)->format('Y-m-d');
                         }
 
-                        $company = \App\Models\Company::updateOrCreate(
+                        $company = Company::updateOrCreate(
                             ['slug' => $companySlug],
                             [
                                 'name' => $companyName,

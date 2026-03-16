@@ -44,7 +44,7 @@ class AllGames extends Component
                 'involved_companies.company' => ['name']
             ])
             ->where('total_rating', '>=', $this->minRatingFilter)
-            ->where('total_rating_count', '>=', 50)
+            ->where('total_rating_count', '>=', 30)
             ->where('game_type', '=', 0);
 
         if (!empty($this->platformsFilter)) {
@@ -59,7 +59,9 @@ class AllGames extends Component
 
         $total = (clone $query)->count();
 
-        $igdbGames = $query->orderBy($this->orderBy, 'desc')
+        $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
+
+        $igdbGames = $query->orderBy($sortField, 'desc')
             ->skip(($page - 1) * $this->limit)
             ->take($this->limit)
             ->get();
@@ -151,8 +153,7 @@ class AllGames extends Component
         $this->reset(['platformsFilter', 'genresFilter', 'minRatingFilter']);
     }
 
-    #[On('evtScroll')]
-    public function moreLimit()
+    public function loadMore()
     {
         $this->limit += 48;
     }

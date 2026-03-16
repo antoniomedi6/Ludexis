@@ -1,6 +1,9 @@
+@props(['variant' => 'modal'])
+
 <div wire:loading.flex
-    {{ $attributes->merge(['class' => 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] flex-col justify-center items-center gap-4 bg-[#0f1117]/90 px-8 py-6 rounded-2xl border border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.15)] pointer-events-none backdrop-blur-md']) }}>
-    <svg viewBox="0 0 150 150" style="color:#20b7cf;">
+    {{ $attributes->merge(['class' => $variant === 'modal' ? 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] flex-col justify-center items-center gap-4 bg-[#0f1117]/90 px-8 py-6 rounded-2xl border border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.15)] pointer-events-none backdrop-blur-md' : 'inline-flex justify-center items-center pointer-events-none']) }}>
+
+    <svg viewBox="0 0 150 150" style="color:#20b7cf;" class="{{ $variant === 'simple' ? 'w-20 h-25 pt-5' : 'w-24 h-24' }}">
         <style>
             @keyframes loader2022 {
                 50% {
@@ -55,6 +58,8 @@
         <circle class="ccc2002" cx="75" cy="75" r="65" />
     </svg>
 
-
-    <span class="text-cyan-500 font-black text-sm uppercase tracking-widest animate-pulse">Cargando...</span>
+    @if ($variant === 'modal')
+        <span
+            class="text-cyan-500 font-black text-sm uppercase tracking-widest animate-pulse">{{ $slot }}</span>
+    @endif
 </div>

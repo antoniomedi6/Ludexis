@@ -21,7 +21,7 @@
                 <div class="absolute top-2 right-2">
                     <span
                         class="bg-[#0f1117]/90 backdrop-blur text-cyan-400 font-black text-sm px-2 py-0.5 rounded-lg border border-gray-700 shadow-lg drop-shadow-md">
-                        {{ $item->rating ?? $item->weighted_score }}
+                        {{ $item->rating }}
                     </span>
                 </div>
 

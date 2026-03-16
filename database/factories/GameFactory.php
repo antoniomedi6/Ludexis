@@ -22,10 +22,8 @@ class GameFactory extends Factory
             'title' => fake()->words(3, true),
             'synopsis' => fake()->paragraphs(3, true),
             'cover_image' => Storage::putFileAs('images/gameCovers/', new File($image), basename($image)),
-            'is_multiplayer' => fake()->boolean(40),
-            'community_avg_time' => fake()->numberBetween(5, 100),
-            'igdb_avg_time' => fake()->numberBetween(5, 100),
-            'weighted_score' => fake()->randomFloat(1, 5, 9.5),
+            'avg_time' => fake()->numberBetween(5, 100),
+            'rating' => fake()->randomFloat(1, 5, 9.5),
         ];
     }
 

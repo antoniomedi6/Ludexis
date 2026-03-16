@@ -55,10 +55,10 @@
                                     Tiempo Medio
                                 </p>
                                 <p class="text-2xl font-black text-white leading-none">
-                                    @if ($game->igdb_avg_time === 0)
+                                    @if ($game->avg_time === 0)
                                         No Registrado
                                     @else
-                                        {{ $game->igdb_avg_time }}<span class="text-sm text-gray-500">h</span>
+                                        {{ $game->avg_time }}<span class="text-sm text-gray-500">h</span>
                                     @endif
                                 </p>
                             </div>

@@ -18,10 +18,8 @@ return new class extends Migration {
             $table->string('video_url')->nullable();
             $table->date('first_release_date')->nullable();
             $table->string('slug')->unique()->nullable();
-            $table->integer('igdb_avg_time')->nullable();
-            $table->integer('community_avg_time')->nullable();
+            $table->integer('avg_time')->nullable();
             $table->float('rating')->nullable();
-            $table->decimal('weighted_score')->nullable();
             $table->integer('igdb_id')->unique();
             $table->timestamps();
         });

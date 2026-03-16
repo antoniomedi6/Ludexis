@@ -70,9 +70,7 @@ class SaveGameAction
             'first_release_date' => $formattedDate,
             'slug' => $igdbGame->slug,
             'rating' => $igdbGame->total_rating ?? 0,
-            'igdb_avg_time' => 0,
-            'community_avg_time' => 0,
-            'weighted_score' => 0,
+            'avg_time' => 0,
             'video_url' => $videoUrl
         ]);
 

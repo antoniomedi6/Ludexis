@@ -132,7 +132,6 @@
             </div>
 
             <div class="relative min-h-[400px]">
-                <x-miscomponentes.loading-spinner />
                 @if (count($games))
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
                         @foreach ($games as $item)
@@ -226,7 +225,7 @@
                 
                         if (percentage >= 90) {
                             if (!this.dispatched) {
-                                this.$dispatch('evtScroll');
+                                $wire.loadMore()
                                 this.dispatched = true;
                             }
                         } else {
@@ -235,9 +234,16 @@
                     }
                 }" @scroll.window.throttle.50ms="checkScroll()">
                 </div>
+                <x-miscomponentes.loading-spinner variant="modal"
+                    wire:target="orderBy, platformsFilter, genresFilter, minRatingFilter, clearFilters">
+                    Actualizando catálogo...
+                </x-miscomponentes.loading-spinner>
+
+                <x-miscomponentes.loading-spinner variant="simple" wire:target="loadMore" />
             </div>
             <x-miscomponentes.back-to-top />
         </div>
+        <x-miscomponentes.back-to-top />
     </div>
     <x-miscomponentes.footer />
 </div>
