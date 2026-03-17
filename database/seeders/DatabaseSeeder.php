@@ -50,9 +50,10 @@ class DatabaseSeeder extends Seeder
                 DB::table('game_user')->insert([
                     'user_id' => $user->id,
                     'game_id' => $game->id,
-                    'status' => fake()->randomElement(['jugando', 'pendiente', 'completado', 'abandonado']),
+                    'status' => fake()->randomElement(['pending, abandoned, finish, completed, multiplayer', 'paused', 'playing']),
                     'drop_reason' => fake()->optional(0.3)->sentence(),
-                    'hours_played' => fake()->numberBetween(0, 100),
+                    'hours_finish' => 0,
+                    'hours_completed' => 0,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
