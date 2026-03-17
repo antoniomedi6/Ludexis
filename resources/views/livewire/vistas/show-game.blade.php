@@ -1,113 +1,144 @@
-<div class="min-h-screen bg-[#0f1117] text-white font-sans relative">
-    <div class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden">
+<div
+    class="min-h-screen bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans relative transition-colors duration-300">
+    <div
+        class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden bg-white dark:bg-[#0f1117] transition-colors duration-300 pointer-events-none select-none">
         <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ $game->screenshots[0] ?? 'sc8c26' }}.jpg"
-            class="w-full h-full object-cover opacity-30 blur-md scale-105"
-            style="
-        mask-image: linear-gradient(to bottom, black 40%, transparent);
-        -webkit-mask-image: linear-gradient(
-            to bottom,
-            black 40%,
-            transparent
-        );
-        " />
+            class="w-full h-full object-cover opacity-10 dark:opacity-30 blur-md scale-105 transition-opacity duration-300 pointer-events-none select-none"
+            style="mask-image: linear-gradient(to bottom, black 40%, transparent); -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent);"
+            draggable="false" />
     </div>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 py-12">
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div class="lg:col-span-8 flex flex-col gap-10">
                 <div class="flex flex-col sm:flex-row gap-8 items-start">
                     <img src="{{ $game->cover_url }}"
-                        class="w-48 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.8)] border border-gray-700 shrink-0" />
+                        class="w-48 rounded-2xl shadow-xl dark:shadow-[0_20px_40px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300" />
 
                     <div class="flex-1 pt-2">
-                        <div class="flex items-center gap-3 mb-2">
+                        <div class="flex items-center gap-3 mb-3">
                             <span
-                                class="bg-cyan-900/40 text-cyan-400 border border-cyan-800/50 px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest">Lanzamiento:
-                                {{ $game->first_release_date->year }}</span>
+                                class="bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
+                                Lanzamiento: {{ $game->first_release_date->year }}
+                            </span>
                             <span
-                                class="text-gray-400 text-xs font-bold uppercase tracking-wider">{{ $game->companies->first()?->name ?? 'Desconocido' }}</span>
+                                class="text-gray-600 dark:text-gray-400 text-xs font-bold uppercase tracking-wider transition-colors duration-300">
+                                {{ $game->companies->first()?->name ?? 'Desconocido' }}
+                            </span>
                         </div>
-                        <h1 class="text-5xl md:text-6xl font-black text-white leading-tight tracking-tighter mb-4">
+                        <h1
+                            class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight tracking-tighter mb-5 transition-colors duration-300 drop-shadow-sm">
                             {{ $game->title }}
                         </h1>
-                        <div class="flex flex-wrap gap-2 mb-6">
+                        <div class="flex flex-wrap gap-2 mb-8">
                             @foreach ($game->genres as $genre)
                                 <span
-                                    class="text-gray-400 text-xs font-bold uppercase tracking-wider border border-gray-800 px-3 py-1 rounded-full">{{ $genre->name }}</span>
+                                    class="text-gray-600 dark:text-gray-300 text-[10px] font-bold uppercase tracking-wider border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1d27] px-3 py-1.5 rounded-xl transition-colors duration-300 shadow-sm dark:shadow-none">
+                                    {{ $genre->name }}
+                                </span>
                             @endforeach
                         </div>
 
                         <div class="flex items-center gap-8">
                             <div>
-                                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">
+                                <p
+                                    class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
                                     Nota Global
                                 </p>
                                 <div class="flex items-end gap-1">
                                     <span
-                                        class="text-4xl font-black text-white leading-none">{{ $game->rating ?? '-' }}</span>
-                                    <span class="text-sm text-cyan-500 font-bold mb-1"><i
+                                        class="text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">{{ $game->rating ?? '-' }}</span>
+                                    <span
+                                        class="text-sm text-cyan-600 dark:text-cyan-500 font-bold mb-1 transition-colors duration-300"><i
                                             class="fa-solid fa-star"></i></span>
                                 </div>
                             </div>
-                            <div class="w-px h-10 bg-gray-800"></div>
+                            <div class="w-px h-10 bg-gray-200 dark:bg-gray-800 transition-colors duration-300"></div>
                             <div>
-                                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">
+                                <p
+                                    class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
                                     Tiempo Medio
                                 </p>
-                                <p class="text-2xl font-black text-white leading-none">
+                                <p
+                                    class="text-2xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">
                                     @if ($game->avg_time === 0)
-                                        No Registrado
+                                        <span class="text-lg text-gray-500 dark:text-gray-600">No Registrado</span>
                                     @else
-                                        {{ $game->avg_time }}<span class="text-sm text-gray-500">h</span>
+                                        {{ $game->avg_time }}<span
+                                            class="text-sm text-gray-500 dark:text-gray-600 ml-1">h</span>
                                     @endif
                                 </p>
                             </div>
-                            <div class="w-px h-10 bg-gray-800"></div>
+                            <div class="w-px h-10 bg-gray-200 dark:bg-gray-800 transition-colors duration-300"></div>
                             <div>
-                                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">
+                                <p
+                                    class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
                                     Plataformas
                                 </p>
-                                <div class="flex gap-3 text-lg text-gray-400 mt-1">
-                                    <i class="fa-brands fa-windows"></i>
-                                    <i class="fa-brands fa-playstation"></i>
-                                    <i class="fa-brands fa-xbox"></i>
+                                <div
+                                    class="flex gap-3 text-lg text-gray-600 dark:text-gray-400 mt-1 transition-colors duration-300">
+                                    <i
+                                        class="fa-brands fa-windows hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer"></i>
+                                    <i
+                                        class="fa-brands fa-playstation hover:text-[#00439c] transition-colors cursor-pointer"></i>
+                                    <i
+                                        class="fa-brands fa-xbox hover:text-[#107c10] transition-colors cursor-pointer"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-[#1a1d27] to-[#0f1117] border border-gray-800 rounded-3xl p-8">
-                    <h2 class="text-xs font-black text-cyan-500 uppercase tracking-widest mb-4">
+                <div
+                    class="bg-white dark:bg-gradient-to-br dark:from-[#1a1d27] dark:to-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-8 shadow-sm transition-colors duration-300">
+                    <h2
+                        class="text-xs font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-4 transition-colors duration-300">
                         Sinopsis
                     </h2>
-                    <p class="text-gray-300 text-lg leading-relaxed">
+                    <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed transition-colors duration-300">
                         {{ $game->synopsis }}
                     </p>
                 </div>
 
                 <div>
-                    <h2 class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-photo-film text-cyan-500"></i> Multimedia
-                    </h2>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                        <h2
+                            class="text-xl font-black text-gray-900 dark:text-white flex items-center gap-3 transition-colors duration-300">
+                            <i
+                                class="fa-solid fa-photo-film text-cyan-600 dark:text-cyan-500 transition-colors duration-300"></i>
+                            Multimedia
+                        </h2>
+                        <button
+                            class="bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/40 dark:hover:bg-cyan-800/60 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Subir Captura
+                        </button>
+                    </div>
 
                     <div
-                        class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-800 mb-4 relative group">
+                        class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4 relative shadow-sm transition-colors duration-300 bg-gray-100 dark:bg-[#1a1d27]">
                         <iframe class="absolute top-0 left-0 w-full h-full z-10" src="{{ $game->video_url }}"
                             frameborder="0" allowfullscreen></iframe>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-3">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                         @foreach (array_slice($game->screenshots, 0, 3) as $image)
                             <div
-                                class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition">
+                                class="aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 cursor-pointer hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors relative group shadow-sm">
                                 <img src="{{ "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg" }}"
-                                    class="w-full h-full object-cover" />
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div class="absolute top-2 right-2">
+                                    <span
+                                        class="bg-white/90 dark:bg-[#1a1d27]/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
+                                </div>
                             </div>
                         @endforeach
                         <div
-                            class="aspect-video rounded-xl overflow-hidden border border-gray-800 cursor-pointer hover:border-cyan-500 transition flex items-center justify-center bg-[#1a1d27]">
-                            <span class="text-xs font-black uppercase tracking-widest text-cyan-500">+ Ver todas</span>
+                            class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-[#1a1d27] hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group">
+                            <span
+                                class="text-[10px] md:text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 flex items-center gap-2 transition-colors duration-300">
+                                <i class="fa-solid fa-images text-lg group-hover:scale-110 transition-transform"></i>
+                                Ver todas
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -115,91 +146,121 @@
 
             <div class="lg:col-span-4">
                 <div
-                    class="sticky top-24 bg-[#151821]/90 backdrop-blur-2xl border border-gray-700/50 rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-800">
-                        <div class="w-10 h-10 rounded-full bg-cyan-600 flex items-center justify-center text-white">
-                            <i class="fa-solid fa-user-astronaut"></i>
+                    class="sticky top-28 bg-white/95 dark:bg-[#151821]/95 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-colors duration-300">
+                    <div
+                        class="flex items-center gap-4 mb-8 pb-6 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-cyan-600 dark:bg-cyan-600 flex items-center justify-center text-white shadow-[0_5px_15px_rgba(6,182,212,0.3)]">
+                            <i class="fa-solid fa-user-astronaut text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-xs text-gray-400 font-bold uppercase tracking-wider">
+                            <p
+                                class="text-[10px] text-gray-500 dark:text-gray-400 font-black uppercase tracking-widest transition-colors duration-300">
                                 Tu Registro
                             </p>
-                            <p class="text-sm font-black text-white">
+                            <p class="text-lg font-black text-gray-900 dark:text-white transition-colors duration-300">
                                 Estado del Jugador
                             </p>
                         </div>
                     </div>
 
                     <div class="mb-8">
-                        <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-3">
+                        <p
+                            class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-3 transition-colors duration-300">
                             Progreso Actual
                         </p>
-                        <div class="grid grid-cols-2 gap-2">
-                            <label class="cursor-pointer relative">
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer relative group">
                                 <input type="radio" name="status" class="peer hidden" checked />
                                 <div
-                                    class="flex items-center gap-3 p-3 rounded-xl border border-gray-700 bg-[#0f1117] text-gray-400 peer-checked:bg-cyan-900/30 peer-checked:border-cyan-500 peer-checked:text-cyan-400 transition">
-                                    <i class="fa-solid fa-gamepad text-lg"></i>
-                                    <span class="text-xs font-black uppercase">Jugando</span>
+                                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-cyan-50 dark:peer-checked:bg-cyan-900/30 peer-checked:border-cyan-400 dark:peer-checked:border-cyan-500 peer-checked:text-cyan-700 dark:peer-checked:text-cyan-400 transition-all duration-300 shadow-sm peer-checked:shadow-md">
+                                    <i
+                                        class="fa-solid fa-gamepad text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Jugando</span>
                                 </div>
                             </label>
-                            <label class="cursor-pointer relative">
+                            <label class="cursor-pointer relative group">
                                 <input type="radio" name="status" class="peer hidden" />
                                 <div
-                                    class="flex items-center gap-3 p-3 rounded-xl border border-gray-700 bg-[#0f1117] text-gray-400 peer-checked:bg-green-900/30 peer-checked:border-green-500 peer-checked:text-green-400 transition">
-                                    <i class="fa-solid fa-check-double text-lg"></i>
-                                    <span class="text-xs font-black uppercase">Completado</span>
+                                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-green-50 dark:peer-checked:bg-green-900/30 peer-checked:border-green-400 dark:peer-checked:border-green-500 peer-checked:text-green-700 dark:peer-checked:text-green-400 transition-all duration-300 shadow-sm peer-checked:shadow-md">
+                                    <i
+                                        class="fa-solid fa-check-double text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Completado</span>
                                 </div>
                             </label>
-                            <label class="cursor-pointer relative">
+                            <label class="cursor-pointer relative group">
                                 <input type="radio" name="status" class="peer hidden" />
                                 <div
-                                    class="flex items-center gap-3 p-3 rounded-xl border border-gray-700 bg-[#0f1117] text-gray-400 peer-checked:bg-yellow-900/30 peer-checked:border-yellow-500 peer-checked:text-yellow-400 transition">
-                                    <i class="fa-solid fa-pause text-lg"></i>
-                                    <span class="text-xs font-black uppercase">Pausado</span>
+                                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-yellow-50 dark:peer-checked:bg-yellow-900/30 peer-checked:border-yellow-400 dark:peer-checked:border-yellow-500 peer-checked:text-yellow-700 dark:peer-checked:text-yellow-400 transition-all duration-300 shadow-sm peer-checked:shadow-md">
+                                    <i
+                                        class="fa-solid fa-pause text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Pausado</span>
                                 </div>
                             </label>
-                            <label class="cursor-pointer relative">
+                            <label class="cursor-pointer relative group">
                                 <input type="radio" name="status" class="peer hidden" />
                                 <div
-                                    class="flex items-center gap-3 p-3 rounded-xl border border-gray-700 bg-[#0f1117] text-gray-400 peer-checked:bg-red-900/30 peer-checked:border-red-500 peer-checked:text-red-400 transition">
-                                    <i class="fa-solid fa-skull text-lg"></i>
-                                    <span class="text-xs font-black uppercase">Abandonado</span>
+                                    class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-red-50 dark:peer-checked:bg-red-900/30 peer-checked:border-red-400 dark:peer-checked:border-red-500 peer-checked:text-red-700 dark:peer-checked:text-red-400 transition-all duration-300 shadow-sm peer-checked:shadow-md">
+                                    <i
+                                        class="fa-solid fa-skull text-2xl mb-1 group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Abandonado</span>
                                 </div>
                             </label>
                         </div>
                     </div>
 
-                    <div class="mb-6 bg-[#0f1117] border border-gray-800 rounded-2xl p-5">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Tu Nota</span>
-                            <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">4 / 5</span>
+                    <div
+                        class="mb-8 bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 transition-colors duration-300 shadow-inner dark:shadow-none">
+                        <div class="flex justify-between items-center mb-5">
+                            <span
+                                class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 transition-colors duration-300">Tu
+                                Nota</span>
+                            <span
+                                class="text-xs font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest transition-colors duration-300 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg shadow-sm">4
+                                / 5</span>
                         </div>
-                        <div class="flex justify-center gap-2 text-3xl">
-                            <i class="fa-solid fa-star text-cyan-400 cursor-pointer hover:scale-110 transition"></i>
-                            <i class="fa-solid fa-star text-cyan-400 cursor-pointer hover:scale-110 transition"></i>
-                            <i class="fa-solid fa-star text-cyan-400 cursor-pointer hover:scale-110 transition"></i>
-                            <i class="fa-solid fa-star text-cyan-400 cursor-pointer hover:scale-110 transition"></i>
+                        <div class="flex justify-between gap-2 text-3xl">
                             <i
-                                class="fa-solid fa-star text-gray-700 cursor-pointer hover:text-cyan-400 hover:scale-110 transition"></i>
+                                class="fa-solid fa-star text-cyan-500 dark:text-cyan-400 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-300 drop-shadow-sm"></i>
+                            <i
+                                class="fa-solid fa-star text-cyan-500 dark:text-cyan-400 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-300 drop-shadow-sm"></i>
+                            <i
+                                class="fa-solid fa-star text-cyan-500 dark:text-cyan-400 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-300 drop-shadow-sm"></i>
+                            <i
+                                class="fa-solid fa-star text-cyan-500 dark:text-cyan-400 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-300 drop-shadow-sm"></i>
+                            <i
+                                class="fa-solid fa-star text-gray-300 dark:text-gray-800 cursor-pointer hover:text-cyan-400 hover:scale-110 hover:-translate-y-1 transition-all duration-300"></i>
                         </div>
                     </div>
 
-                    <div class="mb-6">
-                        <details class="group">
+                    <div class="mb-8">
+                        <details
+                            class="group bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 rounded-2xl transition-colors duration-300 shadow-sm overflow-hidden open:pb-4">
                             <summary
-                                class="flex items-center gap-2 cursor-pointer text-sm font-bold text-gray-400 hover:text-cyan-400 transition list-none [&::-webkit-details-marker]:hidden">
-                                <i class="fa-solid fa-pen-to-square"></i> Escribir una
-                                reseña
+                                class="flex items-center justify-between p-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden focus:outline-none">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-cyan-50 dark:bg-[#0f1117] flex items-center justify-center text-cyan-600 dark:text-cyan-400 transition-colors duration-300">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </div>
+                                    <span
+                                        class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest transition-colors duration-300">Escribir
+                                        reseña</span>
+                                </div>
                                 <span
-                                    class="text-[9px] font-black uppercase tracking-widest bg-[#0f1117] border border-gray-700 px-2 py-1 rounded ml-auto text-gray-500">Opcional</span>
+                                    class="text-[9px] font-black uppercase tracking-widest bg-gray-100 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-700 px-2 py-1 rounded-md text-gray-500 dark:text-gray-500 transition-colors duration-300">Opcional</span>
                             </summary>
-                            <div class="mt-4">
-                                <textarea rows="3" placeholder="¿Qué te ha parecido el juego?..."
-                                    class="w-full bg-[#0f1117] border border-gray-800 text-white rounded-xl p-4 text-sm font-medium focus:outline-none focus:border-cyan-500 transition resize-none placeholder-gray-600"></textarea>
+                            <div class="px-5">
+                                <textarea rows="4" placeholder="¿Qué te ha parecido el juego? Escribe tu opinión detallada..."
+                                    class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl p-4 text-sm font-medium focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300 resize-none placeholder-gray-400 dark:placeholder-gray-600 shadow-inner"></textarea>
                             </div>
                         </details>
                     </div>
+
+                    <button
+                        class="w-full bg-gray-900 hover:bg-gray-800 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white font-black py-4 rounded-xl transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_20px_rgba(6,182,212,0.2)] uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:-translate-y-1">
+                        <i class="fa-solid fa-bookmark text-lg"></i> Guardar Cambios
+                    </button>
                 </div>
             </div>
         </div>

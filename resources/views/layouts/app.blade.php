@@ -20,7 +20,12 @@
     <x-banner />
 
     <div class="min-h-screen bg-[#0f1117]">
-        @livewire('navigation-menu')
+        @guest
+            @livewire('navigation-menu')
+        @else
+            <x-miscomponentes.nav-aside />
+        @endguest
+
         <x-miscomponentes.roadmap-link />
         @if (isset($header))
             <header>
