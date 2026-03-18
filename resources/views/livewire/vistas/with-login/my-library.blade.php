@@ -81,7 +81,7 @@
                         @php
                             $status = $item->pivot->status ?? 'pending';
                             $rating = $item->pivot->rating ?? 0;
-                            $hours = $item->pivot->hours_played ?? 0; // Ajusta si en la BD lo llamaste diferente
+                            $hours = $item->pivot->hours_finish ?? 0;
 
                             $isAbandoned = $status === 'abandoned';
                             $isPending = $status === 'pending';
