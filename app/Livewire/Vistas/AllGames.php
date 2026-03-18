@@ -24,6 +24,7 @@ class AllGames extends Component
     public int $limit = 48;
     #[Url]
     public string $search = '';
+
     public function render()
     {
         $page = $this->getPage();
@@ -59,13 +60,16 @@ class AllGames extends Component
             $query->whereIn('genres.name', $genreNames);
         }
 
+        if (!empty($this->search)) {
+            $query->search($this->search);
+        } else {
+            $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
+            $query->orderBy($sortField, 'desc');
+        }
+
         $total = (clone $query)->count();
 
-        $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
-
-        $igdbGames = $query->where('name', 'like', "%{$this->search}%")
-            ->orderBy($sortField, 'desc')
-            ->skip(($page - 1) * $this->limit)
+        $igdbGames = $query->skip(($page - 1) * $this->limit)
             ->take($this->limit)
             ->get();
 
