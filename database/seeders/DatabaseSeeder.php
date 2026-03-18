@@ -21,16 +21,15 @@ class DatabaseSeeder extends Seeder
                     PlatformSeeder::class,
                 ]);
          */
-        /*         User::create([
-                    'name' => 'admin',
-                    'email' => 'admin@example.com',
-                    'password' => Hash::make('password'),
-                    'role' => 'admin',
-                    'xp' => 0,
-                    'is_private' => false,
-                    'banned_at' => null,
-                ]);
-         */
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('contraseñadificil'),
+            'role' => 'admin',
+            'xp' => 0,
+            'is_private' => false,
+            'banned_at' => null,
+        ]);
         $this->call(GameUserSeeder::class);
 
         $users = User::factory(30)->create();

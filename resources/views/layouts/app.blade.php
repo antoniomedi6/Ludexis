@@ -16,32 +16,38 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-[#0f1117]">
+<body class="font-sans antialiased bg-[#0f1117] overflow-hidden text-gray-900 dark:text-gray-100">
     <x-banner />
 
-    <div class="min-h-screen bg-[#0f1117]">
-        @guest
-            @livewire('navigation-menu')
-        @else
+    <div class="flex h-screen w-full bg-[#0f1117] overflow-hidden">
+
+        @auth
             <x-miscomponentes.nav-aside />
-        @endguest
+        @endauth
 
-        <x-miscomponentes.roadmap-link />
-        @if (isset($header))
-            <header>
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+        <div class="flex-1 flex flex-col h-full overflow-hidden relative transition-all duration-300">
+            @guest
+                @livewire('navigation-menu')
+            @endguest
 
-        <main>
-            {{ $slot }}
-        </main>
+            {{-- <x-miscomponentes.roadmap-link /> --}}
+
+            @if (isset($header))
+                <header>
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
+
+            <main class="flex-1 h-full overflow-y-auto relative">
+                {{ $slot }}
+            </main>
+        </div>
+
     </div>
 
     @stack('modals')
-
     @livewireScripts
     <x-miscomponentes.auth-modal />
 </body>

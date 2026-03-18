@@ -1,5 +1,5 @@
 <div
-    class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans min-h-screen flex selection:bg-cyan-500 selection:text-white transition-colors duration-300 lg:ml-64">
+    class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans min-h-screen flex selection:bg-cyan-500 selection:text-white transition-colors duration-300 ">
     <div class="flex-1 flex flex-col h-full w-full">
         <div
             class="h-20 flex items-center justify-between px-8 shrink-0 z-30 sticky top-0 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
@@ -87,7 +87,7 @@
                             $isPending = $status === 'pending';
                         @endphp
 
-                        <div
+                        <a href="{{ route('games.show', $item->slug) }}"
                             class="group bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-none hover:border-cyan-300 dark:hover:border-cyan-500/50 transition-all duration-500 flex flex-col {{ $isAbandoned || $isPending ? 'opacity-80 hover:opacity-100' : '' }}">
 
                             <div class="relative aspect-[4/3] w-full overflow-hidden">
@@ -106,32 +106,32 @@
                                     @elseif ($status === 'completed')
                                         <span
                                             class="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-trophy"></i> 100% Completado
+                                            <x-icons.completed class="size-6" /> 100% Completado
                                         </span>
                                     @elseif ($status === 'playing')
                                         <span
                                             class="bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-gamepad"></i> Jugando
+                                            <x-icons.playing class="size-6" /> Jugando
                                         </span>
                                     @elseif ($status === 'abandoned')
                                         <span
                                             class="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-skull"></i> Abandonado
+                                            <x-icons.abandoned class="size-6" /> Abandonado
                                         </span>
                                     @elseif ($status === 'pending')
                                         <span
                                             class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-regular fa-clock"></i> Pendiente
+                                            <x-icons.pending class="size-6" /> Pendiente
                                         </span>
                                     @elseif ($status === 'paused')
                                         <span
                                             class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-pause"></i> En Pausa
+                                            <x-icons.paused class="size-6" /> En Pausa
                                         </span>
                                     @elseif ($status === 'multiplayer')
                                         <span
                                             class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-users"></i> Multiplayer
+                                            <x-icons.multiplayer class="size-6" /> Multiplayer
                                         </span>
                                     @endif
                                 </div>
@@ -181,22 +181,23 @@
                                     {{ $hours }} hrs jugadas
                                 </p>
                             </div>
-                        </div>
-                    @endforeach
+                        </a>
                 </div>
-
-                @if (count($userGames) < 0)
-                    <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
-                        <div
-                            class="w-24 h-24 bg-gray-100 dark:bg-[#1a1d27] rounded-full flex items-center justify-center mb-6 border border-gray-200 dark:border-gray-800">
-                            <i class="fa-solid fa-gamepad text-4xl text-gray-400 dark:text-gray-600"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Tu biblioteca está vacía</h3>
-                        <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Explora el catálogo y añade juegos
-                            a tu registro para empezar a llevar el control de tus partidas.</p>
-                    </div>
-                @endif
+                @endforeach
             </div>
+
+            @if (count($userGames) < 0)
+                <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
+                    <div
+                        class="w-24 h-24 bg-gray-100 dark:bg-[#1a1d27] rounded-full flex items-center justify-center mb-6 border border-gray-200 dark:border-gray-800">
+                        <i class="fa-solid fa-gamepad text-4xl text-gray-400 dark:text-gray-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Tu biblioteca está vacía</h3>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Explora el catálogo y añade juegos
+                        a tu registro para empezar a llevar el control de tus partidas.</p>
+                </div>
+            @endif
         </div>
     </div>
+</div>
 </div>

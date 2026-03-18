@@ -1,6 +1,9 @@
-<div class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 flex-1 flex flex-col min-h-screen transition-colors duration-300 lg:ml-64"
+<div class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 flex-1 flex flex-col min-h-screen transition-colors duration-300"
     x-data="{ filtersOpen: false }">
-
+    <section
+        class="h-20 flex items-center justify-between px-8 shrink-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        @livewire('utils.search-games')
+    </section>
     <div x-show="filtersOpen" x-transition.opacity @click="filtersOpen = false"
         class="fixed inset-0 z-40 bg-gray-900/20 dark:bg-black/60 backdrop-blur-sm transition-colors duration-300"
         style="display: none;">
@@ -114,16 +117,6 @@
                 </button>
             </div>
         </div>
-
-        {{--
-        <div
-            class="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117]/50 transition-colors duration-300">
-            <button @click="filtersOpen = false"
-                class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:-translate-y-1">
-                <i class="fa-solid fa-check"></i> Aplicar Filtros
-            </button>
-        </div>
-        --}}
     </aside>
 
     <div class="flex-1 flex flex-col items-start relative w-full max-w-[1600px] mx-auto">

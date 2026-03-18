@@ -11,7 +11,7 @@ use Livewire\Component;
 class GameRegistryCard extends Component
 {
     public GameRegistryForm $form;
-    public $gameTitle; // Solo guardamos el título para mostrarlo si hiciera falta, no el modelo entero
+    public $gameTitle;
 
     public function mount($gameId)
     {
@@ -32,8 +32,7 @@ class GameRegistryCard extends Component
             $this->form->hours_completed = $registro->hours_completed;
             $this->form->drop_reason = $registro->drop_reason;
         } else {
-            // Un valor por defecto si no hay registro para que los radio buttons funcionen
-            $this->form->status = 'playing';
+            $this->form->status = null;
         }
     }
 
@@ -41,7 +40,6 @@ class GameRegistryCard extends Component
     {
         $this->form->saveForm();
 
-        // Un mensajito de éxito no viene mal
         session()->flash('message', '¡Registro guardado con éxito!');
     }
 

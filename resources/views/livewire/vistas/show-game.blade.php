@@ -1,5 +1,6 @@
 <div
-    class="min-h-screen bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans relative transition-colors duration-300">
+    class="min-h-screen flow-root bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans relative transition-colors duration-300">
+
     <div
         class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden bg-white dark:bg-[#0f1117] transition-colors duration-300 pointer-events-none select-none">
         <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ $game->screenshots[0] ?? 'sc8c26' }}.jpg"
@@ -7,8 +8,11 @@
             style="mask-image: linear-gradient(to bottom, black 40%, transparent); -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent);"
             draggable="false" />
     </div>
-
-    <main class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">
+    <section
+        class="h-20 flex items-center justify-between px-8 shrink-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 z-50">
+        @livewire('utils.search-games')
+    </section>
+    <section class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div class="lg:col-span-8 flex flex-col gap-10">
                 <div class="flex flex-col sm:flex-row gap-8 items-start">
@@ -149,5 +153,5 @@
                 @endauth
             </div>
         </div>
-    </main>
+    </section>
 </div>

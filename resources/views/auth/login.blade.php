@@ -69,6 +69,14 @@
                         </div>
 
                         <div class="relative">
+                            <div class="relative">
+                                <i
+                                    class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                                <x-input id="password"
+                                    class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
+                                    type="password" name="password" required autocomplete="current-password"
+                                    placeholder="••••••••" />
+                            </div>
                             <div class="flex justify-between items-center mb-1 ml-1">
                                 <x-label for="password" value="{{ __('Password') }}"
                                     class="text-gray-400 text-[10px] font-black uppercase tracking-widest" />
@@ -78,14 +86,6 @@
                                         {{ __('Forgot?') }}
                                     </a>
                                 @endif
-                            </div>
-                            <div class="relative">
-                                <i
-                                    class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                                <x-input id="password"
-                                    class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
-                                    type="password" name="password" required autocomplete="current-password"
-                                    placeholder="••••••••" />
                             </div>
                         </div>
 
