@@ -16,11 +16,10 @@ class SearchGames extends Component
         $games = collect();
 
         if (strlen($this->search) >= 2) {
-            $igdbGames = IGDBGame::select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'hypes'])
+            $igdbGames = IGDBGame::select(['id', 'name', 'first_release_date', 'total_rating', 'slug'])
                 ->with(['cover' => ['url']])
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->where('total_rating_count', '>', 0)
-                ->orderBy('hypes', 'desc')
+                ->search($this->search)
+                ->where('game_type', 0)
                 ->limit(5)
                 ->get();
 
