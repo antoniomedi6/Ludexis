@@ -15,7 +15,9 @@
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400 font-medium text-lg transition-colors duration-300">
                         Bienvenido de nuevo, Antonio. Tienes
-                        <span class="text-gray-900 dark:text-white font-bold transition-colors duration-300">3 juegos
+                        <span
+                            class="text-gray-900 dark:text-white font-bold transition-colors duration-300">{{ $userGames->where('status', 'playing')->count() }}
+                            juegos
                             activos</span>.
                     </p>
 
@@ -27,7 +29,7 @@
                                     <i
                                         class="fa-solid fa-cubes absolute -bottom-4 -right-4 text-6xl text-gray-100 dark:text-gray-800/30 transition-colors duration-300"></i>
                                     <span
-                                        class="text-4xl font-black text-gray-900 dark:text-white mb-1 relative z-10 transition-colors duration-300">124</span>
+                                        class="text-4xl font-black text-gray-900 dark:text-white mb-1 relative z-10 transition-colors duration-300">{{ count($userGames) }}</span>
                                     <span
                                         class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">En
                                         Biblioteca</span>
@@ -37,17 +39,27 @@
                                     <i
                                         class="fa-solid fa-trophy absolute -bottom-4 -right-4 text-6xl text-green-50 dark:text-green-900/20 transition-colors duration-300"></i>
                                     <span
-                                        class="text-4xl font-black text-green-600 dark:text-green-400 mb-1 relative z-10 transition-colors duration-300">89</span>
+                                        class="text-4xl font-black text-green-600 dark:text-green-400 mb-1 relative z-10 transition-colors duration-300">{{ $userGames->where('status', 'completed')->count() }}</span>
                                     <span
-                                        class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">Completados</span>
+                                        class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">Completados
+                                        al 100%</span>
                                 </div>
                                 <div
                                     class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl relative overflow-hidden">
                                     <i
                                         class="fa-regular fa-clock absolute -bottom-4 -right-4 text-6xl text-gray-100 dark:text-gray-800/30 transition-colors duration-300"></i>
                                     <span
-                                        class="text-4xl font-black text-gray-900 dark:text-white mb-1 relative z-10 transition-colors duration-300">1.2k<span
-                                            class="text-lg text-gray-500 dark:text-gray-500">h</span></span>
+                                        class="text-4xl font-black text-gray-900 dark:text-white mb-1 relative z-10 transition-colors duration-300">
+                                        @php
+                                            $totalHours = $userGames->sum('pivot.hours');
+                                            $formattedHours =
+                                                $totalHours >= 1000
+                                                    ? number_format($totalHours / 1000, 1) . 'k'
+                                                    : $totalHours;
+                                        @endphp
+                                        {{ $formattedHours }}<span
+                                            class="text-lg text-gray-500 dark:text-gray-500">h</span>
+                                    </span>
                                     <span
                                         class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">Tiempo
                                         Total</span>

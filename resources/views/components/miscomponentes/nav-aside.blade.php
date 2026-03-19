@@ -59,19 +59,23 @@
     </div>
 
     @auth
-        <div
-            class="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-transparent transition-colors duration-300 w-full overflow-hidden mt-auto">
+        <a href="{{ route('profile.show') }}" wire:navigate
+            class="block p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-[#1a1d27] transition-all duration-300 w-full overflow-hidden mt-auto cursor-pointer group">
+
             <div class="flex items-center" :class="showNav ? 'gap-3 mb-4' : 'justify-center mb-0'">
                 <div
-                    class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-teal-500 rounded-full flex justify-center items-center font-black shadow-md border-2 border-white dark:border-[#151821] text-white shrink-0 uppercase">
+                    class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-teal-500 rounded-full flex justify-center items-center font-black shadow-md border-2 border-white dark:border-[#151821] text-white shrink-0 uppercase group-hover:scale-110 transition-transform duration-300">
                     {{ substr(Auth::user()->name, 0, 1) }}
                 </div>
 
                 <div x-show="showNav" style="display: none;" class="flex-1 overflow-hidden whitespace-nowrap">
-                    <h2 class="font-bold text-sm leading-tight text-gray-900 dark:text-white truncate">
-                        {{ Auth::user()->name }}</h2>
-                    <span
-                        class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">{{ Auth::user()->rank ?? 'Veterano' }}</span>
+                    <h2
+                        class="font-bold text-sm leading-tight text-gray-900 dark:text-white truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
+                        {{ Auth::user()->name }}
+                    </h2>
+                    <span class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                        {{ Auth::user()->rank ?? 'Veterano' }}
+                    </span>
                 </div>
             </div>
 
@@ -86,6 +90,6 @@
                         style="width: {{ Auth::user()->xp_percentage ?? 45 }}%"></div>
                 </div>
             </div>
-        </div>
+        </a>
     @endauth
 </aside>
