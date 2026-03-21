@@ -112,11 +112,15 @@
                             </div>
                         @endif
 
-                        <div class="flex flex-col gap-4 mt-4">
+                        <div class="flex flex-col mt-4">
                             <x-button
-                                class="w-full justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl transition shadow-[0_0_20px_rgba(6,182,212,0.3)] uppercase tracking-widest text-xs">
-                                {{ __('Crear Cuenta') }}
+                                class="w-full justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl transition shadow-[0_0_20px_rgba(6,182,212,0.3)] uppercase tracking-widest text-xs mb-3">
+                                <i class="fa-solid fa-user-plus mr-2"></i>{{ __('Crear Cuenta') }}
                             </x-button>
+                            <a href="{{ route('welcome') }}"
+                                class="mb-5 inline-flex items-center justify-center bg-red-600 hover:bg-red-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(220,38,38,0.3)] hover:shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:-translate-y-0.5 uppercase tracking-widest text-xs focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-[#0f1117] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0'">
+                                <i class="fas fa-arrow-left-from-bracket mr-2"></i>{{ __('Volver') }}
+                            </a>
 
                             <p class="text-center text-sm text-gray-500">
                                 ¿Ya tienes cuenta?
