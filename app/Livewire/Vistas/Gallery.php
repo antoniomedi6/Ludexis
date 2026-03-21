@@ -2,17 +2,22 @@
 
 namespace App\Livewire\Vistas;
 
+use App\Livewire\Forms\ImageForm;
 use App\Models\Game;
 use App\Models\Image;
 use Livewire\Component;
-
+use Livewire\WithFileUploads;
 class Gallery extends Component
 {
+    use WithFileUploads;
+
     public ?Game $game = null;
+    public ImageForm $cimage;
+    public bool $showingModal = false;
 
     public array $gamesFilter = [];
-    public string $spoilerFilter = 'all';
-    public string $dateFilter = 'all';
+    public string $spoilerFilter = '';
+    public string $dateFilter = '';
     public string $orderBy = 'created_at';
 
     public function mount($slug = null)
@@ -63,9 +68,24 @@ class Gallery extends Component
         }
 
         $images = $query->get();
-        $allGames = Game::has('images')->orderBy('title')->get();
+
+        $gamesWithImages = Game::has('images')->orderBy('title')->get();
+
+        $allGames = Game::orderBy('title')->get();
+
         $game = $this->game;
 
-        return view('livewire.vistas.gallery', compact('images', 'game', 'allGames'));
+        return view('livewire.vistas.gallery', compact('images', 'game', 'gamesWithImages', 'allGames'));
+    }
+
+    public function save()
+    {
+        $this->cimage->saveForm();
+        $this->dispatch('close-modal');
+    }
+
+    public function cancel()
+    {
+        $this->cimage->cancelForm();
     }
 }
