@@ -41,7 +41,7 @@
                     <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Mi Biblioteca</span>
                 </a>
 
-                <a href="/listas" wire:navigate
+                <a href="" wire:navigate
                     class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('listas*') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
                     :class="showNav ? 'gap-3 px-4' : 'justify-center'">
                     <x-icons.list class="size-5 shrink-0" />
@@ -57,8 +57,8 @@
 
                 <div class="h-px bg-gray-500 dark:border-gray-800/60 my-1"></div>
 
-                <a href="{{ route('allGames') }}" wire:navigate
-                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('allGames', 'showGame.*') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
+                <a href="{{ route('social') }}" wire:navigate
+                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('feedSocial') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
                     :class="showNav ? 'gap-3 px-4' : 'justify-center'">
                     <x-icons.social />
                     <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Social</span>
