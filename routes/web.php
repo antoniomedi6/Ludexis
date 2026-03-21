@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RoadmapController;
 use App\Livewire\Vistas\AllGames;
+use App\Livewire\Vistas\Gallery;
 use App\Livewire\Vistas\ShowGame;
 use App\Livewire\Vistas\WithLogin\Dashboard;
 use App\Livewire\Vistas\WithLogin\MyLibrary;
@@ -22,6 +23,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/myLibrary', MyLibrary::class)->name('library');
+    Route::get('/gallery', Gallery::class)->name('gallery');
 });
 
 Route::get('/allGames', AllGames::class)->name('allGames');

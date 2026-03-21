@@ -1,10 +1,7 @@
 <div class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 flex-1 flex flex-col h-screen max-h-screen overflow-hidden transition-colors duration-300"
     x-data="{ filtersOpen: false }">
 
-    <section
-        class="h-20 flex items-center justify-between px-8 shrink-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-        @livewire('utils.search-games')
-    </section>
+    <x-miscomponentes.search-header />
 
     <div x-show="filtersOpen" x-transition.opacity @click="filtersOpen = false"
         class="fixed inset-0 z-40 bg-gray-900/20 dark:bg-black/60 backdrop-blur-sm transition-colors duration-300"
@@ -129,10 +126,7 @@
         <div class="max-w-[1600px] mx-auto flex flex-col gap-8">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                 <div>
-                    <h1
-                        class="text-3xl font-black text-gray-900 dark:text-white tracking-tighter transition-colors duration-300">
-                        Explorar <span class="text-cyan-600 dark:text-cyan-500">Catálogo</span>
-                    </h1>
+                    <x-miscomponentes.title title1="Explorar" title2="Catálogo" />
                     <p class="text-sm text-gray-500 dark:text-gray-400 font-bold mt-1">
                         Mostrando <span class="text-gray-900 dark:text-white">{{ count($games) }}</span> títulos
                     </p>

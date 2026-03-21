@@ -1,18 +1,11 @@
 <div class="h-full flex flex-col bg-gray-50 dark:bg-[#0f1117] transition-colors duration-300">
     <div class="flex-1 flex flex-col h-full">
-        <section
-            class="h-20 flex items-center justify-between px-8 shrink-0 z-20 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-            @livewire('utils.search-games')
-        </section>
+        <x-miscomponentes.search-header />
 
         <section class="flex-1 overflow-y-auto px-4 md:px-8 py-8 relative hide-scrollbar">
             <div class="max-w-[1400px] mx-auto flex flex-col gap-10">
                 <div>
-                    <h1
-                        class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tighter mb-2 transition-colors duration-300">
-                        Resumen
-                        <span class="text-cyan-600 dark:text-cyan-500">General</span>
-                    </h1>
+                    <x-miscomponentes.title title1="Resumen" title2="General" />
                     <p class="text-gray-600 dark:text-gray-400 font-medium text-lg transition-colors duration-300">
                         Bienvenido de nuevo, Antonio. Tienes
                         <span

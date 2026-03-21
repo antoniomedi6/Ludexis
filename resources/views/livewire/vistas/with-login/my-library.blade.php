@@ -1,36 +1,13 @@
 <div
     class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans min-h-screen flex selection:bg-cyan-500 selection:text-white transition-colors duration-300 ">
     <div class="flex-1 flex flex-col h-full w-full">
-        <div
-            class="h-20 flex items-center justify-between px-8 shrink-0 z-30 sticky top-0 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-            <div class="flex-1 max-w-2xl relative group">
-                <i
-                    class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-cyan-600 dark:group-focus-within:text-cyan-500 transition-colors duration-300"></i>
-                @livewire('utils.search-games')
-            </div>
-            <div class="flex items-center gap-4 pl-4">
-                <button
-                    class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] transition-colors duration-300 relative bg-gray-50 dark:bg-[#151821] shadow-sm dark:shadow-none">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-                <button
-                    class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] transition-colors duration-300 relative bg-gray-50 dark:bg-[#151821] shadow-sm dark:shadow-none">
-                    <i class="fa-regular fa-bell"></i>
-                    <span
-                        class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-cyan-500 border-2 border-white dark:border-[#151821] transition-colors duration-300"></span>
-                </button>
-            </div>
-        </div>
+        <x-miscomponentes.search-header />
 
         <div class="flex-1 overflow-y-auto px-4 md:px-8 py-8 relative hide-scrollbar w-full">
             <div class="max-w-[1400px] mx-auto flex flex-col gap-8">
                 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div>
-                        <h1
-                            class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tighter mb-2 transition-colors duration-300">
-                            Mi
-                            <span class="text-cyan-600 dark:text-cyan-500">Biblioteca</span>
-                        </h1>
+                        <x-miscomponentes.title title1="Mi" title2="Biblioteca" />
                         <p class="text-gray-600 dark:text-gray-400 font-medium text-lg transition-colors duration-300">
                             Tienes un total de
                             <span

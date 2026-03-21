@@ -63,6 +63,12 @@
                     <x-icons.social />
                     <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Social</span>
                 </a>
+                <a href="{{ route('gallery') }}" wire:navigate
+                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('gallery', 'gallery') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
+                    :class="showNav ? 'gap-3 px-4' : 'justify-center'">
+                    <x-icons.gallery />
+                    <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Galería</span>
+                </a>
             </nav>
         </div>
     </div>
@@ -95,7 +101,7 @@
                             class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors duration-300 w-full text-left">
                             <i class="fa-solid fa-right-from-bracket text-sm w-4 text-center"></i> {{ __('Log Out') }}
                         </button>
-                    </form>x
+                    </form>
                 </div>
             </div>
 
