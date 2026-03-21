@@ -138,11 +138,14 @@
                         @endforeach
                         <div
                             class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-[#1a1d27] hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group">
-                            <span
-                                class="text-[10px] md:text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 flex items-center gap-2 transition-colors duration-300">
-                                <i class="fa-solid fa-images text-lg group-hover:scale-110 transition-transform"></i>
-                                Ver todas
-                            </span>
+                            <a href="{{ route('gallery', $game->slug) }}">
+                                <span
+                                    class="text-[10px] md:text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 flex items-center gap-2 transition-colors duration-300">
+                                    <i
+                                        class="fa-solid fa-images text-lg group-hover:scale-110 transition-transform"></i>
+                                    Ver todas
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>

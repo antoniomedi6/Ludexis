@@ -24,7 +24,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/myLibrary', MyLibrary::class)->name('library');
-    Route::get('/gallery', Gallery::class)->name('gallery');
+    //Route::get('/gallery', Gallery::class)->name('gallery');
+    Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
     Route::get('/feedSocial', FeedSocial::class)->name('social');
 
 });
