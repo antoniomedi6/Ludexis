@@ -19,10 +19,6 @@ class GameRegistryForm extends Form
 
     #[Validate('nullable|numeric|min:0|max:5')]
     public ?float $rating = null;
-    /* 
-        #[Validate('nullable|string|max:3000')]
-        public ?string $review = null;
-     */
     #[Validate('nullable|integer|min:0')]
     public ?int $hours_finish = 0;
 
@@ -44,7 +40,6 @@ class GameRegistryForm extends Form
             [
                 'status' => $this->status,
                 'rating' => $this->rating,
-                //'review' => $this->review,
                 'hours_finish' => $this->hours_finish,
                 'hours_completed' => $this->hours_completed,
                 'drop_reason' => $this->drop_reason,

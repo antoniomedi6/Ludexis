@@ -16,7 +16,7 @@ class SearchGames extends Component
         $games = collect();
 
         if (strlen($this->search) >= 2) {
-            $igdbGames = IGDBGame::where('name', 'like', '%' . $this->search . '%')
+            $igdbGames = IGDBGame::where('name', 'ilike', '%' . $this->search . '%')
                 ->orderBy('total_rating', 'desc')
                 ->select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'category'])
                 ->with(['cover' => ['image_id', 'url']])

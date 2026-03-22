@@ -39,7 +39,7 @@ class GameRegistryCard extends Component
     public function save()
     {
         $this->form->saveForm();
-
+        $this->dispatch('evtSaved');
         session()->flash('message', '¡Registro guardado con éxito!');
     }
 
