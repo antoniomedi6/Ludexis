@@ -188,12 +188,6 @@
                                                 class="text-[9px] bg-gray-800/80 text-gray-300 border border-gray-600 px-2 py-1 rounded-md font-bold uppercase tracking-wider">{{ $genre->name }}</span>
                                         @endforeach
                                     </div>
-                                    @auth
-                                        <button
-                                            class="w-full bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-black uppercase tracking-widest py-3 rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2">
-                                            <i class="fa-solid fa-plus text-sm"></i> Añadir
-                                        </button>
-                                    @endauth
                                 </div>
                             </div>
                         </div>

@@ -106,14 +106,6 @@
                                         @load="loaded = true" loading="lazy" decoding="async"
                                         class="w-full h-full object-cover block transition-transform duration-700"
                                         :class="(!'{{ $item->is_spoiler }}' || revealed) ? 'group-hover:scale-105' : ''" />
-
-                                    <div x-show="loaded" x-cloak
-                                        class="absolute top-4 right-4 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <button @click.stop=""
-                                            class="w-10 h-10 rounded-full bg-white/90 dark:bg-[#0f1117]/80 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-red-500 flex items-center justify-center transition shadow-md active:scale-90">
-                                            <i class="fa-solid fa-heart text-base"></i>
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <div class="p-5 flex flex-col justify-between flex-1 bg-white dark:bg-[#1a1d27]">

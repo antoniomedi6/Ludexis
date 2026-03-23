@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RoadmapController;
+use App\Livewire\Playground;
 use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
@@ -24,15 +25,13 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/myLibrary', MyLibrary::class)->name('library');
-    //Route::get('/gallery', Gallery::class)->name('gallery');
-    Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
     Route::get('/feedSocial', FeedSocial::class)->name('social');
-
 });
 
 Route::get('/allGames', AllGames::class)->name('allGames');
+Route::get('/playground', Playground::class)->name('playground');
 Route::get('/game/{game}', ShowGame::class)->name('games.show');
-
+Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
 Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
 
 /*

@@ -38,7 +38,7 @@
         </div>
     @endif
 
-    <a href="#"
+    <a href="{{ route('gallery') }}"
         class="w-full bg-gray-50 dark:bg-[#0f1117] hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-800 text-cyan-600 dark:text-cyan-400 font-bold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-xs mt-1">
         Explorar galería completa <i class="fa-solid fa-arrow-right"></i>
     </a>

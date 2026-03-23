@@ -212,5 +212,9 @@
             </div>
             <x-input-error for="form.hours_completed" />
         </div>
+
+        <x-button>
+            <x-icons.review class="size-6 mr-2" /> Escribir Reseña
+        </x-button>
     </div>
 </form>
