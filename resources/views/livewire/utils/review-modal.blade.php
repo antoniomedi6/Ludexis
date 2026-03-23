@@ -1,6 +1,6 @@
 <x-dialog-modal wire:model.live="modalOpen">
     <x-slot:title>
-        Escribe tu<span class="text-cyan-400">reseña</span>
+        Reseña
     </x-slot:title>
 
     <x-slot:content>
@@ -13,9 +13,10 @@
                 </div>
 
                 <div class="w-full md:w-2/3">
-                    <x-miscomponentes.textarea wire:model="review" rows="6"
+                    <x-miscomponentes.textarea class="h-full" wire:model="cform.review"
                         placeholder="¿Qué te ha parecido el juego?"></x-miscomponentes.textarea>
                 </div>
+                <x-input-error for="cform.review" />
             </div>
         @endif
     </x-slot:content>
@@ -25,7 +26,7 @@
             <x-icons.exit class="mr-1 size-4" /> Cancelar
         </x-danger-button>
 
-        <x-button class="ml-3" wire:click="save">
+        <x-button class="ml-1" wire:click="save">
             <x-icons.publish class="mr-1 size-4" /> Publicar Reseña
         </x-button>
     </x-slot:footer>

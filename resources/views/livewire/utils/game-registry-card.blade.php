@@ -42,12 +42,16 @@
                 :class="{ 'opacity-40 grayscale pointer-events-none': !status }">
                 <template x-for="i in 5">
                     <div class="relative w-8 h-8 cursor-pointer">
-                        <i class="fa-solid fa-star text-gray-200 dark:text-gray-800 absolute inset-0 text-3xl"></i>
+
+                        <x-icons.star
+                            class="text-gray-200 dark:text-gray-800 absolute inset-0 w-8 h-8 transition-colors duration-300" />
+
                         <div class="absolute inset-0 overflow-hidden pointer-events-none transition-all duration-150"
                             :style="`width: ${hoverRating ? (hoverRating >= i ? '100%' : (hoverRating == i - 0.5 ? '50%' : '0%')) : (rating >= i ? '100%' : (rating == i - 0.5 ? '50%' : '0%'))}`">
-                            <i
-                                class="fa-solid fa-star text-cyan-500 dark:text-cyan-400 text-3xl drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"></i>
+                            <x-icons.star
+                                class="text-cyan-500 dark:text-cyan-400 w-8 h-8 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
                         </div>
+
                         <div class="absolute left-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i - 0.5"
                             @mouseleave="hoverRating = 0"
                             @click="rating = i - 0.5; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
@@ -56,6 +60,7 @@
                             @mouseleave="hoverRating = 0"
                             @click="rating = i; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
                         </div>
+
                     </div>
                 </template>
             </div>
@@ -212,9 +217,9 @@
             </div>
             <x-input-error for="form.hours_completed" />
         </div>
-
         <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
-            <x-icons.review class="size-6 mr-2" /> Escribir Reseña
+            <x-icons.review class="size-6 mr-2" />
+            {{ $this->form->review ? 'Editar Reseña' : 'Escribir Reseña' }}
         </x-button>
     </div>
 </form>

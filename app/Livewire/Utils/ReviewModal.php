@@ -15,7 +15,7 @@ class ReviewModal extends Component
     public $game = null;
 
     #[On('evtOpenReviewModal')]
-    public function cargarModal($gameId)
+    public function loadModal($gameId)
     {
         $this->game = Game::find($gameId);
         $this->cform->game_id = $gameId;
@@ -24,7 +24,7 @@ class ReviewModal extends Component
             ->where('game_id', $gameId)
             ->first();
 
-        $this->cform->body = $data->review ?? '';
+        $this->cform->review = $data->review ?? '';
 
         $this->modalOpen = true;
     }
@@ -38,7 +38,7 @@ class ReviewModal extends Component
     {
         $this->cform->saveForm();
         $this->modalOpen = false;
-        $this->dispatch('notify', 'Reseña publicada');
+        $this->dispatch('notify', message: 'Reseña publicada', type: 'success');
     }
 
     public function cancel()

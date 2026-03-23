@@ -28,6 +28,7 @@ class GameRegistryCard extends Component
         if ($register) {
             $this->form->status = $register->status;
             $this->form->rating = $register->rating;
+            $this->form->review = $register->review;
             $this->form->hours_finish = $register->hours_finish;
             $this->form->hours_completed = $register->hours_completed;
             $this->form->drop_reason = $register->drop_reason;
@@ -40,7 +41,6 @@ class GameRegistryCard extends Component
     {
         $this->form->saveForm();
         $this->dispatch('evtSaved');
-        session()->flash('message', '¡Registro guardado con éxito!');
     }
 
     public function render()

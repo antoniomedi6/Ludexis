@@ -10,7 +10,7 @@ use Livewire\Form;
 class ReviewForm extends Form
 {
     #[Validate(['required', 'string', 'min:5', 'max:500'])]
-    public string $body = '';
+    public string $review = '';
 
     #[Validate(['required', 'integer', 'exists:games,id'])]
     public int $game_id;
@@ -30,7 +30,7 @@ class ReviewForm extends Form
             ->updateOrInsert(
                 ['user_id' => $user->id, 'game_id' => $this->game_id],
                 [
-                    'review' => $this->body,
+                    'review' => $this->review,
                     'weight_applied' => $weight,
                     'updated_at' => now(),
                 ]

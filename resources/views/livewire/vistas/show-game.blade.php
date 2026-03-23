@@ -53,8 +53,9 @@
                                     <span
                                         class="text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">{{ $game->rating ?? '-' }}</span>
                                     <span
-                                        class="text-sm text-cyan-600 dark:text-cyan-500 font-bold mb-1 transition-colors duration-300"><i
-                                            class="fa-solid fa-star"></i></span>
+                                        class="text-sm text-cyan-600 dark:text-cyan-500 font-bold mb-1 transition-colors duration-300">
+                                        <x-icons.star class="size-8" />
+                                    </span>
                                 </div>
                             </div>
                             <div class="w-px h-10 bg-gray-200 dark:bg-gray-800 transition-colors duration-300"></div>

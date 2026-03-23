@@ -121,20 +121,19 @@
                             {{ Auth::user()->name }}
                         </h2>
                         <span class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
-                            {{ Auth::user()->rank ?? 'Veterano' }}
+                            {{ Auth::user()->role ?? 'Default' }}
                         </span>
                     </div>
                 </div>
 
                 <div x-show="showNav" style="display: none;" class="space-y-1.5 whitespace-nowrap w-full">
                     <div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase tracking-wider">
-                        <span>XP: {{ Auth::user()->xp ?? 450 }}</span>
-                        <span>Nv. {{ Auth::user()->level ?? 12 }}</span>
+                        <span>XP: {{ Auth::user()->xp ?? 0 }}</span>
                     </div>
                     <div
                         class="w-full bg-gray-200 dark:bg-[#0f1117] rounded-full h-1.5 overflow-hidden border border-transparent dark:border-gray-800">
                         <div class="bg-gradient-to-r from-cyan-500 to-teal-400 h-full rounded-full transition-all duration-700"
-                            style="width: {{ Auth::user()->xp_percentage ?? 45 }}%"></div>
+                            style="width: {{ Auth::user()->xp ?? 45 }}%"></div>
                     </div>
                 </div>
             </button>

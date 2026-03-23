@@ -81,7 +81,8 @@ class Gallery extends Component
     public function save()
     {
         $this->cimage->saveForm();
-        $this->dispatch('close-modal');
+        $this->showingModal = false;
+        $this->dispatch('notify', message: 'Imagen Subida Correctamente', type: 'success');
     }
 
     public function cancel()

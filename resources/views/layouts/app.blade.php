@@ -50,6 +50,7 @@
     @stack('modals')
     @livewireScripts
     <x-miscomponentes.auth-modal />
+    <x-miscomponentes.alert />
 </body>
 
 </html>

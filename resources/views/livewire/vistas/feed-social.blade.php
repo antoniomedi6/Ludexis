@@ -17,158 +17,79 @@
     <x-slot>
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-10 w-full">
             <div class="xl:col-span-8 flex flex-col gap-8">
-                <div
-                    class="bg-white dark:bg-[#151821]/80 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 shadow-xl flex flex-col gap-4">
-                    <div class="flex gap-4 items-start">
-                        <div
-                            class="w-12 h-12 bg-gradient-to-tr from-cyan-600 to-teal-600 rounded-2xl flex justify-center items-center font-black shadow-lg border border-cyan-700/50 text-white shrink-0">
-                            A
-                        </div>
-                        <textarea placeholder="Comparte una captura, una opinión o un nuevo descubrimiento..."
-                            class="w-full bg-transparent text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-lg resize-none focus:outline-none h-14 hide-scrollbar pt-2"></textarea>
-                    </div>
-                    <div class="w-full h-px bg-gray-100 dark:bg-gray-800/80"></div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex gap-2">
-                            <button
-                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 font-bold text-xs uppercase tracking-widest transition">
-                                <i class="fa-solid fa-gamepad"></i> Vincular Juego
-                            </button>
-                            <button
-                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold text-xs uppercase tracking-widest transition">
-                                <i class="fa-regular fa-image"></i> Media
-                            </button>
-                        </div>
-                        <button
-                            class="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-8 py-3 rounded-xl transition shadow-[0_0_15px_rgba(6,182,212,0.3)] uppercase tracking-widest text-xs">
-                            Publicar
-                        </button>
-                    </div>
-                </div>
-
                 <div class="flex flex-col gap-8">
-                    <article
-                        class="bg-white dark:bg-[#151821]/80 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-[2rem] overflow-hidden shadow-xl hover:border-gray-300 dark:hover:border-gray-700 transition-colors flex flex-col">
-                        <div class="p-6 flex items-start gap-4">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co2lbd.jpg"
-                                class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-[#1a1d27] shadow-lg shrink-0" />
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-1">
-                                    <h3
-                                        class="text-base font-bold text-gray-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 cursor-pointer transition">
-                                        Sara_Gamer
-                                    </h3>
-                                    <span
-                                        class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">Hace
-                                        1h</span>
-                                </div>
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span
-                                        class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-500/30 px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">
-                                        Captura
-                                    </span>
-                                    <span
-                                        class="text-xs text-gray-500 dark:text-gray-400 font-medium flex items-center gap-1">
-                                        jugando a <strong
-                                            class="text-gray-900 dark:text-white cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">Cyberpunk
-                                            2077</strong>
-                                    </span>
-                                </div>
-                                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-4">
-                                    Night City de noche sigue siendo insuperable. El modo foto de este juego es una
-                                    trampa mortal para mi tiempo libre. 📸✨
-                                </p>
-                                <div class="grid grid-cols-2 gap-2 rounded-xl overflow-hidden mb-4">
-                                    <img src="https://images.igdb.com/igdb/image/upload/t_1080p/sc6qon.jpg"
-                                        class="w-full h-48 object-cover hover:scale-105 transition duration-500 cursor-pointer" />
-                                    <img src="https://images.igdb.com/igdb/image/upload/t_1080p/sc8c26.jpg"
-                                        class="w-full h-48 object-cover hover:scale-105 transition duration-500 cursor-pointer" />
-                                </div>
-                                <div
-                                    class="flex items-center gap-6 pt-4 border-t border-gray-100 dark:border-gray-800/50">
-                                    <button
-                                        class="flex items-center gap-2 text-gray-500 hover:text-red-500 dark:hover:text-red-400 transition font-black text-xs uppercase tracking-widest">
-                                        <i class="fa-solid fa-heart"></i> 256
-                                    </button>
-                                    <button
-                                        class="flex items-center gap-2 text-gray-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition font-black text-xs uppercase tracking-widest">
-                                        <i class="fa-solid fa-comment"></i> 45
-                                    </button>
-                                    <button
-                                        class="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:hover:text-white transition font-black text-xs uppercase tracking-widest ml-auto">
-                                        <i class="fa-solid fa-share-nodes"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article
-                        class="bg-white dark:bg-[#151821]/80 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-[2rem] overflow-hidden shadow-xl hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-                        <div class="p-6 flex items-start gap-4">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co1r7f.jpg"
-                                class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-[#1a1d27] shadow-lg shrink-0" />
-                            <div class="flex-1 flex flex-col">
-                                <div class="flex items-center justify-between mb-1">
-                                    <h3
-                                        class="text-base font-bold text-gray-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 cursor-pointer transition">
-                                        Alex99
-                                    </h3>
-                                    <span
-                                        class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">Hace
-                                        3h</span>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span
-                                        class="text-[10px] bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/30 px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">
-                                        Reseña
-                                    </span>
-                                </div>
-
-                                <div
-                                    class="bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-3xl p-5 mb-4 flex flex-col sm:flex-row gap-5 hover:border-gray-300 dark:hover:border-gray-700 transition cursor-pointer">
-                                    <img src="https://images.igdb.com/igdb/image/upload/t_1080p/co1q1f.jpg"
-                                        class="w-full sm:w-24 h-48 sm:h-36 object-cover rounded-xl shadow-lg shrink-0" />
-                                    <div class="flex flex-col justify-center">
-                                        <div class="flex justify-between items-start mb-2">
-                                            <h4 class="text-xl font-black text-gray-900 dark:text-white leading-tight">
-                                                Red Dead Redemption 2</h4>
-                                            <div
-                                                class="flex text-yellow-500 dark:text-yellow-400 text-xs bg-white dark:bg-[#151821] px-2 py-1 rounded border border-gray-200 dark:border-gray-800 shrink-0">
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                                    class="fa-solid fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
-                                            "Nunca había sentido un mundo tan vivo y unos personajes tan bien escritos.
-                                            La historia de Arthur Morgan es algo que todos deberían experimentar.
-                                            Insuperable en todos los aspectos técnicos y narrativos."
-                                        </p>
+                    @foreach ($userReviews as $item)
+                        <article
+                            class="bg-white dark:bg-[#151821]/80 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-[2rem] overflow-hidden shadow-xl hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+                            <div class="p-6 flex items-start gap-4">
+                                <img src="{{ $item->user->profile_photo_url }} "
+                                    class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-[#1a1d27] shadow-lg shrink-0" />
+                                <div class="flex-1 flex flex-col">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h3
+                                            class="text-base font-bold text-gray-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 cursor-pointer transition">
+                                            {{ $item->user->name }}
+                                        </h3>
+                                        <span
+                                            class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">
+                                            {{ $item->created_at->diffForHumans() }}
+                                        </span>
                                     </div>
-                                </div>
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span
+                                            class="text-[10px] bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/30 px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">
+                                            Reseña
+                                        </span>
+                                    </div>
 
-                                <div class="flex items-center gap-6 pt-2">
-                                    <button
-                                        class="flex items-center gap-2 text-red-500 transition font-black text-xs uppercase tracking-widest">
-                                        <i class="fa-solid fa-heart"></i> 142
-                                    </button>
-                                    <button
-                                        class="flex items-center gap-2 text-gray-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition font-black text-xs uppercase tracking-widest">
-                                        <i class="fa-solid fa-comment"></i> 12
-                                    </button>
-                                    <button
-                                        class="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:hover:text-white transition font-black text-xs uppercase tracking-widest ml-auto">
-                                        <i class="fa-solid fa-share-nodes"></i>
-                                    </button>
+                                    <a href="{{ route('games.show', $item->game->slug) }}"
+                                        class="bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-3xl p-5 mb-4 flex flex-col sm:flex-row gap-5 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-all duration-300 group shadow-sm hover:shadow-md cursor-pointer">
+
+                                        <img src="{{ $item->game->cover_url }}"
+                                            class="w-full sm:w-24 h-48 sm:h-36 object-cover rounded-xl shadow-lg shrink-0 group-hover:scale-[1.02] transition-transform duration-300" />
+
+                                        <div class="flex flex-1 justify-between items-start">
+
+                                            <div class="flex flex-col pr-4">
+                                                <h4
+                                                    class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2">
+                                                    {{ $item->game->title }}
+                                                </h4>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
+                                                    "{{ $item->review }}"
+                                                </p>
+                                            </div>
+
+                                            <div
+                                                class="flex items-center gap-1 text-yellow-500 dark:text-yellow-400 text-xs bg-white dark:bg-[#151821] px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm shrink-0 ml-2">
+                                                @php
+                                                    $stars = floor($item->rating / 2);
+                                                    $hasHalf = $item->rating / 2 - $stars >= 0.5;
+                                                @endphp
+
+                                                @for ($i = 0; $i < $stars; $i++)
+                                                    <x-icons.star class="w-3.5 h-3.5 text-cyan-500" />
+                                                @endfor
+
+                                                @if ($hasHalf)
+                                                    <x-icons.star half class="w-3.5 h-3.5 text-cyan-500" />
+                                                @endif
+
+                                                <span
+                                                    class="ml-1 font-bold text-gray-700 dark:text-gray-300">{{ number_format($item->rating / 2, 1) }}</span>
+                                            </div>
+
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    @endforeach
                 </div>
+
             </div>
 
-            <div class="xl:col-span-4 flex flex-col gap-8">
+            <aside class="xl:col-span-4 flex flex-col gap-8">
                 <div
                     class="bg-white dark:bg-[#151821]/80 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-2xl">
                     <h2
@@ -208,55 +129,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div
-                    class="bg-white dark:bg-[#151821]/80 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-2xl sticky top-4">
-                    <h2
-                        class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-user-plus text-cyan-600 dark:text-cyan-500"></i> A quién seguir
-                    </h2>
-                    <div class="flex flex-col gap-6">
-                        <div class="flex items-center justify-between group">
-                            <div class="flex items-center gap-3 cursor-pointer">
-                                <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co1tmu.jpg"
-                                    class="w-10 h-10 rounded-full object-cover border-2 border-transparent group-hover:border-cyan-500 transition-colors" />
-                                <div>
-                                    <h4
-                                        class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition">
-                                        RPG_Master
-                                    </h4>
-                                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Afín a tus
-                                        gustos</p>
-                                </div>
-                            </div>
-                            <button
-                                class="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500 dark:hover:border-cyan-500 transition flex items-center justify-center">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-between group">
-                            <div class="flex items-center gap-3 cursor-pointer">
-                                <div
-                                    class="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center font-black text-white border-2 border-transparent group-hover:border-cyan-500 transition-colors">
-                                    D
-                                </div>
-                                <div>
-                                    <h4
-                                        class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition">
-                                        DoomSlayer99
-                                    </h4>
-                                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Juega a
-                                        Shooters</p>
-                                </div>
-                            </div>
-                            <button
-                                class="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500 dark:hover:border-cyan-500 transition flex items-center justify-center">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </aside>
         </div>
     </x-slot>
 </x-miscomponentes.page-layout>
