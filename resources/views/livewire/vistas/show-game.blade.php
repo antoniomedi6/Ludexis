@@ -153,6 +153,7 @@
             <div class="lg:col-span-4">
                 @auth
                     @livewire('utils.game-registry-card', ['gameId' => $game->id])
+                    @livewire('utils.review-modal')
                 @endauth
             </div>
         </div>

@@ -213,7 +213,7 @@
             <x-input-error for="form.hours_completed" />
         </div>
 
-        <x-button>
+        <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
             <x-icons.review class="size-6 mr-2" /> Escribir Reseña
         </x-button>
     </div>

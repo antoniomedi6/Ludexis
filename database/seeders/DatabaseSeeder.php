@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
                 'xp' => 0,
                 'is_private' => false,
                 'banned_at' => null,
+                'email_verified_at' => now(),
             ]
         );
 

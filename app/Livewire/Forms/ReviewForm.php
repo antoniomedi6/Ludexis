@@ -17,29 +17,29 @@ class ReviewForm extends Form
 
     public function saveForm()
     {
-        $data = $this->validate();
+        $this->validate();
         $user = Auth::user();
 
-        $data['user_id'] = $user->id;
+        $weight = match ($user->role) {
+            'admin', 'journalist' => 3,
+            'veteran' => 1.5,
+            default => 1,
+        };
 
-        switch ($user->role) {
-            case 'admin':
-            case 'journalist':
-                $data['weight_applied'] = 3;
-                break;
-            case 'veteran':
-            case 'standard':
-            default:
-                $data['weight_applied'] = 1;
-                break;
-        }
+        DB::table('game_user')
+            ->updateOrInsert(
+                ['user_id' => $user->id, 'game_id' => $this->game_id],
+                [
+                    'review' => $this->body,
+                    'weight_applied' => $weight,
+                    'updated_at' => now(),
+                ]
+            );
+    }
 
-        $score = DB::table('game_user')
-            ->where('user_id', $user->id)
-            ->where('game_id', $this->game_id)
-            ->value('rating');
-
-        $data['score'] = $score ?? 0;
-
+    public function cancelForm()
+    {
+        $this->resetValidation();
+        $this->reset();
     }
 }

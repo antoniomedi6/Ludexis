@@ -21,16 +21,16 @@ class GameRegistryCard extends Component
         $this->form->game_id = $game->id;
         $this->form->user_id = Auth::id();
 
-        $registro = GameUser::where('user_id', Auth::id())
+        $register = GameUser::where('user_id', Auth::id())
             ->where('game_id', $game->id)
             ->first();
 
-        if ($registro) {
-            $this->form->status = $registro->status;
-            $this->form->rating = $registro->rating;
-            $this->form->hours_finish = $registro->hours_finish;
-            $this->form->hours_completed = $registro->hours_completed;
-            $this->form->drop_reason = $registro->drop_reason;
+        if ($register) {
+            $this->form->status = $register->status;
+            $this->form->rating = $register->rating;
+            $this->form->hours_finish = $register->hours_finish;
+            $this->form->hours_completed = $register->hours_completed;
+            $this->form->drop_reason = $register->drop_reason;
         } else {
             $this->form->status = null;
         }

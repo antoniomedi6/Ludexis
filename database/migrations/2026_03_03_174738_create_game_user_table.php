@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('status')->default('pending');
             $table->text('review')->nullable();
-            $table->decimal('weight_applied');
+            $table->decimal('weight_applied')->default(1);
             $table->integer('hours_finish')->default(0);
             $table->integer('hours_completed')->default(0);
             $table->decimal('rating')->default(0)->nullable();

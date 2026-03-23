@@ -2,27 +2,47 @@
 
 namespace App\Livewire\Utils;
 
+use App\Livewire\Forms\ReviewForm;
 use App\Models\Game;
+use App\Models\GameUser;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ReviewModal extends Component
 {
-
-    public $gameId = null;
+    public ReviewForm $cform;
     public $modalOpen = false;
     public $game = null;
+
+    #[On('evtOpenReviewModal')]
+    public function cargarModal($gameId)
+    {
+        $this->game = Game::find($gameId);
+        $this->cform->game_id = $gameId;
+
+        $data = GameUser::where('user_id', auth()->id())
+            ->where('game_id', $gameId)
+            ->first();
+
+        $this->cform->body = $data->review ?? '';
+
+        $this->modalOpen = true;
+    }
+
     public function render()
     {
         return view('livewire.utils.review-modal');
     }
 
-    #[On('evtOpenReviewModal')]
-    public function cargarModal(?int $gameId = null)
+    public function save()
     {
-        $this->gameId = $gameId;
-        $this->game = Game::find($gameId);
-        $this->modalOpen = true;
+        $this->cform->saveForm();
+        $this->modalOpen = false;
+        $this->dispatch('notify', 'Reseña publicada');
     }
 
+    public function cancel()
+    {
+        $this->cform->cancelForm();
+    }
 }
