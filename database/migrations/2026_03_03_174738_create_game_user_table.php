@@ -12,7 +12,9 @@ return new class extends Migration {
     {
         Schema::create('game_user', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->default('Pendiente');
+            $table->string('status')->default('pending');
+            $table->text('review')->nullable();
+            $table->decimal('weight_applied');
             $table->integer('hours_finish')->default(0);
             $table->integer('hours_completed')->default(0);
             $table->decimal('rating')->default(0)->nullable();

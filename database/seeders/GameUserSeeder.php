@@ -26,6 +26,16 @@ class GameUserSeeder extends Seeder
 
             foreach ($randomGames as $game) {
                 $user->games()->attach($game->id, [
+                    'review' => fake()->boolean(70) ? fake()->realTextBetween() : null,
+                    'weight_applied' => match ($user->role) {
+                        'admin', 'journalist' => 3,
+                        'veteran' => 1.5,
+                        default => 1,
+                    },
+                    'rating' => fake()->numberBetween(1, 10),
+                    'status' => fake()->randomElement(['pending', 'abandoned', 'finish', 'completed', 'multiplayer', 'paused', 'playing']),
+                    'drop_reason' => fake()->optional(0.3)->sentence(),
+                    'hours_finish' => fake()->randomFloat(2, 0, 100),
                     'created_at' => now()->subDays(rand(0, 6)),
                     'updated_at' => now()->subDays(rand(0, 6)),
                 ]);

@@ -45,12 +45,12 @@
 
                     <span
                         class="text-xl font-black text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-lg border border-indigo-200 dark:border-indigo-500/30 transition-colors duration-300">
-                        {{ $item->score }}
+                        {{ $item->rating }}
                     </span>
                 </div>
 
                 <p class="text-sm text-gray-700 dark:text-gray-300 italic transition-colors duration-300">
-                    "{{ $item->body }}"
+                    "{{ $item->review }}"
                 </p>
             </div>
         </div>

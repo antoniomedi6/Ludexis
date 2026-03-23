@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
@@ -42,6 +41,5 @@ class ReviewForm extends Form
 
         $data['score'] = $score ?? 0;
 
-        Review::create($data);
     }
 }
