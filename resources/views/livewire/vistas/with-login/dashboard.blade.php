@@ -52,96 +52,64 @@
                     </button>
                 </section>
 
-                <section>
-                    <h2
-                        class="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-3 transition-colors duration-300">
-                        <div class="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_#06b6d4] animate-pulse"></div>
-                        Activos en este momento
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div
-                            class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl shadow-xl flex flex-col overflow-hidden transition-colors duration-300 group cursor-pointer">
-                            <div class="relative h-40 w-full overflow-hidden">
-                                <img src="https://images.igdb.com/igdb/image/upload/t_1080p/sc8c26.jpg"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-80">
-                                </div>
-                                <div class="absolute bottom-4 left-4 flex gap-2">
-                                    <span
-                                        class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
-                                        <i class="fa-brands fa-windows mr-1"></i> PC
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3
-                                        class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
-                                        The Witcher 3: Wild Hunt</h3>
-                                    <p
-                                        class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors duration-300">
-                                        <i class="fa-regular fa-clock text-cyan-600 dark:text-cyan-500"></i> 45 hrs
-                                        jugadas
-                                    </p>
-                                </div>
-                                <div class="mt-4">
-                                    <div
-                                        class="flex justify-between text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-widest transition-colors duration-300">
-                                        <span>Progreso</span>
-                                        <span class="text-gray-900 dark:text-white">65%</span>
-                                    </div>
-                                    <div
-                                        class="w-full bg-gray-100 dark:bg-[#0f1117] rounded-full h-1.5 border border-gray-200 dark:border-gray-800 transition-colors duration-300">
-                                        <div class="bg-cyan-500 h-1.5 rounded-full shadow-sm dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]"
-                                            style="width: 65%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                @php
+                    $activeGames = $userGames->where('pivot.status', 'playing')->take(2);
+                @endphp
 
-                        <div
-                            class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl shadow-xl flex flex-col overflow-hidden transition-colors duration-300 group cursor-pointer">
-                            <div class="relative h-40 w-full overflow-hidden">
-                                <img src="https://images.igdb.com/igdb/image/upload/t_1080p/sc6qon.jpg"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                @if ($activeGames->isNotEmpty())
+                    <section>
+                        <h2
+                            class="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-3 transition-colors duration-300">
+                            <div class="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_#06b6d4] animate-pulse"></div>
+                            Activos en este momento
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            @foreach ($activeGames as $game)
                                 <div
-                                    class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-80">
-                                </div>
-                                <div class="absolute bottom-4 left-4 flex gap-2">
-                                    <span
-                                        class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
-                                        <i class="fa-brands fa-playstation mr-1"></i> PS5
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3
-                                        class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
-                                        Cyberpunk 2077</h3>
-                                    <p
-                                        class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors duration-300">
-                                        <i class="fa-regular fa-clock text-cyan-600 dark:text-cyan-500"></i> 12 hrs
-                                        jugadas
-                                    </p>
-                                </div>
-                                <div class="mt-4">
-                                    <div
-                                        class="flex justify-between text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-widest transition-colors duration-300">
-                                        <span>Progreso</span>
-                                        <span class="text-gray-900 dark:text-white">25%</span>
+                                    class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl shadow-xl flex flex-col overflow-hidden transition-colors duration-300 group cursor-pointer">
+
+                                    <div class="relative h-40 w-full overflow-hidden">
+                                        <img src="{{ $game->cover_url }}"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-80">
+                                        </div>
+                                        <div class="absolute bottom-4 left-4 flex gap-2">
+                                            <span
+                                                class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
+                                                <i class="fa-brands fa-windows mr-1"></i> PC
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div
-                                        class="w-full bg-gray-100 dark:bg-[#0f1117] rounded-full h-1.5 border border-gray-200 dark:border-gray-800 transition-colors duration-300">
-                                        <div class="bg-cyan-500 h-1.5 rounded-full shadow-sm dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]"
-                                            style="width: 25%"></div>
+
+                                    <div class="p-6 flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <h3
+                                                class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
+                                                {{ $game->title }}
+                                            </h3>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <div
+                                                class="flex justify-between text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-widest transition-colors duration-300">
+                                                <span>Progreso</span>
+                                                <span class="text-gray-900 dark:text-white">65%</span>
+                                            </div>
+                                            <div
+                                                class="w-full bg-gray-100 dark:bg-[#0f1117] rounded-full h-1.5 border border-gray-200 dark:border-gray-800 transition-colors duration-300">
+                                                <div class="bg-cyan-500 h-1.5 rounded-full shadow-sm dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]"
+                                                    style="width: 65%"></div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    </div>
-                </section>
+                    </section>
+                @endif
 
                 <section>
                     <div class="flex items-center justify-between mb-6">

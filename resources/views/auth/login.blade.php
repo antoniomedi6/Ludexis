@@ -69,6 +69,10 @@
                         </div>
 
                         <div class="relative">
+                            <div class="flex justify-between items-center mb-1 ml-1">
+                                <x-label for="password" value="{{ __('Password') }}"
+                                    class="text-gray-400 text-[10px] font-black uppercase tracking-widest" />
+                            </div>
                             <div class="relative">
                                 <i
                                     class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
@@ -77,9 +81,14 @@
                                     type="password" name="password" required autocomplete="current-password"
                                     placeholder="••••••••" />
                             </div>
-                            <div class="flex justify-between items-center mb-1 ml-1">
-                                <x-label for="password" value="{{ __('Password') }}"
-                                    class="text-gray-400 text-[10px] font-black uppercase tracking-widest" />
+                            <div class="flex justify-between mt-3">
+                                <div class="flex">
+                                    <x-checkbox id="remember_me" name="remember"
+                                        class="bg-[#0f1117] border-gray-700 text-cyan-500 focus:ring-cyan-500 rounded cursor-pointer" />
+                                    <span
+                                        class="ms-2 text-xs text-gray-500 font-bold uppercase tracking-wider cursor-pointer select-none"
+                                        onclick="document.getElementById('remember_me').click()">{{ __('Remember me') }}</span>
+                                </div>
                                 @if (Route::has('password.request'))
                                     <a class="text-[10px] text-cyan-500 font-black uppercase tracking-widest hover:text-cyan-400 transition"
                                         href="{{ route('password.request') }}">
@@ -87,14 +96,6 @@
                                     </a>
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="flex items-center mt-1">
-                            <x-checkbox id="remember_me" name="remember"
-                                class="bg-[#0f1117] border-gray-700 text-cyan-500 focus:ring-cyan-500 rounded cursor-pointer" />
-                            <span
-                                class="ms-2 text-xs text-gray-500 font-bold uppercase tracking-wider cursor-pointer select-none"
-                                onclick="document.getElementById('remember_me').click()">{{ __('Remember me') }}</span>
                         </div>
 
                         <div class="flex flex-col mt-4">

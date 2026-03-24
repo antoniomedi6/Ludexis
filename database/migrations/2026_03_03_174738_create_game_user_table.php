@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->decimal('weight_applied')->default(1);
             $table->integer('hours_finish')->default(0);
             $table->integer('hours_completed')->default(0);
-            $table->decimal('rating')->default(0)->nullable();
+            $table->decimal('rating')->nullable();
             $table->string('drop_reason')->nullable();
             $table->foreignId('game_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

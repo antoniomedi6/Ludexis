@@ -35,8 +35,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(GameUserSeeder::class);
 
-        /* Storage::deleteDirectory('images/gameCovers');
-                Storage::createDirectory('images/gameCovers'); */
+        /* 
+        Storage::deleteDirectory('images/gameCovers');
+        Storage::createDirectory('images/gameCovers'); 
+        */
+
         Storage::deleteDirectory('images/userImages/');
         Storage::createDirectory('images/userImages/');
 

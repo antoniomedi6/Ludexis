@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Vistas\WithLogin;
 
-use App\Models\Game;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 

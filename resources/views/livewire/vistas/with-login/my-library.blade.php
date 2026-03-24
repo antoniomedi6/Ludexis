@@ -101,26 +101,28 @@
 
                         {{-- Estrellas y Plataforma --}}
                         <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                            <div class="flex items-center gap-1">
-                                @if ($rating > 0)
-                                    <div
-                                        class="flex text-cyan-500 dark:text-cyan-400 text-sm drop-shadow-md {{ $isPending || $isAbandoned ? 'opacity-50' : '' }}">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($rating >= $i)
-                                                <i class="fa-solid fa-star"></i>
-                                            @elseif ($rating >= $i - 0.5)
-                                                <i class="fa-solid fa-star-half-stroke"></i>
-                                            @else
-                                                <i class="fa-regular fa-star opacity-30"></i>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                @else
-                                    <span
-                                        class="text-[10px] font-bold text-white/70 uppercase tracking-wider drop-shadow-md">
-                                        Sin valorar
-                                    </span>
+                            <div class="flex gap-0.5 text-cyan-500 dark:text-cyan-400 drop-shadow-md">
+                                @php
+                                    $rating_5 = $rating / 2;
+                                    $fullStars = floor($rating_5);
+                                    $hasHalf = $rating_5 - $fullStars >= 0.5;
+                                    $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
+                                @endphp
+
+                                {{-- Estrellas Completas --}}
+                                @for ($i = 0; $i < $fullStars; $i++)
+                                    <x-icons.star class="w-3.5 h-3.5 fill-current" />
+                                @endfor
+
+                                {{-- Media Estrella --}}
+                                @if ($hasHalf)
+                                    <x-icons.star half class="w-3.5 h-3.5 fill-current" />
                                 @endif
+
+                                {{-- Estrellas Vacías (Translucidas) --}}
+                                @for ($i = 0; $i < $emptyStars; $i++)
+                                    <x-icons.star class="w-3.5 h-3.5 opacity-30 fill-current" />
+                                @endfor
                             </div>
                             <span
                                 class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">

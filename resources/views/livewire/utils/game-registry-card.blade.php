@@ -47,18 +47,18 @@
                             class="text-gray-200 dark:text-gray-800 absolute inset-0 w-8 h-8 transition-colors duration-300" />
 
                         <div class="absolute inset-0 overflow-hidden pointer-events-none transition-all duration-150"
-                            :style="`width: ${hoverRating ? (hoverRating >= i ? '100%' : (hoverRating == i - 0.5 ? '50%' : '0%')) : (rating >= i ? '100%' : (rating == i - 0.5 ? '50%' : '0%'))}`">
+                            :style="`width: ${hoverRating ? (hoverRating >= i * 2 ? '100%' : (hoverRating == i * 2 - 1 ? '50%' : '0%')) : (rating >= i * 2 ? '100%' : (rating == i * 2 - 1 ? '50%' : '0%'))}`">
                             <x-icons.star
                                 class="text-cyan-500 dark:text-cyan-400 w-8 h-8 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
                         </div>
 
-                        <div class="absolute left-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i - 0.5"
+                        <div class="absolute left-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i * 2 - 1"
                             @mouseleave="hoverRating = 0"
-                            @click="rating = i - 0.5; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
+                            @click="rating = i * 2 - 1; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
                         </div>
-                        <div class="absolute right-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i"
+                        <div class="absolute right-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i * 2"
                             @mouseleave="hoverRating = 0"
-                            @click="rating = i; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
+                            @click="rating = i * 2; $wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })">
                         </div>
 
                     </div>
@@ -68,7 +68,7 @@
             <div class="h-6 flex items-center justify-center">
                 <span
                     class="text-xs font-black text-cyan-600 dark:text-cyan-400 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg shadow-sm"
-                    x-show="rating > 0 && status" x-text="Number(rating).toFixed(1) + ' / 5.0'"></span>
+                    x-show="rating > 0 && status" x-text="Number(rating) + ' / 10'"></span>
 
                 <span class="text-xs font-bold text-gray-400 dark:text-gray-600"
                     x-show="(!rating || rating === 0) && status">Sin valorar</span>
@@ -219,7 +219,7 @@
         </div>
         <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
             <x-icons.review class="size-6 mr-2" />
-            {{ $this->form->review ? 'Editar Reseña' : 'Escribir Reseña' }}
+            Escribir Reseña
         </x-button>
     </div>
 </form>
