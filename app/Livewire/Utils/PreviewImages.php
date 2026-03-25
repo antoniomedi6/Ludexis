@@ -8,16 +8,16 @@ use Livewire\Component;
 
 class PreviewImages extends Component
 {
-    public $gameId;
+    public ?string $gameSlug = null;
 
-    public function mount(?int $gameId = null)
+    public function mount(?string $gameSlug = null)
     {
-        $this->gameId = $gameId;
+        $this->gameSlug = $gameSlug;
     }
 
     public function render()
     {
-        if (!$this->gameId) {
+        if (!$this->gameSlug) {
             $images = Cache::remember('last_images_global', 300, function () {
                 return Image::with(['user:id,name,profile_photo_path'])
                     ->where('is_spoiler', false)
@@ -26,10 +26,12 @@ class PreviewImages extends Component
                     ->get(['id', 'user_id', 'game_id', 'image_path', 'created_at']);
             });
         } else {
-            $images = Cache::remember('last_images_game_' . $this->gameId, 300, function () {
+            $images = Cache::remember('last_images_game_' . $this->gameSlug, 300, function () {
                 return Image::with(['user:id,name,profile_photo_path'])
                     ->where('is_spoiler', false)
-                    ->where('game_id', $this->gameId)
+                    ->whereHas('game', function ($query) {
+                        $query->where('slug', $this->gameSlug);
+                    })
                     ->latest()
                     ->limit(7)
                     ->get(['id', 'user_id', 'game_id', 'image_path', 'created_at']);

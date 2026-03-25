@@ -1,3 +1,3 @@
 <div>
-    @livewire('utils.review-modal')
+    @livewire('utils.preview-images', [74])
 </div>

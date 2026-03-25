@@ -160,7 +160,7 @@
                     @livewire('utils.review-modal')
                 @endauth
                 <div class="mt-14">
-                    @livewire('utils.preview-images')
+                    @livewire('utils.preview-images', ['gameSlug' => $game->slug])
                 </div>
             </div>
         </div>

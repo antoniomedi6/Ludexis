@@ -9,7 +9,6 @@
         <span
             class="text-[10px] text-gray-500 dark:text-gray-400 font-bold transition-colors duration-300">Comunidad</span>
     </div>
-
     @if ($images->isNotEmpty())
         <div
             class="relative w-full aspect-video rounded-xl overflow-hidden group cursor-pointer border border-gray-200 dark:border-gray-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-colors duration-300 shadow-sm hover:shadow-md">
@@ -39,9 +38,18 @@
                 </div>
             @endforeach
         </div>
+    @else
+        <div
+            class="flex flex-col items-center justify-center py-10 px-4 bg-gray-50 dark:bg-[#0f1117] border-2 border-gray-200 dark:border-gray-800 rounded-xl transition-colors duration-300">
+            <i class="fa-regular fa-images text-3xl text-gray-300 dark:text-gray-700 mb-3"></i>
+            <span class="text-xs font-bold text-gray-500 dark:text-gray-400 text-center">
+                {{ $gameSlug ? 'Aún no hay capturas de este juego.' : 'Aún no hay capturas.' }}
+            </span>
+            <span class="text-[10px] text-gray-400 dark:text-gray-600 mt-1">¡Sé el primero en compartir una!</span>
+        </div>
     @endif
 
-    <a href="{{ route('gallery') }}"
+    <a href="{{ $gameSlug ? route('gallery', $gameSlug) : route('gallery') }}"
         class="group w-full bg-gray-50 dark:bg-[#0f1117] hover:bg-cyan-50 dark:hover:bg-cyan-900/20 border border-gray-200 dark:border-gray-800 hover:border-cyan-200 dark:hover:border-cyan-800/50 text-cyan-600 dark:text-cyan-400 font-bold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-xs mt-1">
         Explorar galería completa
         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>

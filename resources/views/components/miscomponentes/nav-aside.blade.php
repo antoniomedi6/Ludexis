@@ -1,8 +1,13 @@
-<aside x-data="{ showNav: localStorage.getItem('showNav') !== 'false' }" x-init="$watch('showNav', value => localStorage.setItem('showNav', value))" :class="showNav ? 'w-64' : 'w-24'"
-    class="bg-white dark:bg-[#151821] border-r border-gray-200 dark:border-gray-800 flex flex-col justify-between shrink-0 z-50 h-screen transition-all duration-300 relative overflow-hidden">
+{{-- Fondo oscuro para cerrar al tocar fuera (Visible en móvil/tablet) --}}
+<div x-show="showNav" @click="showNav = false"
+    class="fixed inset-0 bg-[#0f1117]/80 backdrop-blur-sm z-40 lg:hidden transition-opacity" x-transition.opacity
+    style="display: none;"></div>
+
+<aside x-data="{ showNav: window.innerWidth < 1024 ? false : localStorage.getItem('showNav') !== 'false' }" x-init="$watch('showNav', value => { if (window.innerWidth >= 1024) localStorage.setItem('showNav', value) })" @resize.window="if(window.innerWidth < 1024) showNav = false"
+    :class="showNav ? 'translate-x-0 w-64' : '-translate-x-full w-64 lg:translate-x-0 lg:w-24'"
+    class="bg-white dark:bg-[#151821] border-r border-gray-200 dark:border-gray-800 flex flex-col justify-between z-50 h-screen transition-all duration-300 fixed lg:relative top-0 left-0 lg:shrink-0">
 
     <div class="w-full overflow-hidden">
-
         <div class="p-6 border-b border-gray-100 dark:border-gray-800/60 flex transition-all duration-300"
             :class="showNav ? 'flex-row items-center justify-between' : 'flex-col items-center gap-6'">
 
@@ -63,8 +68,9 @@
                     <x-icons.social />
                     <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Social</span>
                 </a>
+
                 <a href="{{ route('gallery') }}" wire:navigate
-                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('gallery', 'gallery') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
+                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 {{ request()->is('gallery') ? 'bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1d27] border border-transparent' }}"
                     :class="showNav ? 'gap-3 px-4' : 'justify-center'">
                     <x-icons.gallery />
                     <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Galería</span>
@@ -85,7 +91,7 @@
                 x-transition:leave-start="opacity-100 translate-x-0 scale-100"
                 x-transition:leave-end="opacity-0 -translate-x-4 scale-95" style="display: none;"
                 class="fixed bottom-6 w-48 bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300"
-                :class="showNav ? 'left-[17rem]' : 'left-[7rem]'">
+                :class="showNav ? 'left-4 lg:left-[17rem]' : 'left-4 lg:left-[7rem]'">
 
                 <div class="p-2 flex flex-col gap-1">
                     <a href="{{ route('profile.show') }}" wire:navigate
@@ -109,7 +115,7 @@
                 class="block p-6 w-full text-left hover:bg-gray-100 dark:hover:bg-[#1a1d27] transition-all duration-300 cursor-pointer group focus:outline-none"
                 :class="showProfileOptions ? 'bg-gray-100 dark:bg-[#1a1d27]' : ''">
 
-                <div class="flex items-center" :class="showNav ? 'gap-3 mb-4' : 'justify-center mb-0'">
+                <div class="flex items-center" :class="showNav ? 'gap-3 mb-4' : 'justify-center mb-0 lg:justify-center'">
                     <div
                         class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-teal-500 rounded-full flex justify-center items-center font-black shadow-md border-2 border-white dark:border-[#151821] text-white shrink-0 uppercase group-hover:scale-110 transition-transform duration-300">
                         {{ substr(Auth::user()->name, 0, 1) }}
