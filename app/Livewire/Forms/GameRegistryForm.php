@@ -17,7 +17,7 @@ class GameRegistryForm extends Form
     #[Validate('required|string|in:pending,playing,finish,completed,paused,abandoned,multiplayer')]
     public ?string $status = null;
 
-    #[Validate('nullable|numeric|min:0|max:5')]
+    #[Validate('nullable|numeric|min:0|max:10')]
     public ?float $rating = null;
     #[Validate('nullable|integer|min:0')]
     public ?int $hours_finish = 0;
