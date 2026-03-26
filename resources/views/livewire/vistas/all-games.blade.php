@@ -1,48 +1,44 @@
-<div x-data="{ filtersOpen: false }" class="w-full">
+<div class="w-full">
+    <x-miscomponentes.page-layout title1="Explorar" title2="Catálogo" :subtitle="'Mostrando ' . count($games) . ' títulos'" :full-width="false">
 
-    <template x-teleport="body">
-        <div>
-            <div x-show="filtersOpen" x-transition.opacity @click="filtersOpen = false"
-                class="fixed inset-0 z-[100] bg-gray-900/60 dark:bg-black/80 backdrop-blur-sm" x-cloak>
-            </div>
+        <x-slot:aside>
+            <div class="flex items-center gap-4">
 
-            <aside x-cloak wire:ignore :class="filtersOpen ? 'translate-x-0' : 'translate-x-full'"
-                class="fixed inset-y-0 right-0 z-[110] w-full sm:w-80 bg-white dark:bg-[#151821] border-l border-gray-200 dark:border-gray-800 overflow-y-auto transition-transform duration-300 shadow-2xl flex flex-col translate-x-full custom-scrollbar">
-                <div class="p-6 md:p-8 flex-1">
-                    <div
-                        class="flex items-center justify-between mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <h2 class="font-black text-gray-900 dark:text-white text-xl tracking-tight">Filtros</h2>
-                        <div class="flex items-center gap-4">
+                <div class="relative" x-data="{ filtersOpen: false }">
+                    <button @click="filtersOpen = !filtersOpen"
+                        class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-xs uppercase tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm">
+                        <i class="fa-solid fa-filter text-cyan-600 dark:text-cyan-500"></i> Filtros
+                    </button>
+
+                    <div x-show="filtersOpen" @click.away="filtersOpen = false" x-transition.opacity
+                        class="absolute right-0 sm:left-0 sm:right-auto top-full mt-3 w-80 sm:w-96 max-h-[80vh] overflow-y-auto custom-scrollbar bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl z-[100] p-6 flex flex-col gap-6"
+                        x-cloak>
+
+                        <div
+                            class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-4 shrink-0">
+                            <h2 class="font-black text-gray-900 dark:text-white text-lg tracking-tight">Filtros</h2>
                             <button wire:click="clearFilters" @click="filtersOpen = false"
-                                class="text-[10px] font-black text-cyan-600 dark:text-cyan-500 uppercase hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors">Limpiar</button>
-                            <button @click="filtersOpen = false"
-                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-[#1a1d27] text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
+                                class="text-[10px] font-black text-cyan-600 uppercase tracking-widest hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors">Limpiar</button>
                         </div>
-                    </div>
 
-                    <div class="space-y-10">
                         <div x-data="{ searchPlat: '' }">
-                            <h3
-                                class="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-gray-400 mb-4">
-                                Plataforma</h3>
-                            <div class="relative mb-4">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-3">Plataforma</h3>
+                            <div class="relative mb-3">
                                 <i
-                                    class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xs"></i>
+                                    class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xs"></i>
                                 <input type="text" x-model="searchPlat" placeholder="Buscar plataforma..."
-                                    class="w-full bg-gray-100 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-10 pr-4 py-3 text-xs font-bold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors placeholder-gray-500 shadow-inner" />
+                                    class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-lg pl-9 pr-3 py-2 text-xs font-bold text-gray-900 dark:text-white focus:ring-cyan-500 transition-colors shadow-inner">
                             </div>
-                            <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar">
                                 @foreach ($allPlatforms as $platform)
                                     <label
                                         x-show="searchPlat === '' || '{{ strtolower($platform->name) }}'.includes(searchPlat.toLowerCase())"
-                                        class="flex items-center gap-3 cursor-pointer group">
+                                        class="flex items-center gap-2.5 cursor-pointer group">
                                         <input type="checkbox" value="{{ $platform->id }}"
                                             wire:model.live="platformsFilter"
-                                            class="w-4 h-4 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-[#0f1117] text-cyan-600 focus:ring-cyan-500 transition-colors cursor-pointer" />
+                                            class="w-4 h-4 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-[#0f1117] text-cyan-600 focus:ring-cyan-500 transition-colors cursor-pointer">
                                         <span
-                                            class="text-sm font-bold text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:hover:text-white transition-colors">
+                                            class="text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                                             {{ $platform->name }}
                                         </span>
                                     </label>
@@ -51,9 +47,8 @@
                         </div>
 
                         <div x-data="{ nota: @entangle('minRatingFilter') }">
-                            <h3
-                                class="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-gray-400 mb-4">
-                                Nota LUDEXIS Mínima</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-3">Nota LUDEXIS
+                                Mínima</h3>
                             <div class="px-2">
                                 <input type="range" min="0" max="100"
                                     wire:model.live.debounce.300ms="minRatingFilter"
@@ -68,27 +63,26 @@
                         </div>
 
                         <div x-data="{ expanded: false }">
-                            <h3
-                                class="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-gray-400 mb-4">
-                                Géneros</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-3">Géneros</h3>
                             <div class="flex flex-wrap gap-2">
                                 @foreach ($topGenres as $genre)
                                     <label class="cursor-pointer group">
                                         <input type="checkbox" value="{{ $genre->id }}"
                                             wire:model.live="genresFilter" class="hidden peer" />
                                         <div
-                                            class="bg-gray-100 dark:bg-[#1a1d27] text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 px-4 py-2 rounded-xl text-xs font-bold transition-all peer-checked:bg-cyan-600 peer-checked:text-white peer-checked:border-cyan-500 shadow-sm">
+                                            class="bg-gray-100 dark:bg-[#1a1d27] text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all peer-checked:bg-cyan-600 peer-checked:text-white peer-checked:border-cyan-500 shadow-sm">
                                             {{ $genre->name }}
                                         </div>
                                     </label>
                                 @endforeach
+
                                 <div x-show="expanded" x-collapse class="flex flex-wrap gap-2 mt-1 w-full">
                                     @foreach ($otherGenres as $genre)
                                         <label class="cursor-pointer group">
                                             <input type="checkbox" value="{{ $genre->id }}"
                                                 wire:model.live="genresFilter" class="hidden peer" />
                                             <div
-                                                class="bg-gray-100 dark:bg-[#1a1d27] text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 px-4 py-2 rounded-xl text-xs font-bold transition-all peer-checked:bg-cyan-600 peer-checked:text-white peer-checked:border-cyan-500 shadow-sm">
+                                                class="bg-gray-100 dark:bg-[#1a1d27] text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all peer-checked:bg-cyan-600 peer-checked:text-white peer-checked:border-cyan-500 shadow-sm">
                                                 {{ $genre->name }}
                                             </div>
                                         </label>
@@ -96,33 +90,27 @@
                                 </div>
                             </div>
                             <button @click="expanded = !expanded"
-                                class="mt-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-cyan-600 transition-colors flex items-center gap-2 focus:outline-none">
+                                class="mt-3 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-cyan-600 transition-colors flex items-center gap-2 focus:outline-none">
                                 <span x-text="expanded ? 'Mostrar menos' : 'Mostrar todos'"></span>
                                 <i class="fa-solid fa-chevron-down transition-transform"
                                     :class="expanded ? 'rotate-180' : ''"></i>
                             </button>
                         </div>
+
                     </div>
                 </div>
-            </aside>
-        </div>
-    </template>
 
-    <x-miscomponentes.page-layout title1="Explorar" title2="Catálogo" :subtitle="'Mostrando ' . count($games) . ' títulos'" :full-width="false">
-        <x-slot:aside>
-            <button @click="filtersOpen = true"
-                class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-xs uppercase tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm">
-                <i class="fa-solid fa-filter text-cyan-600 dark:text-cyan-500"></i> Filtros
-            </button>
-            <div class="relative group">
-                <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <select wire:model.live="orderBy"
-                    class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500">
-                    <option value="first_release_date">Más recientes</option>
-                    <option value="rating">Puntuación Ludexis</option>
-                </select>
-                <i
-                    class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                <div class="relative group">
+                    <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <select wire:model.live="orderBy"
+                        class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500">
+                        <option value="first_release_date">Más recientes</option>
+                        <option value="rating">Puntuación Ludexis</option>
+                    </select>
+                    <i
+                        class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                </div>
+
             </div>
         </x-slot:aside>
 
@@ -203,8 +191,8 @@
                         <i class="fa-solid fa-magnifying-glass text-4xl text-gray-400 transition-colors"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">No hay resultados</h3>
-                    <p class="text-gray-600 dark:text-gray-500 text-sm font-medium text-center max-w-md">Intenta
-                        limpiar los filtros para encontrar el juego que buscas.</p>
+                    <p class="text-gray-600 dark:text-gray-500 text-sm font-medium text-center max-w-md">Intenta limpiar
+                        los filtros para encontrar el juego que buscas.</p>
                     <button wire:click="clearFilters"
                         class="mt-8 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 text-cyan-600 font-black px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-md hover:-translate-y-1 flex items-center gap-2">
                         <i class="fa-solid fa-rotate-right"></i> Limpiar Filtros

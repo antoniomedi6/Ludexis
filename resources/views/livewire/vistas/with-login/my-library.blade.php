@@ -1,44 +1,45 @@
 <x-miscomponentes.page-layout title1="Mi" title2="Biblioteca" :subtitle="'Tienes un total de ' . count($userGames) . ' juegos en tu registro.'">
 
-    {{-- BARRA DE HERRAMIENTAS (Filtros y Orden) --}}
     <x-slot:aside>
-        {{-- Botones de Estado --}}
-        <div
-            class="flex items-center gap-2 bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-2xl p-1.5 shadow-sm transition-colors duration-300 overflow-x-auto w-full sm:w-auto hide-scrollbar">
-            <button
-                class="px-5 py-2 rounded-xl bg-gray-100 dark:bg-[#1a1d27] text-cyan-600 dark:text-cyan-400 font-bold text-xs uppercase tracking-widest shadow-sm transition-colors duration-300 whitespace-nowrap">
-                Todos
-            </button>
-            <button
-                class="px-5 py-2 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300 whitespace-nowrap">
-                Jugando
-            </button>
-            <button
-                class="px-5 py-2 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300 whitespace-nowrap">
-                Completados
-            </button>
-            <button
-                class="px-5 py-2 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-white font-bold text-xs uppercase tracking-widest transition-colors duration-300 whitespace-nowrap">
-                Pendientes
-            </button>
-        </div>
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 w-full">
 
-        {{-- Select de Ordenación --}}
-        <div class="relative w-full sm:w-auto group shrink-0">
-            <i
-                class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-sm transition-colors duration-300"></i>
-            <select
-                class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-2xl pl-10 pr-10 py-2.5 font-bold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 appearance-none cursor-pointer w-full transition-colors duration-300 shadow-sm">
-                <option value="updated">Última actualización</option>
-                <option value="rating">Mi Puntuación</option>
-                <option value="time">Horas jugadas</option>
-            </select>
-            <i
-                class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xs pointer-events-none transition-colors duration-300"></i>
+            <div class="relative w-full sm:w-56 group shrink-0">
+                <i
+                    class="fa-solid fa-filter absolute left-4 top-1/2 -translate-y-1/2 text-cyan-600 dark:text-cyan-500 text-sm transition-colors duration-300"></i>
+
+                <select wire:model.live="filterBy"
+                    class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-2xl pl-10 pr-10 py-2.5 font-bold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 appearance-none cursor-pointer w-full transition-colors duration-300 shadow-sm">
+                    <option value="">Todos los juegos</option>
+                    <option value="playing">Jugando</option>
+                    <option value="completed">Completados</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="paused">En Pausa</option>
+                    <option value="multiplayer">Multijugador</option>
+                    <option value="abandoned">Abandonados</option>
+                </select>
+
+                <i
+                    class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xs pointer-events-none transition-colors duration-300"></i>
+            </div>
+
+            <div class="relative w-full sm:w-56 group shrink-0">
+                <i
+                    class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-sm transition-colors duration-300"></i>
+
+                <select wire:model.live="orderBy"
+                    class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-2xl pl-10 pr-10 py-2.5 font-bold focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 appearance-none cursor-pointer w-full transition-colors duration-300 shadow-sm">
+                    <option value="updated_at">Última actualización</option>
+                    <option value="rating">Mi Puntuación</option>
+                    <option value="time">Horas jugadas</option>
+                </select>
+
+                <i
+                    class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-xs pointer-events-none transition-colors duration-300"></i>
+            </div>
+
         </div>
     </x-slot:aside>
 
-    {{-- CONTENIDO PRINCIPAL (El Grid de Juegos) --}}
     @if (count($userGames) > 0)
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full">
             @foreach ($userGames as $item)
@@ -69,7 +70,7 @@
                             @elseif ($status === 'completed')
                                 <span
                                     class="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                    <x-icons.completed class="size-6" /> 100% Completado
+                                    <x-icons.completed class="size-6" /> 100%
                                 </span>
                             @elseif ($status === 'playing')
                                 <span
@@ -99,7 +100,6 @@
                             @endif
                         </div>
 
-                        {{-- Estrellas y Plataforma --}}
                         <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                             <div class="flex gap-0.5 text-cyan-500 dark:text-cyan-400 drop-shadow-md">
                                 @php
@@ -109,17 +109,12 @@
                                     $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
                                 @endphp
 
-                                {{-- Estrellas Completas --}}
                                 @for ($i = 0; $i < $fullStars; $i++)
                                     <x-icons.star class="w-3.5 h-3.5 fill-current" />
                                 @endfor
-
-                                {{-- Media Estrella --}}
                                 @if ($hasHalf)
                                     <x-icons.star half class="w-3.5 h-3.5 fill-current" />
                                 @endif
-
-                                {{-- Estrellas Vacías (Translucidas) --}}
                                 @for ($i = 0; $i < $emptyStars; $i++)
                                     <x-icons.star class="w-3.5 h-3.5 opacity-30 fill-current" />
                                 @endfor
@@ -151,15 +146,17 @@
             @endforeach
         </div>
     @else
-        {{-- ESTADO VACÍO (Si count es 0) --}}
-        <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
+        <div class="flex flex-col items-center justify-center py-20 px-6 text-center w-full">
             <div
                 class="w-24 h-24 bg-gray-100 dark:bg-[#1a1d27] rounded-full flex items-center justify-center mb-6 border border-gray-200 dark:border-gray-800 shadow-sm">
                 <i class="fa-solid fa-gamepad text-4xl text-gray-400 dark:text-gray-600"></i>
             </div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Tu biblioteca está vacía</h3>
-            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Explora el catálogo y añade juegos a tu
-                registro para empezar a llevar el control de tus partidas.</p>
+            <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">
+                {{ $filterBy === '' ? 'Tu biblioteca está vacía' : 'No hay juegos en este estado' }}
+            </h3>
+            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+                {{ $filterBy === '' ? 'Explora el catálogo y añade juegos a tu registro para empezar a llevar el control de tus partidas.' : 'Intenta seleccionar otro filtro para ver tu colección.' }}
+            </p>
         </div>
     @endif
 
