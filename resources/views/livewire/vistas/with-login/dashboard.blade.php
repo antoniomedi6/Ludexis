@@ -5,7 +5,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 w-full">
             <div class="xl:col-span-8 flex flex-col gap-10">
                 <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div
+                    <a href="{{ route('library') }}"
                         class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl relative overflow-hidden">
                         <i
                             class="fa-solid fa-cubes absolute -bottom-4 -right-4 text-6xl text-gray-100 dark:text-gray-800/30 transition-colors duration-300"></i>
@@ -14,8 +14,8 @@
                         <span
                             class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">En
                             Biblioteca</span>
-                    </div>
-                    <div
+                    </a>
+                    <a href="{{ route('library') }}"
                         class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl relative overflow-hidden">
                         <i
                             class="fa-solid fa-trophy absolute -bottom-4 -right-4 text-6xl text-green-50 dark:text-green-900/20 transition-colors duration-300"></i>
@@ -24,8 +24,8 @@
                         <span
                             class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">Completados
                             al 100%</span>
-                    </div>
-                    <div
+                    </a>
+                    <a href="{{ route('library') }}"
                         class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl relative overflow-hidden">
                         <i
                             class="fa-regular fa-clock absolute -bottom-4 -right-4 text-6xl text-gray-100 dark:text-gray-800/30 transition-colors duration-300"></i>
@@ -41,7 +41,7 @@
                         <span
                             class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 relative z-10 transition-colors duration-300">Tiempo
                             Total</span>
-                    </div>
+                    </a>
                     <button
                         class="bg-gradient-to-br from-cyan-50 dark:from-cyan-900/30 to-white dark:to-[#151821] border border-cyan-200 dark:border-cyan-800/50 rounded-[2rem] p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:from-cyan-100 dark:hover:from-cyan-800/40 shadow-xl dark:shadow-[0_0_20px_rgba(6,182,212,0.1)] group">
                         <i
@@ -174,67 +174,7 @@
                         </div>
                     </section>
                 </div>
-
-                <section>
-                    <h2
-                        class="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6 transition-colors duration-300">
-                        Tu Actividad Reciente
-                    </h2>
-                    <div class="flex flex-col gap-4">
-                        <div
-                            class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl p-5 flex flex-col sm:flex-row gap-5 items-start sm:items-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl">
-                            <div
-                                class="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 flex items-center justify-center shrink-0 border border-green-200 dark:border-green-500/20 text-xl transition-colors duration-300">
-                                <i class="fa-solid fa-check"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                                    <span
-                                        class="text-gray-900 dark:text-white font-bold text-base transition-colors duration-300">Elden
-                                        Ring</span> marcado como Finalizado.
-                                </p>
-                                <div class="flex flex-wrap gap-3 mt-2 items-center">
-                                    <span
-                                        class="text-xs font-black text-cyan-600 dark:text-cyan-400 transition-colors duration-300"><i
-                                            class="fa-solid fa-clock mr-1"></i> 120 horas</span>
-                                    <div
-                                        class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 transition-colors duration-300">
-                                    </div>
-                                    <div class="flex text-xs text-yellow-500">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                            class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <span
-                                class="text-xs text-gray-500 dark:text-gray-500 font-bold uppercase tracking-wider transition-colors duration-300">Ayer</span>
-                        </div>
-
-                        <div
-                            class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl p-5 flex flex-col sm:flex-row gap-5 items-start sm:items-center transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-[#1a1d27] shadow-xl">
-                            <div
-                                class="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-200 dark:border-cyan-500/20 text-xl transition-colors duration-300">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </div>
-                            <div class="flex-1 w-full">
-                                <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                                    Has escrito una reseña para <span
-                                        class="text-gray-900 dark:text-white font-bold text-base transition-colors duration-300">Hollow
-                                        Knight</span>.
-                                </p>
-                                <div
-                                    class="mt-3 bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs italic text-gray-500 dark:text-gray-400 border-l-2 border-l-cyan-500 transition-colors duration-300">
-                                    "El mejor metroidvania que he jugado en la última década. El diseño de niveles es
-                                    magistral."
-                                </div>
-                            </div>
-                            <span
-                                class="text-xs text-gray-500 dark:text-gray-500 font-bold uppercase tracking-wider shrink-0 transition-colors duration-300">Hace
-                                2 días</span>
-                        </div>
-                    </div>
-                </section>
+                @livewire('utils.preview-my-recent-activity')
             </div>
             @livewire('utils.preview-social-feed')
         </div>

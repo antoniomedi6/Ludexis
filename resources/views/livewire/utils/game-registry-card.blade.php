@@ -5,7 +5,7 @@
 
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-[0_5px_15px_rgba(6,182,212,0.4)]">
-                <img class="size-9" src="{{ Storage::url('logo-tracker.png') }}" />
+                <img class="size-9" src="{{ asset('images/logo-tracker.png') }}" />
             </div>
             <div>
                 <p
