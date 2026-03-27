@@ -64,18 +64,9 @@
         <div class="relative max-w-7xl mx-auto px-6 py-16 space-y-20 z-10">
             @livewire('utils.tendencias')
 
-            <section class="grid lg:grid-cols-3 gap-10">
-                <div class="flex justify-between items-end mb-2">
-                    <h2
-                        class="text-2xl font-black flex items-center gap-2 text-gray-900 dark:text-white transition-colors duration-300">
-                        <i class="fa-solid fa-star text-indigo-500"></i> Reseñas Destacadas
-                    </h2>
-                </div>
+            <section class="grid lg:grid-cols-3 gap-10 items-start">
                 @livewire('utils.preview-reviews')
-
-                <div class="space-y-10">
-                    @livewire('utils.preview-images')
-                </div>
+                @livewire('utils.preview-images')
             </section>
         </div>
     </div>
