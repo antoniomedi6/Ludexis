@@ -24,8 +24,8 @@
             class="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-96 overflow-y-auto custom-scrollbar">
 
             @foreach ($games as $item)
-                <a href="{{ route('games.show', $item->slug) }}"
-                    class="flex items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-[#1f2937] transition-colors border-b border-gray-100 dark:border-gray-800/50 last:border-0 group">
+                <div wire:click="addToDb('{{ $item->slug }}')"
+                    class="flex cursor-pointer items-center gap-4 p-3 hover:bg-gray-50 dark:hover:bg-[#1f2937] transition-colors border-b border-gray-100 dark:border-gray-800/50 last:border-0 group">
                     <div class="w-10 h-14 shrink-0 bg-[#0f1117] rounded overflow-hidden shadow border border-gray-800">
                         <img src="{{ $item->cover_url }}" alt="{{ $item->title }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -42,7 +42,7 @@
                         class="flex flex-col items-center justify-center bg-cyan-900/20 border border-cyan-500/20 rounded px-2.5 py-1.5 shrink-0">
                         <span class="text-xs font-black text-cyan-400">{{ $item->rating ?? '-' }}</span>
                     </div>
-                </a>
+                </div>
             @endforeach
 
             <div class="p-3 bg-gray-50 dark:bg-[#151821] border-t border-gray-100 dark:border-gray-800 text-center">

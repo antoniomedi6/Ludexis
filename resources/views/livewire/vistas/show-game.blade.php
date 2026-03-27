@@ -163,6 +163,12 @@
                     @livewire('utils.preview-images', ['gameSlug' => $game->slug])
                 </div>
             </div>
+
         </div>
+
+        <div class="w-full max-w-5xl mx-auto mt-16">
+            @livewire('utils.preview-reviews', ['gameId' => $game->id])
+        </div>
+
     </section>
 </div>
