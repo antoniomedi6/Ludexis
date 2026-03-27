@@ -25,8 +25,9 @@ class PreviewReviews extends Component
                     ->get(['id', 'rating', 'review', 'user_id', 'game_id', 'created_at']);
             });
         } else {
-            $reviews = Cache::remember('last_reviews', 300, function () {
+            $reviews = Cache::remember("last_reviews_$this->gameId", 300, function () {
                 return GameUser::with(['user:id,name,role', 'game:id,title,cover_url,slug'])
+                    ->where('game_id', $this->gameId)
                     ->whereNotNull('review')
                     ->latest()
                     ->limit(3)

@@ -28,7 +28,7 @@ class SaveGameAction
             'total_rating'
         ])
             ->with([
-                'videos' => ['video_id'],
+                'videos' => ['video_id', 'name'],
                 'cover' => ['url'],
                 'genres' => ['name'],
                 'platforms' => ['name'],
@@ -59,8 +59,13 @@ class SaveGameAction
 
         $videoUrl = null;
         $videos = data_get($igdbGame, 'videos', []);
-        if (!empty($videos) && isset($videos[0]['video_id'])) {
-            $videoUrl = 'https://www.youtube.com/embed/' . $videos[0]['video_id'];
+        if (!empty($videos)) {
+            foreach ($videos as $video) {
+                if (isset($video['video_id']) && isset($video['name']) && stripos($video['name'], 'trailer') !== false) {
+                    $videoUrl = 'https://www.youtube.com/embed/' . $video['video_id'];
+                    break;
+                }
+            }
         }
 
         $screenshotHashes = [];
