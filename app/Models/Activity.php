@@ -11,7 +11,11 @@ class Activity extends Model
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
 
-    protected $fillable = ['action_type', 'user_id', 'game_id'];
+    protected $fillable = ['user_id', 'game_id', 'action_type', 'details',];
+
+    protected $casts = [
+        'details' => 'array',
+    ];
 
     public function user(): BelongsTo
     {
@@ -21,5 +25,10 @@ class Activity extends Model
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function month()
+    {
+
     }
 }

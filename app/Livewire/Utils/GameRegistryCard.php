@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Utils;
 
+use App\Events\GameStatusEvent;
 use App\Livewire\Forms\GameRegistryForm;
-use App\Livewire\Forms\ReviewForm;
 use App\Models\Game;
 use App\Models\GameUser;
 use Illuminate\Support\Facades\Auth;
@@ -12,18 +12,17 @@ use Livewire\Component;
 class GameRegistryCard extends Component
 {
     public GameRegistryForm $form;
-    public $gameTitle;
+    public Game $game;
 
     public function mount($gameId)
     {
-        $game = Game::findOrFail($gameId);
-        $this->gameTitle = $game->title;
+        $this->game = Game::findOrFail($gameId);
 
-        $this->form->game_id = $game->id;
+        $this->form->game_id = $this->game->id;
         $this->form->user_id = Auth::id();
 
         $register = GameUser::where('user_id', Auth::id())
-            ->where('game_id', $game->id)
+            ->where('game_id', $this->game->id)
             ->first();
 
         if ($register) {
@@ -41,6 +40,9 @@ class GameRegistryCard extends Component
     public function save()
     {
         $this->form->saveForm();
+
+        GameStatusEvent::dispatch(Auth::user(), $this->game, $this->form->status);
+
         $this->dispatch('evtSaved');
     }
 

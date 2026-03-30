@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\GameUser;
+use Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
