@@ -3,6 +3,7 @@
 namespace App\Livewire\Vistas;
 
 use App\Actions\SaveGameAction;
+use App\Models\Company;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Platform;
@@ -136,7 +137,7 @@ class AllGames extends Component
             $placeholder->setRelation('platforms', $platforms);
 
             $companies = collect(data_get($igdbGame, 'involved_companies', []))->map(function ($ic) {
-                $company = new \App\Models\Company();
+                $company = new Company();
                 $company->name = data_get($ic, 'company.name');
                 return $company;
             })->filter(function ($c) {

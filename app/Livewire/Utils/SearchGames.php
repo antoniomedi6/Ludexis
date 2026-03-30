@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Utils;
 
+use App\Actions\SaveGameAction;
 use App\Models\Game;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -60,5 +61,18 @@ class SearchGames extends Component
         }
 
         return view('livewire.utils.search-games', compact('games'));
+    }
+
+    public function addToDb(string $slug)
+    {
+        $saveGameAction = new SaveGameAction();
+
+        $game = $saveGameAction($slug);
+
+        if (!$game) {
+            return;
+        }
+
+        $this->redirect(route('games.show', $game->slug));
     }
 }
