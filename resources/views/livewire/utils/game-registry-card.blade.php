@@ -18,14 +18,12 @@
             </div>
         </div>
 
-        {{-- VALORACIÓN --}}
         <div class="bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 transition-colors duration-300 flex flex-col items-center shadow-inner dark:shadow-none relative"
             x-data="{ hoverRating: 0, rating: $wire.entangle('form.rating'), saved: false }">
 
             <span
                 class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 mb-4">Valoración</span>
 
-            {{-- ICONO GUARDADO VALORACIÓN --}}
             <template x-if="saved">
                 <div x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-50"
                     x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
@@ -82,7 +80,6 @@
             </div>
         </div>
 
-        {{-- ESTADOS --}}
         <div>
             <div class="flex justify-between items-center mb-3">
                 <span
@@ -106,7 +103,6 @@
                             wire:model="form.status"
                             @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })" />
 
-                        {{-- ICONO GUARDADO INDIVIDUAL --}}
                         <template x-if="saved">
                             <div x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 scale-50"
@@ -138,7 +134,6 @@
                         wire:model="form.status"
                         @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })" />
 
-                    {{-- ICONO GUARDADO MULTIPLAYER --}}
                     <template x-if="saved">
                         <div x-transition:enter="transition ease-out duration-300"
                             x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
@@ -162,7 +157,6 @@
             <x-input-error for="form.status" />
         </div>
 
-        {{-- HORAS FINISH --}}
         <div x-show="status === 'finish' || status === 'completed'" x-transition x-data="{ saved: false }">
             <label class="flex justify-between items-center mb-3">
                 <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Horas Objetivo
@@ -174,7 +168,6 @@
                     @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })"
                     class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
 
-                {{-- ICONO GUARDADO HORAS FINISH --}}
                 <template x-if="saved">
                     <div x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
@@ -190,7 +183,6 @@
             <x-input-error for="form.hours_finish" />
         </div>
 
-        {{-- HORAS COMPLETED --}}
         <div x-show="status === 'completed'" x-transition x-data="{ saved: false }">
             <label class="flex justify-between items-center mb-3">
                 <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Horas Completado
@@ -202,7 +194,6 @@
                     @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })"
                     class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
 
-                {{-- ICONO GUARDADO HORAS COMPLETED --}}
                 <template x-if="saved">
                     <div x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
@@ -217,9 +208,14 @@
             </div>
             <x-input-error for="form.hours_completed" />
         </div>
-        <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
-            <x-icons.review class="size-6 mr-2" />
-            Escribir Reseña
-        </x-button>
+
+        <div class="flex flex-col gap-3">
+            <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
+                <x-icons.review class="size-6 mr-2" />
+                Escribir Reseña
+            </x-button>
+
+            <livewire:utils.add-game-to-list :gameId="$this->form->game_id" />
+        </div>
     </div>
 </form>

@@ -138,41 +138,6 @@
 
                         </div>
                     </section>
-
-                    <section>
-                        <h2
-                            class="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-3 transition-colors duration-300">
-                            <i class="fa-solid fa-medal text-cyan-600 dark:text-cyan-500"></i> Logros Recientes
-                        </h2>
-                        <div
-                            class="bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 rounded-3xl p-6 shadow-xl flex flex-wrap gap-4 justify-center items-center h-full min-h-[180px] transition-colors duration-300">
-                            <div class="group relative cursor-pointer">
-                                <div
-                                    class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-yellow-500 dark:to-orange-600 rounded-2xl rotate-45 flex items-center justify-center border-2 border-yellow-200 dark:border-yellow-300/30 shadow-[0_0_15px_rgba(234,179,8,0.2)] group-hover:scale-110 transition-transform">
-                                    <i class="fa-solid fa-dragon text-white -rotate-45 text-xl"></i>
-                                </div>
-                            </div>
-                            <div class="group relative cursor-pointer">
-                                <div
-                                    class="w-14 h-14 bg-gradient-to-br from-gray-300 to-gray-500 dark:from-gray-400 dark:to-gray-600 rounded-2xl rotate-45 flex items-center justify-center border-2 border-gray-200 dark:border-gray-300/30 shadow-[0_0_15px_rgba(156,163,175,0.2)] group-hover:scale-110 transition-transform">
-                                    <i class="fa-solid fa-skull text-white -rotate-45 text-xl"></i>
-                                </div>
-                            </div>
-                            <div class="group relative cursor-pointer">
-                                <div
-                                    class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-blue-500 dark:from-cyan-500 dark:to-blue-600 rounded-2xl rotate-45 flex items-center justify-center border-2 border-cyan-200 dark:border-cyan-300/30 shadow-[0_0_15px_rgba(6,182,212,0.2)] group-hover:scale-110 transition-transform">
-                                    <i class="fa-solid fa-car-burst text-white -rotate-45 text-xl"></i>
-                                </div>
-                            </div>
-                            <div class="group relative cursor-pointer">
-                                <div
-                                    class="w-14 h-14 bg-gray-50 dark:bg-[#0f1117] rounded-2xl rotate-45 flex items-center justify-center border-2 border-gray-300 dark:border-gray-800 border-dashed hover:border-cyan-500 dark:hover:border-cyan-500/50 transition-colors">
-                                    <span
-                                        class="text-gray-500 dark:text-gray-600 font-black -rotate-45 text-xs transition-colors duration-300">+12</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
                 @livewire('utils.preview-my-recent-activity')
             </div>

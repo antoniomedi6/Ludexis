@@ -11,7 +11,7 @@ class Activity extends Model
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
 
-    protected $fillable = ['user_id', 'game_id', 'action_type', 'details',];
+    protected $fillable = ['user_id', 'game_id', 'action_type', 'details', 'created_at'];
 
     protected $casts = [
         'details' => 'array',

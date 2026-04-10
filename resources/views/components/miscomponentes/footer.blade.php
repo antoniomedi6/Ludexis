@@ -5,7 +5,7 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
 
             <div class="space-y-6">
                 <a href="{{ route('welcome') }}"
@@ -22,14 +22,6 @@
                 <div class="flex space-x-3 pt-2">
                     <a href="#"
                         class="w-10 h-10 rounded-xl bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-[#1a1d27] hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-twitter text-lg"></i>
-                    </a>
-                    <a href="#"
-                        class="w-10 h-10 rounded-xl bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-[#1a1d27] hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <i class="fa-brands fa-discord text-lg"></i>
-                    </a>
-                    <a href="#"
-                        class="w-10 h-10 rounded-xl bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-[#1a1d27] hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1">
                         <i class="fa-brands fa-github text-lg"></i>
                     </a>
                 </div>
@@ -42,7 +34,7 @@
                 </h3>
                 <ul class="space-y-4">
                     <li>
-                        <a href="#"
+                        <a href="{{ route('allGames') }}"
                             class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
                             <i
                                 class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
@@ -50,27 +42,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Tendencias de la Semana
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
+                        <a href="{{ route('social') }}"
                             class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
                             <i
                                 class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
                             Mejores Reseñas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Ruleta Rusa del Backlog
                         </a>
                     </li>
                 </ul>
@@ -87,57 +63,13 @@
                             class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
                             <i
                                 class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Centro de Ayuda
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Términos de Servicio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Política de Privacidad
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300">
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"></i>
-                            Sistema de Reputación
+                            Documentación
                         </a>
                     </li>
                 </ul>
             </div>
-
-            <div class="space-y-6">
-                <h3
-                    class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-4 transition-colors duration-300">
-                    Únete a la Comunidad
-                </h3>
-                <p
-                    class="text-sm font-medium text-gray-600 dark:text-gray-400 transition-colors duration-300 leading-relaxed">
-                    Recibe un resumen semanal con los lanzamientos más esperados.
-                </p>
-                <form class="flex gap-2">
-                    <input type="email" placeholder="Tu correo electrónico"
-                        class="w-full bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors duration-300 shadow-inner">
-                    <button type="button"
-                        class="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-3 rounded-xl font-black transition-all duration-300 flex items-center justify-center shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] hover:-translate-y-1">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-
         </div>
-
+        {{-- 
         <div
             class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 transition-colors duration-300">
             <div class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">
@@ -157,5 +89,6 @@
                 </span>
             </div>
         </div>
+         --}}
     </div>
 </footer>

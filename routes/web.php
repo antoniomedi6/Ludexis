@@ -6,7 +6,9 @@ use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
 use App\Livewire\Vistas\ShowGame;
+use App\Livewire\Vistas\WithLogin\CustomLists;
 use App\Livewire\Vistas\WithLogin\Dashboard;
+use App\Livewire\Vistas\WithLogin\Lists\ShowUserList;
 use App\Livewire\Vistas\WithLogin\MyLibrary;
 use App\Livewire\Vistas\WithLogin\UserTimeline;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,8 @@ Route::middleware([
     Route::get('/myLibrary', MyLibrary::class)->name('library');
     Route::get('/feedSocial', FeedSocial::class)->name('social');
     Route::get('/timeline', UserTimeline::class)->name('timeline');
+    Route::get('/userLists', CustomLists::class)->name('userLists');
+    Route::get('/userLists/{list}', ShowUserList::class)->name('userLists.show');
 });
 
 Route::get('/allGames', AllGames::class)->name('allGames');

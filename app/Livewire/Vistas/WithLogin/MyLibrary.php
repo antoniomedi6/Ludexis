@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class MyLibrary extends Component
 {
-    // Valores por defecto
     public string $filterBy = '';
     public string $orderBy = 'updated_at';
 

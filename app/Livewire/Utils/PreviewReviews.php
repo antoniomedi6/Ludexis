@@ -16,7 +16,7 @@ class PreviewReviews extends Component
     }
     public function render()
     {
-        if (!empty($gameId)) {
+        if (empty($gameId)) {
             $reviews = Cache::remember('last_reviews', 300, function () {
                 return GameUser::with(['user:id,name,role', 'game:id,title,cover_url,slug'])
                     ->whereNotNull('review')
