@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Livewire\Vistas\WithLogin;
+namespace App\Livewire\Vistas\WithLogin\Lists;
 
-use App\Livewire\Forms\CustomListForm;
+use App\Livewire\Forms\Lists\CustomListForm;
 use App\Models\CustomList;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CustomLists extends Component
+class ShowCustomLists extends Component
 {
     use WithPagination;
 
     public $showCreateModal = false;
-    public CustomListForm $cForm;
+    public CustomListForm $cform;
     public string $search = '';
     public string $orderBy = 'updated_at';
 
@@ -31,19 +31,19 @@ class CustomLists extends Component
             ->orderBy($this->orderBy, $orderDirection)
             ->paginate(15);
 
-        return view('livewire.vistas.with-login.custom-lists', compact('userLists'));
+        return view('livewire.vistas.with-login.lists.show-custom-lists', compact('userLists'));
     }
 
     public function save()
     {
-        $this->cForm->saveForm();
+        $this->cform->saveForm();
         $this->cancel();
         $this->dispatch('notify', message: 'Lista Creada Correctamente', type: 'success');
     }
 
     public function cancel()
     {
-        $this->cForm->cancelForm();
+        $this->cform->cancelForm();
         $this->showCreateModal = false;
     }
 

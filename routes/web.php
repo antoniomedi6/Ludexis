@@ -6,8 +6,8 @@ use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
 use App\Livewire\Vistas\ShowGame;
-use App\Livewire\Vistas\WithLogin\CustomLists;
 use App\Livewire\Vistas\WithLogin\Dashboard;
+use App\Livewire\Vistas\WithLogin\Lists\ShowCustomLists;
 use App\Livewire\Vistas\WithLogin\Lists\ShowUserList;
 use App\Livewire\Vistas\WithLogin\MyLibrary;
 use App\Livewire\Vistas\WithLogin\UserTimeline;
@@ -26,21 +26,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    /* RUTAS PARA USUARIOS AUTENTICADOS */
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/myLibrary', MyLibrary::class)->name('library');
     Route::get('/feedSocial', FeedSocial::class)->name('social');
     Route::get('/timeline', UserTimeline::class)->name('timeline');
-    Route::get('/userLists', CustomLists::class)->name('userLists');
+    Route::get('/userLists', ShowCustomLists::class)->name('userLists');
     Route::get('/userLists/{list}', ShowUserList::class)->name('userLists.show');
 });
 
+/* RUTAS ACCESIBLES PARA USUARIOS SIN AUTENTICAR */
 Route::get('/allGames', AllGames::class)->name('allGames');
 Route::get('/playground', Playground::class)->name('playground');
 Route::get('/game/{game}', ShowGame::class)->name('games.show');
 Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
 Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
-
-/*
-Route::redirect('/register', '/');
-Route::redirect('/login', '/');
- */

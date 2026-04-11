@@ -215,7 +215,7 @@
                 Escribir Reseña
             </x-button>
 
-            <livewire:utils.add-game-to-list :gameId="$this->form->game_id" />
+            <livewire:utils.add-game-to-list-modal :gameId="$this->form->game_id" />
         </div>
     </div>
 </form>

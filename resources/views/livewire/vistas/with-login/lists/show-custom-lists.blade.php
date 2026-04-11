@@ -22,6 +22,7 @@
                         class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500">
                         <option value="updated_at">Más recientes</option>
                         <option value="name">Alfabético</option>
+                        <option value="games_count">Cantidad</option>
                     </select>
                     <i
                         class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
@@ -35,6 +36,8 @@
             </button>
         </div>
     </x-slot>
+
+    {{-- MODAL PARA CREAR LISTA --}}
 
     <x-modal wire:model="showCreateModal" maxWidth="md">
 

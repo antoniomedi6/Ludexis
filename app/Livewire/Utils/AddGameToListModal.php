@@ -6,7 +6,7 @@ use App\Models\CustomList;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class AddGameToList extends Component
+class AddGameToListModal extends Component
 {
     public $showModal = false;
     public $gameId;
@@ -27,6 +27,12 @@ class AddGameToList extends Component
     public function render()
     {
         $userLists = CustomList::where('user_id', Auth::id())
+            ->withCount('games')
+            ->with([
+                'games' => function ($query) {
+                    $query->select('games.id', 'cover_url');
+                }
+            ])
             ->withExists([
                 'games as contains_game' => function ($query) {
                     $query->where('game_id', $this->gameId);
@@ -35,6 +41,6 @@ class AddGameToList extends Component
             ->orderBy('name')
             ->get();
 
-        return view('livewire.utils.add-game-to-list', compact('userLists'));
+        return view('livewire.utils.add-game-to-list-modal', compact('userLists'));
     }
 }

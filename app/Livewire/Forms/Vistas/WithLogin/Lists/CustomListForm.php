@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Forms;
+namespace App\Livewire\Forms\Lists;
 
 use App\Models\CustomList;
 use Livewire\Attributes\Validate;

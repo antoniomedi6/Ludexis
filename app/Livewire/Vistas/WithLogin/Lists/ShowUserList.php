@@ -2,22 +2,73 @@
 
 namespace App\Livewire\Vistas\WithLogin\Lists;
 
+use App\Livewire\Forms\Vistas\WithLogin\Lists\UpdateListForm;
 use App\Models\CustomList;
+use App\Models\Game;
 use Livewire\Component;
 
 class ShowUserList extends Component
 {
-    public CustomList $list;
+    public $listId;
+    public bool $showUpdateModal = false;
+    public bool $confirmingListDeletion = false;
+    public UpdateListForm $uform;
+
+    // INICIALIZACION
 
     public function mount(CustomList $list)
     {
-        abort_if($list->user_id !== auth()->id(), 403);
-
-        $this->list = $list->loadCount('games')->load('games');
+        $this->listId = $list->id;
     }
 
     public function render()
     {
-        return view('livewire.vistas.with-login.lists.show-user-list');
+        $list = CustomList::withCount('games')->with('games')->findOrFail($this->listId);
+
+        return view('livewire.vistas.with-login.lists.show-user-list', compact('list'));
+    }
+
+    // UPDATE
+
+    public function openModal()
+    {
+        $list = CustomList::findOrFail($this->listId);
+        $this->uform->setList($list);
+        $this->showUpdateModal = true;
+    }
+
+    public function save()
+    {
+        $list = CustomList::findOrFail($this->listId);
+        $this->uform->updateListForm($list);
+        $this->showUpdateModal = false;
+
+        $this->dispatch('notify', message: 'Lista actualizada correctamente.', type: 'success');
+    }
+
+    public function cancel()
+    {
+        $this->uform->cancelForm();
+        $this->showUpdateModal = false;
+    }
+
+    // DELETE
+
+    public function deleteList()
+    {
+        $list = CustomList::findOrFail($this->listId);
+        $list->delete();
+
+        $this->dispatch('notify', message: 'Lista eliminada correctamente', type: 'success');
+
+        return $this->redirect(route('userLists'), navigate: true);
+    }
+
+    public function deleteGameFromList($gameId)
+    {
+        $list = CustomList::findOrFail($this->listId);
+        $list->games()->detach($gameId);
+
+        $this->dispatch('notify', message: 'Juego eliminado de la lista correctamente', type: 'success');
     }
 }

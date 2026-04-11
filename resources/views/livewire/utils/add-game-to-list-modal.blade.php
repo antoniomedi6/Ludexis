@@ -27,7 +27,6 @@
                         <div
                             class="relative bg-white dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-cyan-400 dark:hover:border-cyan-700 transition-all duration-300 group shadow-sm">
                             <label class="flex items-center gap-4 p-5 cursor-pointer">
-                                {{-- Miniatura estilo CustomLists --}}
                                 <div
                                     class="flex-shrink-0 w-14 h-14 rounded-xl bg-gray-100 dark:bg-[#1a1d27] flex items-center justify-center group-hover:scale-105 transition-transform">
                                     @if ($list->games_count > 0)
