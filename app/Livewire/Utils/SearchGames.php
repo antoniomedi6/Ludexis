@@ -18,6 +18,7 @@ class SearchGames extends Component
 
         if (strlen($this->search) >= 2) {
             $igdbGames = IGDBGame::where('name', 'ilike', '%' . $this->search . '%')
+                ->where('game_type', 0)
                 ->orderBy('total_rating', 'desc')
                 ->select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'category'])
                 ->with(['cover' => ['image_id', 'url']])
@@ -57,7 +58,7 @@ class SearchGames extends Component
                     }
 
                     return $placeholder;
-                })->values(); // Reindexar la colección
+                })->values();
         }
 
         return view('livewire.utils.search-games', compact('games'));
