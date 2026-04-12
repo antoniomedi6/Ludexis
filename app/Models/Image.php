@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ class Image extends Model
 {
     /** @use HasFactory<\Database\Factories\ImageFactory> */
     use HasFactory;
+    use Likeable;
 
     protected $fillable = ['image_path', 'is_spoiler', 'user_id', 'game_id'];
 

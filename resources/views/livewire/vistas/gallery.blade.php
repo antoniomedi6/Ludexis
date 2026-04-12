@@ -110,7 +110,6 @@
 
                                 <div
                                     class="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-950 aspect-video shrink-0">
-                                    {{-- Skeleton Loader --}}
                                     <div x-show="!loaded"
                                         class="absolute inset-0 animate-pulse flex items-center justify-center z-10"
                                         aria-hidden="true">
@@ -165,11 +164,13 @@
                                     @endif
 
                                     <div
-                                        class="flex items-center gap-3 pt-4 mt-auto border-t border-gray-200 dark:border-gray-800/80">
+                                        class="flex justify-between items-center gap-3 pt-4 mt-auto border-t border-gray-200 dark:border-gray-800/80">
                                         <span
                                             class="font-bold text-sm text-gray-700 dark:text-gray-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors">
                                             {{ $item->user->name }}
                                         </span>
+                                        {{-- BOTÓN DE LIKE (AQUÍ ESTÁ LA MAGIA) --}}
+                                        @livewire('utils.like-button', ['model' => $item], key('like-review-' . $item->id))
                                     </div>
                                 </div>
                             </div>

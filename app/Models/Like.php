@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Like extends Model
 {
-    /** @use HasFactory<\Database\Factories\LikeFactory> */
     use HasFactory;
 
     protected $fillable = ['likeable_id', 'likeable_type', 'user_id'];
@@ -16,5 +15,11 @@ class Like extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    // {{-- SYNOPSIS: Relación polimórfica inversa --}}
+    public function likeable()
+    {
+        return $this->morphTo();
     }
 }

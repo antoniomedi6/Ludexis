@@ -1,7 +1,7 @@
 <x-miscomponentes.page-layout title1="Ludexis" title2="Feed"
     subtitle="Descubre a qué están jugando tus amigos y comparte tus momentos.">
 
-    {{-- BARRA SUPERIOR: FILTROS --}}
+    {{-- BARRA SUPERIOR --}}
     <x-slot:aside>
         <div class="flex gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1 shrink-0"
             role="group" aria-label="Filtros del feed">
@@ -52,48 +52,51 @@
                                         </span>
                                     </div>
 
-                                    <a href="{{ route('games.show', $item->game->slug) }}"
-                                        class="bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-3xl p-5 mb-4 flex flex-col sm:flex-row gap-5 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-all duration-300 group shadow-sm hover:shadow-md cursor-pointer focus:outline-none focus:ring-4 focus:ring-cyan-500 block">
+                                    {{-- TARJETA DEL JUEGO RESEÑADO --}}
+                                    <div
+                                        class="bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-3xl p-5 mb-4 flex flex-col sm:flex-row gap-5 group shadow-sm">
 
-                                        <img src="{{ $item->game->cover_url }}"
-                                            alt="Portada de {{ $item->game->title }}" loading="lazy"
-                                            class="w-full sm:w-24 h-48 sm:h-36 object-cover rounded-xl shadow-lg shrink-0 group-hover:scale-[1.02] transition-transform duration-300" />
+                                        <a href="{{ route('games.show', $item->game->slug) }}"
+                                            class="shrink-0 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-xl">
+                                            <img src="{{ $item->game->cover_url }}"
+                                                alt="Portada de {{ $item->game->title }}" loading="lazy"
+                                                class="w-full sm:w-24 h-48 sm:h-36 object-cover rounded-xl shadow-lg group-hover:scale-[1.02] transition-transform duration-300" />
+                                        </a>
 
                                         <div class="flex flex-1 justify-between items-start">
                                             <div class="flex flex-col pr-4">
-                                                <h3
-                                                    class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2">
-                                                    {{ $item->game->title }}
-                                                </h3>
+                                                <a href="{{ route('games.show', $item->game->slug) }}"
+                                                    class="focus:outline-none focus:underline">
+                                                    <h3
+                                                        class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 hover:text-cyan-600 transition-colors">
+                                                        {{ $item->game->title }}
+                                                    </h3>
+                                                </a>
                                                 <p class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
                                                     "{{ $item->review }}"
                                                 </p>
                                             </div>
 
-                                            @php
-                                                $rating_5 = $item->rating / 2;
-                                                $stars = floor($rating_5);
-                                                $hasHalf = $rating_5 - $stars >= 0.5;
-                                            @endphp
-                                            <div class="flex items-center gap-1 text-yellow-500 dark:text-yellow-400 text-xs bg-white dark:bg-gray-900 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm shrink-0 ml-2"
-                                                aria-label="Valoración: {{ number_format($rating_5, 1) }} sobre 5 estrellas">
-                                                @for ($i = 0; $i < $stars; $i++)
+                                            <div class="flex flex-col items-end gap-3 shrink-0">
+                                                {{-- Puntuación --}}
+                                                @php
+                                                    $rating_5 = $item->rating / 2;
+                                                    $stars = floor($rating_5);
+                                                    $hasHalf = $rating_5 - $stars >= 0.5;
+                                                @endphp
+                                                <div class="flex items-center gap-1 text-yellow-500 dark:text-yellow-400 text-xs bg-white dark:bg-gray-900 px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm"
+                                                    aria-label="Valoración: {{ number_format($rating_5, 1) }} estrellas">
+                                                    <span
+                                                        class="font-bold text-gray-700 dark:text-gray-300 mr-1">{{ number_format($rating_5, 1) }}</span>
                                                     <x-icons.star class="w-3.5 h-3.5 text-cyan-500"
                                                         aria-hidden="true" />
-                                                @endfor
+                                                </div>
 
-                                                @if ($hasHalf)
-                                                    <x-icons.star half class="w-3.5 h-3.5 text-cyan-500"
-                                                        aria-hidden="true" />
-                                                @endif
-
-                                                <span class="ml-1 font-bold text-gray-700 dark:text-gray-300"
-                                                    aria-hidden="true">
-                                                    {{ number_format($rating_5, 1) }}
-                                                </span>
+                                                {{-- BOTÓN DE LIKE (AQUÍ ESTÁ LA MAGIA) --}}
+                                                @livewire('utils.like-button', ['model' => $item], key('like-review-' . $item->id))
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -125,28 +128,7 @@
                                     class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition truncate">
                                     Hollow Knight: Silksong
                                 </h3>
-                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">
-                                    12.5K Menciones
-                                </p>
-                            </div>
-                        </a>
-
-                        {{-- Tendencia 2 --}}
-                        <a href="#"
-                            class="flex items-center gap-4 group p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-950 transition focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                            <span class="text-lg font-black text-gray-400 dark:text-gray-500 w-6 text-center"
-                                aria-label="Top 2">2</span>
-                            <img src="https://images.igdb.com/igdb/image/upload/t_thumb/co670h.jpg"
-                                alt="Portada de GTA VI" loading="lazy"
-                                class="w-10 h-14 object-cover rounded shadow border border-gray-200 dark:border-gray-700" />
-                            <div class="flex-1 overflow-hidden">
-                                <h3
-                                    class="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition truncate">
-                                    GTA VI
-                                </h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">
-                                    8.2K Menciones
-                                </p>
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">12.5K Menciones</p>
                             </div>
                         </a>
                     </div>
