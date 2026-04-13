@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\ExperienceService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -60,6 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'profile_photo_url',
+        'rank_details',
+        'rank_progress_percentage'
     ];
 
     /**
@@ -110,5 +113,30 @@ class User extends Authenticatable implements MustVerifyEmail
         };
 
         return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=' . $color . '&background=' . $background;
+    }
+
+    /**
+     * Obtiene el rango y color basado en el ExperienceService.
+     */
+    public function getRankDetailsAttribute(): array
+    {
+        return ExperienceService::getCurrentRank($this);
+    }
+
+    /**
+     * Calcula el progreso hacia el siguiente rango (0 a 100).
+     */
+    public function getRankProgressPercentageAttribute(): int
+    {
+        $currentRank = $this->rank_details;
+        $nextRank = ExperienceService::getNextRank($this);
+
+        if (!$nextRank)
+            return 100;
+
+        $xpInLevel = $this->xp - $currentRank['xp_required'];
+        $xpRequired = $nextRank['xp_required'] - $currentRank['xp_required'];
+
+        return (int) (($xpInLevel / $xpRequired) * 100);
     }
 }

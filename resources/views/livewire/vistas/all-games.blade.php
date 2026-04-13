@@ -8,7 +8,7 @@
                 <div class="relative" x-data="{ filtersOpen: false }">
                     <button @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-xs uppercase tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-xs tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-600 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
@@ -152,7 +152,6 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 md:gap-8"
                     role="list">
                     @foreach ($games as $item)
-                        {{-- Transformado en botón para la navegación con TAB --}}
                         <button type="button" wire:click="addToDb('{{ $item->slug }}')" role="listitem"
                             class="relative text-left group aspect-[3/4] rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 cursor-pointer shadow-sm hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-cyan-500 transition-all duration-500 w-full block">
 

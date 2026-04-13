@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="relative z-10 w-full relative overflow-hidden min-h-[400px]">
+    <div class="relative z-10 w-full overflow-hidden min-h-[400px]">
         @if ($list->games_count > 0)
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full">

@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\RoadmapController;
-use App\Livewire\Playground;
+// use App\Http\Controllers\RoadmapController;
+// use App\Livewire\Playground;
 use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
 use App\Livewire\Vistas\ShowGame;
+use App\Livewire\Vistas\ShowUserProfile;
 use App\Livewire\Vistas\WithLogin\Dashboard;
 use App\Livewire\Vistas\WithLogin\Lists\ShowCustomLists;
 use App\Livewire\Vistas\WithLogin\Lists\ShowUserList;
@@ -37,7 +38,8 @@ Route::middleware([
 
 /* RUTAS ACCESIBLES PARA USUARIOS SIN AUTENTICAR */
 Route::get('/allGames', AllGames::class)->name('allGames');
-Route::get('/playground', Playground::class)->name('playground');
+// Route::get('/playground', Playground::class)->name('playground');
 Route::get('/game/{game}', ShowGame::class)->name('games.show');
 Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
-Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
+// Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
+Route::get('/profile/{userId}', ShowUserProfile::class)->name('profile');

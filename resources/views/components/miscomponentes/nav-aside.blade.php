@@ -139,13 +139,19 @@
                 aria-orientation="vertical" aria-labelledby="user-menu-button">
 
                 <div class="p-2 flex flex-col gap-1">
+                    <a href="{{ route('profile', Auth::id()) }}" wire:navigate
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-[#1a1d27] transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                        role="menuitem">
+                        <i class="fa-solid fa-user text-sm w-4 text-center" aria-hidden="true"></i>
+                        {{ __('My Profile') }}
+                    </a>
+
                     <a href="{{ route('profile.show') }}" wire:navigate
                         class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-[#1a1d27] transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                         role="menuitem">
-                        <i class="fa-solid fa-user text-sm w-4 text-center" aria-hidden="true"></i> {{ __('Profile') }}
+                        <i class="fa-solid fa-gear text-sm w-4 text-center" aria-hidden="true"></i>
+                        {{ __('Options') }}
                     </a>
-
-                    <div class="h-px bg-gray-200 dark:border-gray-800/60 my-1 mx-2" role="separator"></div>
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf

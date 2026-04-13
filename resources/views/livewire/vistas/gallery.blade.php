@@ -15,7 +15,7 @@
                 <div class="relative" x-data="{ filtersOpen: false }">
                     <button type="button" @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm uppercase tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-700 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
@@ -84,7 +84,7 @@
                 <div class="relative">
                     <label for="order-gallery" class="sr-only">Ordenar galería</label>
                     <select id="order-gallery" wire:model.live="orderBy"
-                        class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl px-4 py-3 font-black uppercase tracking-widest focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-sm cursor-pointer">
+                        class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl px-4 py-3 font-black tracking-widest focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-sm cursor-pointer">
                         <option value="created_at">Más recientes</option>
                         <option value="likes">Más valoradas</option>
                     </select>
@@ -169,7 +169,7 @@
                                             class="font-bold text-sm text-gray-700 dark:text-gray-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors">
                                             {{ $item->user->name }}
                                         </span>
-                                        {{-- BOTÓN DE LIKE (AQUÍ ESTÁ LA MAGIA) --}}
+                                        {{-- BOTÓN DE LIKE --}}
                                         @livewire('utils.like-button', ['model' => $item], key('like-review-' . $item->id))
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                 @endif
             </div>
 
-            {{-- PANEL LATERAL: INFORMACIÓN DEL JUEGO (Si aplica) --}}
+            {{-- PANEL LATERAL: INFORMACIÓN DEL JUEGO --}}
             @if (isset($game))
                 <aside class="xl:col-span-4 2xl:col-span-3">
                     <div
