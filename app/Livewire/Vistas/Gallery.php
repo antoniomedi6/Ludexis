@@ -19,20 +19,13 @@ class Gallery extends Component
     public string $spoilerFilter = '';
     public string $dateFilter = '';
     public string $orderBy = 'created_at';
+    public int $limit = 30;
 
     public function mount($slug = null)
     {
         if ($slug) {
             $this->game = Game::where('slug', $slug)->firstOrFail();
         }
-    }
-
-    public function clearFilters()
-    {
-        $this->gamesFilter = [];
-        $this->spoilerFilter = 'all';
-        $this->dateFilter = 'all';
-        $this->orderBy = 'created_at';
     }
 
     public function render()
@@ -67,7 +60,7 @@ class Gallery extends Component
             $query->latest();
         }
 
-        $images = $query->get();
+        $images = $query->limit($this->limit)->get();
 
         $gamesWithImages = Game::has('images')->orderBy('title')->get();
 
@@ -88,5 +81,19 @@ class Gallery extends Component
     public function cancel()
     {
         $this->cimage->cancelForm();
+    }
+
+
+    public function clearFilters()
+    {
+        $this->gamesFilter = [];
+        $this->spoilerFilter = 'all';
+        $this->dateFilter = 'all';
+        $this->orderBy = 'created_at';
+    }
+
+    public function loadMore()
+    {
+        $this->limit += 30;
     }
 }

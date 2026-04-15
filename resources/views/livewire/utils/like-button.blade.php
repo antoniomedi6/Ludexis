@@ -1,14 +1,51 @@
-<button type="button" wire:click="toggleLike" aria-pressed="{{ $isLiked ? 'true' : 'false' }}"
-    aria-label="{{ $isLiked ? 'Quitar me gusta' : 'Dar me gusta' }}"
-    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 group {{ $isLiked ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/50' : 'bg-gray-50 dark:bg-gray-950 border-gray-200 dark:border-gray-800 hover:border-red-200 dark:hover:border-red-800/50 hover:bg-red-50 dark:hover:bg-red-900/10' }}">
+@auth
+    <button type="button" wire:click="toggleLike" aria-pressed="{{ $isLiked ? 'true' : 'false' }}"
+        aria-label="{{ $isLiked ? 'Quitar me gusta' : 'Dar me gusta' }}"
+        class="group relative flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm
+    {{ $isLiked
+        ? 'bg-gradient-to-br from-cyan-900/40 to-gray-900 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+        : 'bg-white dark:bg-[#1a1d27] border-gray-200 dark:border-gray-800 hover:border-cyan-500/40 hover:bg-cyan-50 dark:hover:bg-cyan-900/20' }}">
 
-    <div class="relative flex items-center justify-center">
-        <i class="fa-heart text-sm transition-transform duration-300 group-active:scale-75 {{ $isLiked ? 'fa-solid text-red-500' : 'fa-regular text-gray-500 dark:text-gray-400 group-hover:text-red-400' }}"
-            aria-hidden="true"></i>
-    </div>
+        <div class="relative flex items-center justify-center">
+            {{-- Efecto de resplandor detrás del icono cuando está activo --}}
+            <div class="absolute inset-0 bg-cyan-400 blur-md transition-opacity duration-300 {{ $isLiked ? 'opacity-40' : 'opacity-0' }}"
+                aria-hidden="true"></div>
 
+            {{-- Icono con salto y sombra drop-shadow --}}
+            <i class="transition-all duration-300 group-active:scale-75 relative z-10 text-base
+            {{ $isLiked
+                ? 'fa-solid fa-heart text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]'
+                : 'fa-regular fa-heart text-gray-400 dark:text-gray-500 group-hover:text-cyan-500' }}"
+                aria-hidden="true"></i>
+        </div>
+
+        {{-- Texto contador --}}
+        <span
+            class="text-xs font-black tracking-widest uppercase transition-colors duration-300 relative z-10
+        {{ $isLiked ? 'text-cyan-400' : 'text-gray-600 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400' }}">
+            {{ $likesCount > 0 ? $likesCount : 'Like' }}
+        </span>
+    </button>
+@else
     <span
-        class="text-xs font-black transition-colors duration-300 {{ $isLiked ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400' }}">
-        {{ $likesCount > 0 ? $likesCount : 'Like' }}
+        class="group relative flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm bg-white dark:bg-[#1a1d27] border-gray-200 dark:border-gray-800  ">
+
+        <div class="relative flex items-center justify-center">
+            {{-- Efecto de resplandor detrás del icono cuando está activo --}}
+            <div class="absolute inset-0 bg-cyan-400 blur-md transition-opacity duration-300 {{ $isLiked ? 'opacity-40' : 'opacity-0' }}"
+                aria-hidden="true"></div>
+
+            {{-- Icono con salto y sombra drop-shadow --}}
+            <i class="transition-all duration-300 group-active:scale-75 relative z-10 text-base
+            {{ $isLiked
+                ? 'fa-solid fa-heart text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]'
+                : 'fa-regular fa-heart text-gray-400 dark:text-gray-500 group-hover:text-cyan-500' }}"
+                aria-hidden="true"></i>
+        </div>
+
+        {{-- Texto contador --}}
+        <span class="text-xs font-black tracking-widest uppercase transition-colors duration-300 relative z-10">
+            {{ $likesCount > 0 ? $likesCount : 'Like' }}
+        </span>
     </span>
-</button>
+@endauth

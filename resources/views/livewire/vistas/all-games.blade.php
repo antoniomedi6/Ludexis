@@ -133,21 +133,7 @@
         </x-slot:aside>
 
         {{-- LISTADO DE JUEGOS --}}
-        <div class="relative min-h-[500px]" x-data="{
-            dispatched: false,
-            observe() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && !this.dispatched) {
-                            this.dispatched = true;
-                            $wire.loadMore().then(() => { this.dispatched = false; });
-                        }
-                    })
-                }, { threshold: 0.1 });
-                observer.observe(this.$refs.infiniteMarker);
-            }
-        }" x-init="observe()">
-
+        <div class="relative min-h-[500px]">
             @if (count($games))
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 md:gap-8"
                     role="list">
@@ -206,7 +192,7 @@
                 </div>
 
                 {{-- Observer para Scroll Infinito --}}
-                <div x-ref="infiniteMarker" class="h-10 w-full mt-4" aria-hidden="true"></div>
+                <div x-intersect="$wire.loadMore()" class="h-10 w-full mt-4" aria-hidden="true"></div>
             @else
                 {{-- ESTADO VACÍO --}}
                 <div class="flex flex-col items-center justify-center py-32 px-6 border-2 border-dashed border-gray-300 dark:border-gray-800 rounded-3xl bg-white/50 dark:bg-gray-900/50 transition-colors"

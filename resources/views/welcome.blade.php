@@ -80,5 +80,4 @@
         </div>
     </div>
 
-    <x-miscomponentes.footer />
 </x-app-layout>

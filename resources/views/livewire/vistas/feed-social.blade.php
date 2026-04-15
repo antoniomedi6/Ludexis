@@ -21,7 +21,7 @@
     <x-slot>
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-10 w-full">
 
-            {{-- COLUMNA PRINCIPAL: FEED DE RESEÑAS --}}
+            {{-- COLUMNA PRINCIPAL --}}
             <div class="xl:col-span-8 flex flex-col gap-8" role="feed" aria-label="Feed de reseñas">
                 <div class="flex flex-col gap-8">
                     @foreach ($userReviews as $item)

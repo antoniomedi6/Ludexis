@@ -13,13 +13,13 @@ class PreviewSocialFeed extends Component
     {
         $activities = Cache::remember('preview_social_feed', 60, function () {
 
-            $reviews = GameUser::with(['user:id,name', 'game:id,title,cover_url'])
+            $reviews = GameUser::with(['user:id,name', 'game:id,title,cover_url,slug'])
                 ->whereNotNull('rating')
                 ->latest('updated_at')
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
-                    return [
+                    return (object) [
                         'type' => 'review',
                         'user' => $item->user,
                         'game' => $item->game,
@@ -29,13 +29,14 @@ class PreviewSocialFeed extends Component
                     ];
                 });
 
-            $images = Image::with(['user:id,name', 'game:id,title,cover_url'])
+            $images = Image::with(['user:id,name', 'game:id,title,cover_url,slug'])
                 ->where('is_spoiler', false)
                 ->latest()
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
-                    return [
+                    return (object) [
+                        'id' => $item->id,
                         'type' => 'capture',
                         'user' => $item->user,
                         'game' => $item->game,
@@ -44,14 +45,13 @@ class PreviewSocialFeed extends Component
                     ];
                 });
 
-            // 3. Obtener los últimos 3 juegos añadidos a pendientes/deseados
-            $wishlisted = GameUser::with(['user:id,name', 'game:id,title'])
+            $wishlisted = GameUser::with(['user:id,name', 'game:id,title,slug'])
                 ->where('status', 'pending')
                 ->latest('updated_at')
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
-                    return [
+                    return (object) [
                         'type' => 'wishlist',
                         'user' => $item->user,
                         'game' => $item->game,

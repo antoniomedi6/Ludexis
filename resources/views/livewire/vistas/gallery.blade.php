@@ -103,6 +103,7 @@
 
                         @foreach ($images as $item)
                             <div x-data="{ loaded: false, revealed: false }" wire:key="gal-img-{{ $item->id }}"
+                                @click="$dispatch('open-image-detail', { imageId: {{ $item->id }} })"
                                 @if ($item->is_spoiler) @click="revealed = true" @endif
                                 @if ($item->is_spoiler) @keydown.enter="revealed = true" @endif role="button"
                                 tabindex="0" aria-label="Captura de pantalla compartida por {{ $item->user->name }}"
@@ -146,18 +147,22 @@
                                     @if (!isset($game))
                                         <div class="flex items-start gap-4">
                                             @if ($item->game && $item->game->cover_url)
-                                                <img src="{{ $item->game->cover_url }}"
-                                                    alt="Portada de {{ $item->game->title }}"
-                                                    class="w-12 h-16 rounded-lg object-cover shrink-0 border border-gray-200 dark:border-gray-800 shadow-sm"
-                                                    loading="lazy">
+                                                <a href="{{ route('games.show', $item->game->slug) }}">
+                                                    <img src="{{ $item->game->cover_url }}"
+                                                        alt="Portada de {{ $item->game->title }}"
+                                                        class="w-12 h-16 rounded-lg object-cover shrink-0 border border-gray-200 dark:border-gray-800 shadow-sm"
+                                                        loading="lazy">
+                                                </a>
                                             @endif
 
                                             <div class="flex-1 flex flex-col gap-2">
                                                 <div class="flex items-start justify-between gap-3">
-                                                    <span
-                                                        class="text-sm font-black text-gray-900 dark:text-white line-clamp-2 leading-tight hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors">
-                                                        {{ $item->game->title ?? 'Juego Desconocido' }}
-                                                    </span>
+                                                    <a href="{{ route('games.show', $item->game->slug) }}">
+                                                        <span
+                                                            class="text-sm font-black text-gray-900 dark:text-white line-clamp-2 leading-tight hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors">
+                                                            {{ $item->game->title ?? 'Juego Desconocido' }}
+                                                        </span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,6 +181,8 @@
                             </div>
                         @endforeach
                     </div>
+                    {{-- Observer para Scroll Infinito --}}
+                    <div x-intersect="$wire.loadMore()" class="h-10 w-full mt-4" aria-hidden="true"></div>
                 @else
                     {{-- ESTADO VACÍO --}}
                     <div class="flex flex-col items-center justify-center py-32 border-2 border-dashed border-gray-400 dark:border-gray-700 rounded-3xl bg-white/50 dark:bg-gray-900/50"
@@ -189,21 +196,13 @@
 
             {{-- PANEL LATERAL: INFORMACIÓN DEL JUEGO --}}
             @if (isset($game))
-                <aside class="xl:col-span-4 2xl:col-span-3">
-                    <div
-                        class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl border border-gray-300 dark:border-gray-800 rounded-3xl p-6 sticky top-8 shadow-xl">
-                        <img src="{{ $game->cover_url }}" alt="Portada de {{ $game->title }}"
-                            class="w-full aspect-[3/4] object-cover rounded-2xl mb-6 shadow-lg border border-gray-300 dark:border-gray-700" />
-                        <h2 class="text-2xl font-black text-gray-900 dark:text-white leading-tight mb-2">
-                            {{ $game->title }}</h2>
-                        <a href="{{ route('games.show', $game->slug) }}"
-                            class="w-full mt-6 bg-gray-900 hover:bg-gray-800 text-white font-black px-6 py-3.5 rounded-xl transition-all uppercase tracking-widest text-sm flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            Ver Ficha
-                        </a>
-                    </div>
+                <aside class="xl:col-span-4 2xl:col-span-3 sticky top-8">
+                    <x-miscomponentes.game-widget :game="$game" />
                 </aside>
             @endif
         </div>
+        {{-- SPINNER DE CARGA --}}
+        <x-miscomponentes.loading-spinner variant="simple" wire:target="loadMore" />
 
     </x-miscomponentes.page-layout>
 

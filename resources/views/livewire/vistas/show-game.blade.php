@@ -153,7 +153,7 @@
                                 Multimedia
                             </h2>
                             <button
-                                class="bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/40 dark:hover:bg-cyan-800/60 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 shadow-sm">
+                                class="bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/40 dark:hover:bg-cyan-800/60 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                 <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Subir Captura
                             </button>
                         </div>
@@ -165,22 +165,34 @@
                         </div>
 
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" aria-label="Galería de imágenes">
+
                             @foreach (array_slice($game->screenshots, 0, 3) as $image)
-                                <div
-                                    class="aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 cursor-pointer hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors relative group shadow-sm">
-                                    <img src="{{ "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg" }}"
+                                @php
+                                    $imageUrl = "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg";
+                                    $highResUrl = "https://images.igdb.com/igdb/image/upload/t_1080p/$image.jpg";
+                                @endphp
+
+                                <div x-data @click="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
+                                    @keydown.enter="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
+                                    role="button" tabindex="0"
+                                    class="aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 cursor-pointer hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors relative group shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+
+                                    <img src="{{ $imageUrl }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        alt="Captura de pantalla de {{ $game->title }}" loading="lazy" />
+                                        alt="Captura del juego" loading="lazy" />
+
                                     <div class="absolute top-2 right-2">
                                         <span
                                             class="bg-white/90 dark:bg-[#1a1d27]/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
                                     </div>
                                 </div>
                             @endforeach
+
+                            {{-- BOTÓN VER TODAS --}}
                             <div
-                                class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-[#1a1d27] hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group">
+                                class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-[#1a1d27] hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group focus-within:ring-2 focus-within:ring-cyan-500">
                                 <a href="{{ route('gallery', $game->slug) }}"
-                                    class="flex items-center justify-center w-full h-full"
+                                    class="flex items-center justify-center w-full h-full focus:outline-none"
                                     aria-label="Ver todas las imágenes en la galería">
                                     <span
                                         class="text-[10px] md:text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 flex items-center gap-2 transition-colors duration-300">
@@ -190,6 +202,7 @@
                                     </span>
                                 </a>
                             </div>
+
                         </div>
                     </section>
                 </div>

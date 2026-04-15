@@ -1,5 +1,7 @@
 <div class="w-full max-w-sm bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col gap-4 transition-colors duration-300 shadow-sm dark:shadow-none"
     aria-labelledby="preview-images-heading">
+
+    {{-- CABECERA --}}
     <div class="flex justify-between items-end">
         <h2 id="preview-images-heading"
             class="text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2 transition-colors duration-300">
@@ -11,8 +13,10 @@
     </div>
 
     @if ($images->isNotEmpty())
-        {{-- Imagen Principal --}}
-        <div role="button" tabindex="0" aria-label="Ver captura destacada de {{ $images->first()->user->name }}"
+        {{-- IMAGEN PRINCIPAL --}}
+        <div x-data @click="$dispatch('open-image-detail', { imageId: {{ $images->first()->id }} })"
+            @keydown.enter="$dispatch('open-image-detail', { imageId: {{ $images->first()->id }} })" role="button"
+            tabindex="0" aria-label="Ver captura destacada de {{ $images->first()->user->name }}"
             class="relative w-full aspect-video rounded-xl overflow-hidden group cursor-pointer border border-gray-200 dark:border-gray-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-colors duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
             <img src="{{ Storage::url($images->first()->image_path) }}"
@@ -35,11 +39,13 @@
             </div>
         </div>
 
-        {{-- Grid de Miniaturas --}}
+        {{-- GRID DE MINIATURAS --}}
         <div class="grid grid-cols-3 gap-2" role="list">
             @foreach ($images->skip(1) as $item)
                 <div role="listitem">
-                    <div role="button" tabindex="0" aria-label="Ver captura adicional de la comunidad"
+                    <div x-data @click="$dispatch('open-image-detail', { imageId: {{ $item->id }} })"
+                        @keydown.enter="$dispatch('open-image-detail', { imageId: {{ $item->id }} })" role="button"
+                        tabindex="0" aria-label="Ver captura adicional de la comunidad"
                         class="relative aspect-square rounded-lg overflow-hidden group border border-gray-200 dark:border-gray-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 cursor-pointer transition-colors duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <img src="{{ Storage::url($item->image_path) }}" alt="Captura de pantalla de la comunidad"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
@@ -49,7 +55,7 @@
             @endforeach
         </div>
     @else
-        {{-- Estado Vacío --}}
+        {{-- ESTADO VACIO --}}
         <div class="flex flex-col items-center justify-center py-10 px-4 bg-gray-50 dark:bg-gray-950 border-2 border-gray-200 dark:border-gray-800 rounded-xl transition-colors duration-300"
             role="status">
             <i class="fa-regular fa-images text-3xl text-gray-300 dark:text-gray-700 mb-3" aria-hidden="true"></i>
@@ -61,6 +67,7 @@
         </div>
     @endif
 
+    {{-- ENLACE --}}
     <a href="{{ $gameSlug ? route('gallery', $gameSlug) : route('gallery') }}"
         class="group w-full bg-gray-50 dark:bg-gray-950 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 border border-gray-200 dark:border-gray-800 hover:border-cyan-200 dark:hover:border-cyan-800/50 text-cyan-700 dark:text-cyan-400 font-bold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-xs mt-1 focus:outline-none focus:ring-2 focus:ring-cyan-500">
         Explorar galería completa

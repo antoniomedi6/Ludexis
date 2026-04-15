@@ -42,15 +42,24 @@
 
             <main class="flex-1 h-full overflow-y-auto relative">
                 {{ $slot }}
+
+                <x-miscomponentes.footer />
+
             </main>
         </div>
-
     </div>
-
     @stack('modals')
     @livewireScripts
-    <x-miscomponentes.auth-modal />
+    {{-- <x-miscomponentes.auth-modal /> --}}
+
+    {{-- NOTIFICACIONES --}}
     <x-miscomponentes.alert />
+
+    {{-- MODAL DE IMAGENES SIMPLE --}}
+    <x-miscomponentes.image-modal />
+
+    {{-- MODAL DE DETALLE DE IMAGEN --}}
+    @livewire('utils.image-detail-modal')
 </body>
 
 </html>
