@@ -21,13 +21,13 @@
                         @endif
                     </div>
 
-                    @if (isset($aside))
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            {{ $aside }}
-                        </div>
-                    @endif
-                </div>
 
+                </div>
+                @if (isset($aside))
+                    <div class="flex sm:flex-row-reverse items-center gap-4">
+                        {{ $aside }}
+                    </div>
+                @endif
                 <div class="w-full">
                     {{ $slot }}
                 </div>

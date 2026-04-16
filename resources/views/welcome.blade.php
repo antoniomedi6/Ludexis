@@ -19,7 +19,7 @@
             </div>
 
             <div
-                class="relative max-w-7xl mx-auto px-6 py-20 md:py-28 flex flex-col md:flex-row items-center justify-between gap-12">
+                class="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28 flex flex-col md:flex-row items-center justify-between gap-12">
 
                 {{-- Textos --}}
                 <div class="max-w-xl relative z-10">
@@ -32,7 +32,7 @@
                         Lleva el control de lo que juegas.
                     </h1>
                     <p class="text-lg md:text-xl text-gray-700 dark:text-gray-400 mb-10 font-medium leading-relaxed">
-                        Explora nuestra base de datos sincronizada con IGDB, registra tus horas y lee reseñas ponderadas
+                        Explora nuestra base de datos, registra tus horas y lee reseñas ponderadas
                         sin review bombing.
                     </p>
 

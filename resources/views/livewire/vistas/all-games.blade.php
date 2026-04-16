@@ -8,7 +8,7 @@
                 <div class="relative" x-data="{ filtersOpen: false }">
                     <button @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 text-gray-900 dark:text-white px-5 py-3 rounded-xl text-xs tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-600 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
@@ -121,7 +121,7 @@
                     <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
                         aria-hidden="true"></i>
                     <select id="order-by" wire:model.live="orderBy"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 hover:bg-[#1f2937] dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
                         <option value="first_release_date">Más recientes</option>
                         <option value="rating">Puntuación Ludexis</option>
                     </select>
@@ -135,7 +135,7 @@
         {{-- LISTADO DE JUEGOS --}}
         <div class="relative min-h-[500px]">
             @if (count($games))
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 md:gap-8"
+                <div class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-8"
                     role="list">
                     @foreach ($games as $item)
                         <button type="button" wire:click="addToDb('{{ $item->slug }}')" role="listitem"
@@ -151,7 +151,7 @@
                             <div
                                 class="absolute inset-0 flex flex-col justify-between p-4 md:p-6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 group-focus:translate-y-0">
 
-                                <div class="flex justify-between items-start">
+                                <div class="flex justify-between items-start ">
                                     @if ($item->first_release_date && $item->first_release_date->isFuture())
                                         <span
                                             class="bg-gray-900/90 text-cyan-400 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest shadow-lg">

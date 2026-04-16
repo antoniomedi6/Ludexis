@@ -87,12 +87,12 @@
                                         class="bg-[#0f1117] border-gray-700 text-cyan-500 focus:ring-cyan-500 rounded cursor-pointer" />
                                     <span
                                         class="ms-2 text-xs text-gray-500 font-bold uppercase tracking-wider cursor-pointer select-none"
-                                        onclick="document.getElementById('remember_me').click()">{{ __('Remember me') }}</span>
+                                        onclick="document.getElementById('remember_me').click()">{{ __('Recuerdamé') }}</span>
                                 </div>
                                 @if (Route::has('password.request'))
                                     <a class="text-[10px] text-cyan-500 font-black uppercase tracking-widest hover:text-cyan-400 transition"
                                         href="{{ route('password.request') }}">
-                                        {{ __('Forgot?') }}
+                                        {{ __('¿Has olvidado tu contraseña?') }}
                                     </a>
                                 @endif
                             </div>

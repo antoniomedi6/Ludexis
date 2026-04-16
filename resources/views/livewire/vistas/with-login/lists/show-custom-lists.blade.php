@@ -9,17 +9,20 @@
     {{-- BARRA SUPERIOR: BUSCADOR Y ORDEN --}}
     <x-slot name="aside">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
-            <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
 
-                {{-- Buscador --}}
-                <div class="relative w-full sm:w-64">
-                    <label for="search-lists" class="sr-only">Buscar colección</label>
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
-                        aria-hidden="true"></i>
-                    <input id="search-lists" type="search" wire:model.live.debounce.300ms="search"
-                        placeholder="Buscar colección..."
-                        class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
-                </div>
+            {{-- Buscador --}}
+            <div class="relative w-full sm:w-64 shrink-0">
+                <label for="search-lists" class="sr-only">Buscar colección</label>
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                    aria-hidden="true"></i>
+                <input id="search-lists" type="search" wire:model.live.debounce.300ms="search"
+                    placeholder="Buscar colección..."
+                    class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+            </div>
+
+            {{-- Controles de Acción (Orden y Creación) --}}
+            {{-- RESOLUCIÓN RESPONSIVE: Cambio de flex-row a flex-col sm:flex-row para que el botón no aplaste el select en resoluciones móviles, evitando que el texto interno desaparezca. --}}
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
 
                 {{-- Orden --}}
                 <div class="relative group w-full sm:w-48">
@@ -27,7 +30,7 @@
                     <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
                         aria-hidden="true"></i>
                     <select id="order-lists" wire:model.live="orderBy"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
                         <option value="updated_at">Más recientes</option>
                         <option value="name">Alfabético</option>
                         <option value="games_count">Cantidad</option>
@@ -35,67 +38,71 @@
                     <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"
                         aria-hidden="true"></i>
                 </div>
+
+                <button type="button" @click="$wire.set('showCreateModal', true)"
+                    class="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm flex items-center justify-center gap-3 hover:-translate-y-1 shrink-0 w-full sm:w-auto focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                    <i class="fa-solid fa-folder-plus text-lg" aria-hidden="true"></i>
+                    Nueva Colección
+                </button>
             </div>
 
-            <button type="button" @click="$wire.set('showCreateModal', true)"
-                class="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm flex items-center justify-center gap-3 hover:-translate-y-1 shrink-0 w-full sm:w-auto focus:outline-none focus:ring-4 focus:ring-cyan-500">
-                <i class="fa-solid fa-folder-plus text-lg" aria-hidden="true"></i>
-                Nueva Colección
-            </button>
         </div>
     </x-slot>
 
     {{-- MODAL PARA CREAR LISTA --}}
-    <x-modal wire:model="showCreateModal" maxWidth="md">
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 mb-5 shadow-inner"
-                aria-hidden="true">
-                <i class="fa-solid fa-folder-plus text-3xl text-cyan-600 dark:text-cyan-400"></i>
-            </div>
-            <h3 id="modal-title"
-                class="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-none mb-2">
-                Nueva Colección
-            </h3>
-            <p class="text-gray-500 dark:text-gray-400 text-sm font-medium px-4">
-                Dale un nombre a tu lista para empezar a organizar tu biblioteca.
-            </p>
-        </div>
-
-        <form wire:submit.prevent="save" class="space-y-6" aria-labelledby="modal-title">
-            <div class="space-y-2">
-                <label for="cname"
-                    class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-widest pl-1">
-                    Nombre de la lista <span class="text-cyan-500" aria-hidden="true">*</span>
-                    <span class="sr-only">(obligatorio)</span>
-                </label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors duration-300 group-focus-within:text-cyan-500"
-                        aria-hidden="true">
-                        <i class="fa-solid fa-pen text-gray-400 group-focus-within:text-cyan-500 transition-colors"></i>
-                    </div>
-                    <input type="text" id="cname" wire:model="cForm.name" required aria-required="true"
-                        class="block w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 shadow-sm"
-                        placeholder="Ej: Joyas Ocultas, Backlog 2026..." autocomplete="off">
+    @if ($showCreateModal)
+        <x-modal wire:model="showCreateModal" maxWidth="md">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 mb-5 shadow-inner"
+                    aria-hidden="true">
+                    <i class="fa-solid fa-folder-plus text-3xl text-cyan-600 dark:text-cyan-400"></i>
                 </div>
-                @error('cForm.name')
-                    <span class="text-red-500 dark:text-red-400 text-xs font-bold pl-1"
-                        role="alert">{{ $message }}</span>
-                @enderror
+                <h3 id="modal-title"
+                    class="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-none mb-2">
+                    Nueva Colección
+                </h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm font-medium px-4">
+                    Dale un nombre a tu lista para empezar a organizar tu biblioteca.
+                </p>
             </div>
 
-            <div
-                class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6 border-t border-gray-100 dark:border-gray-800/80">
-                <button type="button" wire:click="cancel"
-                    class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-gray-500">
-                    Cancelar
-                </button>
-                <button type="submit"
-                    class="w-full sm:w-auto bg-cyan-600 hover:bg-cyan-500 text-white font-black px-8 py-3.5 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-cyan-500">
-                    Crear Lista
-                </button>
-            </div>
-        </form>
-    </x-modal>
+            <form wire:submit.prevent="save" class="space-y-6" aria-labelledby="modal-title">
+                <div class="space-y-2">
+                    <label for="cname"
+                        class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-widest pl-1">
+                        Nombre de la lista <span class="text-cyan-500" aria-hidden="true">*</span>
+                        <span class="sr-only">(obligatorio)</span>
+                    </label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors duration-300 group-focus-within:text-cyan-500"
+                            aria-hidden="true">
+                            <i
+                                class="fa-solid fa-pen text-gray-400 group-focus-within:text-cyan-500 transition-colors"></i>
+                        </div>
+                        <input type="text" id="cname" wire:model="cform.name" required aria-required="true"
+                            class="block w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 shadow-sm"
+                            placeholder="Ej: Joyas Ocultas, Backlog 2026..." autocomplete="off">
+                    </div>
+                    @error('cform.name')
+                        <span class="text-red-500 dark:text-red-400 text-xs font-bold pl-1"
+                            role="alert">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div
+                    class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6 border-t border-gray-100 dark:border-gray-800/80">
+                    <button type="button" wire:click="cancel"
+                        class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="w-full sm:w-auto bg-cyan-600 hover:bg-cyan-500 text-white font-black px-8 py-3.5 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                        Crear Lista
+                    </button>
+                </div>
+            </form>
+        </x-modal>
+    @endif
 
     {{-- GRID DE LISTAS --}}
     <div class="absolute top-0 right-0 w-full max-w-3xl h-[600px] bg-cyan-200/20 dark:bg-cyan-900/10 rounded-full blur-[120px] pointer-events-none z-0"
@@ -103,15 +110,15 @@
 
     <div class="relative z-10 w-full overflow-hidden min-h-[500px]">
         @if ($userLists->count())
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" role="list">
+            <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 items-stretch" role="list">
 
                 @foreach ($userLists as $list)
                     <div role="listitem">
                         <a href="{{ route('userLists.show', $list->id) }}" wire:navigate
-                            class="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-cyan-400 dark:hover:border-cyan-800 transition-all duration-300 group cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 block focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                            class="h-full bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden hover:border-cyan-400 dark:hover:border-cyan-800 transition-all duration-300 group cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col focus:outline-none focus:ring-4 focus:ring-cyan-500">
 
                             <div
-                                class="h-40 w-full bg-gray-100 dark:bg-gray-900 relative overflow-hidden flex items-center justify-center p-4">
+                                class="h-32 sm:h-40 w-full bg-gray-100 dark:bg-gray-900 relative overflow-hidden flex items-center justify-center p-4 shrink-0">
                                 <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"
                                     aria-hidden="true"></div>
 
@@ -124,52 +131,54 @@
 
                                         @if (isset($covers[1]))
                                             <img src="{{ $covers[1] }}" alt="Portada de fondo" loading="lazy"
-                                                class="absolute w-20 aspect-[3/4] rounded-lg object-cover shadow-lg -translate-x-12 opacity-60 rotate-[-10deg] group-hover:-translate-x-14 transition-transform duration-300">
+                                                class="absolute w-16 sm:w-20 aspect-[3/4] rounded-lg object-cover shadow-lg -translate-x-10 sm:-translate-x-12 opacity-60 rotate-[-10deg] group-hover:-translate-x-12 sm:group-hover:-translate-x-14 transition-transform duration-300">
                                         @endif
 
                                         @if (isset($covers[2]))
                                             <img src="{{ $covers[2] }}" alt="Portada de fondo" loading="lazy"
-                                                class="absolute w-20 aspect-[3/4] rounded-lg object-cover shadow-lg translate-x-12 opacity-60 rotate-[10deg] group-hover:translate-x-14 transition-transform duration-300">
+                                                class="absolute w-16 sm:w-20 aspect-[3/4] rounded-lg object-cover shadow-lg translate-x-10 sm:translate-x-12 opacity-60 rotate-[10deg] group-hover:translate-x-12 sm:group-hover:translate-x-14 transition-transform duration-300">
                                         @endif
 
                                         @if (isset($covers[0]))
                                             <img src="{{ $covers[0] }}" alt="Portada principal" loading="lazy"
-                                                class="relative z-10 w-24 aspect-[3/4] rounded-lg object-cover shadow-xl border border-gray-700 group-hover:scale-105 transition-transform duration-300">
+                                                class="relative z-10 w-20 sm:w-24 aspect-[3/4] rounded-lg object-cover shadow-xl border border-gray-700 group-hover:scale-105 transition-transform duration-300">
                                         @endif
                                     </div>
                                 @else
-                                    <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
                                         aria-hidden="true">
                                         <i
-                                            class="fa-solid fa-ghost text-2xl text-gray-400 dark:text-gray-600 group-hover:text-cyan-500 transition-colors"></i>
+                                            class="fa-solid fa-ghost text-xl sm:text-2xl text-gray-400 dark:text-gray-600 group-hover:text-cyan-500 transition-colors"></i>
                                     </div>
                                 @endif
                             </div>
 
-                            <div class="p-5 flex-1 flex flex-col border-t border-gray-100 dark:border-gray-800">
+                            <div class="p-4 sm:p-5 flex-1 flex flex-col border-t border-gray-100 dark:border-gray-800">
                                 <h3
-                                    class="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight line-clamp-1 group-hover:text-cyan-500 transition-colors mb-1">
+                                    class="text-base sm:text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight group-hover:text-cyan-500 transition-colors mb-2 break-words">
                                     {{ $list->name }}
                                 </h3>
 
-                                <div class="flex items-center justify-between mt-auto pt-4">
+                                <div
+                                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-auto pt-4 border-t border-gray-50 dark:border-gray-800/50">
                                     <div class="flex items-center gap-2">
                                         @if ($list->games_count > 0)
                                             <span
-                                                class="text-xs font-black text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-md"
+                                                class="text-[10px] sm:text-xs font-black text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 sm:px-2.5 py-1 rounded-md"
                                                 aria-label="{{ $list->games_count }} juegos">
-                                                {{ $list->games_count }} <i class="fa-solid fa-gamepad ml-1 text-xs"
+                                                {{ $list->games_count }} <i
+                                                    class="fa-solid fa-gamepad ml-1 text-[10px] sm:text-xs"
                                                     aria-hidden="true"></i>
                                             </span>
                                         @else
                                             <span
-                                                class="text-xs font-black text-gray-400 dark:text-gray-500 px-1 py-1">
+                                                class="text-[10px] sm:text-xs font-black text-gray-400 dark:text-gray-500 px-1 py-1">
                                                 Lista vacía
                                             </span>
                                         @endif
                                     </div>
                                     <time datetime="{{ $list->updated_at }}"
-                                        class="text-xs font-bold uppercase tracking-widest text-gray-400"
+                                        class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400"
                                         aria-label="Actualizado el {{ \Carbon\Carbon::parse($list->updated_at)->translatedFormat('d de F') }}">
                                         {{ \Carbon\Carbon::parse($list->updated_at)->translatedFormat('d M') }}
                                     </time>
@@ -181,14 +190,14 @@
 
                 <div role="listitem">
                     <button type="button" @click="$wire.set('showCreateModal', true)"
-                        class="w-full border-2 border-dashed border-gray-300 dark:border-gray-800 rounded-2xl p-6 hover:border-cyan-400 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/10 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[260px] group shadow-sm focus:outline-none focus:ring-4 focus:ring-cyan-500">
-                        <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/30 transition-all duration-300"
+                        class="h-full w-full border-2 border-dashed border-gray-300 dark:border-gray-800 rounded-2xl p-4 sm:p-6 hover:border-cyan-400 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/10 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[220px] sm:min-h-[260px] group shadow-sm focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/30 transition-all duration-300"
                             aria-hidden="true">
                             <i
-                                class="fa-solid fa-folder-plus text-xl text-gray-400 dark:text-gray-500 group-hover:text-cyan-500 transition-colors"></i>
+                                class="fa-solid fa-folder-plus text-lg sm:text-xl text-gray-400 dark:text-gray-500 group-hover:text-cyan-500 transition-colors"></i>
                         </div>
                         <h3
-                            class="text-lg font-black text-gray-600 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors uppercase">
+                            class="text-sm sm:text-lg font-black text-gray-600 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors uppercase text-center">
                             Nueva Lista
                         </h3>
                     </button>

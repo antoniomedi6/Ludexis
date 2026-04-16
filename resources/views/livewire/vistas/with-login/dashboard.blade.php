@@ -1,6 +1,8 @@
-<x-miscomponentes.page-layout title1="Resumen" title2="General" :subtitle="'Bienvenido de nuevo, Antonio. Tienes ' .
-    $userGames->where('pivot.status', 'playing')->count() .
-    ' juegos activos.'">
+<x-miscomponentes.page-layout title1="Resumen" title2="General">
+    <x-slot name="subtitle">
+        Bienvenido de nuevo, {{ Auth()->user()->name }}. Tienes
+        {{ $userGames->where('pivot.status', 'playing')->count() }} juegos activos.
+    </x-slot>
     <x-slot>
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 w-full">
 
@@ -69,7 +71,8 @@
                         <h2 id="active-games-heading"
                             class="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-3 transition-colors duration-300">
                             <div class="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_#06b6d4] animate-pulse"
-                                aria-hidden="true"></div>
+                                aria-hidden="true">
+                            </div>
                             Activos en este momento
                         </h2>
 

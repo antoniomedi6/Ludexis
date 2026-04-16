@@ -11,10 +11,11 @@ class ShowCustomLists extends Component
 {
     use WithPagination;
 
-    public $showCreateModal = false;
-    public CustomListForm $cform;
+    public bool $showCreateModal = false;
     public string $search = '';
     public string $orderBy = 'updated_at';
+
+    public CustomListForm $cform;
 
     public function render()
     {
