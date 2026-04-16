@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'admin',
-                'password' => Hash::make('contraseñadificil'),
+                'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
                 'role' => 'admin',
                 'xp' => 0,
                 'is_private' => false,
