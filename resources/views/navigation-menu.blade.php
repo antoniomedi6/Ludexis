@@ -1,16 +1,21 @@
 <nav x-data="{ open: false }"
     class="fixed w-full top-0 left-0 z-50 bg-white/90 dark:bg-[#0f1117]/90 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center gap-8">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center gap-4 md:gap-8">
 
-        <div class="flex items-center">
+        {{-- LOGO --}}
+        <div class="flex items-center shrink-0">
             <a href="{{ route('welcome') }}" wire:navigate
                 class="text-2xl font-black text-cyan-600 dark:text-cyan-500 tracking-tighter shrink-0 transition-colors duration-300">
                 <x-miscomponentes.application-logo-name />
             </a>
         </div>
 
-        @livewire('utils.search-games')
+        {{-- BUSCADOR --}}
+        <div class="flex-1 w-full max-w-2xl px-2 md:px-6">
+            @livewire('utils.search-games')
+        </div>
 
+        {{-- ACCIONES DE USUARIO --}}
         <div class="flex items-center gap-4 shrink-0">
             @guest
                 @if (Route::has('login'))
@@ -85,6 +90,7 @@
                 </div>
             @endauth
 
+            {{-- BOTÓN HAMBURGUESA --}}
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-100 dark:hover:bg-[#1a1d27] focus:outline-none transition-colors duration-300">
@@ -100,6 +106,7 @@
         </div>
     </div>
 
+    {{-- MENÚ RESPONSIVE --}}
     <div :class="{ 'block': open, 'hidden': !open }"
         class="hidden sm:hidden bg-white dark:bg-[#0f1117] border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
         <div class="pt-2 pb-3 space-y-1">
