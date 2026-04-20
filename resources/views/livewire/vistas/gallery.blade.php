@@ -26,50 +26,52 @@
                         </div>
 
                         {{-- Filtro de Juegos --}}
-                        <div x-data="{ searchGame: '' }">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3"
-                                id="filter-games-heading">Juegos</h3>
-                            <label for="search-games-filter" class="sr-only">Buscar juego en filtros</label>
-                            <input id="search-games-filter" type="search" x-model="searchGame" placeholder="Buscar..."
-                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white mb-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-gray-400 shadow-inner">
+                        @unless (isset($this->game))
+                            <div x-data="{ searchGame: '' }">
+                                <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3"
+                                    id="filter-games-heading">Juegos</h3>
+                                <label for="search-games-filter" class="sr-only">Buscar juego en filtros</label>
+                                <input id="search-games-filter" type="search" x-model="searchGame" placeholder="Buscar..."
+                                    class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white mb-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-gray-400 shadow-inner">
 
-                            <div class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar" role="group"
-                                aria-labelledby="filter-games-heading">
-                                @foreach ($allGames as $g)
-                                    <label
-                                        x-show="(searchGame.trim() !== '' && '{{ strtolower(str_replace('\'', '\\\'', $g->title)) }}'.includes(searchGame.trim().toLowerCase())) || $wire.gamesFilter.includes({{ $g->id }})"
-                                        class="flex items-center gap-2.5 cursor-pointer group">
-                                        <input type="checkbox" wire:model.live="gamesFilter" value="{{ $g->id }}"
-                                            class="w-4 h-4 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-cyan-600 focus:ring-cyan-500">
-                                        <span
-                                            class="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{{ $g->title }}</span>
-                                    </label>
-                                @endforeach
+                                <div class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar" role="group"
+                                    aria-labelledby="filter-games-heading">
+                                    @foreach ($allGames as $g)
+                                        <label
+                                            x-show="(searchGame.trim() !== '' && '{{ strtolower(str_replace('\'', '\\\'', $g->title)) }}'.includes(searchGame.trim().toLowerCase())) || $wire.gamesFilter.includes({{ $g->id }})"
+                                            class="flex items-center gap-2.5 cursor-pointer group">
+                                            <input type="checkbox" wire:model.live="gamesFilter" value="{{ $g->id }}"
+                                                class="w-4 h-4 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-cyan-600 focus:ring-cyan-500">
+                                            <span
+                                                class="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{{ $g->title }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
+
+                            <div class="space-y-4 border-t border-gray-200 dark:border-gray-800 pt-4"></div>
+                        @endunless
+
+                        {{-- Filtro Spoilers --}}
+                        <div>
+                            <label for="filter-spoilers" class="sr-only">Filtrar por spoilers</label>
+                            <select id="filter-spoilers" wire:model.live="spoilerFilter"
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                                <option value="all">Todos los Spoilers</option>
+                                <option value="hide">Ocultar Spoilers</option>
+                                <option value="only">Solo Spoilers</option>
+                            </select>
                         </div>
 
-                        <div class="space-y-4 border-t border-gray-200 dark:border-gray-800 pt-4">
-                            {{-- Filtro Spoilers --}}
-                            <div>
-                                <label for="filter-spoilers" class="sr-only">Filtrar por spoilers</label>
-                                <select id="filter-spoilers" wire:model.live="spoilerFilter"
-                                    class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                                    <option value="all">Todos los Spoilers</option>
-                                    <option value="hide">Ocultar Spoilers</option>
-                                    <option value="only">Solo Spoilers</option>
-                                </select>
-                            </div>
-
-                            {{-- Filtro Fechas --}}
-                            <div>
-                                <label for="filter-dates" class="sr-only">Filtrar por fecha</label>
-                                <select id="filter-dates" wire:model.live="dateFilter"
-                                    class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                                    <option value="all">Cualquier fecha</option>
-                                    <option value="24h">Últimas 24h</option>
-                                    <option value="week">Esta semana</option>
-                                </select>
-                            </div>
+                        {{-- Filtro Fechas --}}
+                        <div>
+                            <label for="filter-dates" class="sr-only">Filtrar por fecha</label>
+                            <select id="filter-dates" wire:model.live="dateFilter"
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2.5 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                                <option value="all">Cualquier fecha</option>
+                                <option value="24h">Últimas 24h</option>
+                                <option value="week">Esta semana</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -227,7 +229,7 @@
     </x-miscomponentes.page-layout>
 
     {{-- MODAL DE SUBIDA --}}
-    <x-modal wire:model="showingModal" maxWidth="3xl">
+    <x-modal wire:model="showingModal" maxWidth="3xl" @closed="$wire.cancel()">
         <div class="mb-10">
             <h2 id="modal-upload-title"
                 class="text-3xl font-black text-gray-900 dark:text-white tracking-tighter uppercase flex items-center gap-4">
@@ -279,25 +281,28 @@
             </div>
 
             <div class="flex flex-col justify-between h-full">
-                {{-- Selector de Juego --}}
-                <div>
-                    <label for="game-select"
-                        class="block text-sm font-black uppercase tracking-widest text-gray-700 dark:text-gray-400 mb-3">Juego
-                        relacionado</label>
-                    <select id="game-select" wire:model="cimage.game_id" aria-required="true"
-                        class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl p-4 text-sm font-bold focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-inner">
-                        <option value="">Selecciona un juego...</option>
-                        @foreach ($allGames as $game)
-                            <option value="{{ $game->id }}">{{ $game->title }}</option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="cimage.game_id"
-                        class="mt-2 text-red-600 dark:text-red-500 text-sm font-bold" />
-                </div>
+                {{-- Selector de Juego (solo si no hay un juego específico en la galería) --}}
+                @unless (isset($this->game))
+                    <div>
+                        <label for="game-select"
+                            class="block text-sm font-black uppercase tracking-widest text-gray-700 dark:text-gray-400 mb-3">Juego
+                            relacionado</label>
+                        <select id="game-select" wire:model="cimage.game_id" aria-required="true"
+                            class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl p-4 text-sm font-bold focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-inner">
+                            <option value="">Selecciona un juego...</option>
+                            @foreach ($allGames as $game)
+                                <option value="{{ $game->id }}">{{ $game->title }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="cimage.game_id" />
+                    </div>
+                @else
+                    <x-miscomponentes.game-widget :game="$game" />
+                @endunless
 
                 {{-- Botones de Acción --}}
                 <div class="flex gap-4 mt-8">
-                    <button type="button" @click="$wire.set('showingModal', false)"
+                    <button type="button" wire:click="cancel"
                         class="flex-1 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 font-black py-4 rounded-xl uppercase text-sm tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
                         Cancelar
                     </button>
@@ -310,7 +315,8 @@
         </form>
     </x-modal>
 
-    <x-miscomponentes.loading-spinner variant="modal" wire:target="save, gamesFilter, spoilerFilter, dateFilter">
+    <x-miscomponentes.loading-spinner variant="modal"
+        wire:target="save, gamesFilter, spoilerFilter, dateFilter, orderBy">
         Actualizando galería...
     </x-miscomponentes.loading-spinner>
 </div>

@@ -4,16 +4,20 @@ namespace App\Services;
 
 use App\Models\User;
 
+/**
+ * Servicio encargado de gestionar el sistema de niveles y experiencia de la plataforma.
+ * Define la tabla de progresión de rangos, evalúa el estado actual de un usuario
+ * teniendo en cuenta sus roles fijos, y gestiona el incremento de XP junto con
+ * los ascensos automáticos en la base de datos (ej. paso a Veterano).
+ */
 class ExperienceService
 {
-    // Valores de experiencia otorgados por cada acción
+    // CONFIGURACIÓN DE XP
     const XP_PER_LIKE_RECEIVED = 10;
     const XP_PER_IMAGE = 30;
     const XP_PER_REVIEW = 50;
 
-    /**
-     * Define los rangos visuales para el camino de un usuario estándar.
-     */
+    // DEFINICIÓN DE RANGOS (CAMINO ESTÁNDAR)
     public static function getLibraryRanks(): array
     {
         return [
@@ -25,12 +29,10 @@ class ExperienceService
         ];
     }
 
-    /**
-     * Determina el rango actual del usuario evaluando primero su rol en base de datos.
-     */
+    // EVALUACIÓN DE RANGO ACTUAL
     public static function getCurrentRank(User $user): array
     {
-        // Prioridad para roles otorgados manualmente o por ascenso
+        // 1. Roles con prioridad
         if ($user->role === 'admin') {
             return ['name' => 'Administrador', 'xp_required' => 0, 'color' => 'text-red-600 dark:text-red-500'];
         }
@@ -43,7 +45,7 @@ class ExperienceService
             return ['name' => 'Veterano', 'xp_required' => 10000, 'color' => 'text-yellow-600 dark:text-yellow-500'];
         }
 
-        // Progresión por XP para el rol 'standard'
+        // 2. Progresión por XP
         $ranks = self::getLibraryRanks();
         $currentRank = $ranks[0];
 
@@ -58,9 +60,7 @@ class ExperienceService
         return $currentRank;
     }
 
-    /**
-     * Encuentra el siguiente escalón en la progresión.
-     */
+    // CÁLCULO DE SIGUIENTE RANGO
     public static function getNextRank(User $user): ?array
     {
         if (in_array($user->role, ['admin', 'journalist', 'veteran'])) {
@@ -78,9 +78,7 @@ class ExperienceService
         return null;
     }
 
-    /**
-     * Suma XP al usuario y gestiona el cambio de rol a Veterano.
-     */
+    // SUMA DE XP Y CONTROL DE ASCENSO
     public static function addXp(User $user, int $amount): bool
     {
         if (in_array($user->role, ['admin', 'journalist'])) {
@@ -90,7 +88,6 @@ class ExperienceService
         $user->increment('xp', $amount);
         $user->refresh();
 
-        // Umbral de ascenso oficial en base de datos
         if ($user->role === 'standard' && $user->xp >= 10000) {
             $user->update(['role' => 'veteran']);
             return true;

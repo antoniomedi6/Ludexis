@@ -1,8 +1,8 @@
 <div
-    class="min-h-screen flow-root bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans relative transition-colors duration-300">
+    class="min-h-screen flow-root bg-gray-50 dark:bg-darkbox-main text-gray-900 dark:text-gray-100 font-sans relative transition-colors duration-300">
 
     {{-- FONDO DIFUMINADO --}}
-    <div class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden bg-white dark:bg-[#0f1117] transition-colors duration-300 pointer-events-none select-none"
+    <div class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden bg-white dark:bg-darkbox-main transition-colors duration-300 pointer-events-none select-none"
         aria-hidden="true">
         <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ $game->screenshots[0] ?? 'sc8c26' }}.jpg"
             class="w-full h-full object-cover opacity-10 dark:opacity-30 blur-md scale-105 transition-opacity duration-300 pointer-events-none select-none"
@@ -12,7 +12,7 @@
 
     {{-- BUSCADOR SUPERIOR --}}
     <section
-        class="h-20 flex items-center justify-between px-8 shrink-0 bg-white/80 dark:bg-[#0f1117]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 z-50 relative">
+        class="h-20 flex items-center justify-between px-8 shrink-0 bg-white/80 dark:bg-darkbox-main/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 z-50 relative">
         @livewire('utils.search-games')
     </section>
 
@@ -20,8 +20,10 @@
     <section class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
+            {{-- COLUMNA PRINCIPAL --}}
             <div class="lg:col-span-8 flex flex-col gap-10">
 
+                {{-- CABECERA --}}
                 <div class="flex flex-col sm:flex-row gap-8 items-start">
                     <img src="{{ $game->cover_url }}"
                         class="w-48 rounded-2xl shadow-xl dark:shadow-[0_20px_40px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
@@ -48,7 +50,7 @@
                         <div class="flex flex-wrap gap-2 mb-8" aria-label="Géneros del juego">
                             @foreach ($game->genres as $genre)
                                 <span
-                                    class="text-gray-600 dark:text-gray-300 text-[10px] font-bold uppercase tracking-wider border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1d27] px-3 py-1.5 rounded-xl transition-colors duration-300 shadow-sm dark:shadow-none">
+                                    class="text-gray-600 dark:text-gray-300 text-[10px] font-bold uppercase tracking-wider border border-gray-300 dark:border-gray-700 bg-white dark:bg-darkbox-card px-3 py-1.5 rounded-xl transition-colors duration-300 shadow-sm dark:shadow-none">
                                     {{ $genre->name }}
                                 </span>
                             @endforeach
@@ -132,7 +134,7 @@
 
                 {{-- SINOPSIS --}}
                 <div
-                    class="bg-white dark:bg-gradient-to-br dark:from-[#1a1d27] dark:to-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-8 shadow-sm transition-colors duration-300">
+                    class="bg-white dark:bg-gradient-to-br dark:from-darkbox-card dark:to-darkbox-main border border-gray-200 dark:border-gray-800 rounded-[2rem] p-8 shadow-sm transition-colors duration-300">
                     <h2
                         class="text-xs font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-4 transition-colors duration-300">
                         Sinopsis
@@ -159,7 +161,7 @@
                         </div>
 
                         <div
-                            class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4 relative shadow-sm transition-colors duration-300 bg-gray-100 dark:bg-[#1a1d27]">
+                            class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4 relative shadow-sm transition-colors duration-300 bg-gray-100 dark:bg-darkbox-card">
                             <iframe class="absolute top-0 left-0 w-full h-full z-10" src="{{ $game->video_url }}"
                                 frameborder="0" allowfullscreen title="Tráiler de {{ $game->title }}"></iframe>
                         </div>
@@ -183,14 +185,14 @@
 
                                     <div class="absolute top-2 right-2">
                                         <span
-                                            class="bg-white/90 dark:bg-[#1a1d27]/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
+                                            class="bg-white/90 dark:bg-darkbox-card/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
                                     </div>
                                 </div>
                             @endforeach
 
-                            {{-- BOTÓN VER TODAS --}}
+                            {{-- BOTÓN GALERIA --}}
                             <div
-                                class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-[#1a1d27] hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group focus-within:ring-2 focus-within:ring-cyan-500">
+                                class="aspect-video rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-darkbox-card hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center justify-center shadow-sm group focus-within:ring-2 focus-within:ring-cyan-500">
                                 <a href="{{ route('gallery', $game->slug) }}"
                                     class="flex items-center justify-center w-full h-full focus:outline-none"
                                     aria-label="Ver todas las imágenes en la galería">
@@ -206,26 +208,29 @@
                         </div>
                     </section>
                 </div>
+
+                {{-- RESEÑAS --}}
+                <div class="w-full mt-4">
+                    @livewire('utils.preview-reviews', ['gameId' => $game->id])
+                </div>
+
             </div>
 
+            {{-- BARRA LATERAL --}}
             <div class="lg:col-span-4">
+
                 {{-- GAMEREGISTRYCARD --}}
                 @auth
                     @livewire('utils.game-registry-card', ['gameId' => $game->id])
                     @livewire('utils.review-modal')
                 @endauth
 
+                {{-- GALERÍA IMÁGENES --}}
                 <div class="mt-14">
                     @livewire('utils.preview-images', ['gameSlug' => $game->slug])
                 </div>
             </div>
 
         </div>
-
-        {{-- REVIEWS --}}
-        <div class="w-full max-w-5xl mx-auto mt-16">
-            @livewire('utils.preview-reviews', ['gameId' => $game->id])
-        </div>
-
     </section>
 </div>

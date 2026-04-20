@@ -4,10 +4,11 @@ namespace App\Livewire\Utils;
 
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use App\Services\ExperienceService;
 
 class LikeButton extends Component
 {
-    // {{-- SYNOPSIS: Aceptamos cualquier modelo que use el trait Likeable (GameUser, Image, etc.) --}}
     public Model $model;
 
     public bool $isLiked = false;
@@ -17,21 +18,27 @@ class LikeButton extends Component
     {
         $this->model = $model;
 
-        // Inicializamos el estado para no hacer consultas extra en la vista
-        if (auth()->check()) {
-            $this->isLiked = $this->model->isLikedBy(auth()->user());
+        if (Auth::check()) {
+            $this->isLiked = $this->model->isLikedBy(Auth::user());
         }
-        $this->likesCount = $this->model->likesCount;
+
+        $this->likesCount = $this->model->likes_count;
     }
 
     public function toggleLike()
     {
-        // Alternamos el like en la base de datos
-        $this->model->toggleLike(auth()->user());
+        if (!Auth::check())
+            return redirect()->route('login');
 
-        // Actualizamos el estado local (sin recargar de base de datos para que sea instantáneo)
+        $user = Auth::user();
+        $this->authorize('interact-with-model', $this->model);
+
+        $this->model->toggleLike($user);
+
         $this->isLiked = !$this->isLiked;
-        $this->likesCount = $this->isLiked ? $this->likesCount + 1 : $this->likesCount - 1;
+        $this->likesCount = $this->model->likes()->count();
+
+        $this->dispatch('like-toggled', modelId: $this->model->id, likesCount: $this->likesCount);
     }
 
     public function render()

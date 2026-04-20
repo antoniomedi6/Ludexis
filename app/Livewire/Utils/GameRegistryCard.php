@@ -13,6 +13,7 @@ class GameRegistryCard extends Component
 {
     public GameRegistryForm $form;
     public Game $game;
+    public ?GameUser $gameUser = null;
 
     public function mount($gameId)
     {
@@ -21,17 +22,17 @@ class GameRegistryCard extends Component
         $this->form->game_id = $this->game->id;
         $this->form->user_id = Auth::id();
 
-        $register = GameUser::where('user_id', Auth::id())
+        $this->gameUser = GameUser::where('user_id', Auth::id())
             ->where('game_id', $this->game->id)
             ->first();
 
-        if ($register) {
-            $this->form->status = $register->status;
-            $this->form->rating = $register->rating;
-            $this->form->review = $register->review;
-            $this->form->hours_finish = $register->hours_finish;
-            $this->form->hours_completed = $register->hours_completed;
-            $this->form->drop_reason = $register->drop_reason;
+        if ($this->gameUser) {
+            $this->form->status = $this->gameUser->status;
+            $this->form->rating = $this->gameUser->rating;
+            $this->form->review = $this->gameUser->review;
+            $this->form->hours_finish = $this->gameUser->hours_finish;
+            $this->form->hours_completed = $this->gameUser->hours_completed;
+            $this->form->drop_reason = $this->gameUser->drop_reason;
         } else {
             $this->form->status = null;
         }
@@ -41,8 +42,25 @@ class GameRegistryCard extends Component
     {
         $this->form->saveForm();
 
-        GameStatusEvent::dispatch(Auth::user(), $this->game, $this->form->status);
+        $this->gameUser = GameUser::where('user_id', Auth::id())
+            ->where('game_id', $this->game->id)
+            ->first();
 
+        if ($this->form->status) {
+            GameStatusEvent::dispatch(Auth::user(), $this->game, $this->form->status);
+        }
+
+        $this->dispatch('evtSaved');
+    }
+
+    public function toggleStatus()
+    {
+        $this->authorize('delete', $this->gameUser);
+        if ($this->gameUser) {
+            $this->gameUser->delete();
+            reset($this->gameUser);
+        }
+        $this->form->reset();
         $this->dispatch('evtSaved');
     }
 

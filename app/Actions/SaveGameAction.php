@@ -9,16 +9,24 @@ use App\Models\Company;
 use Carbon\Carbon;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
 
+/**
+ * Action que se encarga de obtener y guardar un videojuego en el sistema.
+ * Verifica si el juego existe en la base de datos local mediante su slug;
+ * en caso negativo, realiza una petición a la API de IGDB, formatea la información
+ * y crea el registro sincronizando sus relaciones (géneros, compañías y plataformas).
+ */
 class SaveGameAction
 {
     public function __invoke(string $slug): ?Game
     {
+        // COMPROBACIÓN LOCAL
         $localGame = Game::where('slug', $slug)->first();
 
         if ($localGame) {
             return $localGame;
         }
 
+        // PETICIÓN A IGDB
         $igdbGame = IGDBGame::select([
             'id',
             'name',
@@ -43,6 +51,7 @@ class SaveGameAction
             return null;
         }
 
+        // FORMATEO DE DATOS
         $coverUrl = null;
         $url = data_get($igdbGame, 'cover.url');
         if ($url) {
@@ -78,6 +87,7 @@ class SaveGameAction
             }
         }
 
+        // CREACIÓN DEL JUEGO
         $game = Game::create([
             'igdb_id' => $igdbGame->id,
             'title' => $igdbGame->name,
@@ -91,6 +101,7 @@ class SaveGameAction
             'screenshots' => !empty($screenshotHashes) ? $screenshotHashes : null
         ]);
 
+        // SINCRONIZACIÓN DE GÉNEROS
         $genres = data_get($igdbGame, 'genres', []);
         if (!empty($genres)) {
             $genreIds = [];
@@ -104,6 +115,7 @@ class SaveGameAction
             $game->genres()->sync($genreIds);
         }
 
+        // SINCRONIZACIÓN DE COMPAÑÍAS
         $companies = data_get($igdbGame, 'involved_companies', []);
         if (!empty($companies)) {
             $companiesPivotData = [];
@@ -141,6 +153,7 @@ class SaveGameAction
             $game->companies()->sync($companiesPivotData);
         }
 
+        // SINCRONIZACIÓN DE PLATAFORMAS
         $platforms = data_get($igdbGame, 'platforms', []);
         if (!empty($platforms)) {
             $platformIds = [];

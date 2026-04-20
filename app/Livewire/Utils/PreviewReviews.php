@@ -3,38 +3,61 @@
 namespace App\Livewire\Utils;
 
 use App\Models\GameUser;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PreviewReviews extends Component
 {
     public ?int $gameId = null;
+    public int $amount = 3;
+    public string $sort = 'newest';
+    public string $filter = 'all';
 
     public function mount(?int $gameId = null)
     {
         $this->gameId = $gameId;
     }
+
+    public function loadMore()
+    {
+        $this->amount += 3;
+    }
+
     public function render()
     {
-        if (empty($gameId)) {
-            $reviews = Cache::remember('last_reviews', 300, function () {
-                return GameUser::with(['user:id,name,role', 'game:id,title,cover_url,slug'])
-                    ->whereNotNull('review')
-                    ->latest()
-                    ->limit(3)
-                    ->get(['id', 'rating', 'review', 'user_id', 'game_id', 'created_at']);
-            });
-        } else {
-            $reviews = Cache::remember("last_reviews_$this->gameId", 300, function () {
-                return GameUser::with(['user:id,name,role', 'game:id,title,cover_url,slug'])
-                    ->where('game_id', $this->gameId)
-                    ->whereNotNull('review')
-                    ->latest()
-                    ->limit(3)
-                    ->get(['id', 'rating', 'review', 'user_id', 'game_id', 'created_at']);
-            });
+        $query = GameUser::with(['user:id,name,role,profile_photo_path', 'game:id,title,cover_url,slug'])
+            ->whereNotNull('review');
+
+        if ($this->gameId) {
+            $query->where('game_id', $this->gameId);
         }
 
-        return view('livewire.utils.preview-reviews', compact('reviews'));
+        // FILTROS
+        match ($this->filter) {
+            'positive' => $query->where('rating', '>=', 7),
+            'mixed' => $query->whereBetween('rating', [4, 6]),
+            'negative' => $query->where('rating', '<=', 3),
+            default => null,
+        };
+
+        // ORDENACIÓN
+        match ($this->sort) {
+            'newest' => $query->latest('updated_at'),
+            'oldest' => $query->oldest('updated_at'),
+            'highest' => $query->orderByDesc('rating')->latest('updated_at'),
+            'lowest' => $query->orderBy('rating')->latest('updated_at'),
+            default => $query->latest('updated_at'),
+        };
+
+        $totalCount = $query->count();
+        $reviews = $query->limit($this->amount)->get();
+
+        if (Auth::check() && $this->sort === 'newest' && $this->filter === 'all') {
+            $reviews = $reviews->sortByDesc(function ($review) {
+                return $review->user_id === Auth::id();
+            })->values();
+        }
+
+        return view('livewire.utils.preview-reviews', compact('reviews', 'totalCount'));
     }
 }

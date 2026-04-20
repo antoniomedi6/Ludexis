@@ -5,6 +5,7 @@ namespace App\Livewire\Vistas;
 use App\Livewire\Forms\ImageForm;
 use App\Models\Game;
 use App\Models\Image;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 class Gallery extends Component
@@ -25,6 +26,7 @@ class Gallery extends Component
     {
         if ($slug) {
             $this->game = Game::where('slug', $slug)->firstOrFail();
+            $this->cimage->game_id = $this->game->id;
         }
     }
 
@@ -81,6 +83,7 @@ class Gallery extends Component
     public function cancel()
     {
         $this->cimage->cancelForm();
+        $this->showingModal = false;
     }
 
 

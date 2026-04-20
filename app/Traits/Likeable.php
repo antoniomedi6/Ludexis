@@ -5,15 +5,20 @@ namespace App\Traits;
 use App\Models\Like;
 use App\Models\User;
 
+/**
+ * Trait reutilizable para implementar relaciones polimórficas de "Me gusta" (Likes).
+ * Permite que cualquier modelo (Imágenes, Reseñas, etc.) pueda recibir interacciones
+ * compartiendo la misma tabla en la base de datos y la misma lógica de negocio.
+ */
 trait Likeable
 {
-    // Relación polimórfica hacia la tabla likes
+    // RELACIÓN POLIMÓRFICA
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
     }
 
-    // Comprueba si un usuario ha dado like a este modelo
+    // VERIFICACIÓN DE ESTADO
     public function isLikedBy(?User $user = null): bool
     {
         $user = $user ?: auth()->user();
@@ -25,7 +30,7 @@ trait Likeable
         return $this->likes()->where('user_id', $user->id)->exists();
     }
 
-    // Alterna el like (si lo tiene lo quita, si no lo tiene lo pone) 
+    // ALTERNANCIA (TOGGLE)
     public function toggleLike(?User $user = null): void
     {
         $user = $user ?: auth()->user();
@@ -41,7 +46,7 @@ trait Likeable
         }
     }
 
-    // {{-- Obtiene el conteo total de likes --}}
+    // CONTEO
     public function getLikesCountAttribute(): int
     {
         return $this->likes()->count();

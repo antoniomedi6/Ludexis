@@ -1,11 +1,11 @@
 <form wire:submit.prevent="save" x-data="{ status: $wire.entangle('form.status') }">
 
     <div
-        class="sticky top-28 bg-white/95 dark:bg-[#151821]/95 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-colors duration-300 flex flex-col gap-8">
+        class="sticky top-28 bg-white/95 dark:bg-darkbox-card/95 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-colors duration-300 flex flex-col gap-8">
 
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-[0_5px_15px_rgba(6,182,212,0.4)]">
-                <img class="size-9" src="{{ asset('images/logo-tracker.png') }}" />
+                <img class="size-9" src="{{ asset('images/logo-tracker.png') }}" alt="Logo Tracker" />
             </div>
             <div>
                 <p
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 transition-colors duration-300 flex flex-col items-center shadow-inner dark:shadow-none relative"
+        <div class="bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 transition-colors duration-300 flex flex-col items-center shadow-inner dark:shadow-none relative"
             x-data="{ hoverRating: 0, rating: $wire.entangle('form.rating'), saved: false }">
 
             <span
@@ -65,7 +65,7 @@
 
             <div class="h-6 flex items-center justify-center">
                 <span
-                    class="text-xs font-black text-cyan-600 dark:text-cyan-400 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg shadow-sm"
+                    class="text-xs font-black text-cyan-600 dark:text-cyan-400 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg shadow-sm"
                     x-show="rating > 0 && status" x-text="Number(rating) + ' / 10'"></span>
 
                 <span class="text-xs font-bold text-gray-400 dark:text-gray-600"
@@ -94,65 +94,59 @@
                         ['val' => 'completed', 'label' => '100%', 'icon' => 'icons.completed'],
                         ['val' => 'paused', 'label' => 'En Pausa', 'icon' => 'icons.paused'],
                         ['val' => 'abandoned', 'label' => 'Abandonado', 'icon' => 'icons.abandoned'],
+                        [
+                            'val' => 'multiplayer',
+                            'label' => 'Multiplayer Frecuente',
+                            'icon' => 'icons.multiplayer',
+                            'col_span' => 'col-span-2',
+                            'color' =>
+                                'peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/30 peer-checked:border-blue-400 dark:peer-checked:border-blue-500 peer-checked:text-blue-700 dark:peer-checked:text-blue-400',
+                        ],
                     ];
                 @endphp
 
-                @foreach ($statuses as $status)
-                    <label class="cursor-pointer relative group" x-data="{ saved: false }">
-                        <input type="radio" name="status" class="peer hidden" value="{{ $status['val'] }}"
+                @foreach ($statuses as $st)
+                    @php
+                        $colorClass =
+                            $st['color'] ??
+                            'peer-checked:bg-gray-200 dark:peer-checked:bg-gray-800 peer-checked:border-gray-400 dark:peer-checked:border-gray-600 peer-checked:text-gray-900 dark:peer-checked:text-white';
+                        $colSpan = $st['col_span'] ?? '';
+                    @endphp
+
+                    <label class="cursor-pointer relative group {{ $colSpan }}" x-data="{ saved: false }">
+                        <input type="radio" name="status" class="peer hidden" value="{{ $st['val'] }}"
                             wire:model="form.status"
                             @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })" />
 
-                        <template x-if="saved">
-                            <div x-transition:enter="transition ease-out duration-300"
-                                x-transition:enter-start="opacity-0 scale-50"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-200"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-50" class="absolute -top-1 -right-1 z-20">
-                                <div
-                                    class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
-                                    <x-icons.saved-animated class="size-5" />
-                                </div>
-                            </div>
-                        </template>
-
                         <div
-                            class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-gray-200 dark:peer-checked:bg-gray-800 peer-checked:border-gray-400 dark:peer-checked:border-gray-600 peer-checked:text-gray-900 dark:peer-checked:text-white transition-all duration-300">
-                            @if (isset($status['type']) && $status['type'] == 'font')
-                                <i class="fa-solid {{ $status['icon'] }} text-sm"></i>
+                            class="flex {{ isset($st['col_span']) ? 'flex-row' : 'flex-col' }} items-center justify-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-darkbox-main text-gray-500 dark:text-gray-400 transition-all duration-300 {{ $colorClass }}">
+
+                            @if (isset($st['type']) && $st['type'] == 'font')
+                                <i class="fa-solid {{ $st['icon'] }} text-sm"></i>
                             @else
-                                <x-dynamic-component :component="$status['icon']" class="size-6" />
+                                <x-dynamic-component :component="$st['icon']" class="size-6" />
                             @endif
-                            <span class="text-[10px] font-black uppercase tracking-wider">{{ $status['label'] }}</span>
+                            <span
+                                class="text-[10px] font-black uppercase tracking-wider text-center">{{ $st['label'] }}</span>
+                        </div>
+
+                        <div x-show="status === '{{ $st['val'] }}'" x-transition
+                            class="absolute -top-2 -right-2 z-20 flex items-center justify-center size-6 bg-white dark:bg-darkbox-card rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+
+                            <button type="button" x-show="!saved"
+                                @click.prevent.stop="status = null; $wire.toggleStatus()"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-200 outline-none">
+                                <x-icons.exit class="size-4" />
+                            </button>
+
+                            <template x-if="saved">
+                                <div class="text-cyan-500 flex items-center justify-center">
+                                    <x-icons.saved-animated class="size-4" />
+                                </div>
+                            </template>
                         </div>
                     </label>
                 @endforeach
-
-                <label class="cursor-pointer relative group col-span-2" x-data="{ saved: false }">
-                    <input type="radio" name="status" class="peer hidden" value="multiplayer"
-                        wire:model="form.status"
-                        @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })" />
-
-                    <template x-if="saved">
-                        <div x-transition:enter="transition ease-out duration-300"
-                            x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
-                            x-transition:leave="transition ease-in duration-200"
-                            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-50"
-                            class="absolute -top-1 -right-1 z-20">
-                            <div
-                                class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
-                                <x-icons.saved-animated class="size-5" />
-                            </div>
-                        </div>
-                    </template>
-
-                    <div
-                        class="flex items-center justify-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1117] text-gray-500 dark:text-gray-400 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/30 peer-checked:border-blue-400 dark:peer-checked:border-blue-500 peer-checked:text-blue-700 dark:peer-checked:text-blue-400 transition-all duration-300">
-                        <x-icons.multiplayer class="size-6" />
-                        <span class="text-[10px] font-black uppercase tracking-wider">Multiplayer Frecuente</span>
-                    </div>
-                </label>
             </div>
             <x-input-error for="form.status" />
         </div>
@@ -166,7 +160,7 @@
                 <i class="fa-regular fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="number" min="0" wire:model="form.hours_finish"
                     @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })"
-                    class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
+                    class="w-full bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
 
                 <template x-if="saved">
                     <div x-transition:enter="transition ease-out duration-300"
@@ -192,7 +186,7 @@
                 <i class="fa-regular fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="number" min="0" wire:model="form.hours_completed"
                     @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })"
-                    class="w-full bg-gray-50 dark:bg-[#0f1117] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
+                    class="w-full bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm font-bold focus:ring-cyan-500 transition-all shadow-inner" />
 
                 <template x-if="saved">
                     <div x-transition:enter="transition ease-out duration-300"
@@ -210,10 +204,13 @@
         </div>
 
         <div class="flex flex-col gap-3">
-            <x-button type="button" @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
-                <x-icons.review class="size-6 mr-2" />
-                Escribir Reseña
-            </x-button>
+            @if ($this->form->status)
+                <x-button type="button"
+                    @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
+                    <x-icons.review class="size-6 mr-2" />
+                    Escribir Reseña
+                </x-button>
+            @endif
 
             <livewire:utils.add-game-to-list-modal :gameId="$this->form->game_id" />
         </div>

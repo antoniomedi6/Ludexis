@@ -10,8 +10,12 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class RecordActivityListener
 {
+
     /**
-     * Create the event listener.
+     * Listener encargado de procesar los eventos de estado de los videojuegos.
+     * Intercepta el GameStatusEvent y registra o actualiza la actividad en el Timeline.
+     * Utiliza lógica de agrupación por día para evitar llenar el feed de spam si el
+     * usuario cambia de estado el mismo juego varias veces en la misma jornada.
      */
     public function __construct()
     {
