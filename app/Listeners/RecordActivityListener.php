@@ -4,9 +4,6 @@ namespace App\Listeners;
 
 use App\Events\GameStatusEvent;
 use App\Models\Activity;
-use Carbon\Carbon;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class RecordActivityListener
 {
@@ -14,8 +11,8 @@ class RecordActivityListener
     /**
      * Listener encargado de procesar los eventos de estado de los videojuegos.
      * Intercepta el GameStatusEvent y registra o actualiza la actividad en el Timeline.
-     * Utiliza lógica de agrupación por día para evitar llenar el feed de spam si el
-     * usuario cambia de estado el mismo juego varias veces en la misma jornada.
+     * Agrupa por ventana de una hora: si el mismo juego cambia de estado varias veces
+     * en esa hora, solo persiste la última transición.
      */
     public function __construct()
     {
@@ -27,20 +24,34 @@ class RecordActivityListener
      */
     public function handle(GameStatusEvent $event): void
     {
-        Activity::updateOrCreate(
-            [
+        $startOfHour = now()->startOfHour();
+        $endOfHour = now()->copy()->endOfHour();
+
+        $details = [
+            'status' => $event->newStatus,
+            'last_interaction' => now()->toTimeString(),
+            'source' => 'registry_card',
+        ];
+
+        $activity = Activity::query()
+            ->where('user_id', $event->user->id)
+            ->where('game_id', $event->game->id)
+            ->whereBetween('created_at', [$startOfHour, $endOfHour])
+            ->first();
+
+        if ($activity) {
+            $activity->update([
+                'action_type' => $event->newStatus,
+                'details' => $details,
+                'created_at' => now(),
+            ]);
+        } else {
+            Activity::create([
                 'user_id' => $event->user->id,
                 'game_id' => $event->game->id,
                 'action_type' => $event->newStatus,
-                'created_at' => Carbon::today(),
-            ],
-            [
-                'details' => [
-                    'status' => $event->newStatus,
-                    'last_interaction' => now()->toTimeString(),
-                    'source' => 'registry_card'
-                ],
-            ]
-        );
+                'details' => $details,
+            ]);
+        }
     }
 }
