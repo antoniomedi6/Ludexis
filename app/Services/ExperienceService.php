@@ -49,8 +49,10 @@ class ExperienceService
         $ranks = self::getLibraryRanks();
         $currentRank = $ranks[0];
 
+        $xp = (int) ($user->xp ?? 0);
+
         foreach ($ranks as $rank) {
-            if ($user->xp >= $rank['xp_required']) {
+            if ($xp >= $rank['xp_required']) {
                 $currentRank = $rank;
             } else {
                 break;
@@ -68,9 +70,10 @@ class ExperienceService
         }
 
         $ranks = self::getLibraryRanks();
+        $xp = (int) ($user->xp ?? 0);
 
         foreach ($ranks as $rank) {
-            if ($user->xp < $rank['xp_required']) {
+            if ($xp < $rank['xp_required']) {
                 return $rank;
             }
         }
@@ -85,7 +88,22 @@ class ExperienceService
             return false;
         }
 
-        $user->increment('xp', $amount);
+        if ($amount === 0) {
+            return false;
+        }
+
+        $currentXp = (int) ($user->xp ?? 0);
+        $newXp = $currentXp + $amount;
+
+        if ($newXp < 0) {
+            $newXp = 0;
+        }
+
+        if ($newXp === $currentXp) {
+            return false;
+        }
+
+        $user->update(['xp' => $newXp]);
         $user->refresh();
 
         if ($user->role === 'standard' && $user->xp >= 10000) {

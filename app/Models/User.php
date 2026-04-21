@@ -136,10 +136,24 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!$nextRank)
             return 100;
 
-        $xpInLevel = $this->xp - $currentRank['xp_required'];
+        $xpInLevel = ((int) ($this->xp ?? 0)) - $currentRank['xp_required'];
         $xpRequired = $nextRank['xp_required'] - $currentRank['xp_required'];
 
-        return (int) (($xpInLevel / $xpRequired) * 100);
+        if ($xpRequired <= 0) {
+            return 100;
+        }
+
+        $percentage = (int) (($xpInLevel / $xpRequired) * 100);
+
+        if ($percentage < 0) {
+            return 0;
+        }
+
+        if ($percentage > 100) {
+            return 100;
+        }
+
+        return $percentage;
     }
 
     /**

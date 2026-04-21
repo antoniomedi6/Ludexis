@@ -42,8 +42,7 @@
                             <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar" role="group"
                                 aria-labelledby="plat-heading">
                                 @foreach ($allPlatforms as $platform)
-                                    <label
-                                        x-show="searchPlat === '' || '{{ strtolower($platform->name) }}'.includes(searchPlat.toLowerCase())"
+                                <label x-show="searchPlat === '' || @js(strtolower($platform->name)).includes(searchPlat.toLowerCase())"
                                         class="flex items-center gap-2.5 cursor-pointer group">
                                         <input type="checkbox" value="{{ $platform->id }}"
                                             wire:model.live="platformsFilter"
