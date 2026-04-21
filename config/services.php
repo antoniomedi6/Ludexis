@@ -18,10 +18,6 @@ return [
         'key' => env('POSTMARK_API_KEY'),
     ],
 
-    'resend' => [
-        'key' => env('RESEND_API_KEY'),
-    ],
-
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
@@ -35,4 +31,16 @@ return [
         ],
     ],
 
+    /* RESEND */
+    'resend' => [
+        'key' => env('RESEND_API_KEY'),
+    ],
+
+    /* STEAM AUTH */
+    'steam' => [
+        'client_id' => env('STEAM_CLIENT_ID'),
+        'client_secret' => env('STEAM_CLIENT_SECRET'),
+        'redirect' => env('STEAM_REDIRECT_URI'),
+        'allowed_hosts' => explode(',', env('STEAM_ALLOWED_HOSTS', 'localhost')),
+    ],
 ];

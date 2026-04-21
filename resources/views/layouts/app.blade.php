@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,10 +17,10 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-white dark:bg-[#151821] overflow-hidden text-gray-900 dark:text-gray-100">
+<body class="font-sans antialiased bg-white dark:bg-darkbox-main overflow-hidden text-gray-900 dark:text-gray-100">
     <x-banner />
 
-    <div class="flex h-screen w-full bg-white dark:bg-[#151821] overflow-hidden">
+    <div class="flex h-screen w-full bg-white dark:bg-darkbox-main overflow-hidden">
 
         @auth
             <x-miscomponentes.nav-aside />
@@ -50,6 +51,7 @@
     </div>
     @stack('modals')
     @livewireScripts
+
     {{-- <x-miscomponentes.auth-modal /> --}}
 
     {{-- NOTIFICACIONES --}}

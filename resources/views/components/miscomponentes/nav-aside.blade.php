@@ -179,11 +179,8 @@
 
                     <div class="flex items-center"
                         :class="showNav ? 'gap-3 mb-4' : 'justify-center mb-0 lg:justify-center'">
-                        <div class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-teal-500 rounded-full flex justify-center items-center font-black shadow-md border-2 border-white dark:border-[#151821] text-white shrink-0 uppercase group-hover:scale-110 transition-transform duration-300"
-                            aria-hidden="true">
-                            {{ substr(Auth::user()->name, 0, 1) }}
-                        </div>
-
+                        <img src="{{ Auth::user()->profile_photo_path }}" alt="Avatar de {{ Auth::user()->name }}"
+                            class="w-10 h-10 rounded-full">
                         <div x-show="showNav" style="display: none;" class="flex-1 overflow-hidden whitespace-nowrap">
                             <h2
                                 class="font-bold text-sm leading-tight text-gray-900 dark:text-white truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">

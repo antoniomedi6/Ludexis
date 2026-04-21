@@ -7,8 +7,11 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Steam\SteamExtendSocialite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -59,6 +62,14 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        /**
+         * STEAM SOCIALITE
+         */
+        Event::listen(
+            SocialiteWasCalled::class,
+            [SteamExtendSocialite::class, 'handle']
+        );
     }
 
 }

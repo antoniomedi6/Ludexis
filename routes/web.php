@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\RoadmapController;
 // use App\Livewire\Playground;
+use App\Http\Controllers\Auth\SteamAuthController;
 use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
@@ -43,3 +44,7 @@ Route::get('/game/{game}', ShowGame::class)->name('games.show');
 Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
 // Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
 Route::get('/profile/{userId}', ShowUserProfile::class)->name('profile');
+
+/* LOGIN SOCIALITE */
+Route::get('/auth/steam/redirect', [SteamAuthController::class, 'redirect'])->name('auth.steam.redirect');
+Route::get('/auth/steam/callback', [SteamAuthController::class, 'callback'])->name('auth.steam.callback');

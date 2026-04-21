@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -39,7 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'provider_name',
         'provider_id',
         'provider_token',
-        'banned_at'
+        'banned_at',
+        'profile_photo_path'
     ];
 
     /**
@@ -138,5 +140,24 @@ class User extends Authenticatable implements MustVerifyEmail
         $xpRequired = $nextRank['xp_required'] - $currentRank['xp_required'];
 
         return (int) (($xpInLevel / $xpRequired) * 100);
+    }
+
+    /**
+     * Determina qué foto de perfil mostrar comprobando el origen de la cuenta.
+     */
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        // Si el usuario no tiene ninguna foto, generamos un avatar automático con sus iniciales.
+        if (empty($this->profile_photo_path)) {
+            return $this->defaultProfilePhotoUrl();
+        }
+
+        // Si el usuario viene de Steam (la ruta empieza por http), usamos su avatar directamente.
+        if (str_starts_with($this->profile_photo_path, 'http')) {
+            return $this->profile_photo_path;
+        }
+
+        // Si es un usuario que subió una imagen, cargamos el archivo local.
+        return Storage::url($this->profile_photo_path);
     }
 }

@@ -1,15 +1,16 @@
 <x-guest-layout>
     <div
-        class="min-h-screen bg-[#0f1117] flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative overflow-hidden">
+        class="min-h-screen bg-darkbox-main flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative overflow-hidden">
+
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 opacity-20 pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-900/40 blur-[120px] rounded-full"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 blur-[120px] rounded-full">
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-900/20 blur-[120px] rounded-full">
             </div>
         </div>
 
         <div class="w-full sm:max-w-4xl mt-6 px-6 py-4 relative z-10">
             <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-[#151821]/80 backdrop-blur-2xl border border-gray-800 rounded-[2.5rem] p-8 md:p-12 shadow-2xl">
+                class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-darkbox-card/90 backdrop-blur-2xl border border-darkbox-border rounded-3xl p-8 md:p-12 shadow-2xl">
 
                 <div class="hidden md:flex flex-col gap-6">
                     <x-miscomponentes.application-logo-name class="w-20 h-20" />
@@ -36,10 +37,10 @@
                             <x-label for="name" value="{{ __('Username') }}"
                                 class="text-gray-400 mb-1 ml-1 text-[10px] font-black uppercase tracking-widest" />
                             <div class="relative">
-                                <i
-                                    class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                                <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+                                    aria-hidden="true"></i>
                                 <x-input id="name"
-                                    class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
+                                    class="block w-full bg-darkbox-main border-darkbox-border text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
                                     type="text" name="name" :value="old('name')" required autofocus
                                     autocomplete="name" placeholder="Tu nombre de usuario" />
                             </div>
@@ -49,10 +50,10 @@
                             <x-label for="email" value="{{ __('Email') }}"
                                 class="text-gray-400 mb-1 ml-1 text-[10px] font-black uppercase tracking-widest" />
                             <div class="relative">
-                                <i
-                                    class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                                <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+                                    aria-hidden="true"></i>
                                 <x-input id="email"
-                                    class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
+                                    class="block w-full bg-darkbox-main border-darkbox-border text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
                                     type="email" name="email" :value="old('email')" required autocomplete="username"
                                     placeholder="tu@email.com" />
                             </div>
@@ -63,10 +64,10 @@
                                 <x-label for="password" value="{{ __('Password') }}"
                                     class="text-gray-400 mb-1 ml-1 text-[10px] font-black uppercase tracking-widest" />
                                 <div class="relative">
-                                    <i
-                                        class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                                    <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+                                        aria-hidden="true"></i>
                                     <x-input id="password"
-                                        class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
+                                        class="block w-full bg-darkbox-main border-darkbox-border text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
                                         type="password" name="password" required autocomplete="new-password"
                                         placeholder="••••••••" />
                                 </div>
@@ -75,10 +76,10 @@
                                 <x-label for="password_confirmation" value="{{ __('Confirm') }}"
                                     class="text-gray-400 mb-1 ml-1 text-[10px] font-black uppercase tracking-widest" />
                                 <div class="relative">
-                                    <i
-                                        class="fa-solid fa-shield-check absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                                    <i class="fa-solid fa-shield-check absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+                                        aria-hidden="true"></i>
                                     <x-input id="password_confirmation"
-                                        class="block w-full bg-[#0f1117] border-gray-800 text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
+                                        class="block w-full bg-darkbox-main border-darkbox-border text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-600"
                                         type="password" name="password_confirmation" required
                                         autocomplete="new-password" placeholder="••••••••" />
                                 </div>
@@ -86,23 +87,24 @@
                         </div>
 
                         @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                            <div class="mt-2">
+                            <div class="mt-2 px-1">
                                 <x-label for="terms">
-                                    <div class="flex items-center">
+                                    <div class="flex items-center group cursor-pointer">
                                         <x-checkbox name="terms" id="terms" required
-                                            class="bg-[#0f1117] border-gray-700 text-cyan-500 focus:ring-cyan-500" />
-                                        <div class="ms-2 text-xs text-gray-500">
-                                            {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                                            class="bg-darkbox-main border-darkbox-border text-cyan-500 focus:ring-cyan-500 rounded" />
+                                        <div
+                                            class="ms-2 text-[10px] text-gray-500 uppercase tracking-widest group-hover:text-gray-400 transition-colors">
+                                            {!! __('Acepto los :terms_of_service y la :privacy_policy', [
                                                 'terms_of_service' =>
                                                     '<a target="_blank" href="' .
                                                     route('terms.show') .
-                                                    '" class="text-cyan-500 hover:text-cyan-400 font-bold transition">' .
+                                                    '" class="text-cyan-500 hover:text-cyan-400 font-black transition">' .
                                                     __('Terms of Service') .
                                                     '</a>',
                                                 'privacy_policy' =>
                                                     '<a target="_blank" href="' .
                                                     route('policy.show') .
-                                                    '" class="text-cyan-500 hover:text-cyan-400 font-bold transition">' .
+                                                    '" class="text-cyan-500 hover:text-cyan-400 font-black transition">' .
                                                     __('Privacy Policy') .
                                                     '</a>',
                                             ]) !!}
@@ -112,19 +114,38 @@
                             </div>
                         @endif
 
-                        <div class="flex flex-col mt-4">
+                        <div class="flex flex-col mt-4 gap-4">
                             <x-button
-                                class="w-full justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl transition shadow-[0_0_20px_rgba(6,182,212,0.3)] uppercase tracking-widest text-xs mb-3">
-                                <i class="fa-solid fa-user-plus mr-2"></i>{{ __('Crear Cuenta') }}
+                                class="w-full justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-black py-3.5 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] uppercase tracking-widest text-xs focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-darkbox-main">
+                                <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i>{{ __('Crear Cuenta') }}
                             </x-button>
-                            <a href="{{ route('welcome') }}"
-                                class="mb-5 inline-flex items-center justify-center bg-red-600 hover:bg-red-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(220,38,38,0.3)] hover:shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:-translate-y-0.5 uppercase tracking-widest text-xs focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-[#0f1117] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0'">
-                                <i class="fas fa-arrow-left-from-bracket mr-2"></i>{{ __('Volver') }}
+
+                            <div class="flex items-center gap-3 opacity-60">
+                                <hr class="flex-1 border-darkbox-border">
+                                <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">O</span>
+                                <hr class="flex-1 border-darkbox-border">
+                            </div>
+
+                            {{-- Social Register --}}
+                            <a href="{{ route('auth.steam.redirect') }}"
+                                class="flex items-center justify-center gap-3 w-full px-4 py-3 bg-gray-900 border border-gray-700 hover:border-cyan-800 hover:bg-cyan-900/30 text-white rounded-xl font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs group"
+                                aria-label="Registrarse con Steam">
+                                <i class="fa-brands fa-steam text-lg group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-300"
+                                    aria-hidden="true"></i>
+                                <span>Crear con Steam</span>
+                            </a>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-darkbox-border">
+                            <a href="{{ route('welcome') }}" wire:navigate
+                                class="bg-red-600 p-2 rounded-lg text-[10px] text-white font-black uppercase tracking-widest hover:bg-red-400 hover:text-white transition-colors flex items-center gap-1.5 group">
+                                <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"
+                                    aria-hidden="true"></i> {{ __('Volver') }}
                             </a>
 
-                            <p class="text-center text-sm text-gray-500">
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
                                 ¿Ya tienes cuenta?
-                                <a class="text-cyan-500 font-bold hover:text-cyan-400 transition"
+                                <a class="text-cyan-500 font-black hover:text-cyan-400 ml-1 transition-colors"
                                     href="{{ route('login') }}">
                                     {{ __('Inicia sesión') }}
                                 </a>

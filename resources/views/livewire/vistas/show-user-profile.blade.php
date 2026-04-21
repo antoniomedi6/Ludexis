@@ -32,8 +32,7 @@
                         <div class="absolute -inset-1.5 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full opacity-30 group-hover:opacity-60 blur-md transition duration-500"
                             aria-hidden="true"></div>
                         <div class="relative">
-                            <img src="https://ui-avatars.com/api/?name={{ $user->name }}&color=FFFFFF&background=374151&size=200"
-                                alt="Avatar de {{ $user->name }}"
+                            <img src="{{ $user->profile_photo_url }}" alt="Avatar de {{ $user->name }}"
                                 class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-gray-900 object-cover shadow-xl bg-gray-100 dark:bg-gray-800">
 
                             {{-- Badge Rol --}}
