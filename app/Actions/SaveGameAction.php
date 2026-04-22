@@ -87,6 +87,8 @@ class SaveGameAction
             }
         }
 
+        $igdbRating = $igdbGame->total_rating ?? 0;
+
         // CREACIÓN DEL JUEGO
         $game = Game::create([
             'igdb_id' => $igdbGame->id,
@@ -95,7 +97,8 @@ class SaveGameAction
             'cover_url' => $coverUrl,
             'first_release_date' => $formattedDate,
             'slug' => $igdbGame->slug,
-            'rating' => $igdbGame->total_rating ?? 0,
+            'rating' => $igdbRating,
+            'igdb_rating' => $igdbRating,
             'avg_time' => 0,
             'video_url' => $videoUrl,
             'screenshots' => !empty($screenshotHashes) ? $screenshotHashes : null

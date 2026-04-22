@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Services\GameScoreService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
@@ -9,6 +10,8 @@ use Livewire\Form;
 
 class ReviewForm extends Form
 {
+    public GameScoreService $gameScoreService;
+
     #[Validate(['required', 'string', 'min:5', 'max:500'])]
     public string $review = '';
 
@@ -20,11 +23,7 @@ class ReviewForm extends Form
         $this->validate();
         $user = Auth::user();
 
-        $weight = match ($user->role) {
-            'admin', 'journalist' => 3,
-            'veteran' => 1.5,
-            default => 1,
-        };
+        $weight = $this->gameScoreService->weightForUser($user);
 
         DB::table('game_user')
             ->updateOrInsert(

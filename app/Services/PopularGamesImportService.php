@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Platform;
+use App\Services\GameScoreService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use MarcReichel\IGDBLaravel\Models\Game as IGDBGame;
@@ -81,6 +82,8 @@ class PopularGamesImportService
         $imported = 0;
 
         foreach ($igdbGames as $igdbGame) {
+            $igdbRating = $igdbGame->total_rating;
+
             $game = Game::updateOrCreate(
                 ['igdb_id' => $igdbGame->id],
                 [
@@ -89,7 +92,8 @@ class PopularGamesImportService
                     'cover_url' => $this->buildCoverUrl($igdbGame),
                     'first_release_date' => $this->formatReleaseDate(data_get($igdbGame, 'first_release_date')),
                     'slug' => $igdbGame->slug,
-                    'rating' => $igdbGame->total_rating,
+                    'rating' => $igdbRating,
+                    'igdb_rating' => $igdbRating,
                     'avg_time' => 0,
                     'video_url' => $this->buildVideoUrl($igdbGame),
                     'screenshots' => $this->buildScreenshotHashes($igdbGame),
@@ -99,6 +103,8 @@ class PopularGamesImportService
             $this->syncGenres($game, data_get($igdbGame, 'genres', []));
             $this->syncCompanies($game, data_get($igdbGame, 'involved_companies', []));
             $this->syncPlatforms($game, data_get($igdbGame, 'platforms', []));
+
+            app(GameScoreService::class)->recalculate($game->refresh());
 
             $imported++;
 

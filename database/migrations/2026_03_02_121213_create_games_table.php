@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('first_release_date')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->integer('avg_time')->nullable();
+            $table->float('igdb_rating')->nullable();
             $table->float('rating')->nullable();
             $table->json('screenshots')->nullable();
             $table->json('artworks')->nullable();

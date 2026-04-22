@@ -3,11 +3,15 @@
 namespace App\Livewire\Forms;
 
 use App\Models\GameUser;
+use App\Services\GameScoreService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class GameRegistryForm extends Form
 {
+    public GameScoreService $gameScoreService;
+
     #[Validate('required|integer')]
     public int $game_id = 0;
 
@@ -19,6 +23,8 @@ class GameRegistryForm extends Form
 
     #[Validate('nullable|numeric|min:0|max:10')]
     public ?float $rating = null;
+
+    public ?string $review = null;
     #[Validate('nullable|integer|min:0')]
     public ?int $hours_finish = 0;
 
@@ -32,6 +38,8 @@ class GameRegistryForm extends Form
     {
         $this->validate();
 
+        $weight = $this->gameScoreService->weightForUser(Auth::user());
+
         GameUser::updateOrCreate(
             [
                 'user_id' => $this->user_id,
@@ -40,6 +48,7 @@ class GameRegistryForm extends Form
             [
                 'status' => $this->status,
                 'rating' => $this->rating,
+                'weight_applied' => $weight,
                 'hours_finish' => $this->hours_finish,
                 'hours_completed' => $this->hours_completed,
                 'drop_reason' => $this->drop_reason,

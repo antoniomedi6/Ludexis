@@ -6,6 +6,7 @@ use App\Events\GameStatusEvent;
 use App\Livewire\Forms\GameRegistryForm;
 use App\Models\Game;
 use App\Models\GameUser;
+use App\Services\GameScoreService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -14,7 +15,7 @@ class GameRegistryCard extends Component
     public GameRegistryForm $form;
     public Game $game;
     public ?GameUser $gameUser = null;
-
+    public GameScoreService $gameScoreService;
     public function mount($gameId)
     {
         $this->game = Game::findOrFail($gameId);
@@ -46,6 +47,8 @@ class GameRegistryCard extends Component
             ->where('game_id', $this->game->id)
             ->first();
 
+        $this->gameScoreService->recalculate($this->game->refresh());
+
         if ($this->form->status) {
             GameStatusEvent::dispatch(Auth::user(), $this->game, $this->form->status);
         }
@@ -61,6 +64,9 @@ class GameRegistryCard extends Component
             reset($this->gameUser);
         }
         $this->form->reset();
+
+        app(GameScoreService::class)->recalculate($this->game->refresh());
+
         $this->dispatch('evtSaved');
     }
 
