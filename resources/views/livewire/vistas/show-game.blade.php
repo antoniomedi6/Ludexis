@@ -11,10 +11,7 @@
     </div>
 
     {{-- BUSCADOR SUPERIOR --}}
-    <section
-        class="h-20 flex items-center justify-between px-8 shrink-0 bg-white/80 dark:bg-darkbox-main/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 z-50 relative">
-        @livewire('utils.search-games')
-    </section>
+    <x-miscomponentes.search-header />
 
     {{-- CONTENEDOR PRINCIPAL --}}
     <section class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">

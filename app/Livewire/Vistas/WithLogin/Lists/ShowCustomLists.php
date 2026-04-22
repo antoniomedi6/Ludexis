@@ -23,8 +23,8 @@ class ShowCustomLists extends Component
 
         $userLists = CustomList::withCount('games')
             ->with([
-                'games' => function ($query) {
-                    $query->select('games.id', 'cover_url')->take(3);
+                'games' => function ($q) {
+                    $q->select('games.id', 'cover_url')->take(3);
                 }
             ])
             ->where('user_id', auth()->id())

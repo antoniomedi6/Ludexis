@@ -1,51 +1,187 @@
 <x-miscomponentes.page-layout :fullWidth="false">
 
-    {{-- BOTONES SUPERIORES --}}
+    {{-- CONTROLES SUPERIORES --}}
     <x-slot:aside>
-        <button type="button"
-            class="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
-            <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
-        </button>
-        <button type="button"
-            class="p-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400"
-            aria-label="Opciones del perfil">
-            <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
-        </button>
+        @auth
+            <div x-data="{ openOptions: false, openReport: false }" class="relative flex items-center gap-2">
+                @if (Auth::id() !== $user->id)
+                    <button type="button"
+                        class="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
+                        <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
+                    </button>
+                @else
+                    <a href="{{ route('profile.show') }}"
+                        class="px-6 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400">
+                        <i class="fa-solid fa-gear mr-2" aria-hidden="true"></i> Ajustes
+                    </a>
+                @endif
+
+                {{-- OPTIONS MENU --}}
+                <button type="button" @click="openOptions = !openOptions"
+                    class="p-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400"
+                    aria-label="Opciones del perfil" :aria-expanded="openOptions.toString()">
+                    <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                </button>
+
+                <div x-show="openOptions" x-cloak @click.outside="openOptions = false"
+                    class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-lg overflow-hidden z-50"
+                    role="menu" aria-label="Opciones del perfil">
+                    <div class="p-2 space-y-1">
+                        <button type="button"
+                            @click="openOptions = false; openReport = true"
+                            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            role="menuitem">
+                            <i class="fa-solid fa-flag text-gray-400" aria-hidden="true"></i>
+                            <span>Reportar</span>
+                        </button>
+
+                        @if (Auth::user()->role === 'admin')
+                            <div class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                                <label for="role_select"
+                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    Rol de usuario
+                                </label>
+                                <select id="role_select" wire:model.live="selectedRole" wire:change="updateRole"
+                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    <option value="standard">Standard</option>
+                                    <option value="journalist">Journalist</option>
+                                    <option value="veteran">Veteran</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                <div x-data="{ saved: false }" x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
+                                    class="relative mt-2">
+                                    <template x-if="saved">
+                                        <div x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="opacity-0 scale-50"
+                                            x-transition:enter-end="opacity-100 scale-100"
+                                            x-transition:leave="transition ease-in duration-200"
+                                            x-transition:leave-start="opacity-100 scale-100"
+                                            x-transition:leave-end="opacity-0 scale-50"
+                                            class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
+                                            role="status" aria-live="polite">
+                                            <span
+                                                class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                                <x-icons.saved-animated class="size-6" />
+                                            </span>
+                                            <span>Rol actualizado.</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- REPORT MODAL --}}
+                <div x-show="openReport" x-cloak x-on:report-sent.window="openReport = false"
+                    class="fixed inset-0 z-50 flex items-center justify-center p-4"
+                    role="dialog" aria-modal="true" aria-label="Reportar usuario">
+                    <div class="absolute inset-0 bg-black/50" @click="openReport = false" aria-hidden="true"></div>
+                    <div
+                        class="relative w-full max-w-lg bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-xl p-6">
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <div>
+                                <h3 class="text-lg font-black text-gray-900 dark:text-white">Reportar usuario</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    Elige un motivo para reportar a <span class="font-bold">{{ $user->name }}</span>.
+                                </p>
+                            </div>
+                            <button type="button" @click="openReport = false"
+                                class="p-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                aria-label="Cerrar modal">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div>
+                                <label for="report_reason"
+                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    Motivo
+                                </label>
+                                <select id="report_reason" wire:model.live="reportReason"
+                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    <option value="">Selecciona un motivo</option>
+                                    <option value="Spam o publicidad">Spam o publicidad</option>
+                                    <option value="Suplantación de identidad">Suplantación de identidad</option>
+                                    <option value="Lenguaje ofensivo">Lenguaje ofensivo</option>
+                                    <option value="Contenido inapropiado">Contenido inapropiado</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                @error('reportReason')
+                                    <p class="mt-2 text-xs font-bold text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-2">
+                                <button type="button" @click="openReport = false"
+                                    class="px-4 py-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card text-sm font-black text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    Cancelar
+                                </button>
+                                <button type="button"
+                                    wire:click="submitReport"
+                                    class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    Enviar
+                                </button>
+                            </div>
+
+                            <div x-data="{ saved: false }" x-on:report-sent.window="saved = true; setTimeout(() => saved = false, 1600)"
+                                class="relative mt-2">
+                                <template x-if="saved">
+                                    <div x-transition:enter="transition ease-out duration-300"
+                                        x-transition:enter-start="opacity-0 scale-50"
+                                        x-transition:enter-end="opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-200"
+                                        x-transition:leave-start="opacity-100 scale-100"
+                                        x-transition:leave-end="opacity-0 scale-50"
+                                        class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
+                                        role="status" aria-live="polite">
+                                        <span
+                                            class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                            <x-icons.saved-animated class="size-6" />
+                                        </span>
+                                        <span>Reporte enviado.</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endauth
     </x-slot:aside>
 
     <x-slot>
         <div class="flex flex-col gap-8">
 
-            {{-- PLAYER CARD --}}
+            {{-- HEADER DEL JUGADOR --}}
             <header
-                class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[2rem] shadow-sm overflow-hidden relative">
+                class="w-full bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] shadow-sm overflow-hidden relative">
 
-                {{-- Efecto de resplandor --}}
+                {{-- Efecto de resplandor ambiental --}}
                 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-[60px] pointer-events-none"
                     aria-hidden="true"></div>
 
                 <div
                     class="relative z-10 p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-center gap-6 sm:gap-8">
 
-                    {{-- Avatar --}}
+                    {{-- Contenedor del Avatar --}}
                     <div class="relative shrink-0 group">
                         <div class="absolute -inset-1.5 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full opacity-30 group-hover:opacity-60 blur-md transition duration-500"
                             aria-hidden="true"></div>
                         <div class="relative">
                             <img src="{{ $user->profile_photo_url }}" alt="Avatar de {{ $user->name }}"
-                                class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-gray-900 object-cover shadow-xl bg-gray-100 dark:bg-gray-800">
+                                class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-darkbox-main object-cover shadow-xl bg-gray-100 dark:bg-darkbox-main">
 
-                            {{-- Badge Rol --}}
-                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-gray-900 shadow-md whitespace-nowrap"
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
                                 title="Rol Oficial">
-                                <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i> {{ $user->role }}
+                                <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i> {{ $user->role ?? 'Jugador' }}
                             </div>
                         </div>
                     </div>
 
-                    {{-- Info del Jugador --}}
+                    {{-- Información Base --}}
                     <div class="flex-1 w-full text-center sm:text-left flex flex-col justify-center gap-5">
-
                         <div>
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-start gap-3 mb-2">
@@ -55,29 +191,28 @@
                                 </h1>
                                 @if ($user->is_private)
                                     <span
-                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
+                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
                                         title="Perfil Privado">
                                         <i class="fa-solid fa-lock" aria-hidden="true"></i> Privado
                                     </span>
                                 @else
                                     <span
-                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
+                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
                                         title="Perfil Público">
                                         <i class="fa-solid fa-earth" aria-hidden="true"></i> Público
                                     </span>
                                 @endif
                             </div>
-
                             <p class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
                                 <i class="fa-solid fa-calendar-day mr-1" aria-hidden="true"></i>
-                                {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('M Y') }}
+                                Registrado en {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('M Y') }}
                             </p>
                         </div>
 
-                        @if (!Auth::user()->role === 'admin' || Auth::user()->role === 'journalist')
-                            {{-- Barra XP --}}
+                        {{-- Progreso XP: Solo visible si no es admin general viendo --}}
+                        @if ($canViewPrivateData)
                             <div
-                                class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 p-3.5 rounded-2xl">
+                                class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border p-3.5 rounded-2xl">
                                 <div class="flex justify-between items-end mb-2 px-1">
                                     <span
                                         class="text-[10px] font-black uppercase tracking-widest text-gray-500">Progreso
@@ -86,60 +221,69 @@
                                         class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{{ $user->xp }}
                                         / 1,000</span>
                                 </div>
-                                <div class="h-2 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden"
+                                <div class="h-2 w-full bg-gray-200 dark:bg-darkbox-card rounded-full overflow-hidden"
                                     role="progressbar" aria-valuenow="{{ $user->xp }}" aria-valuemin="0"
                                     aria-valuemax="1000">
                                     <div class="h-full bg-cyan-500 rounded-full transition-all duration-500"
-                                        style="width: {{ ($user->xp / 1000) * 100 }}%"></div>
+                                        style="width: {{ min(($user->xp / 1000) * 100, 100) }}%"></div>
                                 </div>
                             </div>
                         @endif
                     </div>
-                    @if (Auth::user()->is_private || Auth::user()->role === 'admin' || Auth::user()->id === $user->id)
-                        @if (isset($game))
-                            <div class="flex-col">
-                                <h2 class="text-xl font-bold">Mi Top 3 de Juegos</h2>
-                                <div class="flex gap-5">
-                                    <div>
-                                        2
+
+                    {{-- Top 3 Juegos --}}
+                    @if ($topGames->isNotEmpty() && $canViewPrivateData)
+                        <div class="flex flex-col items-center sm:items-end w-full sm:w-auto mt-4 sm:mt-0">
+                            <h2 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-3">Top 3 Juegos
+                            </h2>
+                            <div class="flex items-end justify-center gap-3">
+                                @foreach ($topGames as $index => $topGame)
+                                    <div class="relative group"
+                                        title="{{ $topGame->name }} - {{ $topGame->pivot->rating }}/10">
+                                        <img src="{{ $topGame->cover_url ?? 'https://via.placeholder.com/150' }}"
+                                            alt="Portada de {{ $topGame->name }}"
+                                            class="rounded-lg object-cover shadow-md border-2 {{ $loop->first ? 'w-16 h-24 border-yellow-500 z-10' : ($loop->iteration === 2 ? 'w-14 h-20 border-gray-300 opacity-80' : 'w-12 h-16 border-orange-400 opacity-60') }}">
+                                        <div
+                                            class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-darkbox-main border border-darkbox-border flex items-center justify-center text-[10px] font-black text-white shadow-lg">
+                                            {{ $loop->iteration }}
+                                        </div>
                                     </div>
-                                    <div>
-                                        1
-                                    </div>
-                                    <div>
-                                        3
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-                        @endif
+                        </div>
                     @endif
                 </div>
             </header>
 
-            {{-- GRID PRINCIPAL --}}
+            {{-- LAYOUT PRINCIPAL --}}
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-                @if (!$user->is_private)
-                    {{-- ASIDE: Estadísticas --}}
+
+                {{-- Comprobación de privacidad controlada desde Livewire --}}
+                @if ($canViewPrivateData)
+
+                    {{-- ASIDE: Estadísticas y Colecciones --}}
                     <aside class="xl:col-span-4 flex flex-col gap-8">
 
+                        {{-- Estadísticas --}}
                         <div
-                            class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 sm:p-8 shadow-sm">
+                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm">
                             <h2
                                 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-6 flex items-center gap-2">
                                 <i class="fa-solid fa-chart-pie text-cyan-500" aria-hidden="true"></i> Estadísticas
                                 Usuario
                             </h2>
 
-                            <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
+                            <div
+                                class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-gray-100 dark:border-darkbox-border">
                                 <div
-                                    class="bg-gray-50 dark:bg-gray-950 p-4 rounded-2xl border border-gray-100 dark:border-gray-800/50 text-center">
+                                    class="bg-gray-50 dark:bg-darkbox-main p-4 rounded-2xl border border-gray-100 dark:border-darkbox-border/50 text-center">
                                     <span
                                         class="block text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tabular-nums">{{ $totalHours }}</span>
                                     <span
                                         class="text-[10px] font-bold uppercase text-gray-500 tracking-widest">Horas</span>
                                 </div>
                                 <div
-                                    class="bg-gray-50 dark:bg-gray-950 p-4 rounded-2xl border border-gray-100 dark:border-gray-800/50 text-center">
+                                    class="bg-gray-50 dark:bg-darkbox-main p-4 rounded-2xl border border-gray-100 dark:border-darkbox-border/50 text-center">
                                     <span
                                         class="block text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tabular-nums">{{ number_format($averageRating, 1) }}</span>
                                     <span class="text-[10px] font-bold uppercase text-gray-500 tracking-widest">Nota
@@ -179,26 +323,28 @@
 
                         {{-- Colecciones --}}
                         <div
-                            class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 sm:p-8 shadow-sm">
+                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm">
                             <h2
                                 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-6 flex items-center gap-2">
                                 <i class="fa-solid fa-layer-group text-cyan-500" aria-hidden="true"></i> Colecciones
                             </h2>
                             <nav class="space-y-3" aria-label="Listas de juegos del usuario">
-                                <a href="#"
-                                    class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800/50 rounded-2xl hover:border-cyan-500/50 transition-colors group focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                    <span
-                                        class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Mis
-                                        Favoritos Absolutos</span>
-                                    <span class="text-xs font-black text-gray-400 tabular-nums">10</span>
-                                </a>
-                                <a href="#"
-                                    class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800/50 rounded-2xl hover:border-cyan-500/50 transition-colors group focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                    <span
-                                        class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">Decepción
-                                        Total</span>
-                                    <span class="text-xs font-black text-gray-400 tabular-nums">4</span>
-                                </a>
+                                @forelse ($customLists as $list)
+                                    <a href="{{ route('userLists.show', $list->id) }}"
+                                        class="flex justify-between items-center p-4 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border/50 rounded-2xl hover:border-cyan-500/50 transition-colors group focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                        <span
+                                            class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">{{ $list->name }}</span>
+                                        <span
+                                            class="text-xs font-black text-gray-400 tabular-nums">{{ $list->games_count ?? 0 }}</span>
+                                    </a>
+                                @empty
+                                    <div
+                                        class="text-center p-4 border border-dashed border-gray-200 dark:border-darkbox-border rounded-2xl">
+                                        <p
+                                            class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">
+                                            Sin colecciones</p>
+                                    </div>
+                                @endforelse
                             </nav>
                         </div>
                     </aside>
@@ -206,12 +352,12 @@
                     {{-- FEED PRINCIPAL --}}
                     <div x-data="{ activeTab: 'activity' }" class="xl:col-span-8 flex flex-col gap-8">
 
-                        {{-- Pestañas --}}
-                        <div class="flex gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1.5 shrink-0 w-fit shadow-sm"
+                        {{-- Navegación de Pestañas --}}
+                        <div class="flex gap-2 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl p-1.5 shrink-0 w-fit shadow-sm"
                             role="tablist">
                             <button type="button" @click="activeTab = 'activity'"
                                 :class="activeTab === 'activity' ?
-                                    'bg-gray-100 dark:bg-gray-800 text-cyan-600 dark:text-cyan-400' :
+                                    'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
                                 class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
                                 role="tab">
@@ -219,7 +365,7 @@
                             </button>
                             <button type="button" @click="activeTab = 'library'"
                                 :class="activeTab === 'library' ?
-                                    'bg-gray-100 dark:bg-gray-800 text-cyan-600 dark:text-cyan-400' :
+                                    'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
                                 class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
                                 role="tab">
@@ -227,7 +373,7 @@
                             </button>
                             <button type="button" @click="activeTab = 'screenshots'"
                                 :class="activeTab === 'screenshots' ?
-                                    'bg-gray-100 dark:bg-gray-800 text-cyan-600 dark:text-cyan-400' :
+                                    'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
                                 class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
                                 role="tab">
@@ -235,141 +381,182 @@
                             </button>
                         </div>
 
-                        {{-- CONTENIDO DE LAS PESTAÑAS --}}
+                        {{-- PESTAÑA: ACTIVIDAD --}}
                         <div x-show="activeTab === 'activity'" x-transition:enter="transition ease-out duration-300"
                             x-transition:enter-start="opacity-0 transform translate-y-4">
-                            <div class="flex flex-col gap-6" role="feed" aria-label="Feed de actividad">
+                            <div class="flex flex-col gap-6" role="feed" aria-label="Feed de actividad reciente">
+                                @forelse ($recentActivity as $game)
+                                    @php
+                                        // Solución Robusta: Forzamos minúsculas y limpiamos espacios. Pillamos inglés y español.
+                                        $rawStatus = strtolower(trim($game->pivot->status ?? ''));
 
-                                {{-- Tarjeta de Reseña --}}
-                                <article
-                                    class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        $statusStyle = match (true) {
+                                            in_array($rawStatus, ['completed', 'completado']) => [
+                                                'bg' => 'bg-emerald-50 dark:bg-emerald-900/20',
+                                                'text' => 'text-emerald-600 dark:text-emerald-400',
+                                                'border' => 'border-emerald-200 dark:border-emerald-800/50',
+                                                'label' => 'Completado',
+                                            ],
+                                            in_array($rawStatus, ['playing', 'jugando']) => [
+                                                'bg' => 'bg-blue-50 dark:bg-blue-900/20',
+                                                'text' => 'text-blue-600 dark:text-blue-400',
+                                                'border' => 'border-blue-200 dark:border-blue-800/50',
+                                                'label' => 'Jugando',
+                                            ],
+                                            in_array($rawStatus, ['abandoned', 'abandonado']) => [
+                                                'bg' => 'bg-red-50 dark:bg-red-900/20',
+                                                'text' => 'text-red-600 dark:text-red-400',
+                                                'border' => 'border-red-200 dark:border-red-800/50',
+                                                'label' => 'Abandonado',
+                                            ],
+                                            in_array($rawStatus, ['pending', 'pendiente']) => [
+                                                'bg' => 'bg-purple-50 dark:bg-purple-900/20',
+                                                'text' => 'text-purple-600 dark:text-purple-400',
+                                                'border' => 'border-purple-200 dark:border-purple-800/50',
+                                                'label' => 'Pendiente',
+                                            ],
+                                            default => [
+                                                'bg' => 'bg-gray-50 dark:bg-gray-800',
+                                                'text' => 'text-gray-600 dark:text-gray-400',
+                                                'border' => 'border-gray-200 dark:border-gray-700',
+                                                'label' => ucfirst($rawStatus) ?: 'Sin estado',
+                                            ],
+                                        };
+                                    @endphp
 
-                                    <div class="flex items-center gap-2 mb-6">
-                                        <span
-                                            class="text-[10px] bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
-                                            Juego Completado
-                                        </span>
-                                        <time
-                                            class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hace
-                                            2
-                                            días</time>
-                                    </div>
+                                    <article
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex items-center gap-2 mb-6">
+                                            <span
+                                                class="text-[10px] {{ $statusStyle['bg'] }} {{ $statusStyle['text'] }} border {{ $statusStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
+                                                {{ $statusStyle['label'] }}
+                                            </span>
+                                            <time
+                                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                                Actualizado
+                                                {{ \Carbon\Carbon::parse($game->pivot->updated_at)->diffForHumans() }}
+                                            </time>
+                                        </div>
 
-                                    <div class="flex flex-col sm:flex-row gap-6">
-                                        <a href="#"
-                                            class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
-                                            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4ksi.jpg"
-                                                class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300"
-                                                alt="Portada de Elden Ring">
-                                        </a>
+                                        <div class="flex flex-col sm:flex-row gap-6">
+                                            <a href="{{ route('games.show', $game->slug) }}"
+                                                class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
+                                                <img src="{{ $game->cover_url ?? 'https://via.placeholder.com/300x400' }}"
+                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300 {{ in_array($rawStatus, ['abandoned', 'abandonado']) ? 'grayscale opacity-80' : '' }}"
+                                                    alt="Portada de {{ $game->name }}">
+                                            </a>
 
-                                        <div class="flex-1 flex flex-col justify-between space-y-3">
-                                            <div>
-                                                <div class="flex justify-between items-start gap-4 mb-2">
-                                                    <h3
-                                                        class="text-xl font-black text-gray-900 dark:text-white leading-tight">
-                                                        <a href="#"
-                                                            class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">Elden
-                                                            Ring: Shadow of the Erdtree</a>
-                                                    </h3>
-                                                    <div class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5"
-                                                        aria-label="Valoración: 9.5">
-                                                        <span
-                                                            class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">9.5</span>
-                                                        <i class="fa-solid fa-star text-yellow-500 text-[10px]"
-                                                            aria-hidden="true"></i>
+                                            <div class="flex-1 flex flex-col justify-between space-y-3">
+                                                <div>
+                                                    <div class="flex justify-between items-start gap-4 mb-2">
+                                                        <h3
+                                                            class="text-xl font-black text-gray-900 dark:text-white leading-tight">
+                                                            <a href="{{ route('games.show', $game->id) }}"
+                                                                class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
+                                                                {{ $game->name }}
+                                                            </a>
+                                                        </h3>
+                                                        @if ($game->pivot->rating)
+                                                            <div
+                                                                class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
+                                                                <span
+                                                                    class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">{{ $game->pivot->rating }}</span>
+                                                                <i class="fa-solid fa-star text-yellow-500 text-[10px]"
+                                                                    aria-hidden="true"></i>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                </div>
 
-                                                <div class="mb-4">
-                                                    <span
-                                                        class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded-md uppercase tracking-wider">
-                                                        <i class="fa-solid fa-clock mr-1" aria-hidden="true"></i> 45h
-                                                        para
-                                                        terminar
-                                                    </span>
-                                                </div>
+                                                    @if ($game->pivot->hours_finish + $game->pivot->hours_completed > 0)
+                                                        <div class="mb-4">
+                                                            <span
+                                                                class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border px-2 py-1 rounded-md uppercase tracking-wider">
+                                                                <i class="fa-solid fa-clock mr-1"
+                                                                    aria-hidden="true"></i>
+                                                                {{ $game->pivot->hours_finish + $game->pivot->hours_completed }}h
+                                                                registradas
+                                                            </span>
+                                                        </div>
+                                                    @endif
 
-                                                <p
-                                                    class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
-                                                    "Una expansión que se siente como un juego completo. La dirección
-                                                    artística
-                                                    supera todo lo visto y el diseño de niveles es magistral."
-                                                </p>
-                                            </div>
-
-                                            <div class="pt-3 border-t border-gray-50 dark:border-gray-800/50 mt-2">
-                                                <button type="button"
-                                                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 text-xs font-black text-gray-500 hover:text-red-500 hover:border-red-200 dark:hover:border-red-900/50 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 group mt-2">
-                                                    <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"
-                                                        aria-hidden="true"></i> <span class="tabular-nums">124</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                {{-- Tarjeta de Abandonado --}}
-                                <article
-                                    class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
-
-                                    <div class="flex items-center gap-2 mb-6">
-                                        <span
-                                            class="text-[10px] bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
-                                            Abandonado
-                                        </span>
-                                        <time
-                                            class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hace
-                                            1
-                                            semana</time>
-                                    </div>
-
-                                    <div class="flex flex-col sm:flex-row gap-6">
-                                        <a href="#"
-                                            class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
-                                            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co5vbg.jpg"
-                                                class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300 grayscale opacity-80"
-                                                alt="Portada de Redfall">
-                                        </a>
-
-                                        <div class="flex-1 flex flex-col justify-center space-y-3">
-                                            <div>
-                                                <h3
-                                                    class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-4">
-                                                    <a href="#"
-                                                        class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">Redfall</a>
-                                                </h3>
-
-                                                <div
-                                                    class="bg-red-50 dark:bg-red-500/10 border-l-4 border-red-500 p-4 rounded-r-lg">
-                                                    <span
-                                                        class="block text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400 mb-2">Motivo
-                                                        del abandono</span>
-                                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                        "Demasiados
-                                                        bugs y el rendimiento en PC es injugable. Quizás en un año..."
-                                                    </p>
+                                                    @if ($game->pivot->review)
+                                                        <p
+                                                            class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
+                                                            "{{ $game->pivot->review }}"
+                                                        </p>
+                                                    @elseif(in_array($rawStatus, ['abandoned', 'abandonado']))
+                                                        <p class="text-sm text-gray-500 dark:text-gray-500 italic">No
+                                                            dejó reseña al abandonar el juego.</p>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
+                                    </article>
+                                @empty
+                                    <div
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        <i class="fa-solid fa-history text-4xl text-gray-400 dark:text-gray-600 mb-4"
+                                            aria-hidden="true"></i>
+                                        <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin actividad
+                                        </h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">No hay registros
+                                            recientes para mostrar.</p>
                                     </div>
-                                </article>
+                                @endforelse
                             </div>
                         </div>
-                        {{-- Pestaña Biblioteca --}}
-                        <div x-show="activeTab === 'library'" x-cloak>
+
+                        {{-- PESTAÑA: BIBLIOTECA --}}
+                        <div x-show="activeTab === 'library'" x-cloak
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform translate-y-4">
                             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                                @foreach ($user->games as $game)
+                                @forelse ($games as $game)
                                     <x-miscomponentes.game-card :game="$game" :status="$game->pivot->status" :rating="$game->pivot->rating"
                                         :hours="$game->pivot->hours_finish + $game->pivot->hours_completed" />
-                                @endforeach
+                                @empty
+                                    <div
+                                        class="col-span-full flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        <i class="fa-solid fa-ghost text-4xl text-gray-400 dark:text-gray-600 mb-4"
+                                            aria-hidden="true"></i>
+                                        <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Biblioteca
+                                            vacía</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">Este usuario aún
+                                            no ha añadido ningún juego.</p>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
-                        <div x-show="activeTab === 'screenshots'">
-                            CAPTURAS
+
+                        {{-- PESTAÑA: CAPTURAS --}}
+                        <div x-show="activeTab === 'screenshots'" x-cloak
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform translate-y-4">
+                            <div
+                                class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                <div
+                                    class="w-16 h-16 bg-gray-100 dark:bg-darkbox-main rounded-2xl flex items-center justify-center mb-4">
+                                    <i class="fa-solid fa-image text-2xl text-gray-400 dark:text-gray-500"
+                                        aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin capturas públicas
+                                </h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">El usuario no ha subido
+                                    capturas de pantalla de sus juegos todavía.</p>
+                            </div>
                         </div>
+
                     </div>
                 @else
+                    {{-- ESTADO VACÍO PARA PERFIL PRIVADO --}}
+                    <div
+                        class="xl:col-span-12 flex flex-col items-center justify-center p-12 sm:p-20 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border mt-8">
+                        <i class="fa-solid fa-lock text-5xl text-gray-400 dark:text-gray-600 mb-6"
+                            aria-hidden="true"></i>
+                        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Este perfil es privado</h3>
+                        <p class="text-base text-gray-500 dark:text-gray-400 max-w-md">No puedes ver la actividad,
+                            biblioteca ni estadísticas de este usuario porque ha configurado su cuenta como privada.</p>
+                    </div>
                 @endif
             </div>
         </div>

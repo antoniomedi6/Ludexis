@@ -9,8 +9,8 @@ class PreviewNextGames extends Component
 {
     public function render()
     {
-        $nextGames = Game::where(function ($query) {
-            $query->where('first_release_date', '>=', now())
+        $nextGames = Game::where(function ($q) {
+            $q->where('first_release_date', '>=', now())
                 ->orWhereNull('first_release_date');
         })
             ->orderByRaw('first_release_date IS NULL')

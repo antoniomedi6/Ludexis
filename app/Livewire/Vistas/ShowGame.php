@@ -19,11 +19,11 @@ class ShowGame extends Component
 
         // Guardamos media y total en la misma caché
         $stats = Cache::remember("game_{$game->id}_time_stats", now()->addHours(24), function () use ($game) {
-            $query = GameUser::where('game_id', $game->id)->where('hours_finish', '>', 0);
+            $q = GameUser::where('game_id', $game->id)->where('hours_finish', '>', 0);
 
             return [
-                'average' => round($query->avg('hours_finish') ?? 0, 1),
-                'count' => $query->count()
+                'average' => round($q->avg('hours_finish') ?? 0, 1),
+                'count' => $q->count()
             ];
         });
 

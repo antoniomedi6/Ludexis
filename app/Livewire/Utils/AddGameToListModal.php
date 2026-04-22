@@ -29,13 +29,13 @@ class AddGameToListModal extends Component
         $userLists = CustomList::where('user_id', Auth::id())
             ->withCount('games')
             ->with([
-                'games' => function ($query) {
-                    $query->select('games.id', 'cover_url');
+                'games' => function ($q) {
+                    $q->select('games.id', 'cover_url');
                 }
             ])
             ->withExists([
-                'games as contains_game' => function ($query) {
-                    $query->where('game_id', $this->gameId);
+                'games as contains_game' => function ($q) {
+                    $q->where('game_id', $this->gameId);
                 }
             ])
             ->orderBy('name')

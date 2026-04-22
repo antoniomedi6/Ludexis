@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\CustomList;
 use App\Models\Image;
 use App\Models\User;
+use App\Services\PopularGamesImportService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,12 +19,28 @@ class DatabaseSeeder extends Seeder
                     PlatformSeeder::class,
                 ]);
          */
+
+        /* Crea un usuario admin */
         User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => 'admin',
-                'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
+                'password' => Hash::make(env('ADMIN_PASSWORD')),
                 'role' => 'admin',
+                'xp' => 0,
+                'is_private' => false,
+                'banned_at' => null,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        /* Crea un usuario estándar */
+        User::firstOrCreate(
+            ['email' => 'user@example.com'],
+            [
+                'name' => 'user',
+                'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
+                'role' => 'standard',
                 'xp' => 0,
                 'is_private' => false,
                 'banned_at' => null,
@@ -33,11 +50,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory(30)->create();
 
+        /* app crea una instancia de la clase PopularGamesImportService y se trae los 100 juegos más populares de IGDB */
+        app(PopularGamesImportService::class)->importPopular(100);
+
         $this->call(GameUserSeeder::class);
 
-        /* 
+        /*
         Storage::deleteDirectory('images/gameCovers');
-        Storage::createDirectory('images/gameCovers'); 
+        Storage::createDirectory('images/gameCovers');
         */
 
         Storage::deleteDirectory('images/userImages/');

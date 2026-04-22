@@ -2,24 +2,50 @@
 
 namespace App\Livewire\Vistas;
 
+use App\Models\Game;
 use App\Models\GameUser;
 use Livewire\Component;
 
 class FeedSocial extends Component
 {
-    public int $limit = 20;
-    public function render()
+    public int $limit = 10;
+
+    public function loadMore(): void
     {
-        $userReviews = GameUser::whereNotNull('review')
-            ->orderBy('created_at', 'desc')
-            ->limit($this->limit)
-            ->get();
-        return
-            view('livewire.vistas.feed-social', compact('userReviews'));
+        $this->limit += 10;
     }
 
-    public function loadMore()
+    public function render()
     {
-        $this->limit += 20;
+        $baseQuery = GameUser::query()
+            ->with(['user', 'game'])
+            ->whereNotNull('review')
+            ->where('review', '!=', '')
+            ->whereHas('game')
+            ->whereHas('user', fn($q) => $q->whereNull('banned_at'));
+
+        $totalCount = (clone $baseQuery)->count();
+
+        $userReviews = $baseQuery
+            ->orderByDesc('created_at')
+            ->limit($this->limit)
+            ->get();
+
+        $trending = Game::query()
+            ->withCount([
+                'users as reviews_count' => fn($q) => $q->whereNotNull('game_user.review')
+                    ->where('game_user.review', '!=', ''),
+            ])
+            ->having('reviews_count', '>', 0)
+            ->orderByDesc('reviews_count')
+            ->orderByDesc('rating')
+            ->limit(5)
+            ->get();
+
+        return view('livewire.vistas.feed-social', [
+            'userReviews' => $userReviews,
+            'totalCount' => $totalCount,
+            'trending' => $trending,
+        ]);
     }
 }

@@ -32,37 +32,37 @@ class Gallery extends Component
 
     public function render()
     {
-        $query = Image::with(['game', 'user']);
+        $q = Image::with(['game', 'user']);
 
         if ($this->game) {
-            $query->where('game_id', $this->game->id);
+            $q->where('game_id', $this->game->id);
         }
 
         if (!empty($this->gamesFilter)) {
-            $query->whereIn('game_id', $this->gamesFilter);
+            $q->whereIn('game_id', $this->gamesFilter);
         }
 
         if ($this->spoilerFilter === 'hide') {
-            $query->where('is_spoiler', false);
+            $q->where('is_spoiler', false);
         } elseif ($this->spoilerFilter === 'only') {
-            $query->where('is_spoiler', true);
+            $q->where('is_spoiler', true);
         }
 
         if ($this->dateFilter === '24h') {
-            $query->where('created_at', '>=', now()->subDay());
+            $q->where('created_at', '>=', now()->subDay());
         } elseif ($this->dateFilter === 'week') {
-            $query->where('created_at', '>=', now()->subWeek());
+            $q->where('created_at', '>=', now()->subWeek());
         } elseif ($this->dateFilter === 'month') {
-            $query->where('created_at', '>=', now()->subMonth());
+            $q->where('created_at', '>=', now()->subMonth());
         }
 
         if ($this->orderBy === 'likes') {
-            $query->withCount('likes')->orderByDesc('likes_count');
+            $q->withCount('likes')->orderByDesc('likes_count');
         } else {
-            $query->latest();
+            $q->latest();
         }
 
-        $images = $query->limit($this->limit)->get();
+        $images = $q->limit($this->limit)->get();
 
         $gamesWithImages = Game::has('images')->orderBy('title')->get();
 

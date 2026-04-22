@@ -25,32 +25,32 @@ class PreviewReviews extends Component
 
     public function render()
     {
-        $query = GameUser::with(['user:id,name,role,profile_photo_path', 'game:id,title,cover_url,slug'])
+        $q = GameUser::with(['user:id,name,role,profile_photo_path', 'game:id,title,cover_url,slug'])
             ->whereNotNull('review');
 
         if ($this->gameId) {
-            $query->where('game_id', $this->gameId);
+            $q->where('game_id', $this->gameId);
         }
 
         // FILTROS
         match ($this->filter) {
-            'positive' => $query->where('rating', '>=', 7),
-            'mixed' => $query->whereBetween('rating', [4, 6]),
-            'negative' => $query->where('rating', '<=', 3),
+            'positive' => $q->where('rating', '>=', 7),
+            'mixed' => $q->whereBetween('rating', [4, 6]),
+            'negative' => $q->where('rating', '<=', 3),
             default => null,
         };
 
         // ORDENACIÓN
         match ($this->sort) {
-            'newest' => $query->latest('updated_at'),
-            'oldest' => $query->oldest('updated_at'),
-            'highest' => $query->orderByDesc('rating')->latest('updated_at'),
-            'lowest' => $query->orderBy('rating')->latest('updated_at'),
-            default => $query->latest('updated_at'),
+            'newest' => $q->latest('updated_at'),
+            'oldest' => $q->oldest('updated_at'),
+            'highest' => $q->orderByDesc('rating')->latest('updated_at'),
+            'lowest' => $q->orderBy('rating')->latest('updated_at'),
+            default => $q->latest('updated_at'),
         };
 
-        $totalCount = $query->count();
-        $reviews = $query->limit($this->amount)->get();
+        $totalCount = $q->count();
+        $reviews = $q->limit($this->amount)->get();
 
         if (Auth::check() && $this->sort === 'newest' && $this->filter === 'all') {
             $reviews = $reviews->sortByDesc(function ($review) {

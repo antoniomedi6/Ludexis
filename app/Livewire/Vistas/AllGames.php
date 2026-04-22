@@ -30,7 +30,7 @@ class AllGames extends Component
     {
         $page = $this->getPage();
 
-        $query = IGDBGame::select([
+        $q = IGDBGame::select([
             'id',
             'name',
             'first_release_date',
@@ -53,24 +53,24 @@ class AllGames extends Component
 
         if (!empty($this->platformsFilter)) {
             $platformNames = Platform::whereIn('id', $this->platformsFilter)->pluck('name')->toArray();
-            $query->whereIn('platforms.name', $platformNames);
+            $q->whereIn('platforms.name', $platformNames);
         }
 
         if (!empty($this->genresFilter)) {
             $genreNames = Genre::whereIn('id', $this->genresFilter)->pluck('name')->toArray();
-            $query->whereIn('genres.name', $genreNames);
+            $q->whereIn('genres.name', $genreNames);
         }
 
         if (!empty($this->search)) {
-            $query->search($this->search);
+            $q->search($this->search);
         } else {
             $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
-            $query->orderBy($sortField, 'desc');
+            $q->orderBy($sortField, 'desc');
         }
 
-        $total = (clone $query)->count();
+        $total = (clone $q)->count();
 
-        $igdbGames = $query->skip(($page - 1) * $this->limit)
+        $igdbGames = $q->skip(($page - 1) * $this->limit)
             ->take($this->limit)
             ->get();
 

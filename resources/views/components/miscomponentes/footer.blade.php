@@ -24,7 +24,8 @@
                     un sistema de reputación real.
                 </p>
                 <div class="flex space-x-3 pt-2">
-                    <a href="#" aria-label="Visitar nuestro repositorio en GitHub"
+                    <a href="https://github.com/antoniomedi6" target="_blank"
+                        aria-label="Visitar nuestro repositorio en GitHub"
                         class="w-10 h-10 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-cyan-50 dark:hover:bg-gray-800 hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-brands fa-github text-lg" aria-hidden="true"></i>
                     </a>

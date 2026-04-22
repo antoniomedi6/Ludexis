@@ -218,7 +218,7 @@
                                             </div>
                                             <time datetime="{{ $item->updated_at }}"
                                                 class="block mt-1 text-xs text-gray-500 font-bold uppercase tracking-widest">
-                                                {{ $item->updated_at }}
+                                                {{ $item->updated_at->diffForHumans() }}
                                             </time>
                                             <p
                                                 class="text-xs text-gray-600 dark:text-gray-400 font-bold uppercase mt-0.5 transition-colors duration-300">
@@ -247,10 +247,10 @@
                                         <div class="scale-90 origin-left">
                                             <livewire:utils.like-button :model="$item" :key="'like-btn-global-' . $item->id" />
                                         </div>
+                                        <div class="scale-90 origin-left">
+                                            <livewire:utils.report-button :model="$item" :key="'report-btn-global-' . $item->id" />
+                                        </div>
                                     @endauth
-                                    <div class="scale-90 origin-left">
-                                        <livewire:utils.report-button :model="$item" :key="'report-btn-global-' . $item->id" />
-                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -258,6 +258,7 @@
                 </div>
 
                 {{-- CARGAR MÁS --}}
+                {{--
                 @if ($totalCount > $amount)
                     <div class="flex justify-center mt-6">
                         <button type="button" wire:click="loadMore"
@@ -268,6 +269,7 @@
                         </button>
                     </div>
                 @endif
+                 --}}
             @endif
         </div>
     </div>

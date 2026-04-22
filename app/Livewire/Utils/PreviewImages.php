@@ -36,8 +36,8 @@ class PreviewImages extends Component
                     ->withCount('likes')
                     ->where('is_spoiler', false)
                     // ->where('created_at', '>=', now()->subMonth())
-                    ->whereHas('game', function ($query) {
-                        $query->where('slug', $this->gameSlug);
+                    ->whereHas('game', function ($q) {
+                        $q->where('slug', $this->gameSlug);
                     })
                     ->orderByDesc('likes_count')
                     ->latest()
