@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Traits\Likeable;
+use App\Traits\Reportable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GameUser extends Model
 {
     use Likeable;
+    use Reportable;
     protected $table = 'game_user';
     protected $fillable = ['status', 'review', 'weight_applied', 'hours_finish', 'hours_completed', 'rating', 'drop_reason', 'game_id', 'user_id'];
 

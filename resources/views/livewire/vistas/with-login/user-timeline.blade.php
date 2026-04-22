@@ -1,4 +1,4 @@
-<x-miscomponentes.page-layout fullWidth="false">
+<x-miscomponentes.page-layout :fullWidth="false">
 
     {{-- RESPLANDOR DE FONDO --}}
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-screen bg-cyan-200/40 dark:bg-cyan-900/20 rounded-full blur-3xl opacity-70 pointer-events-none z-0"
@@ -26,9 +26,9 @@
                     Resumen Anual
                 </button>
 
-                <button type="button" wire:click="setFilter('last_month')"
-                    aria-pressed="{{ $filterOption === 'last_month' ? 'true' : 'false' }}"
-                    class="relative px-8 py-2.5 rounded-xl text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'last_month' ? 'text-cyan-700 dark:text-cyan-400 bg-white dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
+                <button type="button" wire:click="setFilter('current_month')"
+                    aria-pressed="{{ $filterOption === 'current_month' ? 'true' : 'false' }}"
+                    class="relative px-8 py-2.5 rounded-xl text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'current_month' ? 'text-cyan-700 dark:text-cyan-400 bg-white dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
                     Vista Mensual
                 </button>
             </div>
@@ -42,6 +42,25 @@
             </div>
 
             @php $globalIndex = 0; @endphp
+
+            @if ($monthsSummary->isEmpty())
+                {{-- SIN RESULTADOS --}}
+                <div class="relative z-10 flex flex-col items-center justify-center p-12 sm:p-16 text-center bg-white dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-800 rounded-3xl shadow-sm max-w-2xl mx-auto"
+                    role="status" aria-live="polite">
+                    <div
+                        class="w-16 h-16 bg-gray-50 dark:bg-gray-950 rounded-2xl flex items-center justify-center mb-5 border border-gray-200 dark:border-gray-800">
+                        <i class="fa-solid fa-hourglass-half text-2xl text-cyan-600 dark:text-cyan-500"
+                            aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 dark:text-white mb-2 uppercase tracking-tight">
+                        Sin actividad registrada
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 max-w-md">
+                        No hay hitos en el rango seleccionado. Prueba a cambiar el filtro o empieza a registrar
+                        partidas para construir tu cronología.
+                    </p>
+                </div>
+            @endif
 
             @foreach ($monthsSummary as $monthKey => $monthData)
                 @php $globalIndex++; @endphp
@@ -120,8 +139,8 @@
                                 <div
                                     class="flex flex-col {{ $globalIndex % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse' }} items-center gap-8">
 
-                                    <img src="{{ $item->game->cover_url }}" alt="Portada de {{ $item->game->title }}"
-                                        loading="lazy"
+                                    <img src="{{ $item->game?->cover_url }}"
+                                        alt="Portada de {{ $item->game?->title ?? 'juego' }}" loading="lazy"
                                         class="w-32 md:w-40 aspect-[3/4] rounded-2xl md:rounded-3xl object-cover shadow-lg shrink-0 transition-transform duration-500 hover:scale-105" />
 
                                     <div class="flex-1 space-y-3 w-full">
@@ -138,7 +157,7 @@
 
                                         <h4 id="activity-heading-{{ $globalIndex }}"
                                             class="text-2xl font-black text-gray-900 dark:text-white leading-tight uppercase">
-                                            {{ $item->game->title }}
+                                            {{ $item->game?->title ?? 'Juego desconocido' }}
                                         </h4>
 
                                         <div

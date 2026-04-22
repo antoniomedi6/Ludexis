@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\GameStatusEvent;
+use App\Listeners\RecordActivityListener;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -28,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+        VerifyEmail::toMailUsing(function (string $url) {
             return (new MailMessage())
                 ->subject('Verifica tu cuenta en Ludexis')
                 ->view('emails.verify', ['url' => $url]);
@@ -54,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
 
-            // Si el modelo tiene un 'user_id' (es el autor de la reseña/captura), 
+            // Si el modelo tiene un 'user_id' (es el autor de la reseña/captura),
             // prohibimos que se dé like a sí mismo.
             if (isset($model->user_id)) {
                 return $user->id !== $model->user_id;
@@ -69,6 +71,14 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(
             SocialiteWasCalled::class,
             [SteamExtendSocialite::class, 'handle']
+        );
+
+        /**
+         * TIMELINE: registra los cambios de estado de los videojuegos en la tabla activities.
+         */
+        Event::listen(
+            GameStatusEvent::class,
+            [RecordActivityListener::class, 'handle']
         );
     }
 

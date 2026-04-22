@@ -79,10 +79,9 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <time datetime="{{ $item->updated_at }}"
-                                        class="block mt-1 text-xs text-gray-500 font-bold uppercase tracking-widest">
+                                    <div class="block mt-1 text-xs text-gray-500 font-bold uppercase tracking-widest">
                                         {{ $item->updated_at->diffForHumans() }}
-                                    </time>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
@@ -97,13 +96,16 @@
                             {{ $item->review }}
                         </div>
 
-                        @auth
-                            <div class="mt-2 flex justify-start">
+                        <div class="mt-2 flex justify-start items-center gap-2 flex-wrap">
+                            @auth
                                 <div class="scale-90 origin-left">
                                     <livewire:utils.like-button :model="$item" :key="'like-btn-specific-' . $item->id" />
                                 </div>
+                            @endauth
+                            <div class="scale-90 origin-left">
+                                <livewire:utils.report-button :model="$item" :key="'report-btn-specific-' . $item->id" />
                             </div>
-                        @endauth
+                        </div>
                     </article>
                 @endforeach
             </div>
@@ -240,13 +242,16 @@
                                     {{ $item->review }}
                                 </div>
 
-                                @auth
-                                    <div class="mt-auto flex justify-start">
+                                <div class="mt-auto flex justify-start items-center gap-2 flex-wrap">
+                                    @auth
                                         <div class="scale-90 origin-left">
                                             <livewire:utils.like-button :model="$item" :key="'like-btn-global-' . $item->id" />
                                         </div>
+                                    @endauth
+                                    <div class="scale-90 origin-left">
+                                        <livewire:utils.report-button :model="$item" :key="'report-btn-global-' . $item->id" />
                                     </div>
-                                @endauth
+                                </div>
                             </div>
                         </article>
                     @endforeach

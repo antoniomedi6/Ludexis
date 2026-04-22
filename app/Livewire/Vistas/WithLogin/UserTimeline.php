@@ -9,11 +9,13 @@ use Livewire\Component;
 
 class UserTimeline extends Component
 {
-    public $filterOption = 'last_year';
+    public string $filterOption = 'current_year';
 
-    public function setFilter($option)
+    public function setFilter(string $option): void
     {
-        $this->filterOption = $option;
+        $this->filterOption = in_array($option, ['current_year', 'current_month'])
+            ? $option
+            : 'current_year';
     }
 
     public function render()
@@ -21,6 +23,7 @@ class UserTimeline extends Component
         $dateLimit = $this->getDateLimit();
 
         $activities = Activity::with('game')
+            ->whereHas('game')
             ->where('user_id', Auth::id())
             ->where('created_at', '>=', $dateLimit)
             ->orderBy('created_at', 'desc')
@@ -54,14 +57,12 @@ class UserTimeline extends Component
         return view('livewire.vistas.with-login.user-timeline', compact('monthsSummary'));
     }
 
-    private function getDateLimit()
+    private function getDateLimit(): Carbon
     {
         return match ($this->filterOption) {
-            'last_month' => Carbon::now()->subMonth(),
-            'last_6_months' => Carbon::now()->subMonths(6),
+            'current_month' => Carbon::now()->startOfMonth(),
             'current_year' => Carbon::now()->startOfYear(),
-            'last_year' => Carbon::now()->subYear(),
-            default => Carbon::now()->subYear(),
+            default => Carbon::now()->startOfYear(),
         };
     }
 }

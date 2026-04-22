@@ -52,6 +52,10 @@
                                         <div class="scale-90 origin-left">
                                             @livewire('utils.like-button', ['model' => $image], key('like-detail-' . $image->id))
                                         </div>
+                                        {{-- BOTÓN DE REPORTAR --}}
+                                        <div class="scale-90 origin-left">
+                                            <livewire:utils.report-button :model="$image" :key="'report-detail-' . $image->id" />
+                                        </div>
                                     </div>
                                     <time class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">
                                         {{ $image->created_at->diffForHumans() }}

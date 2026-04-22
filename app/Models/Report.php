@@ -17,4 +17,10 @@ class Report extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // {{-- SYNOPSIS: Relación polimórfica inversa --}}
+    public function reportable()
+    {
+        return $this->morphTo();
+    }
 }

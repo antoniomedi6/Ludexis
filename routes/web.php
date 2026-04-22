@@ -8,6 +8,7 @@ use App\Livewire\Vistas\FeedSocial;
 use App\Livewire\Vistas\Gallery;
 use App\Livewire\Vistas\ShowGame;
 use App\Livewire\Vistas\ShowUserProfile;
+use App\Livewire\Vistas\WithLogin\Admin\Reports;
 use App\Livewire\Vistas\WithLogin\Dashboard;
 use App\Livewire\Vistas\WithLogin\Lists\ShowCustomLists;
 use App\Livewire\Vistas\WithLogin\Lists\ShowUserList;
@@ -35,6 +36,8 @@ Route::middleware([
     Route::get('/timeline', UserTimeline::class)->name('timeline');
     Route::get('/userLists', ShowCustomLists::class)->name('userLists');
     Route::get('/userLists/{list}', ShowUserList::class)->name('userLists.show');
+    /* RUTAS ADMIN */
+    Route::get('/admin/reports', Reports::class)->middleware('admin')->name('admin.reports');
 });
 
 /* RUTAS ACCESIBLES PARA USUARIOS SIN AUTENTICAR */

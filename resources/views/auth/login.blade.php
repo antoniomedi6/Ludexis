@@ -115,7 +115,7 @@
                                 <hr class="flex-1 border-darkbox-border">
                             </div>
                             {{-- Social Login --}}
-                            <a href="{{ route('auth.steam.redirect') }}" wire:navigate
+                            <a href="{{ route('auth.steam.redirect') }}"
                                 class="flex items-center justify-center gap-3 w-full px-4 py-3 bg-gray-900 border border-gray-700 hover:border-cyan-800 hover:bg-cyan-900/30 text-white rounded-xl font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs group"
                                 aria-label="Iniciar sesión con Steam">
                                 <i class="fa-brands fa-steam text-lg group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-300"
