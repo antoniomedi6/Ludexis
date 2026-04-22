@@ -43,4 +43,18 @@ return [
         'redirect' => env('STEAM_REDIRECT_URI'),
         'allowed_hosts' => explode(',', env('STEAM_ALLOWED_HOSTS', 'localhost')),
     ],
+
+    /* DISCORD AUTH */
+    'discord' => [
+        'client_id' => env('DISCORD_CLIENT_ID'),
+        'client_secret' => env('DISCORD_CLIENT_SECRET'),
+        'redirect' => env('DISCORD_REDIRECT_URI'),
+    ],
+
+    /* GOOGLE AUTH */
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
 ];

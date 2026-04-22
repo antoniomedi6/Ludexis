@@ -2,6 +2,8 @@
 
 // use App\Http\Controllers\RoadmapController;
 // use App\Livewire\Playground;
+use App\Http\Controllers\Auth\DiscordAuthController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\SteamAuthController;
 use App\Livewire\Vistas\AllGames;
 use App\Livewire\Vistas\FeedSocial;
@@ -48,6 +50,18 @@ Route::get('/gallery/{slug?}', Gallery::class)->name('gallery');
 // Route::get('/roadmap', [RoadmapController::class, 'index'])->name('roadmap');
 Route::get('/profile/{userId}', ShowUserProfile::class)->name('profile');
 
-/* LOGIN SOCIALITE */
+/**
+ * LOGIN SOCIALITE
+ */
+
+/* STEAM */
 Route::get('/auth/steam/redirect', [SteamAuthController::class, 'redirect'])->name('auth.steam.redirect');
 Route::get('/auth/steam/callback', [SteamAuthController::class, 'callback'])->name('auth.steam.callback');
+
+/* DISCORD */
+Route::get('/auth/discord/redirect', [DiscordAuthController::class, 'redirect'])->name('auth.discord.redirect');
+Route::get('/auth/discord/callback', [DiscordAuthController::class, 'callback'])->name('auth.discord.callback');
+
+/* GOOGLE */
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');

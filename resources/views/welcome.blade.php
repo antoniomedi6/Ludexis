@@ -41,10 +41,14 @@
                             class="bg-[#171a21] hover:bg-[#2a475e] border border-transparent text-white font-black px-8 py-4 rounded-2xl shadow-lg dark:shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center gap-3 text-sm uppercase tracking-widest hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-[#171a21]/50">
                             <i class="fa-brands fa-steam text-xl" aria-hidden="true"></i> Entrar con Steam
                         </a>
-                        <button type="button"
+                        <a type="button" href="{{ route('auth.discord.redirect') }}"
                             class="bg-[#5865F2] hover:bg-[#4752C4] border border-transparent text-white font-black px-8 py-4 rounded-2xl shadow-lg dark:shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center gap-3 text-sm uppercase tracking-widest hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-[#5865F2]/50">
                             <i class="fa-brands fa-discord text-xl" aria-hidden="true"></i> Entrar con Discord
-                        </button>
+                        </a>
+                        <a type="button" href="{{ route('auth.google.redirect') }}"
+                            class="bg-red-600 hover:bg-red-500 border border-transparent text-white font-black px-8 py-4 rounded-2xl shadow-lg dark:shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-300 flex items-center gap-3 text-sm uppercase tracking-widest hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-red-600/50">
+                            <i class="fa-brands fa-google text-xl" aria-hidden="true"></i> Entrar con Google
+                        </a>
                     </div>
                 </div>
 

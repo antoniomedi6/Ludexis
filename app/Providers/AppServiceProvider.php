@@ -12,6 +12,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use SocialiteProviders\Discord\DiscordExtendSocialite;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use SocialiteProviders\Steam\SteamExtendSocialite;
 
@@ -74,12 +75,21 @@ class AppServiceProvider extends ServiceProvider
         );
 
         /**
+         * DISCORD SOCIALITE
+         */
+        Event::listen(
+            SocialiteWasCalled::class,
+            [DiscordExtendSocialite::class, 'handle']
+        );
+
+        /**
          * TIMELINE: registra los cambios de estado de los videojuegos en la tabla activities.
          */
         Event::listen(
             GameStatusEvent::class,
             [RecordActivityListener::class, 'handle']
         );
+
     }
 
 }

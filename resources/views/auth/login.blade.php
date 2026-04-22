@@ -122,6 +122,20 @@
                                     aria-hidden="true"></i>
                                 <span>Entrar con Steam</span>
                             </a>
+                            <a href="{{ route('auth.discord.redirect') }}"
+                                class="flex items-center justify-center gap-3 w-full px-4 py-3 bg-gray-900 border border-gray-700 hover:border-cyan-800 hover:bg-cyan-900/30 text-white rounded-xl font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs group"
+                                aria-label="Iniciar sesión con Discord">
+                                <i class="fa-brands fa-discord text-lg group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-300"
+                                    aria-hidden="true"></i>
+                                <span>Entrar con Discord</span>
+                            </a>
+                            <a href="{{ route('auth.google.redirect') }}"
+                                class="flex items-center justify-center gap-3 w-full px-4 py-3 bg-gray-900 border border-gray-700 hover:border-cyan-800 hover:bg-cyan-900/30 text-white rounded-xl font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs group"
+                                aria-label="Iniciar sesión con Google">
+                                <i class="fa-brands fa-google text-lg group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-300"
+                                    aria-hidden="true"></i>
+                                <span>Entrar con Google</span>
+                            </a>
                         </div>
 
                         <div class="flex items-center justify-between mt-4 pt-4 border-t border-darkbox-border">
