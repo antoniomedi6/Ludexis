@@ -15,7 +15,7 @@ class GameRegistryCard extends Component
     public GameRegistryForm $form;
     public Game $game;
     public ?GameUser $gameUser = null;
-    public GameScoreService $gameScoreService;
+
     public function mount($gameId)
     {
         $this->game = Game::findOrFail($gameId);
@@ -47,7 +47,7 @@ class GameRegistryCard extends Component
             ->where('game_id', $this->game->id)
             ->first();
 
-        $this->gameScoreService->recalculate($this->game->refresh());
+        app(GameScoreService::class)->recalculate($this->game->refresh());
 
         if ($this->form->status) {
             GameStatusEvent::dispatch(Auth::user(), $this->game, $this->form->status);
@@ -61,7 +61,7 @@ class GameRegistryCard extends Component
         $this->authorize('delete', $this->gameUser);
         if ($this->gameUser) {
             $this->gameUser->delete();
-            reset($this->gameUser);
+            $this->gameUser = null;
         }
         $this->form->reset();
 

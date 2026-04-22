@@ -14,7 +14,6 @@ class ReviewModal extends Component
     public ReviewForm $cform;
     public $modalOpen = false;
     public $game = null;
-    public GameScoreService $gameScoreService;
 
     #[On('evtOpenReviewModal')]
     public function loadModal($gameId)
@@ -42,7 +41,7 @@ class ReviewModal extends Component
         $this->modalOpen = false;
 
         if ($this->game) {
-            $this->gameScoreService->recalculate($this->game->refresh());
+            app(GameScoreService::class)->recalculate($this->game->refresh());
         }
 
         $this->dispatch('notify', message: 'Reseña publicada', type: 'success');

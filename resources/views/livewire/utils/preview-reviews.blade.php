@@ -1,8 +1,8 @@
 @if (isset($gameId))
-    {{-- REVIEWS_JUEGO_ESPECIFICO --}}
+    {{-- REVIEWS JUEGO ESPECIFICO --}}
     <div class="col-span-full space-y-4 w-full mt-8" aria-labelledby="opinions-heading">
 
-        {{-- HEADER_Y_FILTROS --}}
+        {{-- HEADER Y FILTROS --}}
         <div
             class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200 dark:border-darkbox-border pb-3">
             <div>

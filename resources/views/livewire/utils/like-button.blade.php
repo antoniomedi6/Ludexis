@@ -1,5 +1,5 @@
 <div>
-    {{-- AUTHENTICATED_VIEW --}}
+    {{-- Vista para usuarios autenticados --}}
     @auth
         <button type="button" wire:click.prevent.stop="toggleLike" aria-pressed="{{ $isLiked ? 'true' : 'false' }}"
             aria-label="{{ $isLiked ? 'Quitar me gusta' : 'Dar me gusta' }}"
@@ -26,7 +26,7 @@
             </span>
         </button>
 
-        {{-- GUEST_VIEW --}}
+        {{-- Vista para usuarios no autenticados --}}
     @else
         <span
             class="group relative flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm bg-white dark:bg-darkbox-card border-gray-200 dark:border-gray-800">

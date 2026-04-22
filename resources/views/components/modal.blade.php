@@ -14,26 +14,27 @@
     ][$maxWidth ?? '2xl'];
 @endphp
 
-<div x-data="{ show: @entangle($attributes->wire('model')) }" x-on:close.stop="show = false" x-on:keydown.escape.window="show = false" x-show="show"
-    id="{{ $id }}" class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-[150]" style="display: none;">
-    <div x-show="show" class="fixed inset-0 transform transition-all" x-on:click="show = false"
-        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-        <div class="absolute inset-0 bg-gray-950/80 backdrop-blur-md"></div>
+{{-- MODAL --}}
+<div x-data="{ show: @entangle($attributes->wire('model')) }" x-on:close.stop="show = false" @keydown.escape.window="show = false" x-show="show" id="{{ $id }}"
+    class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" style="display: none;">
+
+    <div x-show="show" x-transition.opacity
+        class="absolute inset-0 cursor-pointer bg-gray-900/40 transition-colors duration-300 dark:bg-black/60 backdrop-blur-md"
+        @click="show = false" aria-hidden="true">
     </div>
 
-    <div x-show="show"
-        class="bg-white dark:bg-[#151821] rounded-[2.5rem] overflow-hidden shadow-2xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto border border-gray-200 dark:border-gray-800"
-        x-trap.inert.noscroll="show" x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-8 sm:translate-y-0 sm:scale-95"
-        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200"
-        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-        x-transition:leave-end="opacity-0 translate-y-8 sm:translate-y-0 sm:scale-95">
+    <div x-show="show" x-trap.noscroll="show"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-90 translate-y-4"
+        x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+        x-transition:leave-end="opacity-0 scale-90 translate-y-4"
+        class="relative z-10 max-h-screen w-full overflow-x-hidden overflow-y-auto rounded-[2.5rem] border border-gray-200 bg-white shadow-2xl transition-all dark:border-gray-800 dark:bg-[#151821] sm:mx-auto {{ $maxWidth }}"
+        role="dialog" aria-modal="true">
 
-        <button x-on:click="show = false"
-            class="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1a1d27] text-gray-500 hover:text-red-500 transition-colors flex items-center justify-center border border-gray-200 dark:border-gray-800">
-            <i class="fa-solid fa-xmark text-lg"></i>
+        <button type="button" @click="show = false"
+            class="absolute right-6 top-6 z-20 text-gray-400 transition-colors duration-300 hover:text-gray-900 dark:hover:text-white">
+            <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
         </button>
 
         <div class="p-8 md:p-10">

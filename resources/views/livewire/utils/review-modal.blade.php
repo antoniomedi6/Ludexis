@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="w-full md:w-2/3">
-                    <x-miscomponentes.textarea class="h-full" wire:model="cform.review"
+                    <x-miscomponentes.textarea class="h-full" wire:model.debounce.400ms="cform.review"
                         placeholder="¿Qué te ha parecido el juego?"></x-miscomponentes.textarea>
                 </div>
                 <x-input-error for="cform.review" />

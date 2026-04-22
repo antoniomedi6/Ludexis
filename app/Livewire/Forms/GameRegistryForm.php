@@ -10,8 +10,6 @@ use Livewire\Form;
 
 class GameRegistryForm extends Form
 {
-    public GameScoreService $gameScoreService;
-
     #[Validate('required|integer')]
     public int $game_id = 0;
 
@@ -38,7 +36,7 @@ class GameRegistryForm extends Form
     {
         $this->validate();
 
-        $weight = $this->gameScoreService->weightForUser(Auth::user());
+        $weight = app(GameScoreService::class)->weightForUser(Auth::user());
 
         GameUser::updateOrCreate(
             [

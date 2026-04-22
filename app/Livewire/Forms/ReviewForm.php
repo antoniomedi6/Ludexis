@@ -2,16 +2,14 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\GameUser;
 use App\Services\GameScoreService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class ReviewForm extends Form
 {
-    public GameScoreService $gameScoreService;
-
     #[Validate(['required', 'string', 'min:5', 'max:500'])]
     public string $review = '';
 
@@ -23,17 +21,18 @@ class ReviewForm extends Form
         $this->validate();
         $user = Auth::user();
 
-        $weight = $this->gameScoreService->weightForUser($user);
+        $weight = app(GameScoreService::class)->weightForUser($user);
 
-        DB::table('game_user')
-            ->updateOrInsert(
-                ['user_id' => $user->id, 'game_id' => $this->game_id],
-                [
-                    'review' => $this->review,
-                    'weight_applied' => $weight,
-                    'updated_at' => now(),
-                ]
-            );
+        GameUser::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'game_id' => $this->game_id,
+            ],
+            [
+                'review' => $this->review,
+                'weight_applied' => $weight,
+            ]
+        );
     }
 
     public function cancelForm()
