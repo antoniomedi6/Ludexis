@@ -4,7 +4,7 @@
     {{-- FONDO DIFUMINADO --}}
     <div class="absolute top-0 w-full h-[60vh] z-0 overflow-hidden bg-white dark:bg-darkbox-main transition-colors duration-300 pointer-events-none select-none"
         aria-hidden="true">
-        <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ $game->screenshots[0] ?? 'sc8c26' }}.jpg"
+        <img src="https://images.igdb.com/igdb/image/upload/t_1080p/{{ ($game->screenshots ?? [])[0] ?? 'sc8c26' }}.jpg"
             class="w-full h-full object-cover opacity-10 dark:opacity-30 blur-md scale-105 transition-opacity duration-300 pointer-events-none select-none"
             style="mask-image: linear-gradient(to bottom, black 40%, transparent); -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent);"
             draggable="false" alt="" />
@@ -156,36 +156,37 @@
                                 <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Subir Captura
                             </button>
                         </div>
-
-                        <div
-                            class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4 relative shadow-sm transition-colors duration-300 bg-gray-100 dark:bg-darkbox-card">
-                            <iframe class="absolute top-0 left-0 w-full h-full z-10" src="{{ $game->video_url }}"
-                                frameborder="0" allowfullscreen title="Tráiler de {{ $game->title }}"></iframe>
-                        </div>
-
+                        @if ($game->video_url)
+                            <div
+                                class="aspect-video w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-4 relative shadow-sm transition-colors duration-300 bg-gray-100 dark:bg-darkbox-card">
+                                <iframe class="absolute top-0 left-0 w-full h-full z-10" src="{{ $game->video_url }}"
+                                    frameborder="0" allowfullscreen title="Tráiler de {{ $game->title }}"></iframe>
+                            </div>
+                        @endif
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" aria-label="Galería de imágenes">
+                            @if ($game->screenshots)
+                                @foreach (array_slice($game->screenshots ?? [], 0, 3) as $image)
+                                    @php
+                                        $imageUrl = "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg";
+                                        $highResUrl = "https://images.igdb.com/igdb/image/upload/t_1080p/$image.jpg";
+                                    @endphp
 
-                            @foreach (array_slice($game->screenshots, 0, 3) as $image)
-                                @php
-                                    $imageUrl = "https://images.igdb.com/igdb/image/upload/t_screenshot_med/$image.jpg";
-                                    $highResUrl = "https://images.igdb.com/igdb/image/upload/t_1080p/$image.jpg";
-                                @endphp
+                                    <div x-data @click="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
+                                        @keydown.enter="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
+                                        role="button" tabindex="0"
+                                        class="aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 cursor-pointer hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors relative group shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
-                                <div x-data @click="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
-                                    @keydown.enter="$dispatch('open-image-modal', { url: '{{ $highResUrl }}' })"
-                                    role="button" tabindex="0"
-                                    class="aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 cursor-pointer hover:border-cyan-500 dark:hover:border-cyan-500 transition-colors relative group shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                        <img src="{{ $imageUrl }}"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            alt="Captura del juego" loading="lazy" />
 
-                                    <img src="{{ $imageUrl }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        alt="Captura del juego" loading="lazy" />
-
-                                    <div class="absolute top-2 right-2">
-                                        <span
-                                            class="bg-white/90 dark:bg-darkbox-card/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
+                                        <div class="absolute top-2 right-2">
+                                            <span
+                                                class="bg-white/90 dark:bg-darkbox-card/90 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300">Oficial</span>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @endif
 
                             {{-- BOTÓN GALERIA --}}
                             <div
