@@ -110,13 +110,13 @@
                 @endforeach
             </div>
 
-            {{-- LOAD_MORE --}}
+            {{-- CARGAR MÁS --}}
             @if ($totalCount > $amount)
                 <div class="flex justify-center mt-6">
                     <button type="button" wire:click="loadMore"
                         class="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card hover:bg-gray-50 dark:hover:bg-darkbox-main text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 w-full sm:w-auto">
                         <span wire:loading.remove wire:target="loadMore">Cargar Más Reseñas</span>
-                        <span wire:loading wire:target="loadMore"><i class="fa-solid fa-circle-notch fa-spin"></i>
+                        <span wire:loading wire:target="loadMore"><x-icons.animate-spin class="size-4" />
                             Cargando...</span>
                     </button>
                 </div>
@@ -124,11 +124,11 @@
         @endif
     </div>
 @else
-    {{-- REVIEWS_GLOBALES --}}
+    {{-- REVIEWS GLOBALES --}}
     <div class="lg:col-span-2 space-y-6" aria-labelledby="featured-reviews-heading">
         <div class="col-span-full space-y-4 w-full mt-8">
 
-            {{-- HEADER_Y_FILTROS --}}
+            {{-- HEADER Y FILTROS --}}
             <div
                 class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200 dark:border-darkbox-border pb-3">
                 <div>

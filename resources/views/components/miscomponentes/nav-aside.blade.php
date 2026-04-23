@@ -1,9 +1,16 @@
-<div x-data="{ showNav: localStorage.getItem('showNav') !== 'false' }" @toggle-nav.window="showNav = !showNav" x-init="$watch('showNav', value => localStorage.setItem('showNav', value))">
+<div x-data="{
+    showNav: localStorage.getItem('showNav') !== 'false',
+    closeNavOnMobile() {
+        if (window.matchMedia('(max-width: 1023px)').matches) {
+            this.showNav = false;
+        }
+    }
+}" @toggle-nav.window="showNav = !showNav" x-init="$watch('showNav', value => localStorage.setItem('showNav', value))">
 
     {{-- BACKDROP OPACIDAD PARA MÓVILES --}}
     <div x-show="showNav" @click="showNav = false"
         class="fixed inset-0 bg-darkbox-main/80 backdrop-blur-sm z-40 lg:hidden transition-opacity" x-transition.opacity
-        style="display: none;" aria-hidden="true"></div>
+        x-cloak aria-hidden="true"></div>
 
     <aside :class="showNav ? 'translate-x-0 w-64' : '-translate-x-full w-64 lg:translate-x-0 lg:w-24'"
         class="bg-white dark:bg-darkbox-card border-r border-gray-200 dark:border-darkbox-border flex flex-col justify-between z-50 h-screen transition-all duration-300 fixed lg:relative top-0 left-0 lg:shrink-0"
@@ -14,20 +21,20 @@
             <div class="p-6 border-b border-gray-100 dark:border-darkbox-border flex shrink-0 transition-all duration-300"
                 :class="showNav ? 'flex-row items-center justify-between' : 'flex-col items-center gap-6'">
 
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('dashboard') }}" @click="closeNavOnMobile()"
                     class="block shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg"
                     aria-label="Ir a la página de inicio">
-                    <div x-show="showNav" style="display: none;">
+                    <div x-show="showNav" x-cloak>
                         <x-miscomponentes.application-logo-name aria-hidden="true" />
                     </div>
-                    <div x-show="!showNav" style="display: none;">
+                    <div x-show="!showNav" x-cloak>
                         <x-icons.logo class="h-12" aria-hidden="true" />
                     </div>
                 </a>
 
-                {{-- BOTÓN REPLEGAR (OCULTO EN MÓVILES) --}}
-                <button @click="showNav = !showNav"
-                    class="hidden lg:flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border text-gray-500 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-300 dark:hover:border-cyan-500/50 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-all duration-300 shrink-0 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                {{-- BOTÓN REPLEGAR --}}
+                <button @click="showNav = !showNav" x-show="showNav" x-cloak
+                    class="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border text-gray-500 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-300 dark:hover:border-cyan-500/50 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-all duration-300 shrink-0 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                     :aria-expanded="showNav.toString()" aria-label="Alternar menú de navegación">
                     <div class="transition-transform duration-300 flex items-center justify-center"
                         :class="!showNav ? 'rotate-180' : ''" aria-hidden="true">
@@ -39,7 +46,7 @@
             <div class="p-4 w-full flex-1 overflow-y-auto flex flex-col gap-6">
 
                 <div class="flex flex-col w-full">
-                    <span x-show="showNav" style="display: none;"
+                    <span x-show="showNav" x-cloak
                         class="px-4 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 transition-opacity duration-300"
                         id="nav-mi-espacio">
                         Mi Espacio
@@ -47,49 +54,49 @@
 
                     <nav aria-labelledby="nav-mi-espacio"
                         class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
-                        <a href="{{ route('dashboard') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('dashboard') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->routeIs('dashboard') ? "'page'" : 'false' }}">
-                            <x-icons.home class="size-5 shrink-0" aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Inicio</span>
+                            <x-icons.home class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Inicio</span>
                             <span class="sr-only" x-show="!showNav">Inicio</span>
                         </a>
 
-                        <a href="{{ route('library') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('myLibrary') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('library') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('myLibrary') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('myLibrary') ? "'page'" : 'false' }}">
-                            <x-icons.gamepad class="size-5 shrink-0" aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Mi Biblioteca</span>
+                            <x-icons.gamepad class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Mi Biblioteca</span>
                             <span class="sr-only" x-show="!showNav">Mi Biblioteca</span>
                         </a>
 
-                        <a href="{{ route('userLists') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('userLists*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('userLists') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('userLists*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('userLists*') ? "'page'" : 'false' }}">
-                            <x-icons.list class="size-5 shrink-0" aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Mis Listas</span>
+                            <x-icons.list class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Mis Listas</span>
                             <span class="sr-only" x-show="!showNav">Mis Listas</span>
                         </a>
 
 
-                        <a href="{{ route('timeline') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('timeline') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('timeline') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('timeline') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('timeline') ? "'page'" : 'false' }}">
-                            <x-icons.timeline aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Timeline</span>
+                            <x-icons.timeline class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Timeline</span>
                             <span class="sr-only" x-show="!showNav">Timeline</span>
                         </a>
 
-                        <a href="{{ route('allGames') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('allGames', 'showGame.*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('allGames') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('allGames', 'showGame.*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('allGames', 'showGame.*') ? "'page'" : 'false' }}">
-                            <x-icons.catalog class="size-5 shrink-0" aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Explorar
+                            <x-icons.catalog class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Explorar
                                 Catálogo</span>
                             <span class="sr-only" x-show="!showNav">Explorar Catálogo</span>
                         </a>
@@ -97,7 +104,7 @@
                 </div>
 
                 <div class="flex flex-col w-full">
-                    <span x-show="showNav" style="display: none;"
+                    <span x-show="showNav" x-cloak
                         class="px-4 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 transition-opacity duration-300"
                         id="nav-comunidad">
                         Comunidad
@@ -105,21 +112,21 @@
 
                     <nav aria-labelledby="nav-comunidad"
                         class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
-                        <a href="{{ route('social') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('feedSocial') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('social') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('feedSocial') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('feedSocial') ? "'page'" : 'false' }}">
-                            <x-icons.social aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Social</span>
+                            <x-icons.social class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Social</span>
                             <span class="sr-only" x-show="!showNav">Social</span>
                         </a>
 
-                        <a href="{{ route('gallery') }}" wire:navigate
-                            class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('gallery') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                        <a href="{{ route('gallery') }}" wire:navigate @click="closeNavOnMobile()"
+                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('gallery') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('gallery') ? "'page'" : 'false' }}">
-                            <x-icons.gallery aria-hidden="true" />
-                            <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Galería</span>
+                            <x-icons.gallery class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Galería</span>
                             <span class="sr-only" x-show="!showNav">Galería</span>
                         </a>
                     </nav>
@@ -128,7 +135,7 @@
                 @auth
                     @if (Auth::user()->role === 'admin')
                         <div class="flex flex-col w-full">
-                            <span x-show="showNav" style="display: none;"
+                            <span x-show="showNav" x-cloak
                                 class="px-4 text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2 transition-opacity duration-300"
                                 id="nav-admin">
                                 Administración
@@ -136,12 +143,13 @@
 
                             <nav aria-labelledby="nav-admin"
                                 class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
-                                <a href="{{ route('admin.reports') }}" wire:navigate
-                                    class="flex items-center p-3 rounded-xl font-bold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('admin.reports') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                                <a href="{{ route('admin.reports') }}" wire:navigate @click="closeNavOnMobile()"
+                                    class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('admin.reports') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                                     :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                                     :aria-current="{{ request()->routeIs('admin.reports') ? "'page'" : 'false' }}">
-                                    <x-icons.shield class="size-5 shrink-0" aria-hidden="true" />
-                                    <span x-show="showNav" style="display: none;" class="whitespace-nowrap">Reportes</span>
+                                    <x-icons.shield class="size-4 md:size-5 shrink-0" aria-hidden="true" />
+                                    <span x-show="showNav" x-cloak
+                                        class="whitespace-nowrap">Reportes</span>
                                     <span class="sr-only" x-show="!showNav">Reportes</span>
                                 </a>
                             </nav>
@@ -157,25 +165,25 @@
                 class="relative w-full shrink-0 border-t border-gray-200 dark:border-darkbox-border bg-gray-50/50 dark:bg-transparent transition-colors duration-300"
                 @click.away="showProfileOptions = false" @keydown.escape.window="showProfileOptions = false">
 
-                <div x-show="showProfileOptions" x-transition:enter="transition ease-out duration-200"
+                <div x-show="showProfileOptions" x-cloak x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 -translate-x-4 scale-95"
                     x-transition:enter-end="opacity-100 translate-x-0 scale-100"
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
-                    x-transition:leave-end="opacity-0 -translate-x-4 scale-95" style="display: none;"
+                    x-transition:leave-end="opacity-0 -translate-x-4 scale-95"
                     class="fixed bottom-6 w-48 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300"
                     :class="showNav ? 'left-4 lg:left-[17rem]' : 'left-4 lg:left-[7rem]'" role="menu"
                     aria-orientation="vertical" aria-labelledby="user-menu-button">
 
                     <div class="p-2 flex flex-col gap-1">
-                        <a href="{{ route('profile', Auth::id()) }}" wire:navigate
+                        <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
                             class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-user text-sm w-4 text-center" aria-hidden="true"></i>
                             {{ __('Mi Perfil') }}
                         </a>
 
-                        <a href="{{ route('profile.show') }}" wire:navigate
+                        <a href="{{ route('profile.show') }}" wire:navigate @click="closeNavOnMobile()"
                             class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-gear text-sm w-4 text-center" aria-hidden="true"></i>
@@ -204,7 +212,7 @@
                         :class="showNav ? 'gap-3 mb-4' : 'justify-center mb-0 lg:justify-center'">
                         <img src="{{ Auth::user()->profile_photo_url }}" alt="Avatar de {{ Auth::user()->name }}"
                             class="w-10 h-10 rounded-full">
-                        <div x-show="showNav" style="display: none;" class="flex-1 overflow-hidden whitespace-nowrap">
+                        <div x-show="showNav" x-cloak class="flex-1 overflow-hidden whitespace-nowrap">
                             <h2
                                 class="font-bold text-sm leading-tight text-gray-900 dark:text-white truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
                                 {{ Auth::user()->name }}
@@ -215,7 +223,7 @@
                         </div>
                     </div>
 
-                    <div x-show="showNav" style="display: none;" class="space-y-1.5 whitespace-nowrap w-full"
+                    <div x-show="showNav" x-cloak class="space-y-1.5 whitespace-nowrap w-full"
                         aria-hidden="true">
                         <div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase tracking-wider">
                             <span>XP: {{ Auth::user()->xp ?? 0 }}</span>

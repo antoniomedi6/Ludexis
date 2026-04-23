@@ -17,6 +17,7 @@
 
                 @if ($activity->type === 'review')
                     {{-- ACTIVITY: REVIEW --}}
+                    {{-- ACTIVIDAD: RESEÑA --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
                             class="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
@@ -65,6 +66,7 @@
                     </article>
                 @elseif ($activity->type === 'wishlist')
                     {{-- ACTIVITY: WISHLIST --}}
+                    {{-- ACTIVIDAD: LISTA DE DESEOS --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800/30 flex items-center justify-center shrink-0 transition-colors duration-300"
                             aria-hidden="true">
@@ -74,10 +76,14 @@
                         <div class="flex-1 flex flex-col justify-center">
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-400 leading-snug transition-colors duration-300">
-                                <strong id="feed-user-{{ $loop->index }}"
-                                    class="text-gray-900 dark:text-white font-bold transition-colors">{{ $activity->user->name }}</strong>
-                                añadió <strong
-                                    class="text-gray-900 dark:text-white font-bold transition-colors duration-300">{{ $activity->game->title }}</strong>
+                                <a id="feed-user-{{ $loop->index }}" href="{{ route('profile', $activity->user) }}"
+                                    class="text-gray-900 dark:text-white font-bold transition-colors hover:text-purple-600 dark:hover:text-purple-400">
+                                    {{ $activity->user->name }}
+                                </a>
+                                añadió <a href="{{ route('games.show', $activity->game->slug) }}"
+                                    class="text-gray-900 dark:text-white font-bold transition-colors duration-300 hover:text-purple-600 dark:hover:text-purple-400">
+                                    {{ $activity->game->title }}
+                                </a>
                                 a sus pendientes
                             </p>
                             <time datetime="{{ $activity->date }}"
@@ -88,6 +94,7 @@
                     </article>
                 @elseif ($activity->type === 'capture')
                     {{-- ACTIVITY: CAPTURE --}}
+                    {{-- ACTIVIDAD: CAPTURA --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
                             class="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
@@ -95,10 +102,14 @@
                         <div class="flex-1">
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-400 leading-snug transition-colors duration-300">
-                                <strong id="feed-user-{{ $loop->index }}"
-                                    class="text-gray-900 dark:text-white font-bold transition-colors">{{ $activity->user->name }}</strong>
-                                subió una captura de <strong
-                                    class="text-gray-900 dark:text-white font-bold">{{ $activity->game->title }}</strong>.
+                                <a id="feed-user-{{ $loop->index }}" href="{{ route('profile', $activity->user) }}"
+                                    class="text-gray-900 dark:text-white font-bold transition-colors hover:text-cyan-500">
+                                    {{ $activity->user->name }}
+                                </a>
+                                subió una captura de <a href="{{ route('games.show', $activity->game->slug) }}"
+                                    class="text-gray-900 dark:text-white font-bold transition-colors hover:text-cyan-500">
+                                    {{ $activity->game->title }}
+                                </a>.
                             </p>
 
                             <div x-data @click="$dispatch('open-image-detail', { imageId: {{ $activity->id }} })"
@@ -120,7 +131,7 @@
                 @endif
 
             @empty
-                {{-- EMPTY STATE --}}
+                {{-- SIN RESULTADOS --}}
                 <div class="flex flex-col items-center justify-center py-6 text-center" role="status">
                     <i class="fa-solid fa-wind text-gray-300 dark:text-gray-700 text-3xl mb-2" aria-hidden="true"></i>
                     <p class="text-sm text-gray-500 font-bold">Aún no hay actividad social.</p>
@@ -129,6 +140,7 @@
         </div>
 
         {{-- FOOTER LINK --}}
+        {{-- ENLACE A FEED SOCIAL COMPLETO --}}
         <a href="{{ route('social') }}"
             class="w-full mt-6 py-3 border text-center border-gray-200 dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-gray-50 hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
             Ver toda la actividad
