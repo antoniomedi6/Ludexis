@@ -1,28 +1,28 @@
 <form wire:submit.prevent="save" x-data="{ status: $wire.entangle('form.status') }">
 
     <div
-        class="sticky top-28 bg-white/95 dark:bg-darkbox-card/95 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-[2.5rem] p-8 shadow-xl dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-colors duration-300 flex flex-col gap-8">
+        class="sticky top-3 sm:top-10 lg:top-28 bg-white/95 dark:bg-darkbox-card/95 backdrop-blur-2xl border border-gray-200 dark:border-gray-800 rounded-3xl p-3 sm:p-6 lg:p-8 shadow-xl dark:shadow-2xl transition-colors duration-300 flex flex-col gap-3 sm:gap-6 lg:gap-8">
 
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-[0_5px_15px_rgba(6,182,212,0.4)]">
-                <img class="size-9" src="{{ asset('images/logo-tracker.png') }}" alt="Logo Tracker" />
+        <div class="flex items-center gap-3 sm:gap-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-lg">
+                <img class="size-8 sm:size-9" src="{{ asset('images/logo-tracker.png') }}" alt="Logo Tracker" />
             </div>
             <div>
                 <p
                     class="text-[10px] text-cyan-600 dark:text-cyan-500 font-black uppercase tracking-widest transition-colors duration-300">
                     Ludexis Tracker
                 </p>
-                <h3 class="text-xl font-black text-gray-900 dark:text-white transition-colors duration-300">
+                <h3 class="text-base sm:text-xl font-black text-gray-900 dark:text-white transition-colors duration-300">
                     Tu Registro
                 </h3>
             </div>
         </div>
 
-        <div class="bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-gray-800 rounded-[2rem] p-6 transition-colors duration-300 flex flex-col items-center shadow-inner dark:shadow-none relative"
+        <div class="bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-gray-800 rounded-3xl p-3 sm:p-6 transition-colors duration-300 flex flex-col items-center shadow-inner dark:shadow-none relative"
             x-data="{ hoverRating: 0, rating: $wire.entangle('form.rating'), saved: false }">
 
             <span
-                class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 mb-4">Valoración</span>
+                class="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-500 mb-3">Valoración</span>
 
             <template x-if="saved">
                 <div x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-50"
@@ -36,18 +36,18 @@
                 </div>
             </template>
 
-            <div class="flex gap-2 mb-3 transition-all duration-300"
+            <div class="flex gap-1 sm:gap-2 mb-3 transition-all duration-300"
                 :class="{ 'opacity-40 grayscale pointer-events-none': !status }">
                 <template x-for="i in 5">
-                    <div class="relative w-8 h-8 cursor-pointer">
+                    <div class="relative w-6 h-6 sm:w-8 sm:h-8 cursor-pointer">
 
                         <x-icons.star
-                            class="text-gray-200 dark:text-gray-800 absolute inset-0 w-8 h-8 transition-colors duration-300" />
+                            class="text-gray-200 dark:text-gray-800 absolute inset-0 w-6 h-6 sm:w-8 sm:h-8 transition-colors duration-300" />
 
                         <div class="absolute inset-0 overflow-hidden pointer-events-none transition-all duration-150"
                             :style="`width: ${hoverRating ? (hoverRating >= i * 2 ? '100%' : (hoverRating == i * 2 - 1 ? '50%' : '0%')) : (rating >= i * 2 ? '100%' : (rating == i * 2 - 1 ? '50%' : '0%'))}`">
                             <x-icons.star
-                                class="text-cyan-500 dark:text-cyan-400 w-8 h-8 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
+                                class="text-cyan-500 dark:text-cyan-400 w-6 h-6 sm:w-8 sm:h-8 drop-shadow-sm" />
                         </div>
 
                         <div class="absolute left-0 top-0 w-1/2 h-full z-10" @mouseenter="hoverRating = i * 2 - 1"
@@ -65,7 +65,7 @@
 
             <div class="h-6 flex items-center justify-center">
                 <span
-                    class="text-xs font-black text-cyan-600 dark:text-cyan-400 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg shadow-sm"
+                    class="text-xs font-black text-cyan-600 dark:text-cyan-400 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-gray-700 px-2 py-0.5 rounded-lg shadow-sm"
                     x-show="rating > 0 && status" x-text="Number(rating) + ' / 10'"></span>
 
                 <span class="text-xs font-bold text-gray-400 dark:text-gray-600"
@@ -85,7 +85,7 @@
                 <span
                     class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest">Estado</span>
             </div>
-            <div class="grid grid-cols-2 gap-2.5">
+            <div class="grid grid-cols-2 gap-2">
                 @php
                     $statuses = [
                         ['val' => 'pending', 'label' => 'Pendiente', 'icon' => 'icons.pending'],
@@ -119,12 +119,12 @@
                             @change="$wire.save().then(() => { saved = true; setTimeout(() => saved = false, 1500) })" />
 
                         <div
-                            class="flex {{ isset($st['col_span']) ? 'flex-row' : 'flex-col' }} items-center justify-center gap-2 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-darkbox-main text-gray-500 dark:text-gray-400 transition-all duration-300 {{ $colorClass }}">
+                            class="flex {{ isset($st['col_span']) ? 'flex-row' : 'flex-col' }} items-center justify-center gap-2 p-2 sm:p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-darkbox-main text-gray-500 dark:text-gray-400 transition-all duration-300 {{ $colorClass }}">
 
                             @if (isset($st['type']) && $st['type'] == 'font')
                                 <i class="fa-solid {{ $st['icon'] }} text-sm"></i>
                             @else
-                                <x-dynamic-component :component="$st['icon']" class="size-6" />
+                                <x-dynamic-component :component="$st['icon']" class="size-5 sm:size-6" />
                             @endif
                             <span
                                 class="text-[10px] font-black uppercase tracking-wider text-center">{{ $st['label'] }}</span>
@@ -203,11 +203,11 @@
             <x-input-error for="form.hours_completed" />
         </div>
 
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2 sm:gap-3">
             @if ($this->form->status)
                 <x-button type="button"
                     @click="$dispatch('evtOpenReviewModal', { gameId: {{ $this->form->game_id }} })">
-                    <x-icons.review class="size-6 mr-2" />
+                    <x-icons.review class="size-5 sm:size-6 mr-2" />
                     Escribir Reseña
                 </x-button>
             @endif

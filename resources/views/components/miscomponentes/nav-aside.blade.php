@@ -33,9 +33,9 @@
                 </a>
 
                 {{-- BOTÓN REPLEGAR --}}
-                <button @click="showNav = !showNav" x-show="showNav" x-cloak
+                <button @click="showNav = !showNav" x-cloak
                     class="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border text-gray-500 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-300 dark:hover:border-cyan-500/50 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-all duration-300 shrink-0 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
-                    :aria-expanded="showNav.toString()" aria-label="Alternar menú de navegación">
+                    :aria-expanded="showNav.toString()" aria-label="Expandir o replegar navegación">
                     <div class="transition-transform duration-300 flex items-center justify-center"
                         :class="!showNav ? 'rotate-180' : ''" aria-hidden="true">
                         <x-icons.arrow-left class="size-4" />
@@ -54,6 +54,18 @@
 
                     <nav aria-labelledby="nav-mi-espacio"
                         class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
+                        @auth
+                            <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
+                                class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('profile') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                                :class="showNav ? 'gap-3 px-4' : 'justify-center'"
+                                :aria-current="{{ request()->routeIs('profile') ? "'page'" : 'false' }}"
+                                aria-label="Ir a mi perfil">
+                                <i class="fa-solid fa-user text-sm md:text-base w-5 text-center shrink-0"
+                                    aria-hidden="true"></i>
+                                <span x-show="showNav" x-cloak class="whitespace-nowrap">Mi Perfil</span>
+                                <span class="sr-only" x-show="!showNav">Mi Perfil</span>
+                            </a>
+                        @endauth
                         <a href="{{ route('dashboard') }}" wire:navigate @click="closeNavOnMobile()"
                             class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
@@ -162,7 +174,7 @@
 
         @auth
             <div x-data="{ showProfileOptions: false }"
-                class="relative w-full shrink-0 border-t border-gray-200 dark:border-darkbox-border bg-gray-50/50 dark:bg-transparent transition-colors duration-300"
+                class="relative w-full shrink-0 border-t border-gray-200 dark:border-darkbox-border bg-gray-50/50 dark:bg-transparent transition-colors duration-300 pb-4 safe-pb"
                 @click.away="showProfileOptions = false" @keydown.escape.window="showProfileOptions = false">
 
                 <div x-show="showProfileOptions" x-cloak x-transition:enter="transition ease-out duration-200"
@@ -171,8 +183,8 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
                     x-transition:leave-end="opacity-0 -translate-x-4 scale-95"
-                    class="fixed bottom-6 w-48 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300"
-                    :class="showNav ? 'left-4 lg:left-[17rem]' : 'left-4 lg:left-[7rem]'" role="menu"
+                    class="absolute bottom-full mb-4 left-4 w-48 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300 lg:fixed lg:bottom-6 lg:mb-0"
+                    :class="showNav ? 'lg:left-[17rem]' : 'lg:left-[7rem]'" role="menu"
                     aria-orientation="vertical" aria-labelledby="user-menu-button">
 
                     <div class="p-2 flex flex-col gap-1">

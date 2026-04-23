@@ -238,76 +238,83 @@
             </h2>
         </div>
 
-        <form wire:submit="save" class="grid grid-cols-1 md:grid-cols-2 gap-8" aria-labelledby="modal-upload-title">
-            <div class="space-y-6">
+        <form wire:submit="save" class="flex flex-col gap-8" aria-labelledby="modal-upload-title">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
 
-                {{-- Zona de Drop / Input File --}}
-                <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
-                    x-on:livewire-upload-finish="isUploading = false"
-                    x-on:livewire-upload-progress="progress = $event.detail.progress">
+                    {{-- Zona de Drop / Input File --}}
+                    <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
+                        x-on:livewire-upload-finish="isUploading = false"
+                        x-on:livewire-upload-progress="progress = $event.detail.progress">
 
-                    <div class="relative group aspect-video">
-                        <label for="image_upload" class="sr-only">Seleccionar imagen para subir</label>
-                        <input id="image_upload" type="file" wire:model="cimage.image_path"
-                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" aria-required="true">
+                        <div class="relative group aspect-video">
+                            <label for="image_upload" class="sr-only">Seleccionar imagen para subir</label>
+                            <input id="image_upload" type="file" wire:model="cimage.image_path"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                aria-required="true">
 
-                        <div
-                            class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-3xl p-6 flex flex-col items-center justify-center h-full {{ $cimage->image_path ? 'bg-gray-100 dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-950' }}">
-                            @if ($cimage->image_path)
-                                <img src="{{ $cimage->image_path->temporaryUrl() }}"
-                                    alt="Previsualización de la imagen a subir"
-                                    class="w-full h-full object-cover rounded-2xl shadow-sm">
-                            @else
-                                <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600 dark:text-gray-500 mb-2"
-                                    aria-hidden="true"></i>
-                                <p class="text-sm font-black text-gray-700 dark:text-gray-400 uppercase">Seleccionar
-                                    Imagen</p>
-                            @endif
+                            <div
+                                class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-3xl p-6 flex flex-col items-center justify-center h-full {{ $cimage->image_path ? 'bg-gray-100 dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-950' }}">
+                                @if ($cimage->image_path)
+                                    <img src="{{ $cimage->image_path->temporaryUrl() }}"
+                                        alt="Previsualización de la imagen a subir"
+                                        class="w-full h-full object-cover rounded-2xl shadow-sm">
+                                @else
+                                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-600 dark:text-gray-500 mb-2"
+                                        aria-hidden="true"></i>
+                                    <p class="text-sm font-black text-gray-700 dark:text-gray-400 uppercase">
+                                        Seleccionar
+                                        Imagen</p>
+                                @endif
+                            </div>
                         </div>
+                        <x-input-error for="cimage.image_path"
+                            class="mt-2 text-red-600 dark:text-red-500 text-sm font-bold" />
                     </div>
-                    <x-input-error for="cimage.image_path"
-                        class="mt-2 text-red-600 dark:text-red-500 text-sm font-bold" />
+
+                    {{-- Toggle Spoiler --}}
+                    <label for="is-spoiler-toggle"
+                        class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <span
+                            class="text-sm font-black text-gray-800 dark:text-gray-300 uppercase tracking-widest">¿Contiene
+                            Spoilers?</span>
+                        <input id="is-spoiler-toggle" type="checkbox" wire:model="cimage.is_spoiler"
+                            class="w-5 h-5 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-cyan-600 focus:ring-cyan-500 transition-colors">
+                    </label>
                 </div>
 
-                {{-- Toggle Spoiler --}}
-                <label for="is-spoiler-toggle"
-                    class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <span
-                        class="text-sm font-black text-gray-800 dark:text-gray-300 uppercase tracking-widest">¿Contiene
-                        Spoilers?</span>
-                    <input id="is-spoiler-toggle" type="checkbox" wire:model="cimage.is_spoiler"
-                        class="w-5 h-5 rounded border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-cyan-600 focus:ring-cyan-500 transition-colors">
-                </label>
+                <div class="flex flex-col justify-between h-full">
+                    {{-- Selector de Juego (solo si no hay un juego específico en la galería) --}}
+                    @unless (isset($this->game))
+                        <div>
+                            <label for="game-select"
+                                class="block text-sm font-black uppercase tracking-widest text-gray-700 dark:text-gray-400 mb-3">Juego
+                                relacionado</label>
+                            <select id="game-select" wire:model="cimage.game_id" aria-required="true"
+                                class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl p-4 text-sm font-bold focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-inner">
+                                <option value="">Selecciona un juego...</option>
+                                @foreach ($allGames as $game)
+                                    <option value="{{ $game->id }}">{{ $game->title }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error for="cimage.game_id" />
+                        </div>
+                    @else
+                        <x-miscomponentes.game-widget :game="$game" />
+                    @endunless
+                </div>
             </div>
 
-            <div class="flex flex-col justify-between h-full">
-                {{-- Selector de Juego (solo si no hay un juego específico en la galería) --}}
-                @unless (isset($this->game))
-                    <div>
-                        <label for="game-select"
-                            class="block text-sm font-black uppercase tracking-widest text-gray-700 dark:text-gray-400 mb-3">Juego
-                            relacionado</label>
-                        <select id="game-select" wire:model="cimage.game_id" aria-required="true"
-                            class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white rounded-xl p-4 text-sm font-bold focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow-inner">
-                            <option value="">Selecciona un juego...</option>
-                            @foreach ($allGames as $game)
-                                <option value="{{ $game->id }}">{{ $game->title }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error for="cimage.game_id" />
-                    </div>
-                @else
-                    <x-miscomponentes.game-widget :game="$game" />
-                @endunless
-
-                {{-- Botones de Acción --}}
-                <div class="flex gap-4 mt-8">
+            {{-- Botones de Acción --}}
+            <div
+                class="sticky bottom-0 bg-white dark:bg-darkbox-card pt-4 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row gap-3">
                     <button type="button" wire:click="cancel"
-                        class="flex-1 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 font-black py-4 rounded-xl uppercase text-sm tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        class="flex-1 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 font-black py-3 md:py-4 rounded-xl uppercase text-xs md:text-sm tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
                         Cancelar
                     </button>
                     <button type="submit"
-                        class="flex-1 bg-cyan-700 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white font-black py-4 rounded-xl uppercase text-sm tracking-widest shadow-lg shadow-cyan-900/20 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="flex-1 bg-cyan-700 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white font-black py-3 md:py-4 rounded-xl uppercase text-xs md:text-sm tracking-widest shadow-lg shadow-cyan-900/20 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         Publicar
                     </button>
                 </div>

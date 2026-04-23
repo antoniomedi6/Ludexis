@@ -28,8 +28,8 @@
         </button>
 
         {{-- MODAL --}}
-        <div x-data="{ show: @entangle('openModal') }" x-show="show" x-cloak style="display: none;"
-            x-on:keydown.escape.window="$wire.closeReport()" class="fixed inset-0 z-50 flex items-center justify-center p-4"
+        <div x-data="{ show: @entangle('openModal') }" x-show="show" x-cloak
+            x-on:keydown.escape.window="$wire.closeReport()" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
             role="dialog" aria-modal="true" aria-label="Reportar contenido">
 
             <div x-show="show" x-transition.opacity class="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -39,7 +39,7 @@
                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="relative w-full max-w-lg bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-xl p-6"
+                class="relative w-full max-w-lg max-h-screen overflow-y-auto bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-xl p-4 sm:p-6"
                 @click.stop>
 
                 {{-- CABECERA --}}
@@ -79,13 +79,13 @@
                         @enderror
                     </div>
 
-                    <div class="flex items-center justify-end gap-2 pt-2">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 pt-4">
                         <button type="button" wire:click="closeReport"
-                            class="px-4 py-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card text-sm font-black text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            class="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card text-sm font-black text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
                             Cancelar
                         </button>
                         <button type="button" wire:click="submitReport"
-                            class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
+                            class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
                             Enviar reporte
                         </button>
                     </div>

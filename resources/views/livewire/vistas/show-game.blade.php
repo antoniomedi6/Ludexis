@@ -216,10 +216,12 @@
             {{-- BARRA LATERAL --}}
             <div class="lg:col-span-4">
 
-                {{-- GAMEREGISTRYCARD --}}
+                {{-- GAMEREGISTRYCARD (ESCRITORIO) --}}
                 @auth
-                    @livewire('utils.game-registry-card', ['gameId' => $game->id])
-                    @livewire('utils.review-modal')
+                    <div class="hidden lg:block">
+                        <livewire:utils.game-registry-card :gameId="$game->id" :key="'game-registry-desktop-' . $game->id" />
+                    </div>
+                    <livewire:utils.review-modal />
                 @endauth
 
                 {{-- GALERÍA IMÁGENES --}}
@@ -230,4 +232,6 @@
 
         </div>
     </section>
+
+    <x-miscomponentes.game-registry-button :game-id="$game->id" />
 </div>

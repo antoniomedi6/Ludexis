@@ -27,8 +27,7 @@
                     class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-lg overflow-hidden z-50"
                     role="menu" aria-label="Opciones del perfil">
                     <div class="p-2 space-y-1">
-                        <button type="button"
-                            @click="openOptions = false; openReport = true"
+                        <button type="button" @click="openOptions = false; openReport = true"
                             class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-flag text-gray-400" aria-hidden="true"></i>
@@ -36,7 +35,8 @@
                         </button>
 
                         @if (Auth::user()->role === 'admin')
-                            <div class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                            <div
+                                class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
                                 <label for="role_select"
                                     class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
                                     Rol de usuario
@@ -48,7 +48,8 @@
                                     <option value="veteran">Veteran</option>
                                     <option value="admin">Admin</option>
                                 </select>
-                                <div x-data="{ saved: false }" x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
+                                <div x-data="{ saved: false }"
+                                    x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
                                     class="relative mt-2">
                                     <template x-if="saved">
                                         <div x-transition:enter="transition ease-out duration-300"
@@ -74,8 +75,8 @@
 
                 {{-- REPORT MODAL --}}
                 <div x-show="openReport" x-cloak x-on:report-sent.window="openReport = false"
-                    class="fixed inset-0 z-50 flex items-center justify-center p-4"
-                    role="dialog" aria-modal="true" aria-label="Reportar usuario">
+                    class="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true"
+                    aria-label="Reportar usuario">
                     <div class="absolute inset-0 bg-black/50" @click="openReport = false" aria-hidden="true"></div>
                     <div
                         class="relative w-full max-w-lg bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-xl p-6">
@@ -118,14 +119,14 @@
                                     class="px-4 py-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card text-sm font-black text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                     Cancelar
                                 </button>
-                                <button type="button"
-                                    wire:click="submitReport"
+                                <button type="button" wire:click="submitReport"
                                     class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                     Enviar
                                 </button>
                             </div>
 
-                            <div x-data="{ saved: false }" x-on:report-sent.window="saved = true; setTimeout(() => saved = false, 1600)"
+                            <div x-data="{ saved: false }"
+                                x-on:report-sent.window="saved = true; setTimeout(() => saved = false, 1600)"
                                 class="relative mt-2">
                                 <template x-if="saved">
                                     <div x-transition:enter="transition ease-out duration-300"
@@ -175,7 +176,8 @@
 
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
                                 title="Rol Oficial">
-                                <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i> {{ $user->role ?? 'Jugador' }}
+                                <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i>
+                                {{ $user->role ?? 'Jugador' }}
                             </div>
                         </div>
                     </div>
@@ -303,13 +305,15 @@
                                     <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                                         <i class="fa-solid fa-gamepad" aria-hidden="true"></i> Jugando
                                     </div>
-                                    <span class="text-gray-900 dark:text-white tabular-nums">{{ $playingCount }}</span>
+                                    <span
+                                        class="text-gray-900 dark:text-white tabular-nums">{{ $playingCount }}</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm font-bold">
                                     <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
                                         <i class="fa-solid fa-bookmark" aria-hidden="true"></i> Pendientes
                                     </div>
-                                    <span class="text-gray-900 dark:text-white tabular-nums">{{ $pendingCount }}</span>
+                                    <span
+                                        class="text-gray-900 dark:text-white tabular-nums">{{ $pendingCount }}</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm font-bold">
                                     <div class="flex items-center gap-2 text-red-600 dark:text-red-400">

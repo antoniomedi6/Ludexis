@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cualquier elemento con el atributo x-cloak de Alpine.js se ocultará */
 [x-cloak] {
     display: none;
+}
+
+/* SAFE AREA: padding inferior automático que el navegador añade para evitar que el contenido se tape por las notificaciones o el teclado */
+.safe-pb {
+    padding-bottom: env(safe-area-inset-bottom);
 }
