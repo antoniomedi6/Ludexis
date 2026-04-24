@@ -85,7 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'game_user')
-            ->withPivot(['status', 'rating', 'hours_finish', 'hours_completed', 'review']);
+            ->withPivot(['status', 'rating', 'hours_finish', 'hours_completed', 'review'])
+            ->withTimestamps();
     }
 
     public function customLists(): HasMany

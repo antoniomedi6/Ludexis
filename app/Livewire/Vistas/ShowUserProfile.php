@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Vistas;
 
+use App\Models\GameUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -88,6 +89,15 @@ class ShowUserProfile extends Component
 
         $topGames = $games->sortByDesc('pivot.rating')->take(3);
         $recentActivity = $games->sortByDesc('pivot.updated_at')->take(10);
+        $reviews = collect();
+
+        if ($this->canViewPrivateData) {
+            $reviews = GameUser::with(['game:id,title,cover_url,slug'])
+                ->where('user_id', $this->user->id)
+                ->whereNotNull('review')
+                ->latest('updated_at')
+                ->get();
+        }
 
         return view('livewire.vistas.show-user-profile', compact(
             'games',
@@ -100,6 +110,7 @@ class ShowUserProfile extends Component
             'abandonedCount',
             'topGames',
             'recentActivity',
+            'reviews',
             'canViewPrivateData',
         ));
     }

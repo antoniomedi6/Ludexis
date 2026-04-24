@@ -375,6 +375,19 @@
                                 role="tab">
                                 Biblioteca
                             </button>
+                            <button type="button" @click="activeTab = 'reviews'"
+                                :class="activeTab === 'reviews' ?
+                                    'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
+                                    'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
+                                class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center gap-2"
+                                role="tab">
+                                <span>Reseñas</span>
+                                <span
+                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-[10px] font-black tabular-nums text-gray-600 dark:text-gray-300"
+                                    aria-label="Total de reseñas">
+                                    {{ $reviews->count() }}
+                                </span>
+                            </button>
                             <button type="button" @click="activeTab = 'screenshots'"
                                 :class="activeTab === 'screenshots' ?
                                     'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
@@ -391,29 +404,28 @@
                             <div class="flex flex-col gap-6" role="feed" aria-label="Feed de actividad reciente">
                                 @forelse ($recentActivity as $game)
                                     @php
-                                        // Solución Robusta: Forzamos minúsculas y limpiamos espacios. Pillamos inglés y español.
-                                        $rawStatus = strtolower(trim($game->pivot->status ?? ''));
+                                        $status = $game->pivot->status ?? null;
 
-                                        $statusStyle = match (true) {
-                                            in_array($rawStatus, ['completed', 'completado']) => [
+                                        $statusStyle = match ($status) {
+                                            'completed' => [
                                                 'bg' => 'bg-emerald-50 dark:bg-emerald-900/20',
                                                 'text' => 'text-emerald-600 dark:text-emerald-400',
                                                 'border' => 'border-emerald-200 dark:border-emerald-800/50',
                                                 'label' => 'Completado',
                                             ],
-                                            in_array($rawStatus, ['playing', 'jugando']) => [
+                                            'playing' => [
                                                 'bg' => 'bg-blue-50 dark:bg-blue-900/20',
                                                 'text' => 'text-blue-600 dark:text-blue-400',
                                                 'border' => 'border-blue-200 dark:border-blue-800/50',
                                                 'label' => 'Jugando',
                                             ],
-                                            in_array($rawStatus, ['abandoned', 'abandonado']) => [
+                                            'abandoned' => [
                                                 'bg' => 'bg-red-50 dark:bg-red-900/20',
                                                 'text' => 'text-red-600 dark:text-red-400',
                                                 'border' => 'border-red-200 dark:border-red-800/50',
                                                 'label' => 'Abandonado',
                                             ],
-                                            in_array($rawStatus, ['pending', 'pendiente']) => [
+                                            'pending' => [
                                                 'bg' => 'bg-purple-50 dark:bg-purple-900/20',
                                                 'text' => 'text-purple-600 dark:text-purple-400',
                                                 'border' => 'border-purple-200 dark:border-purple-800/50',
@@ -423,7 +435,7 @@
                                                 'bg' => 'bg-gray-50 dark:bg-gray-800',
                                                 'text' => 'text-gray-600 dark:text-gray-400',
                                                 'border' => 'border-gray-200 dark:border-gray-700',
-                                                'label' => ucfirst($rawStatus) ?: 'Sin estado',
+                                                'label' => $status ? ucfirst($status) : 'Sin estado',
                                             ],
                                         };
                                     @endphp
@@ -435,10 +447,8 @@
                                                 class="text-[10px] {{ $statusStyle['bg'] }} {{ $statusStyle['text'] }} border {{ $statusStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
                                                 {{ $statusStyle['label'] }}
                                             </span>
-                                            <time
-                                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                                Actualizado
-                                                {{ \Carbon\Carbon::parse($game->pivot->updated_at)->diffForHumans() }}
+                                            <time class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                                Actualizado {{ $game->pivot->updated_at?->diffForHumans() ?? '—' }}
                                             </time>
                                         </div>
 
@@ -446,7 +456,7 @@
                                             <a href="{{ route('games.show', $game->slug) }}"
                                                 class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
                                                 <img src="{{ $game->cover_url ?? 'https://via.placeholder.com/300x400' }}"
-                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300 {{ in_array($rawStatus, ['abandoned', 'abandonado']) ? 'grayscale opacity-80' : '' }}"
+                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300 {{ $status === 'abandoned' ? 'grayscale opacity-80' : '' }}"
                                                     alt="Portada de {{ $game->name }}">
                                             </a>
 
@@ -488,7 +498,7 @@
                                                             class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
                                                             "{{ $game->pivot->review }}"
                                                         </p>
-                                                    @elseif(in_array($rawStatus, ['abandoned', 'abandonado']))
+                                                    @elseif($status === 'abandoned')
                                                         <p class="text-sm text-gray-500 dark:text-gray-500 italic">No
                                                             dejó reseña al abandonar el juego.</p>
                                                     @endif
@@ -530,6 +540,81 @@
                                     </div>
                                 @endforelse
                             </div>
+                        </div>
+
+                        {{-- PESTAÑA: RESEÑAS --}}
+                        <div x-show="activeTab === 'reviews'" x-cloak
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform translate-y-4">
+                            <section class="flex flex-col gap-6" aria-label="Reseñas del usuario">
+                                @forelse ($reviews as $review)
+                                    <article
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex items-start justify-between gap-4 mb-5">
+                                            <div class="min-w-0">
+                                                <h3
+                                                    class="text-lg sm:text-xl font-black text-gray-900 dark:text-white leading-tight">
+                                                    <a href="{{ route('games.show', $review->game?->slug) }}"
+                                                        class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
+                                                        {{ $review->game?->title ?? 'Juego' }}
+                                                    </a>
+                                                </h3>
+                                                @php
+                                                    $reviewUpdatedAt = $review->updated_at ?? null;
+                                                    $reviewUpdatedAt = $reviewUpdatedAt
+                                                        ? \Carbon\Carbon::parse($reviewUpdatedAt)->timezone(
+                                                            config('app.timezone'),
+                                                        )
+                                                        : null;
+                                                @endphp
+                                                <time
+                                                    class="mt-1 block text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+                                                    @if ($reviewUpdatedAt) datetime="{{ $reviewUpdatedAt->toISOString() }}" title="{{ $reviewUpdatedAt->translatedFormat('d M Y, H:i') }}" @endif>
+                                                    Actualizado
+                                                    {{ $reviewUpdatedAt ? $reviewUpdatedAt->diffForHumans() : '—' }}
+                                                </time>
+                                            </div>
+
+                                            @if ($review->rating)
+                                                <div
+                                                    class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
+                                                    <span
+                                                        class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
+                                                        {{ $review->rating }}
+                                                    </span>
+                                                    <i class="fa-solid fa-star text-yellow-500 text-[10px]"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="flex flex-col sm:flex-row gap-6">
+                                            <a href="{{ route('games.show', $review->game?->slug) }}"
+                                                class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
+                                                <img src="{{ $review->game?->cover_url ?? 'https://via.placeholder.com/300x400' }}"
+                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300"
+                                                    alt="Portada de {{ $review->game?->title ?? 'juego' }}">
+                                            </a>
+
+                                            <div class="flex-1">
+                                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                                    {{ $review->review }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                @empty
+                                    <div
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        <i class="fa-solid fa-star-half-stroke text-4xl text-gray-400 dark:text-gray-600 mb-4"
+                                            aria-hidden="true"></i>
+                                        <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin reseñas
+                                        </h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">Este usuario
+                                            todavía no ha publicado reseñas.</p>
+                                    </div>
+                                @endforelse
+                            </section>
                         </div>
 
                         {{-- PESTAÑA: CAPTURAS --}}
