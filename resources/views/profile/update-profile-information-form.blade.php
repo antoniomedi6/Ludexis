@@ -74,7 +74,8 @@
             <x-input-error for="name" class="mt-2 text-red-500 text-xs font-bold" />
         </div>
 
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-4"
+            @if (!$this->user->hasOfficialEmail()) x-data x-init="$wire.set('state.email', '')" @endif>
             <label for="email"
                 class="block text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
                 {{ __('Correo Electrónico') }}
@@ -84,11 +85,15 @@
                     aria-hidden="true"></i>
                 <x-input id="email" type="email"
                     class="block w-full bg-gray-50 dark:bg-darkbox-main border-gray-200 dark:border-darkbox-border text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
-                    wire:model="state.email" required autocomplete="username" />
+                    wire:model="state.email" required
+                    autocomplete="{{ $this->user->hasOfficialEmail() ? 'username' : 'off' }}" autocapitalize="none"
+                    autocorrect="off" spellcheck="false" />
             </div>
             <x-input-error for="email" class="mt-2 text-red-500 text-xs font-bold" />
 
-            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) &&
+            @if (
+                $this->user->hasOfficialEmail() &&
+                    Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) &&
                     !$this->user->hasVerifiedEmail())
                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">
                     {{ __('Tu dirección de correo electrónico no está verificada.') }}

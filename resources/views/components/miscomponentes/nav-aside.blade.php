@@ -54,18 +54,6 @@
 
                     <nav aria-labelledby="nav-mi-espacio"
                         class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
-                        @auth
-                            <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
-                                class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('profile') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
-                                :class="showNav ? 'gap-3 px-4' : 'justify-center'"
-                                :aria-current="{{ request()->routeIs('profile') ? "'page'" : 'false' }}"
-                                aria-label="Ir a mi perfil">
-                                <i class="fa-solid fa-user text-sm md:text-base w-5 text-center shrink-0"
-                                    aria-hidden="true"></i>
-                                <span x-show="showNav" x-cloak class="whitespace-nowrap">Mi Perfil</span>
-                                <span class="sr-only" x-show="!showNav">Mi Perfil</span>
-                            </a>
-                        @endauth
                         <a href="{{ route('dashboard') }}" wire:navigate @click="closeNavOnMobile()"
                             class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
@@ -160,8 +148,7 @@
                                     :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                                     :aria-current="{{ request()->routeIs('admin.reports') ? "'page'" : 'false' }}">
                                     <x-icons.shield class="size-4 md:size-5 shrink-0" aria-hidden="true" />
-                                    <span x-show="showNav" x-cloak
-                                        class="whitespace-nowrap">Reportes</span>
+                                    <span x-show="showNav" x-cloak class="whitespace-nowrap">Reportes</span>
                                     <span class="sr-only" x-show="!showNav">Reportes</span>
                                 </a>
                             </nav>
@@ -184,8 +171,8 @@
                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
                     x-transition:leave-end="opacity-0 -translate-x-4 scale-95"
                     class="absolute bottom-full mb-4 left-4 w-48 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300 lg:fixed lg:bottom-6 lg:mb-0"
-                    :class="showNav ? 'lg:left-[17rem]' : 'lg:left-[7rem]'" role="menu"
-                    aria-orientation="vertical" aria-labelledby="user-menu-button">
+                    :class="showNav ? 'lg:left-[17rem]' : 'lg:left-[7rem]'" role="menu" aria-orientation="vertical"
+                    aria-labelledby="user-menu-button">
 
                     <div class="p-2 flex flex-col gap-1">
                         <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
@@ -235,8 +222,7 @@
                         </div>
                     </div>
 
-                    <div x-show="showNav" x-cloak class="space-y-1.5 whitespace-nowrap w-full"
-                        aria-hidden="true">
+                    <div x-show="showNav" x-cloak class="space-y-1.5 whitespace-nowrap w-full" aria-hidden="true">
                         <div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase tracking-wider">
                             <span>XP: {{ Auth::user()->xp ?? 0 }}</span>
                         </div>

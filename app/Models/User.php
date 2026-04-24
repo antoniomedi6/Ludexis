@@ -135,8 +135,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $currentRank = $this->rank_details;
         $nextRank = ExperienceService::getNextRank($this);
 
-        if (!$nextRank)
+        if (!$nextRank) {
             return 100;
+        }
 
         $xpInLevel = ((int) ($this->xp ?? 0)) - $currentRank['xp_required'];
         $xpRequired = $nextRank['xp_required'] - $currentRank['xp_required'];
@@ -175,5 +176,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
         // Si es un usuario que subió una imagen, cargamos el archivo local.
         return Storage::url($this->profile_photo_path);
+    }
+
+    /* Comprueba si el email es oficial o ha sido asignado por mi */
+    public function hasOfficialEmail(): bool
+    {
+        $email = strtolower(trim($this->email));
+
+        $isValid = $email && filter_var($email, FILTER_VALIDATE_EMAIL);
+        $isLocalDomain = str_ends_with($email, '@local') || str_contains($email, '@local.') || str_ends_with($email, '.local') || str_contains($email, '.local.');
+        $isSteamLocal = str_contains($email, 'steam@local');
+
+        return (bool) ($isValid && !$isLocalDomain && !$isSteamLocal);
     }
 }
