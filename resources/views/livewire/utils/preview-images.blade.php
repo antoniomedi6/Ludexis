@@ -19,6 +19,13 @@
             tabindex="0" aria-label="Ver captura destacada de {{ $images->first()->user->name }}"
             class="relative w-full aspect-video rounded-xl overflow-hidden group cursor-pointer border border-gray-200 dark:border-gray-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-colors duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
+                    @if (Auth::id() === $images->first()->user_id)
+                        <div class="absolute top-2 right-2 z-20">
+                            <livewire:utils.image-owner-actions :image="$images->first()"
+                                :key="'image-owner-actions-preview-main-' . $images->first()->id" />
+                        </div>
+                    @endif
+
             <img src="{{ Storage::url($images->first()->image_path) }}"
                 alt="Captura de pantalla destacada de la comunidad"
                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
@@ -47,6 +54,12 @@
                         @keydown.enter="$dispatch('open-image-detail', { imageId: {{ $item->id }} })" role="button"
                         tabindex="0" aria-label="Ver captura adicional de la comunidad"
                         class="relative aspect-square rounded-lg overflow-hidden group border border-gray-200 dark:border-gray-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 cursor-pointer transition-colors duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            @if (Auth::id() === $item->user_id)
+                                <div class="absolute top-2 right-2 z-20">
+                                    <livewire:utils.image-owner-actions :image="$item"
+                                        :key="'image-owner-actions-preview-thumb-' . $item->id" />
+                                </div>
+                            @endif
                         <img src="{{ Storage::url($item->image_path) }}" alt="Captura de pantalla de la comunidad"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                             loading="lazy">

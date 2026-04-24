@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Vistas\WithLogin\Lists;
 
-use App\Livewire\Forms\Vistas\WithLogin\Lists\UpdateListForm;
+use App\Livewire\Forms\Lists\UpdateListForm;
 use App\Models\CustomList;
-use App\Models\Game;
+use App\Models\GameUser;
 use Livewire\Component;
 
 class ShowUserList extends Component
@@ -25,7 +25,13 @@ class ShowUserList extends Component
     {
         $list = CustomList::withCount('games')->with('games')->findOrFail($this->listId);
 
-        return view('livewire.vistas.with-login.lists.show-user-list', compact('list'));
+        $gameIds = $list->games->pluck('id');
+
+        $userRegisters = GameUser::where('user_id', auth()->id())
+            ->whereIn('game_id', $gameIds)
+            ->get(['game_id', 'status', 'rating', 'hours_finish']);
+
+        return view('livewire.vistas.with-login.lists.show-user-list', compact('list', 'userRegisters'));
     }
 
     // UPDATE

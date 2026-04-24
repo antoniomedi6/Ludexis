@@ -30,6 +30,7 @@ class Gallery extends Component
         }
     }
 
+    #[On('evtImagesRefresh')]
     public function render()
     {
         $q = Image::with(['game', 'user']);

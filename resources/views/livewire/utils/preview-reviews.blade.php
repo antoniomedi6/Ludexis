@@ -84,11 +84,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
-                                aria-label="Nota: {{ $item->rating }}">
-                                <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
-                                    aria-hidden="true">{{ $item->rating }}</span>
-                                <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
+                            <div class="flex items-center gap-2">
+                                @auth
+                                    @if (Auth::id() === $item->user_id)
+                                        <livewire:utils.review-owner-actions :review="$item"
+                                            :key="'review-owner-actions-preview-specific-' . $item->id" />
+                                    @endif
+                                @endauth
+
+                                <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                    aria-label="Nota: {{ $item->rating }}">
+                                    <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
+                                        aria-hidden="true">{{ $item->rating }}</span>
+                                    <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
 
@@ -227,14 +236,21 @@
                                             </p>
                                         </div>
                                     </div>
-                                    @if ($item->rating > 0)
-                                        <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
-                                            aria-label="Valoración: {{ $item->rating }}">
-                                            <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
-                                                aria-hidden="true">{{ $item->rating }}</span>
-                                            <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
-                                        </div>
-                                    @endif
+                                    <div class="flex items-center gap-2">
+                                            @if (Auth::id() === $item->user_id)
+                                                <livewire:utils.review-owner-actions :review="$item"
+                                                    :key="'review-owner-actions-preview-global-' . $item->id" />
+                                            @endif
+
+                                        @if ($item->rating > 0)
+                                            <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                                aria-label="Valoración: {{ $item->rating }}">
+                                                <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
+                                                    aria-hidden="true">{{ $item->rating }}</span>
+                                                <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
+                                            </div>
+                                        @endif
+                                    </div>
 
                                 </div>
 

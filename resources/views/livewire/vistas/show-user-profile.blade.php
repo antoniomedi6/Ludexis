@@ -260,7 +260,7 @@
             {{-- LAYOUT PRINCIPAL --}}
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
 
-                {{-- Comprobación de privacidad controlada desde Livewire --}}
+                {{-- Comprobación de privacidad --}}
                 @if ($canViewPrivateData)
 
                     {{-- ASIDE: Estadísticas y Colecciones --}}
@@ -447,7 +447,8 @@
                                                 class="text-[10px] {{ $statusStyle['bg'] }} {{ $statusStyle['text'] }} border {{ $statusStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
                                                 {{ $statusStyle['label'] }}
                                             </span>
-                                            <time class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                            <time
+                                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                                 Actualizado {{ $game->pivot->updated_at?->diffForHumans() ?? '—' }}
                                             </time>
                                         </div>
@@ -575,17 +576,26 @@
                                                 </time>
                                             </div>
 
-                                            @if ($review->rating)
-                                                <div
-                                                    class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
-                                                    <span
-                                                        class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
-                                                        {{ $review->rating }}
-                                                    </span>
-                                                    <i class="fa-solid fa-star text-yellow-500 text-[10px]"
-                                                        aria-hidden="true"></i>
-                                                </div>
-                                            @endif
+                                            <div class="shrink-0 flex items-center gap-2">
+                                                @auth
+                                                    @if (Auth::id() === $review->user_id)
+                                                        <livewire:utils.review-owner-actions :review="$review"
+                                                            :key="'review-owner-actions-profile-' . $review->id" />
+                                                    @endif
+                                                @endauth
+
+                                                @if ($review->rating)
+                                                    <div
+                                                        class="bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
+                                                        <span
+                                                            class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
+                                                            {{ $review->rating }}
+                                                        </span>
+                                                        <i class="fa-solid fa-star text-yellow-500 text-[10px]"
+                                                            aria-hidden="true"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
 
                                         <div class="flex flex-col sm:flex-row gap-6">
@@ -621,18 +631,73 @@
                         <div x-show="activeTab === 'screenshots'" x-cloak
                             x-transition:enter="transition ease-out duration-300"
                             x-transition:enter-start="opacity-0 transform translate-y-4">
-                            <div
-                                class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
-                                <div
-                                    class="w-16 h-16 bg-gray-100 dark:bg-darkbox-main rounded-2xl flex items-center justify-center mb-4">
-                                    <i class="fa-solid fa-image text-2xl text-gray-400 dark:text-gray-500"
-                                        aria-hidden="true"></i>
-                                </div>
-                                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin capturas públicas
-                                </h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">El usuario no ha subido
-                                    capturas de pantalla de sus juegos todavía.</p>
-                            </div>
+                            <section class="flex flex-col gap-6" aria-label="Capturas del usuario">
+                                @if ($screenshots->isNotEmpty())
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" role="list">
+                                        @foreach ($screenshots as $item)
+                                            <article role="listitem"
+                                                class="relative group rounded-3xl overflow-hidden bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+                                                <div x-data
+                                                    @click="$dispatch('open-image-detail', { imageId: {{ $item->id }} })"
+                                                    @keydown.enter="$dispatch('open-image-detail', { imageId: {{ $item->id }} })"
+                                                    tabindex="0" role="button"
+                                                    aria-label="Ver captura de {{ $item->game?->title ?? 'juego' }}"
+                                                    class="relative aspect-video w-full overflow-hidden cursor-pointer focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                                                    <img src="{{ Storage::url($item->image_path) }}"
+                                                        alt="Captura de {{ $item->game?->title ?? 'juego' }}"
+                                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                                                        loading="lazy" />
+
+                                                    @if ($item->is_spoiler && !$canManageScreenshots)
+                                                        <div
+                                                            class="absolute inset-0 bg-gray-950/90 backdrop-blur-xl flex items-center justify-center">
+                                                            <span
+                                                                class="text-[10px] font-black uppercase tracking-widest text-white bg-cyan-600 px-3 py-1 rounded-lg">
+                                                                Spoiler
+                                                            </span>
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                                @auth
+                                                    @if (Auth::id() === $item->user_id)
+                                                        <div class="absolute top-3 right-3 z-30">
+                                                            <livewire:utils.image-owner-actions :image="$item"
+                                                                :key="'image-owner-actions-profile-' . $item->id" />
+                                                        </div>
+                                                    @endif
+                                                @endauth
+
+                                                <div class="p-4 border-t border-gray-100 dark:border-darkbox-border">
+                                                    <p
+                                                        class="text-xs font-black text-gray-900 dark:text-white line-clamp-1">
+                                                        {{ $item->game?->title ?? 'Juego' }}
+                                                    </p>
+                                                    <time
+                                                        class="mt-1 block text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                                                        {{ $item->created_at?->diffForHumans() ?? '—' }}
+                                                    </time>
+                                                </div>
+                                            </article>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        <div
+                                            class="w-16 h-16 bg-gray-100 dark:bg-darkbox-main rounded-2xl flex items-center justify-center mb-4">
+                                            <i class="fa-solid fa-image text-2xl text-gray-400 dark:text-gray-500"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                        <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">
+                                            Sin capturas
+                                        </h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm">
+                                            El usuario no ha subido capturas de pantalla todavía.
+                                        </p>
+                                    </div>
+                                @endif
+                            </section>
                         </div>
 
                     </div>
@@ -649,5 +714,9 @@
                 @endif
             </div>
         </div>
+
+        {{-- MODALES --}}
+        <livewire:utils.review-modal />
+        <livewire:utils.image-detail-modal />
     </x-slot>
 </x-miscomponentes.page-layout>

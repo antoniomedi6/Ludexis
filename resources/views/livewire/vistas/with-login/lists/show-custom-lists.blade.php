@@ -21,7 +21,6 @@
             </div>
 
             {{-- Controles de Acción (Orden y Creación) --}}
-            {{-- RESOLUCIÓN RESPONSIVE: Cambio de flex-row a flex-col sm:flex-row para que el botón no aplaste el select en resoluciones móviles, evitando que el texto interno desaparezca. --}}
             <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
 
                 {{-- Orden --}}
@@ -83,10 +82,8 @@
                             class="block w-full pl-11 pr-4 py-3.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 shadow-sm"
                             placeholder="Ej: Joyas Ocultas, Backlog 2026..." autocomplete="off">
                     </div>
-                    @error('cform.name')
-                        <span class="text-red-500 dark:text-red-400 text-xs font-bold pl-1"
-                            role="alert">{{ $message }}</span>
-                    @enderror
+                    <x-input-error for="cform.name" class="text-red-500 dark:text-red-400 text-xs font-bold pl-1" />
+
                 </div>
 
                 <div

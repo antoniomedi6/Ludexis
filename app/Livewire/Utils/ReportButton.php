@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Utils;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,6 +13,7 @@ class ReportButton extends Component
     public bool $isReported = false;
     public bool $openModal = false;
     public string $reportReason = '';
+    public bool $isOwner = false;
 
     public function mount(Model $model)
     {
@@ -22,6 +22,9 @@ class ReportButton extends Component
         if (Auth::check()) {
             $this->isReported = $this->model->isReportedBy(Auth::user());
         }
+
+        // El componente se usa en modelos con user_id (reseñas/capturas)
+        $this->isOwner = isset($this->model->user_id) && ($this->model->user_id === Auth::id());
     }
 
     public function openReport(): void
@@ -45,21 +48,16 @@ class ReportButton extends Component
 
     public function submitReport(): void
     {
-        abort_unless(Auth::check(), 403);
+
+        if ($this->isOwner) {
+            return;
+        }
 
         $this->authorize('interact-with-model', $this->model);
 
         $this->validate([
             'reportReason' => ['required', 'string', 'max:255'],
         ]);
-
-        $ownerId = $this->model instanceof User
-            ? $this->model->id
-            : ($this->model->user_id ?? null);
-
-        if ($ownerId && $ownerId === Auth::id()) {
-            return;
-        }
 
         $this->model->report($this->reportReason);
 

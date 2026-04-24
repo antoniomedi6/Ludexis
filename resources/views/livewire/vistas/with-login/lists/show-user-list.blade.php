@@ -8,20 +8,21 @@
 
     <x-slot name="aside">
         <div class="flex items-center gap-3 w-full justify-end">
-            <a href="{{ route('userLists') }}" wire:navigate
+            <a href="{{ back()->getTargetUrl() }}" wire:navigate
                 class="bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white font-black px-4 py-3 rounded-xl transition-all duration-300 hover:border-cyan-500 flex items-center justify-center gap-2 text-sm shadow-sm">
                 <i class="fa-solid fa-arrow-left"></i> Volver
             </a>
+            @if (Auth::id() === $list->user_id)
+                <button wire:click="openModal"
+                    class="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
+                    <i class="fa-solid fa-pen"></i> Editar
+                </button>
 
-            <button wire:click="openModal"
-                class="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.2)] dark:shadow-[0_5px_15px_rgba(6,182,212,0.3)] uppercase tracking-wider text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
-                <i class="fa-solid fa-pen"></i> Editar
-            </button>
-
-            <button wire:click="$set('confirmingListDeletion', true)"
-                class="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white font-black w-12 h-12 rounded-xl transition-all duration-300 flex items-center justify-center text-sm border border-transparent hover:border-red-600">
-                <i class="fa-solid fa-trash"></i>
-            </button>
+                <button wire:click="$set('confirmingListDeletion', true)"
+                    class="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white font-black w-12 h-12 rounded-xl transition-all duration-300 flex items-center justify-center text-sm border border-transparent hover:border-red-600">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            @endif
         </div>
     </x-slot>
 
@@ -58,9 +59,7 @@
                 @foreach ($list->games as $item)
                     @php
                         // Obteniendo el registro del usuario para este juego si lo hay
-                        $userRegister = \App\Models\GameUser::where('user_id', auth()->id())
-                            ->where('game_id', $item->id)
-                            ->first();
+                        $userRegister = $userRegisters->firstWhere('game_id', $item->id);
 
                         $status = $userRegister->status ?? 'pending';
                         $rating = $userRegister->rating ?? 0;
@@ -172,12 +171,13 @@
                                 </p>
                             </div>
                         </a>
-
-                        {{-- BOTON BORRAR --}}
-                        <button wire:click.prevent="deleteGameFromList({{ $item->id }})"
-                            class="absolute top-4 right-4 w-8 h-8 rounded-full bg-red-500/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-red-600 z-30 shadow-lg translate-y-2 group-hover:translate-y-0 backdrop-blur-sm">
-                            <x-icons.exit />
-                        </button>
+                        @if (Auth::id() === $list->user_id)
+                            {{-- BOTON BORRAR --}}
+                            <button wire:click.prevent="deleteGameFromList({{ $item->id }})"
+                                class="absolute top-4 right-4 w-8 h-8 rounded-full bg-red-500/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-red-600 z-30 shadow-lg translate-y-2 group-hover:translate-y-0 backdrop-blur-sm">
+                                <x-icons.exit />
+                            </button>
+                        @endif
                     </div>
                 @endforeach
             </div>

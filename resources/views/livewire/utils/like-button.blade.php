@@ -2,11 +2,14 @@
     {{-- Vista para usuarios autenticados --}}
     @auth
         <button type="button" wire:click.prevent.stop="toggleLike" aria-pressed="{{ $isLiked ? 'true' : 'false' }}"
-            aria-label="{{ $isLiked ? 'Quitar me gusta' : 'Dar me gusta' }}"
+            aria-label="{{ $isOwner ? 'No puedes darte like a tu propio contenido' : ($isLiked ? 'Quitar me gusta' : 'Dar me gusta') }}"
+            @disabled($isOwner)
             class="group relative flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm
         {{ $isLiked
             ? 'bg-gradient-to-br from-cyan-900/40 to-gray-900 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.15)]'
-            : 'bg-white dark:bg-darkbox-card border-gray-200 dark:border-gray-800 hover:border-cyan-500/40 hover:bg-cyan-50 dark:hover:bg-cyan-900/20' }}">
+            : ($isOwner
+                ? 'bg-gray-100 dark:bg-darkbox-main border-gray-200 dark:border-darkbox-border opacity-70 cursor-not-allowed'
+                : 'bg-white dark:bg-darkbox-card border-gray-200 dark:border-gray-800 hover:border-cyan-500/40 hover:bg-cyan-50 dark:hover:bg-cyan-900/20') }}">
 
             <div class="relative flex items-center justify-center">
                 <div class="absolute inset-0 bg-cyan-400 blur-md transition-opacity duration-300 {{ $isLiked ? 'opacity-40' : 'opacity-0' }}"

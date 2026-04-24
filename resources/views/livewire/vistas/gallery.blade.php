@@ -3,7 +3,7 @@
 
         {{-- BARRA SUPERIOR: CONTROLES Y FILTROS --}}
         <x-slot:aside>
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
+            <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center gap-4 w-full">
 
                 {{-- Filtros Modal --}}
                 <div class="relative w-full sm:w-auto shrink-0" x-data="{ filtersOpen: false }">
@@ -123,6 +123,13 @@
                                 @if ($item->is_spoiler) @keydown.enter="revealed = true" @endif role="button"
                                 tabindex="0" aria-label="Captura de pantalla compartida por {{ $item->user->name }}"
                                 class="relative group rounded-3xl overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col h-full cursor-pointer focus:outline-none focus:ring-4 focus:ring-cyan-500">
+
+                                    @if (Auth::id() === $item->user_id)
+                                        <div class="absolute top-3 right-3 z-30">
+                                            <livewire:utils.image-owner-actions :image="$item"
+                                                :key="'image-owner-actions-gallery-' . $item->id" />
+                                        </div>
+                                    @endif
 
                                 <div
                                     class="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-950 aspect-video shrink-0">

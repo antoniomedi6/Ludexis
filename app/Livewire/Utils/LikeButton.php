@@ -13,6 +13,7 @@ class LikeButton extends Component
 
     public bool $isLiked = false;
     public int $likesCount = 0;
+    public bool $isOwner = false;
 
     public function mount(Model $model)
     {
@@ -22,13 +23,25 @@ class LikeButton extends Component
             $this->isLiked = $this->model->isLikedBy(Auth::user());
         }
 
+        // El componente solo se usa en modelos con user_id (reseñas/capturas)
+        $this->isOwner = isset($this->model->user_id) && ($this->model->user_id === Auth::id());
+
         $this->likesCount = $this->model->likes_count;
     }
 
-    public function toggleLike()
+    public function toggleLike(): void
     {
-        if (!Auth::check())
-            return redirect()->route('login');
+        /* Si el usuario no esta logueado se le redirige a la página de login */
+        if (!Auth::check()) {
+            $this->redirect(route('login'));
+            return;
+        }
+
+        // Evita que el autor pueda darse like a sí mismo
+        if ($this->isOwner) {
+            $this->dispatch('notify', message: 'No puedes darte like a tu propio contenido.', type: 'error');
+            return;
+        }
 
         $user = Auth::user();
         $this->authorize('interact-with-model', $this->model);

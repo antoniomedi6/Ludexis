@@ -44,6 +44,8 @@ class ReviewModal extends Component
             app(GameScoreService::class)->recalculate($this->game->refresh());
         }
 
+        // Refresca el perfil para mostrar el texto actualizado
+        $this->dispatch('evtUserProfileRefresh');
         $this->dispatch('notify', message: 'Reseña publicada', type: 'success');
     }
 
