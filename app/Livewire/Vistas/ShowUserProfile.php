@@ -35,42 +35,6 @@ class ShowUserProfile extends Component
         $this->selectedRole = (string) ($this->user->role ?? 'standard');
     }
 
-    public function updateRole(): void
-    {
-        $this->authorize('updateRole', $this->user);
-
-        $this->validate([
-            'selectedRole' => ['required', 'in:standard,journalist,veteran,admin'],
-        ]);
-
-        if (Auth::id() === $this->user->id) {
-            return;
-        }
-
-        $this->user->role = $this->selectedRole;
-        $this->user->save();
-
-        $this->dispatch('role-updated');
-    }
-
-    public function submitReport(): void
-    {
-        abort_unless(Auth::check(), 403);
-
-        $this->validate([
-            'reportReason' => ['required', 'string', 'max:255'],
-        ]);
-
-        if (Auth::id() === $this->user->id) {
-            return;
-        }
-
-        $this->user->report($this->reportReason);
-
-        $this->reportReason = '';
-        $this->dispatch('report-sent');
-    }
-
     #[On('evtUserProfileRefresh')]
     public function render()
     {
@@ -94,12 +58,44 @@ class ShowUserProfile extends Component
         $abandonedCount = $statusCounts['abandoned'] ?? 0;
 
         $topGames = $games->sortByDesc('pivot.rating')->take(3);
-        $recentActivity = $games->sortByDesc('pivot.updated_at')->take(10);
+        $recentActivity = collect();
         $reviews = collect();
         $screenshots = collect();
 
         if ($this->canViewPrivateData) {
+            $reviewActivity = GameUser::with(['game:id,title,cover_url,slug'])
+                ->withCount('likes')
+                ->where('user_id', $this->user->id)
+                ->whereNotNull('review')
+                ->where('review', '!=', '')
+                ->latest('updated_at')
+                ->limit(10)
+                ->get();
+
+            $imageActivityQuery = Image::with(['game:id,title,slug,cover_url'])
+                ->withCount('likes')
+                ->where('user_id', $this->user->id)
+                ->latest();
+
+            if (! $canManageScreenshots) {
+                $imageActivityQuery->where('is_spoiler', false);
+            }
+
+            $imageActivity = $imageActivityQuery
+                ->limit(10)
+                ->get();
+
+            $recentActivity = $reviewActivity
+                ->concat($imageActivity)
+                ->each(function ($item) {
+                    $item->setAttribute('activity_at', $item->updated_at ?? $item->created_at);
+                })
+                ->sortByDesc('activity_at')
+                ->values()
+                ->take(10);
+
             $reviews = GameUser::with(['game:id,title,cover_url,slug'])
+                ->withCount('likes')
                 ->where('user_id', $this->user->id)
                 ->whereNotNull('review')
                 ->latest('updated_at')
@@ -132,5 +128,41 @@ class ShowUserProfile extends Component
             'canViewPrivateData',
             'canManageScreenshots',
         ));
+    }
+
+    public function updateRole(): void
+    {
+        $this->authorize('updateRole', $this->user);
+
+        $this->validate([
+            'selectedRole' => ['required', 'in:standard,journalist,veteran,admin'],
+        ]);
+
+        if (Auth::id() === $this->user->id) {
+            return;
+        }
+
+        $this->user->role = $this->selectedRole;
+        $this->user->save();
+
+        $this->dispatch('role-updated');
+    }
+
+    public function submitReport(): void
+    {
+        abort_unless(Auth::id(), 403);
+
+        $this->validate([
+            'reportReason' => ['required', 'string', 'max:255'],
+        ]);
+
+        if (Auth::id() === $this->user->id) {
+            return;
+        }
+
+        $this->user->report($this->reportReason);
+
+        $this->reportReason = '';
+        $this->dispatch('report-sent');
     }
 }

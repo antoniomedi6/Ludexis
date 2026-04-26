@@ -126,8 +126,7 @@
 
                                     @if (Auth::id() === $item->user_id)
                                         <div class="absolute top-3 right-3 z-30">
-                                            <livewire:utils.image-owner-actions :image="$item"
-                                                :key="'image-owner-actions-gallery-' . $item->id" />
+                                            @livewire('utils.image-owner-actions', ['image' => $item], key('image-owner-actions-gallery-' . $item->id))
                                         </div>
                                     @endif
 

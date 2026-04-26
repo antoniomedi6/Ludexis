@@ -87,8 +87,7 @@
                             <div class="flex items-center gap-2">
                                 @auth
                                     @if (Auth::id() === $item->user_id)
-                                        <livewire:utils.review-owner-actions :review="$item"
-                                            :key="'review-owner-actions-preview-specific-' . $item->id" />
+                                        @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-specific-' . $item->id))
                                     @endif
                                 @endauth
 
@@ -108,11 +107,11 @@
                         <div class="mt-2 flex justify-start items-center gap-2 flex-wrap">
                             @auth
                                 <div class="scale-90 origin-left">
-                                    <livewire:utils.like-button :model="$item" :key="'like-btn-specific-' . $item->id" />
+                                    @livewire('utils.like-button', ['model' => $item], key('like-btn-specific-' . $item->id))
                                 </div>
                             @endauth
                             <div class="scale-90 origin-left">
-                                <livewire:utils.report-button :model="$item" :key="'report-btn-specific-' . $item->id" />
+                                @livewire('utils.report-button', ['model' => $item], key('report-btn-specific-' . $item->id))
                             </div>
                         </div>
                     </article>
@@ -238,8 +237,7 @@
                                     </div>
                                     <div class="flex items-center gap-2">
                                             @if (Auth::id() === $item->user_id)
-                                                <livewire:utils.review-owner-actions :review="$item"
-                                                    :key="'review-owner-actions-preview-global-' . $item->id" />
+                                                @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-global-' . $item->id))
                                             @endif
 
                                         @if ($item->rating > 0)
@@ -261,10 +259,10 @@
                                 <div class="mt-auto flex justify-start items-center gap-2 flex-wrap">
                                     @auth
                                         <div class="scale-90 origin-left">
-                                            <livewire:utils.like-button :model="$item" :key="'like-btn-global-' . $item->id" />
+                                            @livewire('utils.like-button', ['model' => $item], key('like-btn-global-' . $item->id))
                                         </div>
                                         <div class="scale-90 origin-left">
-                                            <livewire:utils.report-button :model="$item" :key="'report-btn-global-' . $item->id" />
+                                            @livewire('utils.report-button', ['model' => $item], key('report-btn-global-' . $item->id))
                                         </div>
                                     @endauth
                                 </div>

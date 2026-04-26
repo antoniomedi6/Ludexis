@@ -5,7 +5,6 @@ namespace App\Livewire\Utils;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use App\Services\ExperienceService;
 
 class LikeButton extends Component
 {
@@ -19,8 +18,9 @@ class LikeButton extends Component
     {
         $this->model = $model;
 
-        if (Auth::check()) {
-            $this->isLiked = $this->model->isLikedBy(Auth::user());
+        $authUser = Auth::user();
+        if ($authUser) {
+            $this->isLiked = $this->model->isLikedBy($authUser);
         }
 
         // El componente solo se usa en modelos con user_id (reseñas/capturas)
@@ -29,13 +29,13 @@ class LikeButton extends Component
         $this->likesCount = $this->model->likes_count;
     }
 
+    public function render()
+    {
+        return view('livewire.utils.like-button');
+    }
+
     public function toggleLike(): void
     {
-        /* Si el usuario no esta logueado se le redirige a la página de login */
-        if (!Auth::check()) {
-            $this->redirect(route('login'));
-            return;
-        }
 
         // Evita que el autor pueda darse like a sí mismo
         if ($this->isOwner) {
@@ -52,10 +52,5 @@ class LikeButton extends Component
         $this->likesCount = $this->model->likes()->count();
 
         $this->dispatch('like-toggled', modelId: $this->model->id, likesCount: $this->likesCount);
-    }
-
-    public function render()
-    {
-        return view('livewire.utils.like-button');
     }
 }
