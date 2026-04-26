@@ -5,10 +5,7 @@
         @auth
             <div x-data="{ openOptions: false, openReport: false }" class="relative flex items-center gap-2">
                 @if (Auth::id() !== $user->id)
-                    <button type="button"
-                        class="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
-                        <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
-                    </button>
+                    <livewire:utils.follow-button :user="$user" />
                 @else
                     <a href="{{ route('profile.show') }}"
                         class="px-6 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400">
