@@ -13,24 +13,14 @@ use Livewire\Component;
 class ShowUserProfile extends Component
 {
     public User $user;
-    public bool $canViewPrivateData = false;
+
     public string $selectedRole = 'standard';
+
     public string $reportReason = '';
 
     public function mount(int $userId)
     {
         $this->user = User::findOrFail($userId);
-
-        $this->canViewPrivateData = Gate::allows('viewPrivateData', $this->user);
-
-        if ($this->canViewPrivateData) {
-            $this->user->load([
-                'games',
-                'customLists' => function ($q) {
-                    $q->withCount('games');
-                }
-            ]);
-        }
 
         $this->selectedRole = (string) ($this->user->role ?? 'standard');
     }
@@ -38,15 +28,24 @@ class ShowUserProfile extends Component
     #[On('evtUserProfileRefresh')]
     public function render()
     {
-        $canViewPrivateData = $this->canViewPrivateData;
+        $canViewPrivateData = Gate::allows('viewPrivateData', $this->user);
+
+        if ($canViewPrivateData) {
+            $this->user->loadMissing([
+                'games',
+                'customLists' => function ($q) {
+                    $q->withCount('games');
+                },
+            ]);
+        }
         // Esto no es solo para mostrar/ocultar botones en la vista. También controla qué capturas se consultan
         // y evita duplicar lógica en la vista.
         $canManageScreenshots = Gate::allows('manageScreenshots', $this->user);
 
-        $games = $this->canViewPrivateData ? $this->user->games : collect();
-        $customLists = $this->canViewPrivateData ? $this->user->customLists : collect();
+        $games = $canViewPrivateData ? $this->user->games : collect();
+        $customLists = $canViewPrivateData ? $this->user->customLists : collect();
 
-        $totalHours = $games->sum(fn($game) => ($game->pivot->hours_finish ?? 0) + ($game->pivot->hours_completed ?? 0));
+        $totalHours = $games->sum(fn ($game) => ($game->pivot->hours_finish ?? 0) + ($game->pivot->hours_completed ?? 0));
 
         $averageRating = $games->avg('pivot.rating') ?? 0;
 
@@ -62,7 +61,7 @@ class ShowUserProfile extends Component
         $reviews = collect();
         $screenshots = collect();
 
-        if ($this->canViewPrivateData) {
+        if ($canViewPrivateData) {
             $reviewActivity = GameUser::with(['game:id,title,cover_url,slug'])
                 ->withCount('likes')
                 ->where('user_id', $this->user->id)
@@ -105,7 +104,7 @@ class ShowUserProfile extends Component
                 ->where('user_id', $this->user->id)
                 ->latest();
 
-            if (!$canManageScreenshots) {
+            if (! $canManageScreenshots) {
                 $q->where('is_spoiler', false);
             }
 

@@ -32,7 +32,8 @@ class FollowButton extends Component
         $authUser = Auth::user();
 
         $isFollowing = (bool) ($authUser?->isFollowing($target));
-        $hasRequestedToFollow = (bool) ($authUser ? $target->hasRequestedToFollow($authUser) : false);
+        /* README: $follower->hasRequestedToFollow($followable) — solicitud pendiente enviada por el visitante. */
+        $hasRequestedToFollow = (bool) ($authUser ? $authUser->hasRequestedToFollow($target) : false);
 
         return view('livewire.utils.follow-button', compact(
             'isFollowing',
@@ -53,6 +54,7 @@ class FollowButton extends Component
 
         $this->dispatch('evtFollowButtonRefresh')->self();
         $this->dispatch('evtUserProfileRefresh');
+        $this->dispatch('evtNotificationsRefresh');
     }
 
     /* Deja de seguir y dispara el refresco de la vista. */
@@ -62,14 +64,23 @@ class FollowButton extends Component
 
         $this->dispatch('evtFollowButtonRefresh')->self();
         $this->dispatch('evtUserProfileRefresh');
+        $this->dispatch('evtNotificationsRefresh');
     }
 
-    /* Alterna seguir, dejar de seguir y dispara el refresco. */
+    /* Alterna seguir / dejar de seguir; si hay solicitud pendiente (README: hasRequestedToFollow), unfollow cancela la solicitud. */
     public function toggleFollow(): void
     {
-        Auth::user()->toggleFollow($this->followable());
+        $followable = $this->followable();
+        $auth = Auth::user();
+
+        if ($auth->hasRequestedToFollow($followable)) {
+            $auth->unfollow($followable);
+        } else {
+            $auth->toggleFollow($followable);
+        }
 
         $this->dispatch('evtFollowButtonRefresh')->self();
         $this->dispatch('evtUserProfileRefresh');
+        $this->dispatch('evtNotificationsRefresh');
     }
 }

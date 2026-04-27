@@ -12,4 +12,11 @@
     <div class="flex-1 max-w-2xl relative flex justify-end md:justify-start">
         @livewire('utils.search-games')
     </div>
+
+    @auth
+        {{-- NOTIFICACIONES seguimiento y solicitudes --}}
+        <div class="shrink-0 ml-2 md:ml-4 flex items-center">
+            <livewire:utils.notification-bell />
+        </div>
+    @endauth
 </div>

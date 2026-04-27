@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+
 class UserPolicy
 {
     public function viewPrivateData(?User $user, User $model): bool
@@ -12,12 +13,16 @@ class UserPolicy
             return true;
         }
 
-        // Perfil privado: solo el propio usuario o admin.
         if (!$user) {
             return false;
         }
 
-        return ($user->id === $model->id) || ($user->role === 'admin');
+        // Perfil privado: propio usuario, admin o seguidor aceptado.
+        if ($user->id === $model->id || $user->role === 'admin') {
+            return true;
+        }
+
+        return $user->isFollowing($model);
     }
 
     public function updateRole(User $user, User $model): bool
