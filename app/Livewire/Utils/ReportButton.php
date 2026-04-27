@@ -19,17 +19,23 @@ class ReportButton extends Component
     {
         $this->model = $model;
 
-        if (Auth::check()) {
-            $this->isReported = $this->model->isReportedBy(Auth::user());
+        $authUser = Auth::user();
+        if ($authUser) {
+            $this->isReported = $this->model->isReportedBy($authUser);
         }
 
         // El componente se usa en modelos con user_id (reseñas/capturas)
         $this->isOwner = isset($this->model->user_id) && ($this->model->user_id === Auth::id());
     }
 
+    public function render()
+    {
+        return view('livewire.utils.report-button');
+    }
+
     public function openReport(): void
     {
-        if (!Auth::check()) {
+        if (! Auth::id()) {
             $this->redirect(route('login'));
             return;
         }
@@ -66,10 +72,5 @@ class ReportButton extends Component
         $this->reportReason = '';
 
         $this->dispatch('report-sent');
-    }
-
-    public function render()
-    {
-        return view('livewire.utils.report-button');
     }
 }

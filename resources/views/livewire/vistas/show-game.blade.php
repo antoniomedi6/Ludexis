@@ -220,9 +220,9 @@
                 {{-- GAMEREGISTRYCARD (ESCRITORIO) --}}
                 @auth
                     <div class="hidden lg:block">
-                        <livewire:utils.game-registry-card :gameId="$game->id" :key="'game-registry-desktop-' . $game->id" />
+                        @livewire('utils.game-registry-card', ['gameId' => $game->id], key('game-registry-desktop-' . $game->id))
                     </div>
-                    <livewire:utils.review-modal />
+                    @livewire('utils.review-modal')
                 @endauth
 
                 {{-- GALERÍA IMÁGENES --}}

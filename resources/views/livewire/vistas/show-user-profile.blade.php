@@ -3,20 +3,11 @@
     {{-- CONTROLES SUPERIORES --}}
     <x-slot:aside>
         @auth
-            <div x-data="{ openReport: false }" class="relative flex flex-col items-end sm:items-start gap-3">
-                {{-- ACCIONES RÁPIDAS --}}
-                <div
-                    class="flex flex-wrap items-center justify-end sm:justify-start gap-2 rounded-2xl border border-gray-200 dark:border-darkbox-border bg-gray-50 dark:bg-darkbox-main p-2 shadow-sm">
+            <div x-data="{ openOptions: false, openReport: false }"
+                class="relative flex flex-col items-end sm:items-start gap-3">
+                <div class="relative flex flex-wrap items-center justify-end sm:justify-start gap-2">
                     @if (Auth::id() !== $user->id)
-                        <button type="button"
-                            class="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
-                            <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
-                        </button>
-                        <button type="button" @click="openReport = true"
-                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-card hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
-                            <i class="fa-solid fa-flag text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
-                            Reportar
-                        </button>
+                        <livewire:utils.follow-button :user="$user" />
                     @else
                         <a href="{{ route('profile.show') }}"
                             class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
@@ -28,44 +19,104 @@
                             Tu perfil
                         </span>
                     @endif
-                </div>
 
-                @if (Auth::user()->role === 'admin')
-                    <div
-                        class="w-full sm:w-auto sm:min-w-56 px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
-                        <label for="role_select"
-                            class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
-                            Rol de usuario
-                        </label>
-                        <select id="role_select" wire:model.live="selectedRole" wire:change="updateRole"
-                            class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                            <option value="standard">Estándar</option>
-                            <option value="journalist">Periodista</option>
-                            <option value="veteran">Veterano</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                        <div x-data="{ saved: false }"
-                            x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
-                            class="relative mt-2">
-                            <template x-if="saved">
-                                <div x-transition:enter="transition ease-out duration-300"
-                                    x-transition:enter-start="opacity-0 scale-50"
-                                    x-transition:enter-end="opacity-100 scale-100"
-                                    x-transition:leave="transition ease-in duration-200"
-                                    x-transition:leave-start="opacity-100 scale-100"
-                                    x-transition:leave-end="opacity-0 scale-50"
-                                    class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
-                                    role="status" aria-live="polite">
-                                    <span
-                                        class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
-                                        <x-icons.saved-animated class="size-6" />
-                                    </span>
-                                    <span>Rol actualizado.</span>
-                                </div>
-                            </template>
+                    {{-- OPTIONS MENU --}}
+                    @if (Auth::id() !== $user->id)
+                        <button type="button" @click="openOptions = !openOptions"
+                            class="p-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400"
+                            aria-label="Opciones del perfil" :aria-expanded="openOptions.toString()">
+                            <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                        </button>
+
+                        <div x-show="openOptions" x-cloak @click.outside="openOptions = false"
+                            class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-lg overflow-hidden z-50"
+                            role="menu" aria-label="Opciones del perfil">
+                            <div class="p-2 space-y-1">
+                                <button type="button" @click="openOptions = false; openReport = true"
+                                    class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    role="menuitem">
+                                    <i class="fa-solid fa-flag text-gray-400" aria-hidden="true"></i>
+                                    <span>Reportar</span>
+                                </button>
+
+                                @if (Auth::user()->role === 'admin')
+                                    <div
+                                        class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                                        <label for="role_select_menu"
+                                            class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">
+                                            Rol de usuario
+                                        </label>
+                                        <select id="role_select_menu" wire:model.live="selectedRole"
+                                            wire:change="updateRole"
+                                            class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                            <option value="standard">Estándar</option>
+                                            <option value="journalist">Periodista</option>
+                                            <option value="veteran">Veterano</option>
+                                            <option value="admin">Administrador</option>
+                                        </select>
+                                        <div x-data="{ saved: false }"
+                                            x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
+                                            class="relative mt-2">
+                                            <template x-if="saved">
+                                                <div x-transition:enter="transition ease-out duration-300"
+                                                    x-transition:enter-start="opacity-0 scale-50"
+                                                    x-transition:enter-end="opacity-100 scale-100"
+                                                    x-transition:leave="transition ease-in duration-200"
+                                                    x-transition:leave-start="opacity-100 scale-100"
+                                                    x-transition:leave-end="opacity-0 scale-50"
+                                                    class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
+                                                    role="status" aria-live="polite">
+                                                    <span
+                                                        class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                                        <x-icons.saved-animated class="size-6" />
+                                                    </span>
+                                                    <span>Rol actualizado.</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @endif
+                    @else
+                        @if (Auth::user()->role === 'admin')
+                            <div
+                                class="w-full sm:w-auto sm:min-w-56 px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                                <label for="role_select_self"
+                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    Rol de usuario
+                                </label>
+                                <select id="role_select_self" wire:model.live="selectedRole" wire:change="updateRole"
+                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    <option value="standard">Estándar</option>
+                                    <option value="journalist">Periodista</option>
+                                    <option value="veteran">Veterano</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                                <div x-data="{ saved: false }"
+                                    x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
+                                    class="relative mt-2">
+                                    <template x-if="saved">
+                                        <div x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="opacity-0 scale-50"
+                                            x-transition:enter-end="opacity-100 scale-100"
+                                            x-transition:leave="transition ease-in duration-200"
+                                            x-transition:leave-start="opacity-100 scale-100"
+                                            x-transition:leave-end="opacity-0 scale-50"
+                                            class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
+                                            role="status" aria-live="polite">
+                                            <span
+                                                class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                                <x-icons.saved-animated class="size-6" />
+                                            </span>
+                                            <span>Rol actualizado.</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                </div>
 
                 {{-- REPORT MODAL --}}
                 <div x-show="openReport" x-cloak x-on:report-sent.window="openReport = false"
@@ -91,7 +142,7 @@
                         <div class="space-y-3">
                             <div>
                                 <label for="report_reason"
-                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">
                                     Motivo
                                 </label>
                                 <select id="report_reason" wire:model.live="reportReason"
@@ -151,16 +202,16 @@
 
             {{-- HEADER DEL JUGADOR --}}
             <header
-                class="w-full bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] shadow-sm overflow-hidden relative">
+                class="w-full bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl shadow-sm overflow-hidden relative">
 
-                {{-- Efecto de resplandor ambiental --}}
-                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-[60px] pointer-events-none"
+                {{-- EFECTO DE RESPLANDOR AMBIENTAL --}}
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"
                     aria-hidden="true"></div>
 
                 <div
                     class="relative z-10 p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-center gap-6 sm:gap-8">
 
-                    {{-- Contenedor del Avatar --}}
+                    {{-- CONTENEDOR DEL AVATAR --}}
                     <div class="relative shrink-0 group">
                         <div class="absolute -inset-1.5 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full opacity-30 group-hover:opacity-60 blur-md transition duration-500"
                             aria-hidden="true"></div>
@@ -168,7 +219,7 @@
                             <img src="{{ $user->profile_photo_url }}" alt="Avatar de {{ $user->name }}"
                                 class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-darkbox-main object-cover shadow-xl bg-gray-100 dark:bg-darkbox-main">
 
-                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-xs font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
                                 title="Rol Oficial">
                                 <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i>
                                 {{ $user->roleLabel() }}
@@ -176,7 +227,7 @@
                         </div>
                     </div>
 
-                    {{-- Información Base --}}
+                    {{-- INFORMACIÓN BASE --}}
                     <div class="flex-1 w-full text-center sm:text-left flex flex-col justify-center gap-5">
                         <div>
                             <div
@@ -187,47 +238,50 @@
                                 </h1>
                                 @if ($user->is_private)
                                     <span
-                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
+                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-1.5"
                                         title="Perfil Privado">
                                         <i class="fa-solid fa-lock" aria-hidden="true"></i> Privado
                                     </span>
                                 @else
                                     <span
-                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5"
+                                        class="w-fit mx-auto sm:mx-0 px-2.5 py-1 bg-gray-100 dark:bg-darkbox-main text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkbox-border rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-1.5"
                                         title="Perfil Público">
                                         <i class="fa-solid fa-earth" aria-hidden="true"></i> Público
                                     </span>
                                 @endif
                             </div>
+
                             <p class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
                                 <i class="fa-solid fa-calendar-day mr-1" aria-hidden="true"></i>
                                 Registrado en {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('M Y') }}
                             </p>
                         </div>
 
-                        {{-- Progreso XP: Solo visible si no es admin general viendo --}}
                         @if ($canViewPrivateData)
-                            <div
-                                class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border p-3.5 rounded-2xl">
-                                <div class="flex justify-between items-end mb-2 px-1">
-                                    <span
-                                        class="text-[10px] font-black uppercase tracking-widest text-gray-500">Progreso
-                                        XP</span>
-                                    <span
-                                        class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{{ $user->xp }}
-                                        / 1,000</span>
+                            @if (Auth::user() === $this->user)
+                                <div
+                                    class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border p-3.5 rounded-2xl">
+                                    <div class="flex justify-between items-end mb-2 px-1">
+                                        <span
+                                            class="text-xs font-black uppercase tracking-widest text-gray-500">Progreso
+                                            XP</span>
+                                        <span
+                                            class="text-xs font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{{ $user->xp }}
+                                            / 1,000</span>
+                                    </div>
+                                    <div class="h-2 w-full bg-gray-200 dark:bg-darkbox-card rounded-full overflow-hidden"
+                                        role="progressbar" aria-valuenow="{{ $user->xp }}" aria-valuemin="0"
+                                        aria-valuemax="1000">
+                                        <div class="h-full bg-cyan-500 rounded-full transition-all duration-500"
+                                            style="width: {{ min(($user->xp / 1000) * 100, 100) }}%"></div>
+                                    </div>
                                 </div>
-                                <div class="h-2 w-full bg-gray-200 dark:bg-darkbox-card rounded-full overflow-hidden"
-                                    role="progressbar" aria-valuenow="{{ $user->xp }}" aria-valuemin="0"
-                                    aria-valuemax="1000">
-                                    <div class="h-full bg-cyan-500 rounded-full transition-all duration-500"
-                                        style="width: {{ min(($user->xp / 1000) * 100, 100) }}%"></div>
-                                </div>
-                            </div>
+                            @endif
+
                         @endif
                     </div>
 
-                    {{-- Top 3 Juegos --}}
+                    {{-- TOP 3 JUEGOS --}}
                     @if ($topGames->isNotEmpty() && $canViewPrivateData)
                         <div class="flex flex-col items-center sm:items-end w-full sm:w-auto mt-4 sm:mt-0">
                             <h2 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-3">Top 3 Juegos
@@ -236,33 +290,41 @@
                                 @foreach ($topGames as $index => $topGame)
                                     <div class="relative group"
                                         title="{{ $topGame->name }} - {{ $topGame->pivot->rating }}/10">
-                                        <img src="{{ $topGame->cover_url ?? 'https://via.placeholder.com/150' }}"
-                                            alt="Portada de {{ $topGame->name }}"
-                                            class="rounded-lg object-cover shadow-md border-2 {{ $loop->first ? 'w-16 h-24 border-yellow-500 z-10' : ($loop->iteration === 2 ? 'w-14 h-20 border-gray-300 opacity-80' : 'w-12 h-16 border-orange-400 opacity-60') }}">
-                                        <div
-                                            class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-darkbox-main border border-darkbox-border flex items-center justify-center text-[10px] font-black text-white shadow-lg">
-                                            {{ $loop->iteration }}
-                                        </div>
+                                        <a href="{{ route('games.show', $topGame->slug) }}">
+                                            <img src="{{ $topGame->cover_url ?? 'https://via.placeholder.com/150' }}"
+                                                alt="Portada de {{ $topGame->name }}"
+                                                class="rounded-lg object-cover shadow-md border-2 {{ $loop->first ? 'w-16 h-24 border-yellow-500 z-10' : ($loop->iteration === 2 ? 'w-14 h-20 border-gray-300 opacity-80' : 'w-12 h-16 border-orange-400 opacity-60') }}">
+                                            <div
+                                                class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-darkbox-main border border-darkbox-border flex items-center justify-center text-xs font-black text-white shadow-lg">
+                                                {{ $loop->iteration }}
+                                            </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     @endif
                 </div>
+
+                {{-- BARRA SEGUIMIENTO --}}
+                <div
+                    class="relative z-10 border-t border-gray-200 dark:border-darkbox-border bg-gray-50 dark:bg-darkbox-main px-6 sm:px-10 py-3 sm:py-3.5">
+                    @livewire('utils.profile-follow-block', ['userId' => $user->id], key('profile-follow-block-' . $user->id))
+                </div>
             </header>
 
             {{-- LAYOUT PRINCIPAL --}}
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
 
-                {{-- Comprobación de privacidad --}}
+                {{-- COMPROBACIÓN DE PRIVACIDAD --}}
                 @if ($canViewPrivateData)
 
-                    {{-- ASIDE: Estadísticas y Colecciones --}}
+                    {{-- ASIDE: ESTADÍSTICAS Y COLECCIONES --}}
                     <aside class="xl:col-span-4 flex flex-col gap-8">
 
-                        {{-- Estadísticas --}}
+                        {{-- ESTADÍSTICAS --}}
                         <div
-                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm">
+                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm">
                             <h2
                                 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-6 flex items-center gap-2">
                                 <i class="fa-solid fa-chart-pie text-cyan-500" aria-hidden="true"></i> Estadísticas
@@ -276,13 +338,13 @@
                                     <span
                                         class="block text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tabular-nums">{{ $totalHours }}</span>
                                     <span
-                                        class="text-[10px] font-bold uppercase text-gray-500 tracking-widest">Horas</span>
+                                        class="text-xs font-bold uppercase text-gray-500 tracking-widest">Horas</span>
                                 </div>
                                 <div
                                     class="bg-gray-50 dark:bg-darkbox-main p-4 rounded-2xl border border-gray-100 dark:border-darkbox-border/50 text-center">
                                     <span
                                         class="block text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tabular-nums">{{ number_format($averageRating, 1) }}</span>
-                                    <span class="text-[10px] font-bold uppercase text-gray-500 tracking-widest">Nota
+                                    <span class="text-xs font-bold uppercase text-gray-500 tracking-widest">Nota
                                         Media</span>
                                 </div>
                             </div>
@@ -319,9 +381,9 @@
                             </div>
                         </div>
 
-                        {{-- Colecciones --}}
+                        {{-- COLECCIONES --}}
                         <div
-                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm">
+                            class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm">
                             <h2
                                 class="text-xs font-black uppercase tracking-widest text-gray-500 mb-6 flex items-center gap-2">
                                 <i class="fa-solid fa-layer-group text-cyan-500" aria-hidden="true"></i> Colecciones
@@ -350,7 +412,7 @@
                     {{-- FEED PRINCIPAL --}}
                     <div x-data="{ activeTab: 'activity' }" class="xl:col-span-8 flex flex-col gap-8">
 
-                        {{-- Navegación de Pestañas --}}
+                        {{-- NAVEGACIÓN DE PESTAÑAS --}}
                         <div class="flex gap-2 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl p-1.5 shrink-0 w-fit shadow-sm"
                             role="tablist">
                             <button type="button" @click="activeTab = 'activity'"
@@ -377,7 +439,7 @@
                                 role="tab">
                                 <span>Reseñas</span>
                                 <span
-                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-[10px] font-black tabular-nums text-gray-600 dark:text-gray-300"
+                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-xs font-black tabular-nums text-gray-600 dark:text-gray-300"
                                     aria-label="Total de reseñas">
                                     {{ $reviews->count() }}
                                 </span>
@@ -396,63 +458,64 @@
                         <div x-show="activeTab === 'activity'" x-transition:enter="transition ease-out duration-300"
                             x-transition:enter-start="opacity-0 transform translate-y-4">
                             <div class="flex flex-col gap-6" role="feed" aria-label="Feed de actividad reciente">
-                                @forelse ($recentActivity as $game)
+                                @forelse ($recentActivity as $activity)
                                     @php
-                                        $status = $game->pivot->status ?? null;
+                                        $isImage = $activity instanceof \App\Models\Image;
 
-                                        $statusStyle = match ($status) {
-                                            'completed' => [
-                                                'bg' => 'bg-emerald-50 dark:bg-emerald-900/20',
-                                                'text' => 'text-emerald-600 dark:text-emerald-400',
-                                                'border' => 'border-emerald-200 dark:border-emerald-800/50',
-                                                'label' => 'Completado',
-                                            ],
-                                            'playing' => [
-                                                'bg' => 'bg-blue-50 dark:bg-blue-900/20',
-                                                'text' => 'text-blue-600 dark:text-blue-400',
-                                                'border' => 'border-blue-200 dark:border-blue-800/50',
-                                                'label' => 'Jugando',
-                                            ],
-                                            'abandoned' => [
-                                                'bg' => 'bg-red-50 dark:bg-red-900/20',
-                                                'text' => 'text-red-600 dark:text-red-400',
-                                                'border' => 'border-red-200 dark:border-red-800/50',
-                                                'label' => 'Abandonado',
-                                            ],
-                                            'pending' => [
+                                        $activityAt =
+                                            $activity->activity_at ?? ($activity->updated_at ?? $activity->created_at);
+
+                                        $activityLabel = $isImage ? 'Captura' : 'Reseña';
+
+                                        $activityStyle = $isImage
+                                            ? [
                                                 'bg' => 'bg-purple-50 dark:bg-purple-900/20',
                                                 'text' => 'text-purple-600 dark:text-purple-400',
                                                 'border' => 'border-purple-200 dark:border-purple-800/50',
-                                                'label' => 'Pendiente',
-                                            ],
-                                            default => [
-                                                'bg' => 'bg-gray-50 dark:bg-gray-800',
-                                                'text' => 'text-gray-600 dark:text-gray-400',
-                                                'border' => 'border-gray-200 dark:border-gray-700',
-                                                'label' => $status ? ucfirst($status) : 'Sin estado',
-                                            ],
-                                        };
+                                            ]
+                                            : [
+                                                'bg' => 'bg-cyan-50 dark:bg-cyan-900/20',
+                                                'text' => 'text-cyan-700 dark:text-cyan-300',
+                                                'border' => 'border-cyan-200 dark:border-cyan-800/50',
+                                            ];
                                     @endphp
 
                                     <article
-                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-center gap-2 mb-6">
                                             <span
-                                                class="text-[10px] {{ $statusStyle['bg'] }} {{ $statusStyle['text'] }} border {{ $statusStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
-                                                {{ $statusStyle['label'] }}
+                                                class="text-xs {{ $activityStyle['bg'] }} {{ $activityStyle['text'] }} border {{ $activityStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
+                                                {{ $activityLabel }}
                                             </span>
-                                            <time
-                                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                                Actualizado {{ $game->pivot->updated_at?->diffForHumans() ?? '—' }}
+                                            <time class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                                {{ $activityAt?->diffForHumans() ?? '—' }}
                                             </time>
                                         </div>
 
                                         <div class="flex flex-col sm:flex-row gap-6">
-                                            <a href="{{ route('games.show', $game->slug) }}"
+                                            <a href="{{ route('games.show', $activity->game?->slug) }}"
                                                 class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
-                                                <img src="{{ $game->cover_url ?? 'https://via.placeholder.com/300x400' }}"
-                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300 {{ $status === 'abandoned' ? 'grayscale opacity-80' : '' }}"
-                                                    alt="Portada de {{ $game->name }}">
+                                                @if ($isImage)
+                                                    <div
+                                                        class="relative w-full sm:w-28 h-48 sm:h-36 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-darkbox-border bg-gray-100 dark:bg-darkbox-main">
+                                                        <img src="{{ Storage::url($activity->image_path) }}"
+                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                            alt="Captura de {{ $activity->game?->title ?? 'juego' }}" />
+                                                        @if ($activity->is_spoiler)
+                                                            <div
+                                                                class="absolute inset-0 bg-gray-950/90 backdrop-blur-xl flex items-center justify-center">
+                                                                <span
+                                                                    class="text-xs font-black uppercase tracking-widest text-white bg-cyan-600 px-3 py-1 rounded-lg">
+                                                                    Spoiler
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @else
+                                                    <img src="{{ $activity->game?->cover_url ?? 'https://via.placeholder.com/300x400' }}"
+                                                        class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+                                                        alt="Portada de {{ $activity->game?->title ?? 'juego' }}">
+                                                @endif
                                             </a>
 
                                             <div class="flex-1 flex flex-col justify-between space-y-3">
@@ -460,42 +523,39 @@
                                                     <div class="flex justify-between items-start gap-4 mb-2">
                                                         <h3
                                                             class="text-xl font-black text-gray-900 dark:text-white leading-tight">
-                                                            <a href="{{ route('games.show', $game->id) }}"
+                                                            <a href="{{ route('games.show', $activity->game?->slug) }}"
                                                                 class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
-                                                                {{ $game->name }}
+                                                                {{ $activity->game?->title ?? 'Juego' }}
                                                             </a>
                                                         </h3>
-                                                        @if ($game->pivot->rating)
-                                                            <div
-                                                                class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
-                                                                <span
-                                                                    class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">{{ $game->pivot->rating }}</span>
-                                                                <i class="fa-solid fa-star text-yellow-500 text-[10px]"
-                                                                    aria-hidden="true"></i>
-                                                            </div>
-                                                        @endif
+                                                        <div class="shrink-0 flex items-center gap-2">
+                                                            @livewire('utils.like-button', ['model' => $activity], key('profile-activity-like-' . $activity->id))
+
+                                                            @livewire('utils.report-button', ['model' => $activity], key('profile-activity-report-' . $activity->id))
+
+                                                            @if (!$isImage && $activity->rating)
+                                                                <div
+                                                                    class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
+                                                                    <span
+                                                                        class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
+                                                                        {{ $activity->rating }}
+                                                                    </span>
+                                                                    <i class="fa-solid fa-star text-yellow-500 text-xs"
+                                                                        aria-hidden="true"></i>
+                                                                </div>
+                                                            @endif
+                                                        </div>
                                                     </div>
 
-                                                    @if ($game->pivot->hours_finish + $game->pivot->hours_completed > 0)
-                                                        <div class="mb-4">
-                                                            <span
-                                                                class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border px-2 py-1 rounded-md uppercase tracking-wider">
-                                                                <i class="fa-solid fa-clock mr-1"
-                                                                    aria-hidden="true"></i>
-                                                                {{ $game->pivot->hours_finish + $game->pivot->hours_completed }}h
-                                                                registradas
-                                                            </span>
-                                                        </div>
-                                                    @endif
-
-                                                    @if ($game->pivot->review)
+                                                    @if (!$isImage)
                                                         <p
                                                             class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
-                                                            "{{ $game->pivot->review }}"
+                                                            “{{ $activity->review }}”
                                                         </p>
-                                                    @elseif($status === 'abandoned')
-                                                        <p class="text-sm text-gray-500 dark:text-gray-500 italic">No
-                                                            dejó reseña al abandonar el juego.</p>
+                                                    @else
+                                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                            Subió una captura.
+                                                        </p>
                                                     @endif
                                                 </div>
                                             </div>
@@ -503,7 +563,7 @@
                                     </article>
                                 @empty
                                     <div
-                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-3xl border border-dashed border-gray-200 dark:border-darkbox-border">
                                         <i class="fa-solid fa-history text-4xl text-gray-400 dark:text-gray-600 mb-4"
                                             aria-hidden="true"></i>
                                         <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin actividad
@@ -525,7 +585,7 @@
                                         :hours="$game->pivot->hours_finish + $game->pivot->hours_completed" />
                                 @empty
                                     <div
-                                        class="col-span-full flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        class="col-span-full flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-3xl border border-dashed border-gray-200 dark:border-darkbox-border">
                                         <i class="fa-solid fa-ghost text-4xl text-gray-400 dark:text-gray-600 mb-4"
                                             aria-hidden="true"></i>
                                         <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Biblioteca
@@ -544,7 +604,7 @@
                             <section class="flex flex-col gap-6" aria-label="Reseñas del usuario">
                                 @forelse ($reviews as $review)
                                     <article
-                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-[2rem] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-start justify-between gap-4 mb-5">
                                             <div class="min-w-0">
                                                 <h3
@@ -563,7 +623,7 @@
                                                         : null;
                                                 @endphp
                                                 <time
-                                                    class="mt-1 block text-[10px] font-bold text-gray-400 uppercase tracking-widest"
+                                                    class="mt-1 block text-xs font-bold text-gray-400 uppercase tracking-widest"
                                                     @if ($reviewUpdatedAt) datetime="{{ $reviewUpdatedAt->toISOString() }}" title="{{ $reviewUpdatedAt->translatedFormat('d M Y, H:i') }}" @endif>
                                                     Actualizado
                                                     {{ $reviewUpdatedAt ? $reviewUpdatedAt->diffForHumans() : '—' }}
@@ -573,10 +633,13 @@
                                             <div class="shrink-0 flex items-center gap-2">
                                                 @auth
                                                     @if (Auth::id() === $review->user_id)
-                                                        <livewire:utils.review-owner-actions :review="$review"
-                                                            :key="'review-owner-actions-profile-' . $review->id" />
+                                                        @livewire('utils.review-owner-actions', ['review' => $review], key('review-owner-actions-profile-' . $review->id))
                                                     @endif
                                                 @endauth
+
+                                                @livewire('utils.like-button', ['model' => $review], key('profile-review-like-' . $review->id))
+
+                                                @livewire('utils.report-button', ['model' => $review], key('profile-review-report-' . $review->id))
 
                                                 @if ($review->rating)
                                                     <div
@@ -585,7 +648,7 @@
                                                             class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
                                                             {{ $review->rating }}
                                                         </span>
-                                                        <i class="fa-solid fa-star text-yellow-500 text-[10px]"
+                                                        <i class="fa-solid fa-star text-yellow-500 text-xs"
                                                             aria-hidden="true"></i>
                                                     </div>
                                                 @endif
@@ -596,7 +659,7 @@
                                             <a href="{{ route('games.show', $review->game?->slug) }}"
                                                 class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
                                                 <img src="{{ $review->game?->cover_url ?? 'https://via.placeholder.com/300x400' }}"
-                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-[1.02] transition-transform duration-300"
+                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
                                                     alt="Portada de {{ $review->game?->title ?? 'juego' }}">
                                             </a>
 
@@ -609,7 +672,7 @@
                                     </article>
                                 @empty
                                     <div
-                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-3xl border border-dashed border-gray-200 dark:border-darkbox-border">
                                         <i class="fa-solid fa-star-half-stroke text-4xl text-gray-400 dark:text-gray-600 mb-4"
                                             aria-hidden="true"></i>
                                         <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Sin reseñas
@@ -646,7 +709,7 @@
                                                         <div
                                                             class="absolute inset-0 bg-gray-950/90 backdrop-blur-xl flex items-center justify-center">
                                                             <span
-                                                                class="text-[10px] font-black uppercase tracking-widest text-white bg-cyan-600 px-3 py-1 rounded-lg">
+                                                                class="text-xs font-black uppercase tracking-widest text-white bg-cyan-600 px-3 py-1 rounded-lg">
                                                                 Spoiler
                                                             </span>
                                                         </div>
@@ -656,8 +719,7 @@
                                                 @auth
                                                     @if (Auth::id() === $item->user_id)
                                                         <div class="absolute top-3 right-3 z-30">
-                                                            <livewire:utils.image-owner-actions :image="$item"
-                                                                :key="'image-owner-actions-profile-' . $item->id" />
+                                                            @livewire('utils.image-owner-actions', ['image' => $item], key('image-owner-actions-profile-' . $item->id))
                                                         </div>
                                                     @endif
                                                 @endauth
@@ -668,7 +730,7 @@
                                                         {{ $item->game?->title ?? 'Juego' }}
                                                     </p>
                                                     <time
-                                                        class="mt-1 block text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                                                        class="mt-1 block text-xs font-bold uppercase tracking-widest text-gray-400">
                                                         {{ $item->created_at?->diffForHumans() ?? '—' }}
                                                     </time>
                                                 </div>
@@ -677,7 +739,7 @@
                                     </div>
                                 @else
                                     <div
-                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border">
+                                        class="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-darkbox-card rounded-3xl border border-dashed border-gray-200 dark:border-darkbox-border">
                                         <div
                                             class="w-16 h-16 bg-gray-100 dark:bg-darkbox-main rounded-2xl flex items-center justify-center mb-4">
                                             <i class="fa-solid fa-image text-2xl text-gray-400 dark:text-gray-500"
@@ -698,7 +760,7 @@
                 @else
                     {{-- ESTADO VACÍO PARA PERFIL PRIVADO --}}
                     <div
-                        class="xl:col-span-12 flex flex-col items-center justify-center p-12 sm:p-20 text-center bg-gray-50 dark:bg-darkbox-card rounded-[2rem] border border-dashed border-gray-200 dark:border-darkbox-border mt-8">
+                        class="xl:col-span-12 flex flex-col items-center justify-center p-12 sm:p-20 text-center bg-gray-50 dark:bg-darkbox-card rounded-3xl border border-dashed border-gray-200 dark:border-darkbox-border mt-8">
                         <i class="fa-solid fa-lock text-5xl text-gray-400 dark:text-gray-600 mb-6"
                             aria-hidden="true"></i>
                         <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Este perfil es privado</h3>
@@ -710,7 +772,7 @@
         </div>
 
         {{-- MODALES --}}
-        <livewire:utils.review-modal />
-        <livewire:utils.image-detail-modal />
+        @livewire('utils.review-modal')
+        @livewire('utils.image-detail-modal')
     </x-slot>
 </x-miscomponentes.page-layout>

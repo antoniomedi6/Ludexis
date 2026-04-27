@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
+    use Follower;
+    use Followable;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -29,7 +33,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -204,5 +207,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $isSteamLocal = str_contains($email, 'steam@local');
 
         return (bool) ($isValid && !$isLocalDomain && !$isSteamLocal);
+    }
+
+    /* Si el usuario tiene el pefil en privado, se le pedira aprobación para seguirlo */
+    public function needsToApproveFollowRequests()
+    {
+        return (bool) $this->is_private;
     }
 }

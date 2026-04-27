@@ -18,11 +18,6 @@ class PreviewReviews extends Component
         $this->gameId = $gameId;
     }
 
-    public function loadMore()
-    {
-        $this->amount += 3;
-    }
-
     public function render()
     {
         $q = GameUser::with(['user:id,name,role,profile_photo_path', 'game:id,title,cover_url,slug'])
@@ -52,12 +47,17 @@ class PreviewReviews extends Component
         $totalCount = $q->count();
         $reviews = $q->limit($this->amount)->get();
 
-        if (Auth::check() && $this->sort === 'newest' && $this->filter === 'all') {
+        if (Auth::id() && $this->sort === 'newest' && $this->filter === 'all') {
             $reviews = $reviews->sortByDesc(function ($review) {
                 return $review->user_id === Auth::id();
             })->values();
         }
 
         return view('livewire.utils.preview-reviews', compact('reviews', 'totalCount'));
+    }
+
+    public function loadMore()
+    {
+        $this->amount += 3;
     }
 }

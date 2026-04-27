@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="flex-1 overflow-y-auto">
-                    <livewire:utils.game-registry-card :gameId="$gameId" :key="'game-registry-mobile-' . $gameId" />
+                    @livewire('utils.game-registry-card', ['gameId' => $gameId], key('game-registry-mobile-' . $gameId))
                 </div>
             </section>
         </div>

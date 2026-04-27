@@ -71,15 +71,15 @@
                                 {{-- ACCIONES --}}
                                 <div class="flex flex-wrap items-center gap-2">
                                     @if (Auth::id() === $image->user_id)
-                                        <livewire:utils.image-owner-actions :image="$image" :key="'image-owner-actions-detail-' . $image->id" />
+                                        @livewire('utils.image-owner-actions', ['image' => $image], key('image-owner-actions-detail-' . $image->id))
                                     @endif
 
                                     <div class="scale-90 origin-left">
-                                        <livewire:utils.like-button :model="$image" :key="'like-detail-' . $image->id" />
+                                        @livewire('utils.like-button', ['model' => $image], key('like-detail-' . $image->id))
                                     </div>
 
                                     <div class="scale-90 origin-left">
-                                        <livewire:utils.report-button :model="$image" :key="'report-detail-' . $image->id" />
+                                        @livewire('utils.report-button', ['model' => $image], key('report-detail-' . $image->id))
                                     </div>
                                 </div>
 
