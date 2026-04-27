@@ -53,9 +53,9 @@
                     </span>
 
                     <nav aria-labelledby="nav-mi-espacio"
-                        class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
+                        class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-xl border border-gray-100 dark:border-darkbox-border">
                         <a href="{{ route('dashboard') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->routeIs('dashboard') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->routeIs('dashboard') ? "'page'" : 'false' }}">
                             <x-icons.home class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -64,7 +64,7 @@
                         </a>
 
                         <a href="{{ route('library') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('myLibrary') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('myLibrary') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('myLibrary') ? "'page'" : 'false' }}">
                             <x-icons.gamepad class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -73,7 +73,7 @@
                         </a>
 
                         <a href="{{ route('userLists') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('userLists*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('userLists*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('userLists*') ? "'page'" : 'false' }}">
                             <x-icons.list class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -83,16 +83,16 @@
 
 
                         <a href="{{ route('timeline') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('timeline') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('timeline') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('timeline') ? "'page'" : 'false' }}">
                             <x-icons.timeline class="size-4 md:size-5 shrink-0" aria-hidden="true" />
-                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Timeline</span>
-                            <span class="sr-only" x-show="!showNav">Timeline</span>
+                            <span x-show="showNav" x-cloak class="whitespace-nowrap">Tu Cronología</span>
+                            <span class="sr-only" x-show="!showNav">Tu Cronología</span>
                         </a>
 
                         <a href="{{ route('allGames') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('allGames', 'showGame.*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('allGames', 'showGame.*') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('allGames', 'showGame.*') ? "'page'" : 'false' }}">
                             <x-icons.catalog class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -113,7 +113,7 @@
                     <nav aria-labelledby="nav-comunidad"
                         class="space-y-1 w-full bg-gray-50/50 dark:bg-darkbox-main/40 p-2 rounded-2xl border border-gray-100 dark:border-darkbox-border">
                         <a href="{{ route('social') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('feedSocial') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('feedSocial') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('feedSocial') ? "'page'" : 'false' }}">
                             <x-icons.social class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -122,7 +122,7 @@
                         </a>
 
                         <a href="{{ route('gallery') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center p-2 md:p-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('gallery') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
+                            class="flex items-center p-2 md:p-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 {{ request()->is('gallery') ? 'bg-white dark:bg-darkbox-card text-cyan-600 dark:text-cyan-400 shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-darkbox-card border border-transparent' }}"
                             :class="showNav ? 'gap-3 px-4' : 'justify-center'"
                             :aria-current="{{ request()->is('gallery') ? "'page'" : 'false' }}">
                             <x-icons.gallery class="size-4 md:size-5 shrink-0" aria-hidden="true" />
@@ -176,14 +176,14 @@
 
                     <div class="p-2 flex flex-col gap-1">
                         <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-user text-sm w-4 text-center" aria-hidden="true"></i>
                             {{ __('Mi Perfil') }}
                         </a>
 
                         <a href="{{ route('profile.show') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-gear text-sm w-4 text-center" aria-hidden="true"></i>
                             {{ __('Opciones') }}
@@ -192,7 +192,7 @@
                         <form method="POST" action="{{ route('logout') }}" class="w-full">
                             @csrf
                             <button type="submit"
-                                class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                                class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
                                 role="menuitem">
                                 <i class="fa-solid fa-right-from-bracket text-sm w-4 text-center" aria-hidden="true"></i>
                                 {{ __('Cerrar Sesión') }}
@@ -217,7 +217,7 @@
                                 {{ Auth::user()->name }}
                             </h2>
                             <span class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
-                                {{ Auth::user()->role ?? 'Default' }}
+                                {{ Auth::user()->roleLabel() }}
                             </span>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                         <div
                             class="w-full bg-gray-200 dark:bg-darkbox-main rounded-full h-1.5 overflow-hidden border border-transparent dark:border-darkbox-border">
                             <div class="bg-gradient-to-r from-cyan-500 to-teal-400 h-full rounded-full transition-all duration-700"
-                                style="width: {{ Auth::user()->xp ?? 45 }}%"></div>
+                                style="width: {{ Auth::user()->rank_progress_percentage }}%"></div>
                         </div>
                     </div>
                 </button>

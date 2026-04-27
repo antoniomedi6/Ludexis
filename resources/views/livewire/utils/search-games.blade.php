@@ -15,22 +15,35 @@
         {{-- BARRA DE BÚSQUEDA --}}
         <div
             class="relative bg-white dark:bg-[#0f1117] md:bg-transparent rounded-full shadow-2xl md:shadow-none p-1 md:p-0 border border-gray-200 dark:border-gray-800 md:border-transparent">
-            <i class="fa-solid fa-magnifying-glass absolute left-5 md:left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 transition-colors duration-300"
-                aria-hidden="true"></i>
-
-            <label for="search-games" class="sr-only">Buscar juegos, sagas o estudios</label>
-            <input id="search-games" type="search" wire:model.live.debounce.300ms="search" @focus="show = true"
-                @keydown.escape.window="show = false; searchOpen = false"
-                placeholder="Buscar juegos, sagas, estudios..." autocomplete="off" aria-autocomplete="list"
-                aria-controls="search-results" :aria-expanded="show.toString()" x-ref="searchInput"
-                x-effect="if(searchOpen) $nextTick(() => $refs.searchInput.focus())"
-                class="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-full pl-12 pr-12 py-2.5 text-sm focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 transition-colors duration-300 shadow-inner">
-
-            <div wire:loading wire:target="search" class="absolute right-5 md:right-4 top-1/2 -translate-y-1/2"
-                aria-live="polite">
-                <span class="sr-only">Buscando...</span>
-                <x-icons.animate-spin class="size-5" />
+            {{-- IZQUIERDA: lupa o indicador de carga --}}
+            <div class="pointer-events-none absolute left-5 md:left-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center text-gray-500 dark:text-gray-400"
+                aria-hidden="true">
+                <span wire:loading.remove wire:target="search">
+                    <i class="fa-solid fa-magnifying-glass text-sm transition-colors duration-300"></i>
+                </span>
+                <span wire:loading wire:target="search" class="contents" aria-live="polite">
+                    <span class="sr-only">Buscando...</span>
+                    <x-icons.animate-spin class="size-5 text-cyan-600 dark:text-cyan-400" />
+                </span>
             </div>
+
+            <label for="search-games" class="sr-only">Buscar juegos...</label>
+            <input id="search-games" type="text" wire:model.live.debounce.300ms="search" role="searchbox"
+                @focus="show = true" @keydown.escape.window="show = false; searchOpen = false"
+                placeholder="Buscar juegos..." autocomplete="off" aria-autocomplete="list"
+                aria-controls="search-results" :aria-expanded="show.toString()" x-ref="searchInput"
+                x-effect="if(searchOpen) $nextTick(() => $refs.searchInput.focus())" @class([
+                    'w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-full py-2.5 text-sm focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 transition-colors duration-300 shadow-inner pl-12',
+                    strlen(trim($search ?? '')) > 0 ? 'pr-12' : 'pr-4',
+                ])>
+
+            @if (strlen(trim($search ?? '')) > 0)
+                <button type="button" wire:click="$set('search', '')" wire:loading.attr="disabled" wire:target="search"
+                    class="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    aria-label="Borrar búsqueda">
+                    <i class="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
+                </button>
+            @endif
         </div>
 
         {{-- RESULTADOS DE BÚSQUEDA --}}

@@ -145,7 +145,7 @@
                                             </p>
                                             <p
                                                 class="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
-                                                {{ $report->user->role ?? 'standard' }}
+                                                {{ $report->user->roleLabel() }}
                                             </p>
                                         </div>
                                     </a>
@@ -194,7 +194,7 @@
                                                 <span
                                                     class="text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
                                                     <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i>
-                                                    {{ $target->role ?? 'standard' }}
+                                                    {{ $target->roleLabel() }}
                                                 </span>
                                                 @if ($target->banned_at)
                                                     <span

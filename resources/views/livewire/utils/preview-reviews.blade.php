@@ -70,7 +70,7 @@
                                         </h4>
                                         <span
                                             class="text-xs bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 px-1.5 py-0.5 rounded font-black uppercase tracking-widest border border-cyan-200 dark:border-cyan-800/50 shadow-sm">
-                                            {{ $item->user->role ?? 'Jugador' }}
+                                            {{ $item->user->roleLabel() }}
                                         </span>
                                         @if (Auth::check() && Auth::id() === $item->user_id)
                                             <span
@@ -216,7 +216,7 @@
                                                 </h3>
                                                 <span
                                                     class="text-xs bg-indigo-100 text-indigo-700 dark:bg-indigo-600 dark:text-white px-1.5 py-0.5 rounded font-black uppercase shadow-sm transition-colors duration-300">
-                                                    {{ $item->user->role ?? 'Jugador' }}
+                                                    {{ $item->user->roleLabel() }}
                                                 </span>
                                                 @if (Auth::check() && Auth::id() === $item->user_id)
                                                     <span

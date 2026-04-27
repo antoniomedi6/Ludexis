@@ -39,7 +39,7 @@
                                     class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg pl-9 pr-3 py-2 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-colors shadow-inner">
                             </div>
 
-                            <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar" role="group"
+                            <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar px-1" role="group"
                                 aria-labelledby="plat-heading">
                                 @foreach ($allPlatforms as $platform)
                                 <label x-show="searchPlat === '' || @js(strtolower($platform->name)).includes(searchPlat.toLowerCase())"

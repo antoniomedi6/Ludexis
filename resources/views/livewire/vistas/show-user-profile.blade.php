@@ -3,75 +3,69 @@
     {{-- CONTROLES SUPERIORES --}}
     <x-slot:aside>
         @auth
-            <div x-data="{ openOptions: false, openReport: false }" class="relative flex items-center gap-2">
-                @if (Auth::id() !== $user->id)
-                    <button type="button"
-                        class="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
-                        <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
-                    </button>
-                @else
-                    <a href="{{ route('profile.show') }}"
-                        class="px-6 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400">
-                        <i class="fa-solid fa-gear mr-2" aria-hidden="true"></i> Ajustes
-                    </a>
-                @endif
-
-                {{-- OPTIONS MENU --}}
-                <button type="button" @click="openOptions = !openOptions"
-                    class="p-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400"
-                    aria-label="Opciones del perfil" :aria-expanded="openOptions.toString()">
-                    <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
-                </button>
-
-                <div x-show="openOptions" x-cloak @click.outside="openOptions = false"
-                    class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-lg overflow-hidden z-50"
-                    role="menu" aria-label="Opciones del perfil">
-                    <div class="p-2 space-y-1">
-                        <button type="button" @click="openOptions = false; openReport = true"
-                            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                            role="menuitem">
-                            <i class="fa-solid fa-flag text-gray-400" aria-hidden="true"></i>
-                            <span>Reportar</span>
+            <div x-data="{ openReport: false }" class="relative flex flex-col items-end sm:items-start gap-3">
+                {{-- ACCIONES RÁPIDAS --}}
+                <div
+                    class="flex flex-wrap items-center justify-end sm:justify-start gap-2 rounded-2xl border border-gray-200 dark:border-darkbox-border bg-gray-50 dark:bg-darkbox-main p-2 shadow-sm">
+                    @if (Auth::id() !== $user->id)
+                        <button type="button"
+                            class="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 active:scale-95">
+                            <i class="fa-solid fa-user-plus mr-2" aria-hidden="true"></i> Seguir
                         </button>
-
-                        @if (Auth::user()->role === 'admin')
-                            <div
-                                class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
-                                <label for="role_select"
-                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
-                                    Rol de usuario
-                                </label>
-                                <select id="role_select" wire:model.live="selectedRole" wire:change="updateRole"
-                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                    <option value="standard">Standard</option>
-                                    <option value="journalist">Journalist</option>
-                                    <option value="veteran">Veteran</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                <div x-data="{ saved: false }"
-                                    x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
-                                    class="relative mt-2">
-                                    <template x-if="saved">
-                                        <div x-transition:enter="transition ease-out duration-300"
-                                            x-transition:enter-start="opacity-0 scale-50"
-                                            x-transition:enter-end="opacity-100 scale-100"
-                                            x-transition:leave="transition ease-in duration-200"
-                                            x-transition:leave-start="opacity-100 scale-100"
-                                            x-transition:leave-end="opacity-0 scale-50"
-                                            class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
-                                            role="status" aria-live="polite">
-                                            <span
-                                                class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
-                                                <x-icons.saved-animated class="size-6" />
-                                            </span>
-                                            <span>Rol actualizado.</span>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+                        <button type="button" @click="openReport = true"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-card hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
+                            <i class="fa-solid fa-flag text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
+                            Reportar
+                        </button>
+                    @else
+                        <a href="{{ route('profile.show') }}"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
+                            <i class="fa-solid fa-gear text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
+                            Ajustes
+                        </a>
+                        <span
+                            class="inline-flex max-w-32 sm:max-w-none items-center self-stretch sm:px-3 sm:py-2 pl-3 pr-1 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 border-l border-gray-200 dark:border-darkbox-border sm:pl-4 ml-0 sm:ml-1 leading-tight">
+                            Tu perfil
+                        </span>
+                    @endif
                 </div>
+
+                @if (Auth::user()->role === 'admin')
+                    <div
+                        class="w-full sm:w-auto sm:min-w-56 px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                        <label for="role_select"
+                            class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                            Rol de usuario
+                        </label>
+                        <select id="role_select" wire:model.live="selectedRole" wire:change="updateRole"
+                            class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            <option value="standard">Estándar</option>
+                            <option value="journalist">Periodista</option>
+                            <option value="veteran">Veterano</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                        <div x-data="{ saved: false }"
+                            x-on:role-updated.window="saved = true; setTimeout(() => saved = false, 1600)"
+                            class="relative mt-2">
+                            <template x-if="saved">
+                                <div x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 scale-50"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-200"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-50"
+                                    class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
+                                    role="status" aria-live="polite">
+                                    <span
+                                        class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                        <x-icons.saved-animated class="size-6" />
+                                    </span>
+                                    <span>Rol actualizado.</span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                @endif
 
                 {{-- REPORT MODAL --}}
                 <div x-show="openReport" x-cloak x-on:report-sent.window="openReport = false"
@@ -177,7 +171,7 @@
                             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-[10px] font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
                                 title="Rol Oficial">
                                 <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i>
-                                {{ $user->role ?? 'Jugador' }}
+                                {{ $user->roleLabel() }}
                             </div>
                         </div>
                     </div>

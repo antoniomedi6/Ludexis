@@ -7,7 +7,40 @@
     display: none;
 }
 
-/* SAFE AREA: padding inferior automático que el navegador añade para evitar que el contenido se tape por las notificaciones o el teclado */
-.safe-pb {
-    padding-bottom: env(safe-area-inset-bottom);
+/* Scrollbar global */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175 / 0.9) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgb(156 163 175 / 0.9);
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(34 211 238 / 0.8);
+}
+
+.dark .custom-scrollbar {
+    scrollbar-color: rgb(75 85 99 / 0.95) transparent;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgb(75 85 99 / 0.95);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(34 211 238 / 0.75);
 }

@@ -179,6 +179,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return Storage::url($this->profile_photo_path);
     }
 
+    /**
+     * Etiqueta del rol para badges y UI (español).
+     */
+    public function roleLabel(): string
+    {
+        return match ($this->role ?? '') {
+            'admin' => 'Administrador',
+            'journalist' => 'Periodista',
+            'veteran' => 'Veterano',
+            'standard' => 'Estándar',
+            'user' => 'Jugador',
+            default => 'Jugador',
+        };
+    }
+
     /* Comprueba si el email es oficial o ha sido asignado por mi */
     public function hasOfficialEmail(): bool
     {

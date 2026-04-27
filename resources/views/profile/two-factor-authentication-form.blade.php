@@ -19,7 +19,7 @@
                             aria-hidden="true"></i>{{ __('Has activado la autenticación de dos factores.') }}</span>
                 @endif
             @else
-                <span class="text-gray-900 dark:text-white"><i class="fa-solid fa-shield-halved mr-2 text-gray-400"
+                <span class="text-gray-900 dark:text-white"><i class="fa-solid fa-shield mr-2 text-gray-400"
                         aria-hidden="true"></i>{{ __('No has activado la autenticación de dos factores.') }}</span>
             @endif
         </h3>

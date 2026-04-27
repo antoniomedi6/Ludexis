@@ -16,19 +16,20 @@ class SearchGames extends Component
     {
         $games = collect();
 
-        if (strlen($this->search) >= 2) {
-            $igdbGames = IGDBGame::where('name', 'ilike', '%' . $this->search . '%')
-                ->where('game_type', 0)
-                ->orderBy('total_rating', 'desc')
-                ->select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'category'])
+        if (strlen(trim($this->search)) >= 2) {
+            $search = trim($this->search);
+
+            $igdbGames = IGDBGame::where('name', 'ilike', '%' . $search . '%')
+                ->where('total_rating', '>=', 0)
+                ->whereIn('game_type', [0, 8, 9])
+                ->whereNull('version_parent')
+                ->orderBy('first_release_date', 'desc')
+                ->select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'game_type'])
                 ->with(['cover' => ['image_id', 'url']])
                 ->limit(10)
                 ->get();
 
             $games = $igdbGames
-                ->filter(function ($igdbGame) {
-                    return in_array($igdbGame->category ?? 0, [0, 8, 9]);
-                })
                 ->take(5)
                 ->map(function ($igdbGame) {
                     $coverUrl = null;

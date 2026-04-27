@@ -48,8 +48,9 @@ class AllGames extends Component
                 'screenshots' => ['image_id']
             ])
             ->where('total_rating', '>=', $this->minRatingFilter)
-            ->where('total_rating_count', '>=', 50)
-            ->where('game_type', '=', 0);
+            //->where('total_rating_count', '>=', 50)
+            ->whereIn('game_type', [0, 8, 9])
+            ->whereNull('version_parent');
 
         if (!empty($this->platformsFilter)) {
             $platformNames = Platform::whereIn('id', $this->platformsFilter)->pluck('name')->toArray();
@@ -62,11 +63,13 @@ class AllGames extends Component
         }
 
         if (!empty($this->search)) {
-            $q->search($this->search);
-        } else {
-            $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
-            $q->orderBy($sortField, 'desc');
+            $search = trim($this->search);
+
+            $q->where('name', 'ilike', '%' . $search . '%');
         }
+
+        $sortField = $this->orderBy === 'rating' ? 'total_rating' : $this->orderBy;
+        $q->orderBy($sortField, 'desc');
 
         $total = (clone $q)->count();
 

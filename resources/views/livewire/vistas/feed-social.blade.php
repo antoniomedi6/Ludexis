@@ -85,7 +85,7 @@
                                             @if ($item->user->role && $item->user->role !== 'user')
                                                 <span
                                                     class="text-xs bg-gray-100 dark:bg-darkbox-main text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkbox-border px-2 py-0.5 rounded-md font-bold uppercase tracking-widest">
-                                                    {{ $item->user->role }}
+                                                    {{ $item->user->roleLabel() }}
                                                 </span>
                                             @endif
                                         </div>
