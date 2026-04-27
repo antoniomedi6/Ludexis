@@ -74,20 +74,9 @@
 
                 @if ($userReviews->isEmpty())
                     {{-- SIN RESULTADOS --}}
-                    <div class="flex flex-col items-center justify-center py-24 px-6 border-2 border-dashed border-gray-200 dark:border-darkbox-border rounded-[2rem] bg-gray-50/50 dark:bg-darkbox-card/20 text-center"
-                        aria-live="polite">
-                        <div class="mb-6 bg-white dark:bg-darkbox-main w-24 h-24 flex items-center justify-center rounded-full shadow-sm ring-1 ring-gray-100 dark:ring-darkbox-border"
-                            aria-hidden="true">
-                            <i class="fa-solid fa-comment-dots text-4xl text-gray-300 dark:text-gray-600"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">
-                            El feed está muy tranquilo
-                        </h3>
-                        <p class="text-base text-gray-500 dark:text-gray-400 font-medium max-w-md mx-auto">
-                            Sé la primera persona en romper el hielo compartiendo tu opinión sobre el último juego que
-                            has completado.
-                        </p>
-                    </div>
+                    <x-miscomponentes.empty-state title="El feed está muy tranquilo"
+                        content="Sé la primera persona en romper el hielo compartiendo tu opinión sobre el último juego que has completado."
+                        icon="fa-solid fa-comment-dots" aria-live="polite" />
                 @else
                     <div class="flex flex-col gap-6" role="feed" aria-label="Feed de reseñas" aria-busy="false">
 

@@ -150,29 +150,11 @@
                                 @endif
                             </div>
 
-                            {{-- Puntuación y Plataforma --}}
                             <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                                @php
-                                    $rating_5 = $rating / 2;
-                                    $fullStars = floor($rating_5);
-                                    $hasHalf = $rating_5 - $fullStars >= 0.5;
-                                    $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
-                                @endphp
-                                <div class="flex gap-0.5 text-cyan-500 dark:text-cyan-400 drop-shadow-md"
-                                    aria-label="Mi puntuación: {{ $rating_5 }} estrellas">
-                                    @for ($i = 0; $i < $fullStars; $i++)
-                                        <x-icons.star class="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-current"
-                                            aria-hidden="true" />
-                                    @endfor
-                                    @if ($hasHalf)
-                                        <x-icons.star half class="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-current"
-                                            aria-hidden="true" />
-                                    @endif
-                                    @for ($i = 0; $i < $emptyStars; $i++)
-                                        <x-icons.star class="w-3 sm:w-3.5 h-3 sm:h-3.5 opacity-30 fill-current"
-                                            aria-hidden="true" />
-                                    @endfor
-                                </div>
+                                <x-miscomponentes.star-rating :value10="$rating"
+                                    size-class="w-3 sm:w-3.5 h-3 sm:h-3.5"
+                                    class="text-cyan-500 dark:text-cyan-400 drop-shadow-md"
+                                    :label=\"'Mi puntuación: ' . number_format(($rating ?? 0) / 2, 1) . ' sobre 5'\" />
                                 <span
                                     class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                                     PC
@@ -205,18 +187,10 @@
 
         {{-- ESTADO VACÍO --}}
     @else
-        <div class="flex flex-col items-center justify-center py-20 px-6 text-center w-full" role="status">
-            <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 border border-gray-200 dark:border-gray-700 shadow-sm"
-                aria-hidden="true">
-                <i class="fa-solid fa-gamepad text-4xl text-gray-400 dark:text-gray-500"></i>
-            </div>
-            <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">
-                {{ $filterBy === '' ? 'Tu biblioteca está vacía' : 'No hay juegos en este estado' }}
-            </h3>
-            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                {{ $filterBy === '' ? 'Explora el catálogo y añade juegos a tu registro para empezar a llevar el control de tus partidas.' : 'Intenta seleccionar otro filtro para ver tu colección.' }}
-            </p>
-        </div>
+        <x-miscomponentes.empty-state
+            :title="$filterBy === '' ? 'Tu biblioteca está vacía' : 'No hay juegos en este estado'"
+            :content="$filterBy === '' ? 'Explora el catálogo y añade juegos a tu registro para empezar a llevar el control de tus partidas.' : 'Intenta seleccionar otro filtro para ver tu colección.'"
+            icon="fa-solid fa-gamepad" />
     @endif
 
     <x-miscomponentes.loading-spinner variant="modal" wire:target="search, orderBy, filterBy">

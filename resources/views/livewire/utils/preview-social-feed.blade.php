@@ -32,25 +32,8 @@
                                     class="text-gray-900 dark:text-white font-bold transition-colors duration-300 hover:text-cyan-500">{{ $activity->game->title }}</a>
                             </p>
 
-                            @php
-                                $rating_5 = $activity->rating / 2;
-                                $fullStars = floor($rating_5);
-                                $hasHalf = $rating_5 - $fullStars >= 0.5;
-                                $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
-                            @endphp
-
-                            <div class="flex gap-0.5 text-cyan-500 mt-1.5 mb-2"
-                                aria-label="Puntuación: {{ $rating_5 }} de 5 estrellas">
-                                @for ($i = 0; $i < $fullStars; $i++)
-                                    <x-icons.star class="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                                @endfor
-                                @if ($hasHalf)
-                                    <x-icons.star half class="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                                @endif
-                                @for ($i = 0; $i < $emptyStars; $i++)
-                                    <x-icons.star class="w-3.5 h-3.5 opacity-30 fill-current" aria-hidden="true" />
-                                @endfor
-                            </div>
+                            <x-miscomponentes.star-rating :value10="$activity->rating"
+                                class="text-cyan-500 mt-1.5 mb-2" />
 
                             @if ($activity->review)
                                 <blockquote

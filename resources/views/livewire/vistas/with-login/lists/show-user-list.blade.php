@@ -128,24 +128,8 @@
 
                                 {{-- VALORACION Y PLATAFORMA --}}
                                 <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end z-10">
-                                    <div class="flex gap-0.5 text-cyan-500 dark:text-cyan-400 drop-shadow-md">
-                                        @php
-                                            $rating_5 = $rating / 2;
-                                            $fullStars = floor($rating_5);
-                                            $hasHalf = $rating_5 - $fullStars >= 0.5;
-                                            $emptyStars = 5 - $fullStars - ($hasHalf ? 1 : 0);
-                                        @endphp
-
-                                        @for ($i = 0; $i < $fullStars; $i++)
-                                            <x-icons.star class="w-3.5 h-3.5 fill-current" />
-                                        @endfor
-                                        @if ($hasHalf)
-                                            <x-icons.star half class="w-3.5 h-3.5 fill-current" />
-                                        @endif
-                                        @for ($i = 0; $i < $emptyStars; $i++)
-                                            <x-icons.star class="w-3.5 h-3.5 opacity-30 fill-current" />
-                                        @endfor
-                                    </div>
+                                    <x-miscomponentes.star-rating :value10="$rating"
+                                        class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" />
                                     <span
                                         class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                                         PC

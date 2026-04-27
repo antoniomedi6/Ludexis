@@ -17,29 +17,19 @@
 
             @if ($totalCount > 0 || $filter !== 'all')
                 <div class="flex flex-wrap gap-2">
-                    <div class="relative group">
-                        <select wire:model.live="filter"
-                            class="appearance-none text-xs font-bold bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full">
-                            <option value="all">Todas las notas</option>
-                            <option value="positive">Positivas (7-10)</option>
-                            <option value="mixed">Mixtas (4-6)</option>
-                            <option value="negative">Negativas (1-3)</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 group-hover:text-cyan-500 transition-colors pointer-events-none"
-                            aria-hidden="true"></i>
-                    </div>
+                    <x-miscomponentes.filter-select wire:model.live="filter" accent="cyan">
+                        <option value="all">Todas las notas</option>
+                        <option value="positive">Positivas (7-10)</option>
+                        <option value="mixed">Mixtas (4-6)</option>
+                        <option value="negative">Negativas (1-3)</option>
+                    </x-miscomponentes.filter-select>
 
-                    <div class="relative group">
-                        <select wire:model.live="sort"
-                            class="appearance-none text-xs font-bold bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full">
-                            <option value="newest">Más recientes</option>
-                            <option value="highest">Mayor nota</option>
-                            <option value="lowest">Menor nota</option>
-                            <option value="oldest">Más antiguas</option>
-                        </select>
-                        <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 group-hover:text-cyan-500 transition-colors pointer-events-none"
-                            aria-hidden="true"></i>
-                    </div>
+                    <x-miscomponentes.filter-select wire:model.live="sort" accent="cyan">
+                        <option value="newest">Más recientes</option>
+                        <option value="highest">Mayor nota</option>
+                        <option value="lowest">Menor nota</option>
+                        <option value="oldest">Más antiguas</option>
+                    </x-miscomponentes.filter-select>
                 </div>
             @endif
         </div>
@@ -151,29 +141,19 @@
 
                 @if ($totalCount > 0 || $filter !== 'all')
                     <div class="flex flex-wrap gap-2">
-                        <div class="relative group">
-                            <select wire:model.live="filter"
-                                class="appearance-none text-xs font-bold bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full">
-                                <option value="all">Todas las notas</option>
-                                <option value="positive">Positivas (7-10)</option>
-                                <option value="mixed">Mixtas (4-6)</option>
-                                <option value="negative">Negativas (1-3)</option>
-                            </select>
-                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 group-hover:text-indigo-500 transition-colors pointer-events-none"
-                                aria-hidden="true"></i>
-                        </div>
+                        <x-miscomponentes.filter-select wire:model.live="filter" accent="indigo">
+                            <option value="all">Todas las notas</option>
+                            <option value="positive">Positivas (7-10)</option>
+                            <option value="mixed">Mixtas (4-6)</option>
+                            <option value="negative">Negativas (1-3)</option>
+                        </x-miscomponentes.filter-select>
 
-                        <div class="relative group">
-                            <select wire:model.live="sort"
-                                class="appearance-none text-xs font-bold bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full">
-                                <option value="newest">Más recientes</option>
-                                <option value="highest">Mayor nota</option>
-                                <option value="lowest">Menor nota</option>
-                                <option value="oldest">Más antiguas</option>
-                            </select>
-                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 group-hover:text-indigo-500 transition-colors pointer-events-none"
-                                aria-hidden="true"></i>
-                        </div>
+                        <x-miscomponentes.filter-select wire:model.live="sort" accent="indigo">
+                            <option value="newest">Más recientes</option>
+                            <option value="highest">Mayor nota</option>
+                            <option value="lowest">Menor nota</option>
+                            <option value="oldest">Más antiguas</option>
+                        </x-miscomponentes.filter-select>
                     </div>
                 @endif
             </div>

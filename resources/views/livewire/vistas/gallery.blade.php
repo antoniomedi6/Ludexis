@@ -208,17 +208,9 @@
                     <div x-intersect="$wire.loadMore()" class="h-10 w-full mt-4" aria-hidden="true"></div>
                 @else
                     {{-- ESTADO VACÍO --}}
-                    <div class="flex flex-col items-center justify-center py-32 border-2 border-dashed border-gray-300 dark:border-gray-800 rounded-3xl bg-white/50 dark:bg-gray-900/50"
-                        role="status">
-                        <div class="mb-6 bg-gray-100 dark:bg-gray-800/50 w-24 h-24 flex items-center justify-center rounded-full border border-gray-200 transition-colors shadow-sm"
-                            aria-hidden="true">
-                            <i class="fa-solid fa-image text-4xl text-gray-400 transition-colors"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">No hay capturas</h3>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm font-medium max-w-md mx-auto text-center">
-                            Aún no se han subido imágenes. ¡Anímate a ser el primero en compartir tus mejores momentos!
-                        </p>
-                    </div>
+                    <x-miscomponentes.empty-state title="No hay capturas"
+                        content="Aún no se han subido imágenes. ¡Anímate a ser el primero en compartir tus mejores momentos!"
+                        icon="fa-solid fa-image" />
                 @endif
             </div>
 

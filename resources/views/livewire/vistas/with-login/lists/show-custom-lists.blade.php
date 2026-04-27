@@ -207,21 +207,16 @@
             </div>
         @else
             {{-- ESTADO VACÍO --}}
-            <div class="flex flex-col items-center justify-center py-32 px-6 border-2 border-dashed border-gray-300 dark:border-gray-800 rounded-3xl bg-white/50 dark:bg-gray-900/50 transition-colors"
-                role="status">
-                <div class="mb-6 bg-gray-100 dark:bg-gray-800/50 w-24 h-24 flex items-center justify-center rounded-full border border-gray-200 transition-colors shadow-sm"
-                    aria-hidden="true">
-                    <i class="fa-solid fa-magnifying-glass text-4xl text-gray-400 transition-colors"></i>
-                </div>
-                <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">No hay resultados</h3>
-                <p class="text-gray-600 dark:text-gray-500 text-sm font-medium text-center max-w-md">No hemos
-                    encontrado
-                    ninguna colección que coincida con tu búsqueda.</p>
-                <button type="button" @click="$wire.set('search', '')"
-                    class="mt-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-cyan-600 font-black px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                    <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Limpiar Búsqueda
-                </button>
-            </div>
+            <x-miscomponentes.empty-state title="No hay resultados"
+                content="No hemos encontrado ninguna colección que coincida con tu búsqueda."
+                icon="fa-solid fa-magnifying-glass">
+                <x-slot name="actions">
+                    <button type="button" @click="$wire.set('search', '')"
+                        class="mt-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-cyan-600 font-black px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Limpiar Búsqueda
+                    </button>
+                </x-slot>
+            </x-miscomponentes.empty-state>
         @endif
 
         <x-miscomponentes.loading-spinner variant="modal" wire:target="search, orderBy">
