@@ -1,7 +1,7 @@
 <?php
 
 // use App\Http\Controllers\RoadmapController;
-// use App\Livewire\Playground;
+use App\Livewire\Playground;
 use App\Http\Controllers\Auth\DiscordAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\SteamAuthController;

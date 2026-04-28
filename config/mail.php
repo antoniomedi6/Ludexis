@@ -115,15 +115,4 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Global "To" Address (Interceptador Sandbox) Para no tener que comprar un dominio
-    |--------------------------------------------------------------------------
-    */
-
-    'always_to' => [
-        'address' => env('MAIL_ALWAYS_TO_ADDRESS', 'hello@example.com'),
-        'name' => 'Ludexis',
-    ],
-
 ];

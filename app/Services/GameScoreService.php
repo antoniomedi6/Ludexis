@@ -8,7 +8,7 @@ use App\Models\User;
 
 class GameScoreService
 {
-    private const IGDB_WEIGHT = 3.0;
+    private const DEFAULT_IGDB_WEIGHT = 10.0;
 
     private const ROLE_WEIGHTS = [
         'admin' => 3.0,
@@ -37,7 +37,8 @@ class GameScoreService
         $igdbRating = $game->igdb_rating ?? $game->rating ?? null;
         $igdbRating = $igdbRating === null ? null : (float) $igdbRating;
 
-        $igdbWeight = self::IGDB_WEIGHT;
+        // El peso de IGDB de la puntuación que nos devuelve IGDB
+        $igdbWeight = max(0.0, (float) config('igdb.game_score.igdb_weight', self::DEFAULT_IGDB_WEIGHT));
 
         // Solo contamos registros con rating del usuario
         $userRatings = GameUser::query()

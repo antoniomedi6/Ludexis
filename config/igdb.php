@@ -38,4 +38,12 @@ return [
      * functionality.
      */
     'webhook_secret' => env('IGDB_WEBHOOK_SECRET'),
+
+    /**
+     * Configuración de score final del juego.
+     */
+    'game_score' => [
+        // Peso base de IGDB frente a ratings de usuarios (a mayor valor, más estable ante pocos votos).
+        'igdb_weight' => (float) env('GAME_SCORE_IGDB_WEIGHT', 10),
+    ],
 ];

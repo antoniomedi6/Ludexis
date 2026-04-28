@@ -51,13 +51,8 @@
                             Total</span>
                     </a>
 
-                    <button aria-label="Seleccionar un juego aleatorio"
-                        class="bg-gradient-to-br from-cyan-50 dark:from-cyan-900/30 to-white dark:to-gray-900 border border-cyan-200 dark:border-cyan-800/50 rounded-3xl p-6 flex flex-col justify-center items-center text-center transition-colors duration-300 hover:from-cyan-100 dark:hover:from-cyan-800/40 shadow-xl dark:shadow-[0_0_20px_rgba(6,182,212,0.1)] focus:outline-none focus:ring-2 focus:ring-cyan-500 group">
-                        <i class="fa-solid fa-dice text-3xl text-cyan-600 dark:text-cyan-500 mb-2 group-hover:rotate-12 transition-transform duration-300"
-                            aria-hidden="true"></i>
-                        <span
-                            class="text-xs font-black uppercase tracking-widest text-cyan-700 dark:text-cyan-400 transition-colors duration-300">Juego
-                            Aleatorio</span>
+
+                    @livewire('utils.random-game-picker-modal')
                     </button>
                 </section>
 

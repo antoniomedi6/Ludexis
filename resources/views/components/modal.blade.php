@@ -37,9 +37,9 @@
                 class="relative z-10 max-h-screen w-full overflow-x-hidden overflow-y-auto rounded-[2.5rem] border border-gray-200 bg-white shadow-2xl transition-all dark:border-gray-800 dark:bg-[#151821] sm:mx-auto {{ $maxWidth }}"
                 role="dialog" aria-modal="true">
 
-                <button type="button" @click="show = false"
-                    class="absolute right-6 top-6 z-20 text-gray-400 transition-colors duration-300 hover:text-gray-900 dark:hover:text-white">
-                    <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
+                <button type="button" @click="show = false" aria-label="Cerrar modal"
+                    class="absolute right-6 top-6 z-20 flex w-8 h-8 items-center justify-center rounded-full text-gray-400 transition-colors duration-300 hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:hover:bg-gray-800 dark:hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
                 </button>
 
                 <div class="p-8 md:p-10">
