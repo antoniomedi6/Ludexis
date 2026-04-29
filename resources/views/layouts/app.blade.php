@@ -17,10 +17,10 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-white dark:bg-darkbox-main overflow-hidden text-gray-900 dark:text-gray-100">
+<body class="font-sans antialiased bg-lightbox-main dark:bg-darkbox-main overflow-hidden text-lightbox-text dark:text-gray-100">
     <x-banner />
 
-    <div class="flex h-screen w-full bg-white dark:bg-darkbox-main overflow-hidden">
+    <div class="flex h-screen w-full bg-lightbox-main dark:bg-darkbox-main overflow-hidden">
 
         @auth
             <x-miscomponentes.nav-aside />

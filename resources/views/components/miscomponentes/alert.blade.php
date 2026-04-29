@@ -19,8 +19,8 @@
             x-transition:leave-end="opacity-0"
             class="relative p-4 rounded-2xl shadow-2xl border backdrop-blur-xl flex items-center gap-3 transition-colors duration-300"
             :class="{
-                'bg-white/90 dark:bg-[#151821]/90 border-cyan-500/50 text-gray-900 dark:text-white': type === 'success',
-                'bg-white/90 dark:bg-[#151821]/90 border-red-500/50 text-gray-900 dark:text-white': type === 'error'
+                'bg-lightbox-card/90 dark:bg-darkbox-card/90 border-cyan-500/50 text-gray-900 dark:text-white': type === 'success',
+                'bg-lightbox-card/90 dark:bg-darkbox-card/90 border-red-500/50 text-gray-900 dark:text-white': type === 'error'
             }">
 
             <div class="flex-shrink-0">

@@ -19,8 +19,8 @@
     @livewireStyles
 </head>
 
-<body class="bg-white dark:bg-darkbox-main">
-    <div class="font-sans text-gray-900 dark:text-gray-100 antialiased min-h-screen">
+<body class="bg-lightbox-main dark:bg-darkbox-main">
+    <div class="font-sans text-lightbox-text dark:text-gray-100 antialiased min-h-screen">
         {{ $slot }}
     </div>
 

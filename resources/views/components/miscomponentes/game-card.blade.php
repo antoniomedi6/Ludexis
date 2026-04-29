@@ -6,12 +6,12 @@
 @endphp
 
 <div
-    class="relative group rounded-3xl overflow-hidden bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl dark:shadow-none hover:border-cyan-300 dark:hover:border-cyan-500/50 transition-all duration-500 flex flex-col h-full {{ $isAbandoned || $isPending ? 'opacity-80 hover:opacity-100' : '' }}">
+    class="relative group rounded-3xl overflow-hidden bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border shadow-sm hover:shadow-xl dark:shadow-none hover:border-cyan-300 dark:hover:border-cyan-500/50 transition-all duration-500 flex flex-col h-full {{ $isAbandoned || $isPending ? 'opacity-80 hover:opacity-100' : '' }}">
 
     <a href="{{ route('games.show', $game->slug) }}" wire:navigate class="z-10 flex flex-col flex-1 w-full">
 
         <div
-            class="relative aspect-[4/3] w-full overflow-hidden shrink-0 border-b border-gray-200 dark:border-gray-800 bg-gray-900">
+            class="relative aspect-[4/3] w-full overflow-hidden shrink-0 border-b border-lightbox-border dark:border-darkbox-border bg-gray-900">
             <img src="{{ $game->cover_url }}"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 {{ $isAbandoned ? 'filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100' : '' }}"
                 loading="lazy" alt="Portada de {{ $game->title }}" />
@@ -63,7 +63,7 @@
                 <x-miscomponentes.star-rating :value10="$rating"
                     class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" />
                 <span
-                    class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
+                    class="bg-lightbox-card/90 dark:bg-darkbox-card/90 backdrop-blur-md text-gray-900 dark:text-white border border-lightbox-border dark:border-darkbox-border px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                     PC
                 </span>
             </div>

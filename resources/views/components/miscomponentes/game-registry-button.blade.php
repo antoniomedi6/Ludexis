@@ -18,14 +18,14 @@
                 aria-hidden="true"></div>
 
             <section
-                class="absolute inset-0 bg-white dark:bg-darkbox-card shadow-2xl p-4 safe-pb flex flex-col"
+                class="absolute inset-0 bg-lightbox-main dark:bg-darkbox-card shadow-2xl p-4 safe-pb flex flex-col"
                 @click.stop aria-label="Panel de registro de partida">
                 <div class="flex items-center justify-between gap-4 mb-4">
                     <h2 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest">
                         Registro
                     </h2>
                     <button type="button" @click="openRegistry = false"
-                        class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-main text-gray-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                        class="w-10 h-10 flex items-center justify-center rounded-xl border border-lightbox-border dark:border-darkbox-border bg-lightbox-card dark:bg-darkbox-main text-gray-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
                         aria-label="Cerrar panel de registro">
                         <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
                     </button>

@@ -13,7 +13,7 @@
 <div class="relative group">
     <select
         {{ $attributes->class(
-            'appearance-none text-xs font-bold bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full ' .
+            'appearance-none text-xs font-bold bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border rounded-xl pl-4 pr-9 py-2 text-gray-700 dark:text-gray-300 focus:ring-2 shadow-sm transition-colors duration-300 outline-none cursor-pointer w-full ' .
                 $focusRing,
         ) }}>
         {{ $slot }}

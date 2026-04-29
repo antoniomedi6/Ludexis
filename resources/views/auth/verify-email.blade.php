@@ -1,8 +1,8 @@
 <x-guest-layout>
     <div
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-50 dark:bg-[#0f1117] transition-colors duration-300">
+        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-lightbox-main dark:bg-darkbox-main transition-colors duration-300">
         <div
-            class="w-full sm:max-w-md mt-6 px-8 py-10 bg-white dark:bg-[#151821] border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden rounded-[2rem] transition-colors duration-300 text-center">
+            class="w-full sm:max-w-md mt-6 px-8 py-10 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border shadow-xl overflow-hidden rounded-[2rem] transition-colors duration-300 text-center">
 
             <div
                 class="w-20 h-20 mx-auto bg-cyan-50 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mb-6 border border-cyan-100 dark:border-cyan-800/50">
@@ -36,7 +36,7 @@
                 </form>
 
                 <div
-                    class="flex items-center justify-center mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 transition-colors duration-300">
+                    class="flex items-center justify-center mt-4 pt-4 border-t border-lightbox-border dark:border-darkbox-border transition-colors duration-300">
                     {{--                     <a href="{{ route('profile.show') }}"
                         class="text-xs font-bold text-gray-500 hover:text-cyan-600 dark:hover:text-cyan-400 uppercase tracking-wider transition-colors duration-300">
                         {{ __('Edit Profile') }}

@@ -14,7 +14,7 @@
 
         {{-- BARRA DE BÚSQUEDA --}}
         <div
-            class="relative bg-white dark:bg-[#0f1117] md:bg-transparent rounded-full shadow-2xl md:shadow-none p-1 md:p-0 border border-gray-200 dark:border-gray-800 md:border-transparent">
+            class="relative bg-lightbox-card dark:bg-darkbox-main md:bg-transparent rounded-full shadow-2xl md:shadow-none p-1 md:p-0 border border-lightbox-border dark:border-darkbox-border md:border-transparent">
             {{-- IZQUIERDA: lupa o indicador de carga --}}
             <div class="pointer-events-none absolute left-5 md:left-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center text-gray-500 dark:text-gray-400"
                 aria-hidden="true">
@@ -50,7 +50,7 @@
         @if (count($games) > 0)
             <div x-show="show" x-transition.opacity.duration.200ms style="display: none;" id="search-results"
                 role="listbox"
-                class="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-96 overflow-y-auto custom-scrollbar">
+                class="absolute left-0 right-0 top-full mt-2 bg-lightbox-card dark:bg-gray-800 border border-lightbox-border dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-96 overflow-y-auto custom-scrollbar">
 
                 @foreach ($games as $item)
                     <button type="button" wire:click="addToDb('{{ $item->slug }}')" role="option"
@@ -80,7 +80,7 @@
                 @endforeach
 
                 <div
-                    class="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-100 dark:border-gray-700 text-center shrink-0">
+                    class="p-3 bg-lightbox-soft/50 dark:bg-gray-900 border-t border-lightbox-border dark:border-gray-700 text-center shrink-0">
                     <a href="/allGames?search={{ urlencode($search) }}" wire:navigate
                         class="text-xs font-black text-cyan-500 hover:text-cyan-400 focus:outline-none focus:underline transition-colors uppercase tracking-widest block w-full py-1">
                         Ver todos los resultados para "{{ $search }}"
@@ -91,7 +91,7 @@
             {{-- ESTADO VACÍO --}}
         @elseif(strlen($search) >= 2)
             <div x-show="show" x-transition.opacity.duration.200ms style="display: none;" role="status"
-                class="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden p-6 text-center">
+                class="absolute left-0 right-0 top-full mt-2 bg-lightbox-card dark:bg-gray-800 border border-lightbox-border dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden p-6 text-center">
                 <i class="fa-solid fa-ghost text-3xl text-gray-600 mb-3 block" aria-hidden="true"></i>
                 <span class="text-sm font-bold text-gray-500 dark:text-gray-400">
                     No se encontraron resultados para <span class="text-cyan-500">"{{ $search }}"</span>

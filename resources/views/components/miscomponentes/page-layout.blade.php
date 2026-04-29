@@ -1,7 +1,7 @@
 @props(['title1' => null, 'title2' => null, 'subtitle' => null, 'fullWidth' => false])
 
 <div
-    class="bg-gray-50 dark:bg-[#0f1117] text-gray-900 dark:text-gray-100 font-sans min-h-screen flex selection:bg-cyan-500 selection:text-white transition-colors duration-300">
+    class="bg-lightbox-main dark:bg-darkbox-main text-lightbox-text dark:text-gray-100 font-sans min-h-screen flex selection:bg-cyan-500 selection:text-white transition-colors duration-300">
     <div class="flex-1 flex flex-col h-full w-full">
         <x-miscomponentes.search-header />
 

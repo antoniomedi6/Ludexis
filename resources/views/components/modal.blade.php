@@ -34,7 +34,7 @@
                 x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                 x-transition:leave-end="opacity-0 scale-90 translate-y-4"
-                class="relative z-10 max-h-screen w-full overflow-x-hidden overflow-y-auto rounded-[2.5rem] border border-gray-200 bg-white shadow-2xl transition-all dark:border-gray-800 dark:bg-[#151821] sm:mx-auto {{ $maxWidth }}"
+                class="relative z-10 max-h-screen w-full overflow-x-hidden overflow-y-auto rounded-[2.5rem] border border-lightbox-border bg-lightbox-card shadow-2xl transition-all dark:border-darkbox-border dark:bg-darkbox-card sm:mx-auto {{ $maxWidth }}"
                 role="dialog" aria-modal="true">
 
                 <button type="button" @click="show = false" aria-label="Cerrar modal"

@@ -25,8 +25,13 @@ export default {
                     card: "#111827", // Tarjetas
                     border: "#1F2937", // Bordes
                 },
-                light: {
-                    text: "#F3F4F6", // Textos principales
+                lightbox: {
+                    main: "#F3F7FB", // Fondo Principal (claro, frío)
+                    card: "#F9FBFD", // Tarjetas (claro, no blanco puro)
+                    border: "#D7E3EF", // Bordes (claro, frío)
+                    muted: "#52637A", // Texto secundario (claro)
+                    text: "#0B1220", // Texto principal (claro)
+                    soft: "#E8F4FA", // Superficies suaves (claro, tintado hacia brand)
                 },
             },
         },
