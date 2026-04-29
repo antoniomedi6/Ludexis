@@ -8,7 +8,7 @@
                 <div class="relative" x-data="{ filtersOpen: false }">
                     <button @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm tracking-widest font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm font-black flex items-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-600 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
@@ -42,7 +42,8 @@
                             <div class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar px-1" role="group"
                                 aria-labelledby="plat-heading">
                                 @foreach ($allPlatforms as $platform)
-                                <label x-show="searchPlat === '' || @js(strtolower($platform->name)).includes(searchPlat.toLowerCase())"
+                                    <label
+                                        x-show="searchPlat === '' || @js(strtolower($platform->name)).includes(searchPlat.toLowerCase())"
                                         class="flex items-center gap-2.5 cursor-pointer group">
                                         <input type="checkbox" value="{{ $platform->id }}"
                                             wire:model.live="platformsFilter"
@@ -195,7 +196,8 @@
             @else
                 {{-- ESTADO VACÍO --}}
                 <x-miscomponentes.empty-state title="No hay resultados"
-                    content="Intenta limpiar los filtros para encontrar el juego que buscas." icon="fa-solid fa-magnifying-glass">
+                    content="Intenta limpiar los filtros para encontrar el juego que buscas."
+                    icon="fa-solid fa-magnifying-glass">
                     <x-slot name="actions">
                         <button wire:click="clearFilters" type="button"
                             class="mt-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-cyan-600 font-black px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-cyan-500">

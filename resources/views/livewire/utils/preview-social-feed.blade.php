@@ -16,7 +16,6 @@
             @forelse ($activities as $activity)
 
                 @if ($activity->type === 'review')
-                    {{-- ACTIVITY: REVIEW --}}
                     {{-- ACTIVIDAD: RESEÑA --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
@@ -32,8 +31,7 @@
                                     class="text-gray-900 dark:text-white font-bold transition-colors duration-300 hover:text-cyan-500">{{ $activity->game->title }}</a>
                             </p>
 
-                            <x-miscomponentes.star-rating :value10="$activity->rating"
-                                class="text-cyan-500 mt-1.5 mb-2" />
+                            <x-miscomponentes.star-rating :value10="$activity->rating" class="text-cyan-500 mt-1.5 mb-2" />
 
                             @if ($activity->review)
                                 <blockquote
@@ -95,15 +93,16 @@
                                 </a>.
                             </p>
 
-                            <div x-data @click="$dispatch('open-image-detail', { imageId: {{ $activity->id }} })"
+                            <button type="button" x-data
+                                @click="$dispatch('open-image-detail', { imageId: {{ $activity->id }} })"
                                 @keydown.enter="$dispatch('open-image-detail', { imageId: {{ $activity->id }} })"
                                 class="mt-3 relative rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 aspect-video cursor-pointer transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 group"
-                                tabindex="0" role="button" aria-label="Ver captura en grande">
+                                aria-label="Ver captura en grande">
                                 <img src="{{ Storage::url($activity->image_path) }}"
                                     alt="Captura de pantalla de {{ $activity->game->title }} subida por {{ $activity->user->name }}"
                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                                     loading="lazy" />
-                            </div>
+                            </button>
 
                             <time datetime="{{ $activity->date }}"
                                 class="text-xs text-gray-500 font-bold uppercase tracking-wider block mt-3">
@@ -115,10 +114,19 @@
 
             @empty
                 {{-- SIN RESULTADOS --}}
-                <div class="flex flex-col items-center justify-center py-6 text-center" role="status">
+                <output class="flex flex-col items-center justify-center py-6 text-center" aria-live="polite">
                     <i class="fa-solid fa-wind text-gray-300 dark:text-gray-700 text-3xl mb-2" aria-hidden="true"></i>
-                    <p class="text-sm text-gray-500 font-bold">Aún no hay actividad social.</p>
-                </div>
+                    @if (! $hasFollowings)
+                        <p class="text-sm text-gray-500 font-bold">Sigue a usuarios para ver su actividad.</p>
+                        <a href="{{ route('social') }}"
+                            class="mt-4 inline-flex items-center justify-center px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-gray-50 hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                            aria-label="Ir a la feed social completa para descubrir actividad">
+                            Ir a la feed social
+                        </a>
+                    @else
+                        <p class="text-sm text-gray-500 font-bold">Aún no hay actividad social.</p>
+                    @endif
+                </output>
             @endforelse
         </div>
 

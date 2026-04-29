@@ -53,7 +53,6 @@
 
 
                     @livewire('utils.random-game-picker-modal')
-                    </button>
                 </section>
 
                 {{-- JUEGOS ACTIVOS --}}

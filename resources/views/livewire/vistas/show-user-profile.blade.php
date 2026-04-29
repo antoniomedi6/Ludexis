@@ -3,8 +3,7 @@
     {{-- CONTROLES SUPERIORES --}}
     <x-slot:aside>
         @auth
-            <div x-data="{ openOptions: false, openReport: false }"
-                class="relative flex flex-col items-end sm:items-start gap-3">
+            <div x-data="{ openOptions: false, openReport: false }" class="relative flex flex-col items-end sm:items-start gap-3">
                 <div class="relative flex flex-wrap items-center justify-end sm:justify-start gap-2">
                     @if (Auth::id() !== $user->id)
                         <livewire:utils.follow-button :user="$user" />
@@ -14,10 +13,6 @@
                             <i class="fa-solid fa-gear text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
                             Ajustes
                         </a>
-                        <span
-                            class="inline-flex max-w-32 sm:max-w-none items-center self-stretch sm:px-3 sm:py-2 pl-3 pr-1 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 border-l border-gray-200 dark:border-darkbox-border sm:pl-4 ml-0 sm:ml-1 leading-tight">
-                            Tu perfil
-                        </span>
                     @endif
 
                     {{-- OPTIONS MENU --}}
@@ -204,7 +199,7 @@
             <header
                 class="w-full bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl shadow-sm overflow-hidden relative">
 
-                {{-- EFECTO DE RESPLANDOR AMBIENTAL --}}
+                {{-- EFECTO DE RESPLANDOR --}}
                 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"
                     aria-hidden="true"></div>
 
@@ -258,7 +253,7 @@
                         </div>
 
                         @if ($canViewPrivateData)
-                            @if (Auth::user() === $this->user)
+                            @if (Auth::user()->id === $user->id)
                                 <div
                                     class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border p-3.5 rounded-2xl">
                                     <div class="flex justify-between items-end mb-2 px-1">

@@ -13,7 +13,7 @@
                 class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-darkbox-card/90 backdrop-blur-2xl border border-darkbox-border rounded-3xl p-8 md:p-12 shadow-2xl">
 
                 <div class="hidden md:flex flex-col gap-6">
-                    <x-miscomponentes.application-logo-name class="w-20 h-20" />
+                    <x-miscomponentes.application-logo-name />
                     <h2 class="text-4xl font-black text-white leading-tight tracking-tighter">
                         Bienvenido de <span class="text-cyan-500">nuevo.</span>
                     </h2>

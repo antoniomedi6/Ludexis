@@ -49,11 +49,13 @@
                         class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
                         <x-icons.paused class="size-4" /> En Pausa
                     </span>
+                    {{--
                 @elseif ($status === 'multiplayer')
                     <span
                         class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
                         <x-icons.multiplayer class="size-4" /> Multiplayer
                     </span>
+                     --}}
                 @endif
             </div>
 
@@ -72,14 +74,14 @@
                 class="text-base font-black text-gray-900 dark:text-white leading-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
                 {{ $game->title }}
             </h3>
-            <p
-                class="text-xs font-bold uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5 transition-colors duration-300 
+            <p class="text-xs font-bold uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5 transition-colors duration-300 
                 {{ $status === 'finish' || $status === 'completed' ? 'text-green-600 dark:text-green-500' : '' }}
                 {{ $status === 'playing' ? 'text-cyan-600 dark:text-cyan-500' : '' }}
                 {{ $status === 'abandoned' ? 'text-red-600 dark:text-red-500' : '' }}
                 {{ $status === 'pending' || $status === 'paused' ? 'text-yellow-600 dark:text-yellow-500' : '' }}
-                {{ $status === 'multiplayer' ? 'text-blue-600 dark:text-blue-500' : '' }}">
-                <i class="fa-regular fa-clock"></i>
+                {{-- {{ $status === 'multiplayer' ? 'text-blue-600 dark:text-blue-500' : '' }}"> --}}
+                <i class="fa-regular
+                fa-clock"></i>
                 {{ $hours }} hrs
             </p>
         </div>

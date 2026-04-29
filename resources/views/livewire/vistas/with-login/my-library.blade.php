@@ -19,7 +19,7 @@
                 <div class="relative w-full sm:w-auto" x-data="{ filtersOpen: false }">
                     <button type="button" @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="w-full sm:w-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm tracking-widest font-black flex items-center justify-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="w-full sm:w-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm font-black flex items-center justify-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-700 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
@@ -151,10 +151,9 @@
                             </div>
 
                             <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                                <x-miscomponentes.star-rating :value10="$rating"
-                                    size-class="w-3 sm:w-3.5 h-3 sm:h-3.5"
-                                    class="text-cyan-500 dark:text-cyan-400 drop-shadow-md"
-                                    :label=\"'Mi puntuación: ' . number_format(($rating ?? 0) / 2, 1) . ' sobre 5'\" />
+                                <x-miscomponentes.star-rating :value10="$rating" size-class="w-3 sm:w-3.5 h-3 sm:h-3.5"
+                                    class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" :label=\"'Mi
+                                    puntuación: ' . number_format(($rating ?? 0) / 2, 1) . ' sobre 5'\" />
                                 <span
                                     class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                                     PC
@@ -187,10 +186,7 @@
 
         {{-- ESTADO VACÍO --}}
     @else
-        <x-miscomponentes.empty-state
-            :title="$filterBy === '' ? 'Tu biblioteca está vacía' : 'No hay juegos en este estado'"
-            :content="$filterBy === '' ? 'Explora el catálogo y añade juegos a tu registro para empezar a llevar el control de tus partidas.' : 'Intenta seleccionar otro filtro para ver tu colección.'"
-            icon="fa-solid fa-gamepad" />
+        <x-miscomponentes.empty-state :title="$filterBy === '' ? 'Tu biblioteca está vacía' : 'No hay juegos en este estado'" :content="$filterBy === '' ? 'Explora el catálogo y añade juegos a tu registro para empezar a llevar el control de tus partidas.' : 'Intenta seleccionar otro filtro para ver tu colección.'" icon="fa-solid fa-gamepad" />
     @endif
 
     <x-miscomponentes.loading-spinner variant="modal" wire:target="search, orderBy, filterBy">

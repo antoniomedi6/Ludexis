@@ -49,7 +49,7 @@ class ShowUserList extends Component
         $this->uform->updateListForm($list);
         $this->showUpdateModal = false;
 
-        $this->dispatch('notify', message: 'Lista actualizada correctamente.', type: 'success');
+        $this->dispatch('notify', message: 'Lista actualizada', type: 'success');
     }
 
     public function cancel()
@@ -65,7 +65,7 @@ class ShowUserList extends Component
         $list = CustomList::findOrFail($this->listId);
         $list->delete();
 
-        $this->dispatch('notify', message: 'Lista eliminada correctamente', type: 'success');
+        $this->dispatch('notify', message: 'Lista eliminada', type: 'success');
 
         return $this->redirect(route('userLists'), navigate: true);
     }
@@ -75,6 +75,6 @@ class ShowUserList extends Component
         $list = CustomList::findOrFail($this->listId);
         $list->games()->detach($gameId);
 
-        $this->dispatch('notify', message: 'Juego eliminado de la lista correctamente', type: 'success');
+        $this->dispatch('notify', message: 'Juego eliminado de la lista', type: 'success');
     }
 }

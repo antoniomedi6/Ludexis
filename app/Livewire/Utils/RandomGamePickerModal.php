@@ -28,6 +28,12 @@ class RandomGamePickerModal extends Component
     // Busca un juego aleatorio según el origen y el ranking mínimo.
     public function pickGame()
     {
+        if ($this->selectedSource === 'list' && !$this->selectedListId) {
+            $this->randomGame = null;
+            $this->dispatch('notify', message: 'Selecciona una lista para poder tirar.', type: 'info');
+            return;
+        }
+
         $query = Game::query();
 
         if ($this->selectedSource === 'library') {
@@ -77,7 +83,7 @@ class RandomGamePickerModal extends Component
             return $this->emptyQuery();
         }
 
-        $list = CustomList::where('user_id', Auth::id())->find($this->selectedListId);
+        $list = CustomList::where('user_id', Auth::id())->find((int) $this->selectedListId);
 
         if (!$list) {
             return $this->emptyQuery();

@@ -97,7 +97,7 @@
                                         </div>
                                     @else
                                         <span
-                                            class="text-[10px] font-bold text-gray-400 dark:text-gray-600 mb-1 uppercase tracking-widest transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
+                                            class="text-[10px] font-bold text-gray-400 dark:text-gray-600 mb-1 uppercase whitespace-nowrap tracking-widest transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
                                             title="Aún no hay suficientes partidas registradas" tabindex="0"
                                             aria-label="Aún no hay suficientes partidas registradas">
                                             --
@@ -114,15 +114,25 @@
                                     id="plataformas-label">
                                     Plataformas
                                 </p>
-                                <div class="flex gap-3 text-xl text-gray-600 dark:text-gray-400 mt-1 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
-                                    aria-labelledby="plataformas-label" tabindex="0">
-                                    <span class="sr-only">Disponible en PC, PlayStation y Xbox</span>
-                                    <i class="fa-brands fa-windows hover:text-gray-900 dark:hover:text-white transition-colors"
-                                        aria-hidden="true" title="PC"></i>
-                                    <i class="fa-brands fa-playstation hover:text-[#00439c] transition-colors"
-                                        aria-hidden="true" title="PlayStation"></i>
-                                    <i class="fa-brands fa-xbox hover:text-[#107c10] transition-colors"
-                                        aria-hidden="true" title="Xbox"></i>
+                                <div class="mt-1 transition-colors duration-300" aria-labelledby="plataformas-label">
+                                    @if ($game->platforms->isEmpty())
+                                        <span
+                                            class="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-600 transition-colors duration-300">
+                                            No especificadas
+                                        </span>
+                                    @else
+                                        <ul class="flex flex-wrap items-center gap-2"
+                                            aria-label="Plataformas en las que está disponible">
+                                            @foreach ($game->platforms as $platform)
+                                                <li>
+                                                    <span
+                                                        class="text-gray-600 dark:text-gray-300 text-[10px] font-bold uppercase tracking-wider border border-gray-300 dark:border-gray-700 bg-white dark:bg-darkbox-card px-3 py-1.5 rounded-xl transition-colors duration-300 shadow-sm dark:shadow-none">
+                                                        {{ $platform->abbreviation }}
+                                                    </span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -151,10 +161,12 @@
                                     aria-hidden="true"></i>
                                 Multimedia
                             </h2>
+                            {{--
                             <button
                                 class="bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/40 dark:hover:bg-cyan-800/60 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                 <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Subir Captura
                             </button>
+                            --}}
                         </div>
                         @if ($game->video_url)
                             <div

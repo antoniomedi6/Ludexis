@@ -13,6 +13,10 @@ return new class extends Migration {
         Schema::create('platforms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('platform_family_name')->nullable();
+            $table->string('platform_logo_url')->nullable();
+            $table->string('slug')->nullable()->index();
+            $table->string('abbreviation')->nullable();
             $table->timestamps();
         });
     }

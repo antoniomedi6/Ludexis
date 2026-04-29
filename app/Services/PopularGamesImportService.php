@@ -27,9 +27,23 @@ class PopularGamesImportService
             Genre::firstOrCreate(['name' => $igdbGenre->name]);
         }
 
-        $igdbPlatforms = IGDBPlatform::select(['name'])->limit(500)->get();
+        $igdbPlatforms = IGDBPlatform::select(['name', 'slug', 'abbreviation'])
+            ->with([
+                'platform_family' => ['name'],
+                'platform_logo' => ['url'],
+            ])
+            ->limit(500)
+            ->get();
         foreach ($igdbPlatforms as $igdbPlatform) {
-            Platform::firstOrCreate(['name' => $igdbPlatform->name]);
+            Platform::updateOrCreate(
+                ['name' => $igdbPlatform->name],
+                [
+                    'platform_family_name' => data_get($igdbPlatform, 'platform_family.name'),
+                    'platform_logo_url' => data_get($igdbPlatform, 'platform_logo.url'),
+                    'slug' => data_get($igdbPlatform, 'slug'),
+                    'abbreviation' => data_get($igdbPlatform, 'abbreviation'),
+                ]
+            );
         }
     }
 
@@ -50,7 +64,9 @@ class PopularGamesImportService
                 'videos' => ['video_id'],
                 'cover' => ['url'],
                 'genres' => ['name'],
-                'platforms' => ['name'],
+                'platforms' => ['name', 'slug', 'abbreviation'],
+                'platforms.platform_family' => ['name'],
+                'platforms.platform_logo' => ['url'],
                 'involved_companies' => ['developer', 'publisher'],
                 'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date'],
                 'screenshots' => ['image_id'],
@@ -202,7 +218,15 @@ class PopularGamesImportService
         foreach ($platforms as $platformData) {
             $platformName = data_get($platformData, 'name');
             if ($platformName) {
-                $platform = Platform::firstOrCreate(['name' => $platformName]);
+                $platform = Platform::updateOrCreate(
+                    ['name' => $platformName],
+                    [
+                        'platform_family_name' => data_get($platformData, 'platform_family.name'),
+                        'platform_logo_url' => data_get($platformData, 'platform_logo.url'),
+                        'slug' => data_get($platformData, 'slug'),
+                        'abbreviation' => data_get($platformData, 'abbreviation'),
+                    ]
+                );
                 $platformIds[] = $platform->id;
             }
         }

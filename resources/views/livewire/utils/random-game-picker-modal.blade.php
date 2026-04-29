@@ -1,4 +1,4 @@
-<section class="w-full" aria-labelledby="random-game-title" x-data="{ showModal: @entangle('showModal'), source: @entangle('selectedSource'), listId: @entangle('selectedListId'), minRating: @entangle('minRating') }">
+<section class="w-full" aria-labelledby="random-game-title" x-data="{ showModal: @entangle('showModal').live, source: @entangle('selectedSource').live, listId: @entangle('selectedListId').live, minRating: @entangle('minRating').live }">
 
     <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <button aria-label="Seleccionar un juego aleatorio" @click="showModal = true"
@@ -32,8 +32,9 @@
                 {{-- CONTROLES --}}
                 <form wire:submit.prevent="pickGame" class="space-y-6 lg:col-span-2"
                     aria-label="Filtros del selector aleatorio">
-                    <fieldset class="space-y-3">
-                        <legend class="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
+                    <fieldset class="flex flex-col gap-2">
+                        <legend
+                            class="text-xs font-black uppercase tracking-widest mb-4 text-gray-500 dark:text-gray-400">
                             Origen
                         </legend>
 
@@ -110,9 +111,9 @@
                         </label>
                         <select id="random-list" x-model="listId"
                             class="w-full cursor-pointer rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-900 shadow-sm transition-colors focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:border-darkbox-border dark:bg-darkbox-main dark:text-white">
-                            <option value="">Selecciona una lista</option>
+                            <option :value="null">Selecciona una lista</option>
                             @foreach ($userLists as $list)
-                                <option value="{{ $list->id }}">
+                                <option :value="{{ $list->id }}">
                                     {{ $list->name }} · {{ $list->games_count }} juegos
                                 </option>
                             @endforeach
@@ -136,8 +137,8 @@
                             class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-darkbox-border">
                         <div class="flex justify-between text-xs font-black uppercase tracking-widest text-gray-400"
                             aria-hidden="true">
-                            <span>Flexible</span>
-                            <span>Exigente</span>
+                            <span>0</span>
+                            <span>100</span>
                         </div>
                     </div>
 

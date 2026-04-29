@@ -94,6 +94,7 @@
                         ['val' => 'completed', 'label' => '100%', 'icon' => 'icons.completed'],
                         ['val' => 'paused', 'label' => 'En Pausa', 'icon' => 'icons.paused'],
                         ['val' => 'abandoned', 'label' => 'Abandonado', 'icon' => 'icons.abandoned'],
+                        /*
                         [
                             'val' => 'multiplayer',
                             'label' => 'Multiplayer Frecuente',
@@ -102,6 +103,7 @@
                             'color' =>
                                 'peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/30 peer-checked:border-blue-400 dark:peer-checked:border-blue-500 peer-checked:text-blue-700 dark:peer-checked:text-blue-400',
                         ],
+                        */
                     ];
                 @endphp
 

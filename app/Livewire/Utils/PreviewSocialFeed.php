@@ -4,18 +4,46 @@ namespace App\Livewire\Utils;
 
 use App\Models\GameUser;
 use App\Models\Image;
-use Illuminate\Support\Facades\Cache;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class PreviewSocialFeed extends Component
 {
-    public function render()
+    public function render(): View
     {
-        $activities = Cache::remember('preview_social_feed', 60, function () {
+        $auth = Auth::user();
 
-            $reviews = GameUser::with(['user:id,name', 'game:id,title,cover_url,slug'])
+        $hasFollowings = false;
+        $followingUserIds = null;
+
+        if ($auth instanceof User) {
+            $followingUserIds = $auth
+                ->approvedFollowings()
+                ->where('followable_type', User::class)
+                ->select('followable_id');
+
+            $hasFollowings = $auth
+                ->approvedFollowings()
+                ->where('followable_type', User::class)
+                ->exists();
+        }
+
+        $activities = collect();
+
+        if ($auth instanceof User) {
+            $reviewsQuery = GameUser::with(['user:id,name', 'game:id,title,cover_url,slug'])
                 ->whereNotNull('rating')
-                ->latest('updated_at')
+                ->latest('updated_at');
+
+            // Solo actividad de usuarios seguidos y la propia.
+            $reviewsQuery->where(function ($q) use ($followingUserIds, $auth) {
+                $q->whereIn('user_id', $followingUserIds)
+                    ->orWhere('user_id', $auth->id);
+            });
+
+            $reviews = $reviewsQuery
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
@@ -29,9 +57,17 @@ class PreviewSocialFeed extends Component
                     ];
                 });
 
-            $images = Image::with(['user:id,name', 'game:id,title,cover_url,slug'])
+            $imagesQuery = Image::with(['user:id,name', 'game:id,title,cover_url,slug'])
                 ->where('is_spoiler', false)
-                ->latest()
+                ->latest();
+
+            // Solo actividad de usuarios seguidos y la propia.
+            $imagesQuery->where(function ($q) use ($followingUserIds, $auth) {
+                $q->whereIn('user_id', $followingUserIds)
+                    ->orWhere('user_id', $auth->id);
+            });
+
+            $images = $imagesQuery
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
@@ -45,9 +81,17 @@ class PreviewSocialFeed extends Component
                     ];
                 });
 
-            $wishlisted = GameUser::with(['user:id,name', 'game:id,title,slug'])
+            $wishlistedQuery = GameUser::with(['user:id,name', 'game:id,title,slug'])
                 ->where('status', 'pending')
-                ->latest('updated_at')
+                ->latest('updated_at');
+
+            // Solo actividad de usuarios seguidos y la propia.
+            $wishlistedQuery->where(function ($q) use ($followingUserIds, $auth) {
+                $q->whereIn('user_id', $followingUserIds)
+                    ->orWhere('user_id', $auth->id);
+            });
+
+            $wishlisted = $wishlistedQuery
                 ->take(3)
                 ->get()
                 ->map(function ($item) {
@@ -59,14 +103,14 @@ class PreviewSocialFeed extends Component
                     ];
                 });
 
-            return collect($reviews)
+            $activities = collect($reviews)
                 ->merge($images)
                 ->merge($wishlisted)
                 ->sortByDesc('date')
                 ->take(5)
                 ->values();
-        });
+        }
 
-        return view('livewire.utils.preview-social-feed', compact('activities'));
+        return view('livewire.utils.preview-social-feed', compact('activities', 'hasFollowings'));
     }
 }

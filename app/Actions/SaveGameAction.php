@@ -39,7 +39,9 @@ class SaveGameAction
                 'videos' => ['video_id', 'name'],
                 'cover' => ['url'],
                 'genres' => ['name'],
-                'platforms' => ['name'],
+                'platforms' => ['name', 'slug', 'abbreviation'],
+                'platforms.platform_family' => ['name'],
+                'platforms.platform_logo' => ['url'],
                 'involved_companies' => ['developer', 'publisher'],
                 'involved_companies.company' => ['name', 'slug', 'description', 'country', 'start_date'],
                 'screenshots' => ['image_id']
@@ -163,7 +165,15 @@ class SaveGameAction
             foreach ($platforms as $platformData) {
                 $platformName = data_get($platformData, 'name');
                 if ($platformName) {
-                    $platform = Platform::firstOrCreate(['name' => $platformName]);
+                    $platform = Platform::updateOrCreate(
+                        ['name' => $platformName],
+                        [
+                            'platform_family_name' => data_get($platformData, 'platform_family.name'),
+                            'platform_logo_url' => data_get($platformData, 'platform_logo.url'),
+                            'slug' => data_get($platformData, 'slug'),
+                            'abbreviation' => data_get($platformData, 'abbreviation'),
+                        ]
+                    );
                     $platformIds[] = $platform->id;
                 }
             }
