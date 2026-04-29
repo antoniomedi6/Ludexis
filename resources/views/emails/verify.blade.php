@@ -26,10 +26,16 @@
                 dirección y activar tu cuenta en Ludexis.
             </p>
 
-            <a href="{{ $url }}"
-                style="display: inline-block; cursor: pointer; background-color: #0891b2; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px;">
-                Verificar Dirección
-            </a>
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                <tr>
+                    <td align="center" bgcolor="#0891b2" style="border-radius: 12px;">
+                        <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                            style="display: inline-block; background-color: #0891b2; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px; mso-padding-alt: 0;">
+                            Verificar Dirección
+                        </a>
+                    </td>
+                </tr>
+            </table>
 
             <p style="color: #4b5563; font-size: 13px; margin-top: 32px; margin-bottom: 0;">
                 Si no has creado una cuenta, puedes ignorar este mensaje de forma segura.

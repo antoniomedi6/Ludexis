@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        VerifyEmail::toMailUsing(function (string $url) {
+        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage())
                 ->subject('Verifica tu cuenta en Ludexis')
                 ->view('emails.verify', ['url' => $url, 'logoUrl' => asset('storage/logo.png')]);
