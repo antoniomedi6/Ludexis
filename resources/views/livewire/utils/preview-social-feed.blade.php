@@ -46,7 +46,6 @@
                         </div>
                     </article>
                 @elseif ($activity->type === 'wishlist')
-                    {{-- ACTIVITY: WISHLIST --}}
                     {{-- ACTIVIDAD: LISTA DE DESEOS --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800/30 flex items-center justify-center shrink-0 transition-colors duration-300"
@@ -74,7 +73,6 @@
                         </div>
                     </article>
                 @elseif ($activity->type === 'capture')
-                    {{-- ACTIVITY: CAPTURE --}}
                     {{-- ACTIVIDAD: CAPTURA --}}
                     <article class="flex gap-4 group" aria-labelledby="feed-user-{{ $loop->index }}">
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
@@ -116,13 +114,8 @@
                 {{-- SIN RESULTADOS --}}
                 <output class="flex flex-col items-center justify-center py-6 text-center" aria-live="polite">
                     <i class="fa-solid fa-wind text-gray-300 dark:text-gray-700 text-3xl mb-2" aria-hidden="true"></i>
-                    @if (! $hasFollowings)
+                    @if (!$hasFollowings)
                         <p class="text-sm text-gray-500 font-bold">Sigue a usuarios para ver su actividad.</p>
-                        <a href="{{ route('social') }}"
-                            class="mt-4 inline-flex items-center justify-center px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-gray-50 hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                            aria-label="Ir a la feed social completa para descubrir actividad">
-                            Ir a la feed social
-                        </a>
                     @else
                         <p class="text-sm text-gray-500 font-bold">Aún no hay actividad social.</p>
                     @endif
@@ -130,7 +123,6 @@
             @endforelse
         </div>
 
-        {{-- FOOTER LINK --}}
         {{-- ENLACE A FEED SOCIAL COMPLETO --}}
         <a href="{{ route('social') }}"
             class="w-full mt-6 py-3 border text-center border-gray-200 dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-gray-50 hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">

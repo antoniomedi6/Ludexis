@@ -83,12 +83,15 @@
                                                 loading="lazy" />
                                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-80"
                                                 aria-hidden="true"></div>
+                                            {{-- PLATAFORMA --}}
+                                            {{--
                                             <div class="absolute bottom-4 left-4 flex gap-2">
                                                 <span
                                                     class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                                                     <i class="fa-brands fa-windows mr-1" aria-hidden="true"></i> PC
                                                 </span>
                                             </div>
+                                             --}}
                                         </div>
 
                                         <div class="p-6 flex-1 flex flex-col justify-center">
