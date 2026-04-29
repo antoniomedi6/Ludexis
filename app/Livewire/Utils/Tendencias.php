@@ -17,6 +17,7 @@ class Tendencias extends Component
                 ->where('first_release_date', '>=', now()->subMonths(3)->timestamp)
                 ->where('first_release_date', '<=', now()->timestamp)
                 ->where('total_rating_count', '>', 0)
+                ->whereHas('cover')
                 ->orderBy('hypes', 'desc')
                 ->limit(5)
                 ->get();
@@ -29,15 +30,19 @@ class Tendencias extends Component
                     $coverUrl = str_replace('t_thumb', 't_cover_big', $url);
                 }
 
+                if (!$coverUrl) {
+                    return null;
+                }
+
                 $placeholder = new Game();
                 $placeholder->igdb_id = $igdbGame->id;
                 $placeholder->title = $igdbGame->name;
                 $placeholder->cover_url = $coverUrl;
-                $placeholder->rating = $igdbGame->total_rating ?? 0;
+                $placeholder->setAttribute('rating', $igdbGame->total_rating ?? 0);
                 $placeholder->slug = $igdbGame->slug;
 
                 return $placeholder;
-            });
+            })->filter()->values();
         });
 
         return view('livewire.utils.tendencias', compact('popularGames'));

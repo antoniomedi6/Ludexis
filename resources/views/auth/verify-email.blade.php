@@ -14,13 +14,15 @@
             </h2>
 
             <div class="mb-6 text-sm text-gray-600 dark:text-gray-400 font-medium">
-                {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+                Antes de continuar, ¿podrías verificar tu dirección de correo electrónico haciendo clic en el enlace que
+                acabamos de enviarte? Si no recibiste el correo, te enviaremos otro.
             </div>
 
             @if (session('status') == 'verification-link-sent')
                 <div
                     class="mb-6 p-4 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800/50 text-sm font-bold text-green-600 dark:text-green-400 transition-colors duration-300">
-                    {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
+                    Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que
+                    proporcionaste en tus ajustes de perfil.
                 </div>
             @endif
 
@@ -29,7 +31,7 @@
                     @csrf
                     <button type="submit"
                         class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_5px_15px_rgba(6,182,212,0.3)] hover:shadow-[0_8px_20px_rgba(6,182,212,0.4)] hover:-translate-y-0.5 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i> {{ __('Resend Verification Email') }}
+                        <i class="fa-solid fa-paper-plane"></i> Reenviar correo de verificación
                     </button>
                 </form>
 
@@ -44,7 +46,7 @@
                         @csrf
                         <button type="submit"
                             class="text-xs bg-red-700 hover:bg-red-900 p-3 rounded-lg font-bold text-gray-300 hover:text-red-600 dark:hover:text-white uppercase tracking-wider transition-colors duration-300">
-                            {{ __('Log Out') }}
+                            Cerrar sesión
                         </button>
                     </form>
                 </div>

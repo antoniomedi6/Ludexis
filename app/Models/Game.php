@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class Game extends Model
 {
@@ -61,6 +62,7 @@ class Game extends Model
     {
         return Attribute::make(
             get: fn($v) => (int) $v,
+            set: fn($v) => (int) $v,
         );
     }
 
@@ -73,5 +75,19 @@ class Game extends Model
         return array_map(function ($hash) {
             return "https://images.igdb.com/igdb/image/upload/t_1080p/{$hash}.jpg";
         }, $this->screenshots);
+    }
+
+
+    protected function spanishSynopsis(): Attribute
+    {
+        return Attribute::get(function (): ?string {
+            if (blank($this->synopsis)) {
+                return $this->synopsis;
+            }
+
+            $tr = new GoogleTranslate('es');
+
+            return $tr->translate($this->synopsis);
+        });
     }
 }

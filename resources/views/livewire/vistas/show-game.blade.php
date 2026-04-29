@@ -147,7 +147,7 @@
                         Sinopsis
                     </h2>
                     <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed transition-colors duration-300">
-                        {{ $game->synopsis }}
+                        {{ $game->spanish_synopsis }}
                     </p>
                 </div>
 

@@ -47,6 +47,7 @@ class SaveGameAction
                 'screenshots' => ['image_id']
             ])
             ->where('slug', $slug)
+            ->whereHas('cover')
             ->first();
 
         if (!$igdbGame) {
@@ -58,6 +59,10 @@ class SaveGameAction
         $url = data_get($igdbGame, 'cover.url');
         if ($url) {
             $coverUrl = str_replace('t_thumb', 't_cover_big', $url);
+        }
+
+        if (!$coverUrl) {
+            return null;
         }
 
         $releaseDate = data_get($igdbGame, 'first_release_date');

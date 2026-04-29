@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -27,7 +27,7 @@
             </p>
 
             <a href="{{ $url }}"
-                style="display: inline-block; background-color: #0891b2; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px;">
+                style="display: inline-block; cursor: pointer; background-color: #0891b2; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px;">
                 Verificar Dirección
             </a>
 

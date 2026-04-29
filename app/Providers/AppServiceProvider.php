@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function (string $url) {
             return (new MailMessage())
                 ->subject('Verifica tu cuenta en Ludexis')
-                ->view('emails.verify', ['url' => $url]);
+                ->view('emails.verify', ['url' => $url, 'logoUrl' => asset('storage/logo.png')]);
         });
         ResetPassword::toMailUsing(function (object $notifiable, string $token) {
             $url = url(route('password.reset', [

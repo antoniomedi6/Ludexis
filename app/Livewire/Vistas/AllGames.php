@@ -50,7 +50,8 @@ class AllGames extends Component
             ->where('total_rating', '>=', $this->minRatingFilter)
             //->where('total_rating_count', '>=', 50)
             ->whereIn('game_type', [0, 8, 9])
-            ->whereNull('version_parent');
+            ->whereNull('version_parent')
+            ->whereHas('cover');
 
         if (!empty($this->platformsFilter)) {
             $platformNames = Platform::whereIn('id', $this->platformsFilter)->pluck('name')->toArray();
@@ -98,6 +99,10 @@ class AllGames extends Component
                 $coverUrl = str_replace('t_thumb', 't_cover_big', $url);
             }
 
+            if (!$coverUrl) {
+                return null;
+            }
+
             $screenshotHashes = [];
             $screenshotsData = data_get($igdbGame, 'screenshots', []);
             if (!empty($screenshotsData)) {
@@ -112,7 +117,7 @@ class AllGames extends Component
             $placeholder->igdb_id = $igdbGame->id;
             $placeholder->title = $igdbGame->name;
             $placeholder->cover_url = $coverUrl;
-            $placeholder->rating = $igdbGame->total_rating ?? 0;
+            $placeholder->setAttribute('rating', $igdbGame->total_rating ?? 0);
             $placeholder->slug = $igdbGame->slug;
             $placeholder->is_local = false;
 
@@ -149,7 +154,7 @@ class AllGames extends Component
             $placeholder->setRelation('companies', $companies);
 
             return $placeholder;
-        });
+        })->filter()->values();
 
         $games = new LengthAwarePaginator(
             $mergedGames,

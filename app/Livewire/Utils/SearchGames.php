@@ -23,6 +23,7 @@ class SearchGames extends Component
                 ->where('total_rating', '>=', 0)
                 ->whereIn('game_type', [0, 8, 9])
                 ->whereNull('version_parent')
+                ->whereHas('cover')
                 ->orderBy('first_release_date', 'desc')
                 ->select(['id', 'name', 'first_release_date', 'total_rating', 'slug', 'game_type'])
                 ->with(['cover' => ['image_id', 'url']])
@@ -30,7 +31,6 @@ class SearchGames extends Component
                 ->get();
 
             $games = $igdbGames
-                ->take(5)
                 ->map(function ($igdbGame) {
                     $coverUrl = null;
 
@@ -43,13 +43,17 @@ class SearchGames extends Component
                         }
                     }
 
+                    if (!$coverUrl) {
+                        return null;
+                    }
+
                     $releaseDate = $igdbGame->first_release_date ?? null;
 
                     $placeholder = new Game();
                     $placeholder->igdb_id = $igdbGame->id;
                     $placeholder->title = $igdbGame->name;
                     $placeholder->cover_url = $coverUrl;
-                    $placeholder->rating = $igdbGame->total_rating ?? 0;
+                    $placeholder->setAttribute('rating', $igdbGame->total_rating ?? 0);
                     $placeholder->slug = $igdbGame->slug;
 
                     if ($releaseDate) {
@@ -59,7 +63,10 @@ class SearchGames extends Component
                     }
 
                     return $placeholder;
-                })->values();
+                })
+                ->filter()
+                ->take(5)
+                ->values();
         }
 
         return view('livewire.utils.search-games', compact('games'));
