@@ -7,9 +7,9 @@ LUDEXIS es una plataforma enfocada a los videojuegos que funciona a la vez como 
 ## 🚀 Funcionalidades Principales
 
 * **Gestión de Biblioteca y Listas:** Organiza tus juegos, indica su estado (completado, pendiente, abandonado) y registra las horas que le has dedicado.
-* **Aspecto Social y Privacidad:** Sistema de amigos por solicitud (no seguidores). Puedes ver el *Timeline* cronológico de la actividad de tu red y compartir imágenes en una galería que cuenta con filtro anti-spoilers obligatorio.
+* **Aspecto Social y Privacidad:** Sistema de seguidores. Puedes ver el *Timeline* cronológico de la actividad de tu red y compartir imágenes en una galería que cuenta con filtro anti-spoilers obligatorio.
 * **Sistema Anti-Review Bombing:** Para evitar notas falsas, el peso de los votos cambia según tu rol: Usuario Estándar (x1.0), Veterano (x1.5) o Periodista (x3.0).
-* **Herramientas Útiles:** Incluye funciones como el cálculo automático de horas de una lista entera o un botón para elegir un juego aleatorio de tus pendientes.
+* **Herramientas Útiles:** Incluye funciones como un botón para elegir un juego aleatorio de tus pendientes.
 
 ## 💻 Stack Tecnológico
 
@@ -17,4 +17,4 @@ LUDEXIS es una plataforma enfocada a los videojuegos que funciona a la vez como 
 * **Frontend:** Tailwind CSS para el diseño responsive. Livewire, Alpine.js y JavaScript puro para darle reactividad a la web sin necesidad de recargar la página.
 * **Base de Datos:** MySQL.
 * **Integraciones (APIs):** Conexión con la API de IGDB para importar automáticamente los datos oficiales de los videojuegos y Laravel Socialite para el inicio de sesión con Steam.
-* **Despliegue:** Alojado en AWS utilizando una máquina virtual Ubuntu.
+* **Despliegue:** Alojado en Orange Pi 5 Pro con Ubuntu 24.04.4 LTS, utilizando Ngnix Proxy Manager y DuckdDns.
