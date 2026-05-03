@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->enum('role', ['standard', 'journalist', 'veteran', 'admin']);
+            $table->enum('role', ['standard', 'journalist', 'veteran', 'admin'])->default('standard');
             $table->integer('xp')->default(0);
             $table->boolean('is_private')->default(false);
             $table->string('provider_name')->nullable();

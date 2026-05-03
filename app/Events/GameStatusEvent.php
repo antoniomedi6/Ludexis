@@ -16,7 +16,6 @@ use Illuminate\Queue\SerializesModels;
  */
 class GameStatusEvent
 {
-    // TRAITS
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(

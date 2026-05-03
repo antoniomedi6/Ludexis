@@ -22,12 +22,12 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens;
     use Follower;
     use Followable;
+    use Notifiable;
+    use Reportable;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
-    use Notifiable;
-    use Reportable;
     use TwoFactorAuthenticatable;
 
     /**

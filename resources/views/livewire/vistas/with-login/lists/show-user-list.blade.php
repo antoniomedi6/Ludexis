@@ -130,10 +130,12 @@
                                 <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end z-10">
                                     <x-miscomponentes.star-rating :value10="$rating"
                                         class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" />
+                                    {{--          
                                     <span
                                         class="bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm transition-colors duration-300">
                                         PC
                                     </span>
+                                    --}}
                                 </div>
                             </div>
 

@@ -149,7 +149,7 @@
                                     </span>
                                 @endif
                             </div>
-
+                            {{-- 
                             <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                                 <x-miscomponentes.star-rating :value10="$rating" size-class="w-3 sm:w-3.5 h-3 sm:h-3.5"
                                     class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" :label=\"'Mi
@@ -159,6 +159,7 @@
                                     PC
                                 </span>
                             </div>
+                             --}}
                         </div>
 
                         {{-- INFO DEL JUEGO --}}

@@ -14,7 +14,21 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsis', 'cover_url', 'video_url', 'first_release_date', 'slug', 'rating', 'igdb_rating', 'avg_time', 'screenshots', 'artworks', 'igdb_id'];
+    protected $fillable = [
+        'title',
+        'synopsis',
+        'cover_url',
+        'video_url',
+        'first_release_date',
+        'slug',
+        'rating',
+        'igdb_rating',
+        'avg_time',
+        'screenshots',
+        'artworks',
+        'igdb_id'
+    ];
+
     protected $casts = [
         'first_release_date' => 'date',
         'screenshots' => 'array',

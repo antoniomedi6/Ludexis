@@ -132,7 +132,6 @@ class PopularGamesImportService
         return $imported;
     }
 
-    // HELPERS DE MAPEO
     private function buildCoverUrl($igdbGame): ?string
     {
         $url = data_get($igdbGame, 'cover.url');

@@ -20,14 +20,49 @@ class SaveGameAction
     public function __invoke(string $slug): ?Game
     {
         // COMPROBACIÓN LOCAL
-        $localGame = Game::where('slug', $slug)->first();
+        $localGame = $this->findLocalGame($slug);
 
         if ($localGame) {
             return $localGame;
         }
 
         // PETICIÓN A IGDB
-        $igdbGame = IGDBGame::select([
+        $igdbGame = $this->fetchFromIgdb($slug);
+
+        if (!$igdbGame) {
+            return null;
+        }
+
+        // FORMATEO DE DATOS
+        $coverUrl = $this->resolveCoverUrl($igdbGame);
+
+        if (!$coverUrl) {
+            return null;
+        }
+
+        // CREACIÓN DEL JUEGO
+        $game = $this->createGameFromIgdb($igdbGame, $coverUrl);
+
+        // SINCRONIZACIÓN DE GÉNEROS
+        $this->syncGenres($game, $igdbGame);
+
+        // SINCRONIZACIÓN DE COMPAÑÍAS
+        $this->syncCompanies($game, $igdbGame);
+
+        // SINCRONIZACIÓN DE PLATAFORMAS
+        $this->syncPlatforms($game, $igdbGame);
+
+        return $game;
+    }
+
+    private function findLocalGame(string $slug): ?Game
+    {
+        return Game::where('slug', $slug)->first();
+    }
+
+    private function fetchFromIgdb(string $slug): ?IGDBGame
+    {
+        return IGDBGame::select([
             'id',
             'name',
             'summary',
@@ -49,55 +84,69 @@ class SaveGameAction
             ->where('slug', $slug)
             ->whereHas('cover')
             ->first();
+    }
 
-        if (!$igdbGame) {
-            return null;
-        }
-
-        // FORMATEO DE DATOS
-        $coverUrl = null;
+    private function resolveCoverUrl(IGDBGame $igdbGame): ?string
+    {
         $url = data_get($igdbGame, 'cover.url');
-        if ($url) {
-            $coverUrl = str_replace('t_thumb', 't_cover_big', $url);
-        }
-
-        if (!$coverUrl) {
+        if (!$url) {
             return null;
         }
 
-        $releaseDate = data_get($igdbGame, 'first_release_date');
-        $formattedDate = null;
-        if ($releaseDate) {
-            $formattedDate = is_numeric($releaseDate)
-                ? Carbon::createFromTimestamp($releaseDate)->format('Y-m-d')
-                : Carbon::parse($releaseDate)->format('Y-m-d');
+        return str_replace('t_thumb', 't_cover_big', $url);
+    }
+
+    private function formatIgdbDateValue(mixed $value): ?string
+    {
+        if (!$value) {
+            return null;
         }
 
-        $videoUrl = null;
+        return is_numeric($value)
+            ? Carbon::createFromTimestamp($value)->format('Y-m-d')
+            : Carbon::parse($value)->format('Y-m-d');
+    }
+
+    private function resolveTrailerVideoUrl(IGDBGame $igdbGame): ?string
+    {
         $videos = data_get($igdbGame, 'videos', []);
-        if (!empty($videos)) {
-            foreach ($videos as $video) {
-                if (isset($video['video_id']) && isset($video['name']) && stripos($video['name'], 'trailer') !== false) {
-                    $videoUrl = 'https://www.youtube.com/embed/' . $video['video_id'];
-                    break;
-                }
+        if (empty($videos)) {
+            return null;
+        }
+
+        foreach ($videos as $video) {
+            if (isset($video['video_id'], $video['name']) && stripos($video['name'], 'trailer') !== false) {
+                return 'https://www.youtube.com/embed/' . $video['video_id'];
             }
         }
 
+        return null;
+    }
+
+    private function collectScreenshotHashes(IGDBGame $igdbGame): array
+    {
         $screenshotHashes = [];
         $screenshotsData = data_get($igdbGame, 'screenshots', []);
-        if (!empty($screenshotsData)) {
-            foreach ($screenshotsData as $screenshot) {
-                if (isset($screenshot['image_id'])) {
-                    $screenshotHashes[] = $screenshot['image_id'];
-                }
+        if (empty($screenshotsData)) {
+            return $screenshotHashes;
+        }
+
+        foreach ($screenshotsData as $screenshot) {
+            if (isset($screenshot['image_id'])) {
+                $screenshotHashes[] = $screenshot['image_id'];
             }
         }
 
-        $igdbRating = $igdbGame->total_rating ?? 0;
+        return $screenshotHashes;
+    }
 
-        // CREACIÓN DEL JUEGO
-        $game = Game::create([
+    private function createGameFromIgdb(IGDBGame $igdbGame, string $coverUrl): Game
+    {
+        $formattedDate = $this->formatIgdbDateValue(data_get($igdbGame, 'first_release_date'));
+        $igdbRating = $igdbGame->total_rating ?? 0;
+        $screenshotHashes = $this->collectScreenshotHashes($igdbGame);
+
+        return Game::create([
             'igdb_id' => $igdbGame->id,
             'title' => $igdbGame->name,
             'synopsis' => data_get($igdbGame, 'summary', ''),
@@ -107,84 +156,91 @@ class SaveGameAction
             'rating' => $igdbRating,
             'igdb_rating' => $igdbRating,
             'avg_time' => 0,
-            'video_url' => $videoUrl,
+            'video_url' => $this->resolveTrailerVideoUrl($igdbGame),
             'screenshots' => !empty($screenshotHashes) ? $screenshotHashes : null
         ]);
+    }
 
-        // SINCRONIZACIÓN DE GÉNEROS
+    private function syncGenres(Game $game, IGDBGame $igdbGame): void
+    {
         $genres = data_get($igdbGame, 'genres', []);
-        if (!empty($genres)) {
-            $genreIds = [];
-            foreach ($genres as $genreData) {
-                $genreName = data_get($genreData, 'name');
-                if ($genreName) {
-                    $genre = Genre::firstOrCreate(['name' => $genreName]);
-                    $genreIds[] = $genre->id;
-                }
-            }
-            $game->genres()->sync($genreIds);
+        if (empty($genres)) {
+            return;
         }
 
-        // SINCRONIZACIÓN DE COMPAÑÍAS
+        $genreIds = [];
+        foreach ($genres as $genreData) {
+            $genreName = data_get($genreData, 'name');
+            if ($genreName) {
+                $genre = Genre::firstOrCreate(['name' => $genreName]);
+                $genreIds[] = $genre->id;
+            }
+        }
+        $game->genres()->sync($genreIds);
+    }
+
+    private function syncCompanies(Game $game, IGDBGame $igdbGame): void
+    {
         $companies = data_get($igdbGame, 'involved_companies', []);
-        if (!empty($companies)) {
-            $companiesPivotData = [];
-            foreach ($companies as $involvedCompany) {
-                $companyData = data_get($involvedCompany, 'company');
-                $companyName = data_get($companyData, 'name');
-                $companySlug = data_get($companyData, 'slug');
-
-                if ($companyName && $companySlug) {
-                    $startDate = data_get($companyData, 'start_date');
-                    $compFormattedDate = null;
-
-                    if ($startDate) {
-                        $compFormattedDate = is_numeric($startDate)
-                            ? Carbon::createFromTimestamp($startDate)->format('Y-m-d')
-                            : Carbon::parse($startDate)->format('Y-m-d');
-                    }
-
-                    $company = Company::updateOrCreate(
-                        ['slug' => $companySlug],
-                        [
-                            'name' => $companyName,
-                            'description' => data_get($companyData, 'description'),
-                            'country' => data_get($companyData, 'country'),
-                            'start_date' => $compFormattedDate,
-                        ]
-                    );
-
-                    $companiesPivotData[$company->id] = [
-                        'is_developer' => data_get($involvedCompany, 'developer', false),
-                        'is_publisher' => data_get($involvedCompany, 'publisher', false),
-                    ];
-                }
-            }
-            $game->companies()->sync($companiesPivotData);
+        if (empty($companies)) {
+            return;
         }
 
-        // SINCRONIZACIÓN DE PLATAFORMAS
+        $companiesPivotData = [];
+        foreach ($companies as $involvedCompany) {
+            $companyData = data_get($involvedCompany, 'company');
+            $companyName = data_get($companyData, 'name');
+            $companySlug = data_get($companyData, 'slug');
+
+            if (!$companyName || !$companySlug) {
+                continue;
+            }
+
+            $startDate = data_get($companyData, 'start_date');
+            $compFormattedDate = $this->formatIgdbDateValue($startDate);
+
+            $company = Company::updateOrCreate(
+                ['slug' => $companySlug],
+                [
+                    'name' => $companyName,
+                    'description' => data_get($companyData, 'description'),
+                    'country' => data_get($companyData, 'country'),
+                    'start_date' => $compFormattedDate,
+                ]
+            );
+
+            $companiesPivotData[$company->id] = [
+                'is_developer' => data_get($involvedCompany, 'developer', false),
+                'is_publisher' => data_get($involvedCompany, 'publisher', false),
+            ];
+        }
+
+        $game->companies()->sync($companiesPivotData);
+    }
+
+    private function syncPlatforms(Game $game, IGDBGame $igdbGame): void
+    {
         $platforms = data_get($igdbGame, 'platforms', []);
-        if (!empty($platforms)) {
-            $platformIds = [];
-            foreach ($platforms as $platformData) {
-                $platformName = data_get($platformData, 'name');
-                if ($platformName) {
-                    $platform = Platform::updateOrCreate(
-                        ['name' => $platformName],
-                        [
-                            'platform_family_name' => data_get($platformData, 'platform_family.name'),
-                            'platform_logo_url' => data_get($platformData, 'platform_logo.url'),
-                            'slug' => data_get($platformData, 'slug'),
-                            'abbreviation' => data_get($platformData, 'abbreviation'),
-                        ]
-                    );
-                    $platformIds[] = $platform->id;
-                }
-            }
-            $game->platforms()->sync($platformIds);
+        if (empty($platforms)) {
+            return;
         }
 
-        return $game;
+        $platformIds = [];
+        foreach ($platforms as $platformData) {
+            $platformName = data_get($platformData, 'name');
+            if ($platformName) {
+                $platform = Platform::updateOrCreate(
+                    ['name' => $platformName],
+                    [
+                        'platform_family_name' => data_get($platformData, 'platform_family.name'),
+                        'platform_logo_url' => data_get($platformData, 'platform_logo.url'),
+                        'slug' => data_get($platformData, 'slug'),
+                        'abbreviation' => data_get($platformData, 'abbreviation'),
+                    ]
+                );
+                $platformIds[] = $platform->id;
+            }
+        }
+        $game->platforms()->sync($platformIds);
     }
 }

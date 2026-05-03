@@ -48,7 +48,7 @@ class AllGames extends Component
                 'screenshots' => ['image_id']
             ])
             ->where('total_rating', '>=', $this->minRatingFilter)
-            //->where('total_rating_count', '>=', 50)
+            ->where('total_rating_count', '>=', 25)
             ->whereIn('game_type', [0, 8, 9])
             ->whereNull('version_parent')
             ->whereHas('cover');
