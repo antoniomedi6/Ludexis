@@ -24,7 +24,7 @@ class ImageForm extends Form
         $datos = $this->validate();
 
         $datos['user_id'] = Auth::id();
-        $datos['image_path'] = $this->image_path->store('images/userImages', 'public');
+        $datos['image_path'] = $this->image_path->store('userImages', 'public');
 
         Image::create($datos);
 
