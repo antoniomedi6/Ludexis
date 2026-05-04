@@ -16,12 +16,9 @@
 /public/build
 /public/hot
 /public/storage
-!/public/storage/
-!/public/storage/logo.png
 /storage/*.key
 /storage/pail
 /vendor
 Homestead.json
 Homestead.yaml
 Thumbs.db
-
