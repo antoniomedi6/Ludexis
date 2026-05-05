@@ -127,6 +127,9 @@
                                     No hay datos suficientes
                                 </div>
                             @else
+                                @php
+                                    $genreBarColors = ['bg-cyan-500', 'bg-purple-500', 'bg-teal-500', 'bg-yellow-500'];
+                                @endphp
                                 <div class="flex flex-col gap-4">
                                     @foreach ($genreStats as $stat)
                                         <div>
@@ -140,7 +143,14 @@
                                                 role="progressbar" aria-label="Porcentaje de {{ $stat['name'] }}"
                                                 aria-valuenow="{{ $stat['percentage'] }}" aria-valuemin="0"
                                                 aria-valuemax="100">
-                                                <div class="{{ $stat['color'] }} h-2 rounded-full transition-all duration-1000"
+                                                <div
+                                                    @class([
+                                                        'h-2 rounded-full transition-all duration-1000',
+                                                        'bg-cyan-500' => (($loop->index ?? 0) % count($genreBarColors)) === 0,
+                                                        'bg-purple-500' => (($loop->index ?? 0) % count($genreBarColors)) === 1,
+                                                        'bg-teal-500' => (($loop->index ?? 0) % count($genreBarColors)) === 2,
+                                                        'bg-yellow-500' => (($loop->index ?? 0) % count($genreBarColors)) === 3,
+                                                    ])
                                                     style="width: {{ $stat['percentage'] }}%"></div>
                                             </div>
                                         </div>

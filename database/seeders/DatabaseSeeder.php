@@ -9,17 +9,12 @@ use App\Services\PopularGamesImportService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Database\Seeders\GameUserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        /* $this->call([
-                    GenreSeeder::class,
-                    PlatformSeeder::class,
-                ]);
-         */
-
         /* Crea un usuario admin */
         User::firstOrCreate(
             ['email' => 'admin@example.com'],
@@ -41,6 +36,20 @@ class DatabaseSeeder extends Seeder
                 'name' => 'user',
                 'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
                 'role' => 'standard',
+                'xp' => 9999,
+                'is_private' => false,
+                'banned_at' => null,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        /* Crea un usuario periodista */
+        User::firstOrCreate(
+            ['email' => 'journalist@example.com'],
+            [
+                'name' => 'journalist',
+                'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
+                'role' => 'journalist',
                 'xp' => 0,
                 'is_private' => false,
                 'banned_at' => null,
@@ -54,11 +63,6 @@ class DatabaseSeeder extends Seeder
         app(PopularGamesImportService::class)->importPopular(100);
 
         $this->call(GameUserSeeder::class);
-
-        /*
-        Storage::deleteDirectory('images/gameCovers');
-        Storage::createDirectory('images/gameCovers');
-        */
 
         Storage::deleteDirectory('images/userImages/');
         Storage::createDirectory('images/userImages/');
