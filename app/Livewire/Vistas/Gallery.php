@@ -87,6 +87,13 @@ class Gallery extends Component
         $this->showingModal = false;
     }
 
+    public function openUploadModal(): void
+    {
+        if ($this->game) {
+            $this->cimage->game_id = $this->game->id;
+        }
+        $this->showingModal = true;
+    }
 
     public function clearFilters()
     {
