@@ -17,7 +17,7 @@ class ExperienceService
     const XP_PER_IMAGE = 30;
     const XP_PER_REVIEW = 50;
 
-    // DEFINICIÓN DE RANGOS (CAMINO ESTÁNDAR)
+    // DEFINICIÓN DE RANGOS
     public static function getLibraryRanks(): array
     {
         return [

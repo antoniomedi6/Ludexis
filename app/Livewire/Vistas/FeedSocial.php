@@ -13,7 +13,7 @@ class FeedSocial extends Component
 {
     public int $limit = 10;
 
-    public string $feedTab = 'relevant';
+    public string $feedTab = 'followings';
 
     public function render(): View
     {

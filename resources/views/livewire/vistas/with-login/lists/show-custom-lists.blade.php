@@ -13,11 +13,11 @@
             {{-- Buscador --}}
             <div class="relative w-full sm:w-64 shrink-0">
                 <label for="search-lists" class="sr-only">Buscar colección</label>
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-sm"
                     aria-hidden="true"></i>
                 <input id="search-lists" type="search" wire:model.live.debounce.300ms="search"
                     placeholder="Buscar colección..."
-                    class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    class="w-full bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border hover:bg-lightbox-soft dark:hover:bg-darkbox-card hover:border-cyan-300 dark:hover:border-cyan-600 text-lightbox-text dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
             </div>
 
             {{-- Controles de Acción (Orden y Creación) --}}
@@ -26,15 +26,15 @@
                 {{-- Orden --}}
                 <div class="relative group w-full sm:w-48">
                     <label for="order-lists" class="sr-only">Ordenar colecciones</label>
-                    <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                    <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-sm"
                         aria-hidden="true"></i>
                     <select id="order-lists" wire:model.live="orderBy"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                        class="bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border hover:bg-lightbox-soft dark:hover:bg-darkbox-card text-lightbox-text dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
                         <option value="updated_at">Más recientes</option>
                         <option value="name">Alfabético</option>
                         <option value="games_count">Cantidad</option>
                     </select>
-                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-xs pointer-events-none group-hover:text-cyan-600 dark:group-hover:text-cyan-500 transition-colors"
                         aria-hidden="true"></i>
                 </div>
 
@@ -89,7 +89,7 @@
                 <div
                     class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6 border-t border-gray-100 dark:border-gray-800/80">
                     <button type="button" wire:click="cancel"
-                        class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-lightbox-muted dark:text-gray-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-main hover:text-lightbox-text dark:hover:text-white hover:border-cyan-200 dark:hover:border-transparent border border-transparent transition-all duration-300 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         Cancelar
                     </button>
                     <button type="submit"

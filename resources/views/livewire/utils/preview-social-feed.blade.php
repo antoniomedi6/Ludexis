@@ -21,7 +21,7 @@
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
                             class="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
                             loading="lazy" />
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-400 leading-snug transition-colors duration-300">
                                 <a id="feed-user-{{ $loop->index }}" href="{{ route('profile', $activity->user) }}"
@@ -35,8 +35,10 @@
 
                             @if ($activity->review)
                                 <blockquote
-                                    class="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-950 p-3 rounded-lg border border-gray-200 dark:border-gray-800 transition-colors duration-300 line-clamp-2">
-                                    {{ $activity->review }}
+                                    class="text-xs text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-950 p-3 rounded-lg border border-gray-200 dark:border-gray-800 transition-colors duration-300">
+                                    <p class="leading-relaxed line-clamp-3 break-words">
+                                        {{ $activity->review }}
+                                    </p>
                                 </blockquote>
                             @endif
                             <time datetime="{{ $activity->date }}"
@@ -53,7 +55,7 @@
                             <i
                                 class="fa-solid fa-ghost text-purple-600 dark:text-purple-500 text-sm transition-colors duration-300"></i>
                         </div>
-                        <div class="flex-1 flex flex-col justify-center">
+                        <div class="flex-1 min-w-0 flex flex-col justify-center">
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-400 leading-snug transition-colors duration-300">
                                 <a id="feed-user-{{ $loop->index }}" href="{{ route('profile', $activity->user) }}"
@@ -78,7 +80,7 @@
                         <img src="{{ $activity->game->cover_url }}" alt="Portada de {{ $activity->game->title }}"
                             class="w-10 h-10 rounded-xl object-cover border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
                             loading="lazy" />
-                        <div class="flex-1">
+                        <div class="flex-1 min-w-0">
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-400 leading-snug transition-colors duration-300">
                                 <a id="feed-user-{{ $loop->index }}" href="{{ route('profile', $activity->user) }}"
@@ -125,7 +127,7 @@
 
         {{-- ENLACE A FEED SOCIAL COMPLETO --}}
         <a href="{{ route('social') }}"
-            class="w-full mt-6 py-3 border text-center border-gray-200 dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-gray-50 hover:bg-gray-100 dark:bg-transparent dark:hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            class="w-full mt-6 py-3 border text-center border-lightbox-border dark:border-gray-800 rounded-xl text-xs font-black uppercase tracking-widest text-cyan-600 dark:text-cyan-500 bg-lightbox-soft hover:bg-lightbox-main hover:border-cyan-300 dark:bg-transparent dark:hover:bg-gray-800 dark:hover:border-cyan-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
             Ver toda la actividad
         </a>
     </section>

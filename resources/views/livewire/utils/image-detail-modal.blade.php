@@ -59,7 +59,7 @@
 
                                 {{-- Botón Cerrar (Escritorio) --}}
                                 <button @click="$wire.closeModal()"
-                                    class="hidden md:flex w-8 h-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shrink-0">
+                                    class="hidden md:flex w-8 h-8 items-center justify-center rounded-full text-gray-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-main hover:text-cyan-700 dark:hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shrink-0">
                                     <i class="fa-solid fa-xmark text-lg"></i>
                                 </button>
                             </div>

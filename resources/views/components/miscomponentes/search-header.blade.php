@@ -3,7 +3,7 @@
 
     {{-- BOTÓN HAMBURGUESA (MÓVIL) --}}
     <button @click="$dispatch('toggle-nav')"
-        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-lightbox-main dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors mr-4 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-lightbox-main dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors mr-4 focus:outline-none focus:ring-2 focus:ring-cyan-500"
         aria-label="Abrir menú de navegación principal">
         <i class="fa-solid fa-bars text-lg" aria-hidden="true"></i>
     </button>

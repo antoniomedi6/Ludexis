@@ -14,7 +14,7 @@
                             <x-miscomponentes.title :title1="$title1" :title2="$title2" />
                             @if ($subtitle)
                                 <p
-                                    class="text-gray-600 dark:text-gray-400 font-medium text-lg transition-colors duration-300">
+                                    class="text-gray-600 dark:text-gray-400 font-medium text-md md:text-lg transition-colors duration-300">
                                     {{ $subtitle }}
                                 </p>
                             @endif

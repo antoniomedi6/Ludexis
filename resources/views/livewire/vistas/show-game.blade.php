@@ -21,7 +21,7 @@
             <div class="lg:col-span-8 flex flex-col gap-10">
 
                 {{-- CABECERA --}}
-                <div class="flex flex-col sm:flex-row gap-8 items-start">
+                <div class="flex flex-col items-center md:items-start sm:flex-row gap-8 sm:gap-8">
                     <img src="{{ $game->cover_url }}"
                         class="w-48 rounded-2xl shadow-xl dark:shadow-[0_20px_40px_rgba(0,0,0,0.5)] border border-gray-200 dark:border-gray-700 shrink-0 transition-colors duration-300"
                         alt="Portada del juego {{ $game->title }}" />
@@ -30,8 +30,13 @@
                         <div class="flex items-center gap-3 mb-3">
                             <span
                                 class="bg-cyan-50 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors duration-300">
-                                Lanzamiento: <time
-                                    datetime="{{ $game->first_release_date }}">{{ $game->first_release_date->year }}</time>
+                                Lanzamiento:
+                                @if ($game->first_release_date)
+                                    <time
+                                        datetime="{{ $game->first_release_date }}">{{ $game->first_release_date->year }}</time>
+                                @else
+                                    <span>Desconocido</span>
+                                @endif
                             </span>
                             <span
                                 class="text-gray-600 dark:text-gray-400 text-xs font-bold uppercase tracking-wider transition-colors duration-300">
@@ -40,7 +45,7 @@
                         </div>
 
                         <h1
-                            class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight tracking-tighter mb-5 transition-colors duration-300 drop-shadow-sm">
+                            class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight tracking-tighter mb-5 transition-colors duration-300 drop-shadow-sm">
                             {{ $game->title }}
                         </h1>
 
@@ -53,63 +58,65 @@
                             @endforeach
                         </div>
 
-                        <div class="flex items-start gap-8">
-                            <div>
-                                <p
-                                    class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
-                                    Nota Global
-                                </p>
-                                <div class="flex items-end gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg p-1 -m-1"
-                                    tabindex="0"
-                                    aria-label="Nota global del juego: {{ $game->rating ?? 'Sin nota' }} de 100">
-                                    <span
-                                        class="text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">{{ $game->rating ?? '-' }}</span>
-                                    <span
-                                        class="text-sm text-cyan-600 dark:text-cyan-500 font-bold mb-1 transition-colors duration-300"
-                                        aria-hidden="true">
-                                        <x-icons.star class="size-8" />
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="w-px h-12 bg-gray-200 dark:bg-gray-800 transition-colors duration-300 mt-1"
-                                aria-hidden="true"></div>
-
-                            <div>
-                                <p
-                                    class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
-                                    Tiempo Medio
-                                </p>
-                                <div class="flex items-end gap-3">
-                                    <span
-                                        class="text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">
-                                        {{ $averageHours }}<span class="text-xl text-gray-400"
-                                            aria-label="horas">h</span>
-                                    </span>
-
-                                    @if ($totalRecords > 0)
-                                        <div title="Media basada en {{ $totalRecords }} {{ $totalRecords === 1 ? 'jugador' : 'jugadores' }}"
-                                            class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 mb-1 cursor-help hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
-                                            tabindex="0"
-                                            aria-label="Media basada en {{ $totalRecords }} {{ $totalRecords === 1 ? 'jugador' : 'jugadores' }}">
-                                            <i class="fa-solid fa-users text-xs" aria-hidden="true"></i>
-                                            <span class="text-xs font-bold">{{ $totalRecords }}</span>
-                                        </div>
-                                    @else
+                        <div class="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8">
+                            <div class="flex items-start gap-8">
+                                <div>
+                                    <p
+                                        class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
+                                        Nota Global
+                                    </p>
+                                    <div class="flex items-end gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg p-1 -m-1"
+                                        tabindex="0"
+                                        aria-label="Nota global del juego: {{ $game->rating ?? 'Sin nota' }} de 100">
                                         <span
-                                            class="text-[10px] font-bold text-gray-400 dark:text-gray-600 mb-1 uppercase whitespace-nowrap tracking-widest transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
-                                            title="Aún no hay suficientes partidas registradas" tabindex="0"
-                                            aria-label="Aún no hay suficientes partidas registradas">
-                                            --
+                                            class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">{{ $game->rating ?? '-' }}</span>
+                                        <span
+                                            class="text-base sm:text-sm md:text-sm text-cyan-600 dark:text-cyan-500 font-bold mb-1 transition-colors duration-300"
+                                            aria-hidden="true">
+                                            <x-icons.star class="size-6 md:size-8" />
                                         </span>
-                                    @endif
+                                    </div>
+                                </div>
+
+                                <div class="w-px h-12 bg-gray-200 dark:bg-gray-800 transition-colors duration-300 mt-1"
+                                    aria-hidden="true"></div>
+
+                                <div>
+                                    <p
+                                        class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300">
+                                        Tiempo Medio
+                                    </p>
+                                    <div class="flex flex-wrap items-end gap-3">
+                                        <span
+                                            class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white leading-none transition-colors duration-300">
+                                            {{ $averageHours }}<span class="text-xl text-gray-400"
+                                                aria-label="horas">h</span>
+                                        </span>
+
+                                        @if ($totalRecords > 0)
+                                            <div title="Media basada en {{ $totalRecords }} {{ $totalRecords === 1 ? 'jugador' : 'jugadores' }}"
+                                                class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 mb-1 cursor-help hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
+                                                tabindex="0"
+                                                aria-label="Media basada en {{ $totalRecords }} {{ $totalRecords === 1 ? 'jugador' : 'jugadores' }}">
+                                                <i class="fa-solid fa-users text-xs" aria-hidden="true"></i>
+                                                <span class="text-xs font-bold">{{ $totalRecords }}</span>
+                                            </div>
+                                        @else
+                                            <span
+                                                class="text-[10px] font-bold text-gray-400 dark:text-gray-600 mb-1 uppercase whitespace-nowrap tracking-widest transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1 -m-1"
+                                                title="Aún no hay suficientes partidas registradas" tabindex="0"
+                                                aria-label="Aún no hay suficientes partidas registradas">
+                                                --
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="w-px h-12 bg-gray-200 dark:bg-gray-800 transition-colors duration-300 mt-1"
+                            <div class="hidden sm:block w-px h-12 bg-gray-200 dark:bg-gray-800 transition-colors duration-300 mt-1"
                                 aria-hidden="true"></div>
 
-                            <div>
+                            <div class="sm:mt-0">
                                 <p class="text-[10px] text-gray-500 dark:text-gray-500 font-black uppercase tracking-widest mb-1 transition-colors duration-300"
                                     id="plataformas-label">
                                     Plataformas
@@ -143,10 +150,11 @@
                 <div
                     class="bg-white dark:bg-gradient-to-br dark:from-darkbox-card dark:to-darkbox-main border border-gray-200 dark:border-gray-800 rounded-[2rem] p-8 shadow-sm transition-colors duration-300">
                     <h2
-                        class="text-xs font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-4 transition-colors duration-300">
+                        class="text-xxs md:text-xs font-black text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-4 transition-colors duration-300">
                         Sinopsis
                     </h2>
-                    <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed transition-colors duration-300">
+                    <p
+                        class="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed transition-colors duration-300">
                         {{ $game->spanish_synopsis }}
                     </p>
                 </div>
@@ -161,12 +169,6 @@
                                     aria-hidden="true"></i>
                                 Multimedia
                             </h2>
-                            {{--
-                            <button
-                                class="bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-900/40 dark:hover:bg-cyan-800/60 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Subir Captura
-                            </button>
-                            --}}
                         </div>
                         @if ($game->video_url)
                             <div
@@ -221,27 +223,27 @@
 
                 {{-- RESEÑAS --}}
                 <div class="w-full mt-4">
-                    @livewire('utils.preview-reviews', ['gameId' => $game->id])
+                    <livewire:utils.preview-reviews :game-id="$game->id" />
                 </div>
 
             </div>
 
             {{-- BARRA LATERAL --}}
-            <div class="lg:col-span-4">
+            <aside class="lg:col-span-4">
 
-                {{-- GAMEREGISTRYCARD (ESCRITORIO) --}}
+                {{-- GAMEREGISTRYCARD --}}
                 @auth
                     <div class="hidden lg:block">
-                        @livewire('utils.game-registry-card', ['gameId' => $game->id], key('game-registry-desktop-' . $game->id))
+                        <livewire:utils.game-registry-card :game-id="$game->id" :key="'game-registry-desktop-' . $game->id" />
                     </div>
-                    @livewire('utils.review-modal')
+                    <livewire:utils.review-modal />
                 @endauth
 
                 {{-- GALERÍA IMÁGENES --}}
-                <div class="mt-14">
-                    @livewire('utils.preview-images', ['gameSlug' => $game->slug])
+                <div class="mt-6">
+                    <livewire:utils.preview-images :game-slug="$game->slug" />
                 </div>
-            </div>
+            </aside>
 
         </div>
     </section>

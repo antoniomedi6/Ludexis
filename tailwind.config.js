@@ -34,6 +34,9 @@ export default {
                     soft: "#E8F4FA", // Superficies suaves (claro, tintado hacia brand)
                 },
             },
+            fontSize: {
+                xxs: "0.625rem", // Equivalente a 10px
+            },
         },
     },
 

@@ -39,7 +39,7 @@
             </div>
             <div>
                 <h2
-                    class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-none mb-2">
+                    class="text-xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-none mb-2">
                     {{ $list->name }}
                 </h2>
                 <div class="flex items-center gap-4">
@@ -55,7 +55,7 @@
     <div class="relative z-10 w-full overflow-hidden min-h-[400px]">
         @if ($list->games_count > 0)
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full">
+            <div class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-6 w-full">
                 @foreach ($list->games as $item)
                     @php
                         // Obteniendo el registro del usuario para este juego si lo hay
@@ -87,47 +87,55 @@
                                 </div>
 
                                 {{-- BADGES ESTADO --}}
-                                <div class="absolute top-4 left-4 z-10">
+                                <div class="absolute top-2 left-2 md:top-4 md:left-4 z-10">
                                     @if ($status === 'finish')
                                         <span
-                                            class="bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-flag-checkered"></i> Finalizado
+                                            class="bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <i class="fa-solid fa-flag-checkered"></i> <span
+                                                class="hidden md:inline">Finalizado</span>
                                         </span>
                                     @elseif ($status === 'completed')
                                         <span
-                                            class="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.completed class="size-6" /> 100%
+                                            class="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.completed class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">100%</span>
                                         </span>
                                     @elseif ($status === 'playing')
                                         <span
-                                            class="bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.playing class="size-6" /> Jugando
+                                            class="bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.playing class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">Jugando</span>
                                         </span>
                                     @elseif ($status === 'abandoned')
                                         <span
-                                            class="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.abandoned class="size-6" /> Abandonado
+                                            class="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.abandoned class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">Abandonado</span>
                                         </span>
                                     @elseif ($status === 'pending')
                                         <span
-                                            class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.pending class="size-6" /> Pendiente
+                                            class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.pending class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">Pendiente</span>
                                         </span>
                                     @elseif ($status === 'paused')
                                         <span
-                                            class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.paused class="size-6" /> En Pausa
+                                            class="bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.paused class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">En Pausa</span>
                                         </span>
                                     @elseif ($status === 'multiplayer')
                                         <span
-                                            class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
-                                            <x-icons.multiplayer class="size-6" /> Multiplayer
+                                            class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm transition-colors duration-300 flex items-center gap-1.5">
+                                            <x-icons.multiplayer class="size-4 md:size-6" /> <span
+                                                class="hidden md:inline">Multiplayer</span>
                                         </span>
                                     @endif
                                 </div>
 
                                 {{-- VALORACION Y PLATAFORMA --}}
-                                <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end z-10">
+                                <div
+                                    class="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4 flex justify-between items-end z-10">
                                     <x-miscomponentes.star-rating :value10="$rating"
                                         class="text-cyan-500 dark:text-cyan-400 drop-shadow-md" />
                                     {{--          
@@ -140,20 +148,20 @@
                             </div>
 
                             {{-- INFO JUEGO --}}
-                            <div class="p-6 flex-1 flex flex-col justify-center text-center sm:text-left">
+                            <div class="p-2 md:p-6 flex-1 flex flex-col justify-center text-center sm:text-left">
                                 <h3
-                                    class="text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
+                                    class="text-xs md:text-xl font-black text-gray-900 dark:text-white leading-tight mb-1 md:mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
                                     {{ $item->title }}
                                 </h3>
                                 <p
-                                    class="text-xs font-bold uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5 transition-colors duration-300
+                                    class="text-[10px] md:text-xs font-bold uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1 md:gap-1.5 transition-colors duration-300
                                     {{ $status === 'finish' || $status === 'completed' ? 'text-green-600 dark:text-green-500' : '' }}
                                     {{ $status === 'playing' ? 'text-cyan-600 dark:text-cyan-500' : '' }}
                                     {{ $status === 'abandoned' ? 'text-red-600 dark:text-red-500' : '' }}
                                     {{ $status === 'pending' || $status === 'paused' ? 'text-yellow-600 dark:text-yellow-500' : '' }}
                                     {{ $status === 'multiplayer' ? 'text-blue-600 dark:text-blue-500' : '' }}">
                                     <i class="fa-regular fa-clock"></i>
-                                    {{ $hours }} hrs jugadas
+                                    {{ $hours }} h<span class="hidden md:inline">rs jugadas</span>
                                 </p>
                             </div>
                         </a>
@@ -226,7 +234,7 @@
             <div
                 class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6 border-t border-gray-100 dark:border-gray-800/80">
                 <button type="button" wire:click="cancel"
-                    class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1a1d27] hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider">
+                    class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-main hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider">
                     Cancelar
                 </button>
                 <button type="submit"
@@ -251,7 +259,7 @@
 
         <x-slot name="footer">
             <button type="button" wire:click="$set('confirmingListDeletion', false)"
-                class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1a1d27] hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider">
+                class="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-main hover:text-gray-900 dark:hover:text-white transition-all duration-300 uppercase tracking-wider">
                 Cancelar
             </button>
             <button type="button" wire:click="deleteList"

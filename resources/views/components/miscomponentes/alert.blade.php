@@ -9,7 +9,7 @@
         setTimeout(() => { this.show = false }, 4000);
     }
 }" @notify.window="showToast($event)"
-    class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2 w-full max-w-xs" x-cloak>
+    class="fixed top-5 right-5 z-[100] flex flex-col gap-2 w-full max-w-xs" x-cloak>
 
     <template x-if="show">
         <div x-transition:enter="transition ease-out duration-300"

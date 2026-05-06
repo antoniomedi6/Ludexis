@@ -34,7 +34,7 @@
                 <ul class="space-y-4">
                     <li>
                         <a href="{{ route('allGames') }}"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                             <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                 aria-hidden="true"></i>
                             Catálogo de Juegos
@@ -42,7 +42,7 @@
                     </li>
                     <li>
                         <a href="{{ route('gallery') }}"
-                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                            class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                             <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                 aria-hidden="true"></i>
                             Galería
@@ -61,7 +61,7 @@
                     <ul class="space-y-4">
                         <li>
                             <a href="{{ route('social') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Feed Social
@@ -69,7 +69,7 @@
                         </li>
                         <li>
                             <a href="{{ route('timeline') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Timeline
@@ -77,7 +77,7 @@
                         </li>
                         <li>
                             <a href="{{ route('profile', auth()->id()) }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Mi perfil
@@ -96,7 +96,7 @@
                     <ul class="space-y-4">
                         <li>
                             <a href="{{ route('register') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Crear cuenta
@@ -104,7 +104,7 @@
                         </li>
                         <li>
                             <a href="{{ route('login') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Iniciar sesión
@@ -112,7 +112,7 @@
                         </li>
                         <li>
                             <a href="{{ route('password.request') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Recuperar contraseña
@@ -132,7 +132,7 @@
                     <ul class="space-y-4">
                         <li>
                             <a href="{{ route('dashboard') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Dashboard
@@ -140,7 +140,7 @@
                         </li>
                         <li>
                             <a href="{{ route('library') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Mi Biblioteca
@@ -148,7 +148,7 @@
                         </li>
                         <li>
                             <a href="{{ route('userLists') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Mis Listas
@@ -156,7 +156,7 @@
                         </li>
                         <li>
                             <a href="{{ route('profile.show') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950">
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950">
                                 <i class="fa-solid fa-chevron-right text-xs opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 text-cyan-600 dark:text-cyan-500"
                                     aria-hidden="true"></i>
                                 Ajustes de cuenta
@@ -175,7 +175,7 @@
                     <ul class="space-y-4">
                         <li>
                             <a href="{{ route('auth.steam.redirect') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950"
                                 aria-label="Iniciar sesión con Steam">
                                 <i class="fa-brands fa-steam text-sm opacity-80 mr-2" aria-hidden="true"></i>
                                 Steam
@@ -183,7 +183,7 @@
                         </li>
                         <li>
                             <a href="{{ route('auth.discord.redirect') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950"
                                 aria-label="Iniciar sesión con Discord">
                                 <i class="fa-brands fa-discord text-sm opacity-80 mr-2" aria-hidden="true"></i>
                                 Discord
@@ -191,7 +191,7 @@
                         </li>
                         <li>
                             <a href="{{ route('auth.google.redirect') }}"
-                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+                                class="group flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-950"
                                 aria-label="Iniciar sesión con Google">
                                 <i class="fa-brands fa-google text-sm opacity-80 mr-2" aria-hidden="true"></i>
                                 Google
@@ -208,14 +208,7 @@
             <div class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">
                 &copy; {{ date('Y') }} Ludexis. Todos los derechos reservados.
             </div>
-
             <div class="flex flex-wrap items-center gap-4 md:gap-6">
-                <a href="https://www.igdb.com/" target="_blank" rel="noopener noreferrer"
-                    class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors focus:outline-none focus:underline">
-                    IGDB
-                    <span class="sr-only">(se abre en una pestaña nueva)</span>
-                </a>
-
                 <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700" aria-hidden="true"></span>
 
                 <a href="https://github.com/antoniomedi6" target="_blank" rel="noopener noreferrer"

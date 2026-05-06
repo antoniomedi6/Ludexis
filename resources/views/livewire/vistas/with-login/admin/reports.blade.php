@@ -257,10 +257,12 @@
                                             @endif
                                             @if ($target->rating)
                                                 <div
-                                                    class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
+                                                    class="shrink-0 flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                                    aria-label="Nota: {{ $target->rating }}">
                                                     <span
-                                                        class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">{{ $target->rating }}</span>
-                                                    <i class="fa-solid fa-star text-yellow-500 text-xs"
+                                                        class="text-sm font-black text-cyan-700 dark:text-cyan-400 tabular-nums"
+                                                        aria-hidden="true">{{ $target->rating }}</span>
+                                                    <i class="fa-solid fa-star text-xs text-cyan-500"
                                                         aria-hidden="true"></i>
                                                 </div>
                                             @endif

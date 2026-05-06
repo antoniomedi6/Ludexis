@@ -3,13 +3,13 @@
     {{-- CONTROLES SUPERIORES --}}
     <x-slot:aside>
         @auth
-            <div x-data="{ openOptions: false, openReport: false }" class="relative flex flex-col items-end sm:items-start gap-3">
-                <div class="relative flex flex-wrap items-center justify-end sm:justify-start gap-2">
+            <div x-data="{ openOptions: false, openReport: false }" class="relative flex w-full flex-col items-end gap-3">
+                <div class="relative flex w-full flex-wrap items-center justify-end gap-2">
                     @if (Auth::id() !== $user->id)
                         <livewire:utils.follow-button :user="$user" />
                     @else
                         <a href="{{ route('profile.show') }}"
-                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-xl font-black text-xs uppercase tracking-widest text-lightbox-text dark:text-gray-200 hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm">
                             <i class="fa-solid fa-gear text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
                             Ajustes
                         </a>
@@ -18,32 +18,33 @@
                     {{-- OPTIONS MENU --}}
                     @if (Auth::id() !== $user->id)
                         <button type="button" @click="openOptions = !openOptions"
-                            class="p-2.5 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-600 dark:text-gray-400"
+                            class="p-2.5 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-xl hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 text-lightbox-muted dark:text-gray-400"
                             aria-label="Opciones del perfil" :aria-expanded="openOptions.toString()">
                             <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
                         </button>
 
                         <div x-show="openOptions" x-cloak @click.outside="openOptions = false"
-                            class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-lg overflow-hidden z-50"
+                            class="absolute right-0 top-full mt-2 w-64 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-2xl shadow-xl dark:shadow-2xl overflow-hidden z-50"
                             role="menu" aria-label="Opciones del perfil">
                             <div class="p-2 space-y-1">
                                 <button type="button" @click="openOptions = false; openReport = true"
-                                    class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                    class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-lightbox-text dark:text-gray-200 hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                     role="menuitem">
-                                    <i class="fa-solid fa-flag text-gray-400" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-flag text-lightbox-muted dark:text-gray-400"
+                                        aria-hidden="true"></i>
                                     <span>Reportar</span>
                                 </button>
 
                                 @if (Auth::user()->role === 'admin')
                                     <div
-                                        class="px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                                        class="px-3 py-2 rounded-xl bg-lightbox-soft/80 dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border">
                                         <label for="role_select_menu"
-                                            class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">
+                                            class="block text-xs font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-500 mb-2">
                                             Rol de usuario
                                         </label>
                                         <select id="role_select_menu" wire:model.live="selectedRole"
                                             wire:change="updateRole"
-                                            class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                            class="w-full rounded-xl bg-lightbox-main dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border text-sm font-bold text-lightbox-text dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                             <option value="standard">Estándar</option>
                                             <option value="journalist">Periodista</option>
                                             <option value="veteran">Veterano</option>
@@ -62,7 +63,7 @@
                                                     class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
                                                     role="status" aria-live="polite">
                                                     <span
-                                                        class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                                        class="bg-lightbox-card dark:bg-gray-900 rounded-full shadow-lg border border-lightbox-border dark:border-gray-700 p-0.5">
                                                         <x-icons.saved-animated class="size-6" />
                                                     </span>
                                                     <span>Rol actualizado.</span>
@@ -76,13 +77,13 @@
                     @else
                         @if (Auth::user()->role === 'admin')
                             <div
-                                class="w-full sm:w-auto sm:min-w-56 px-3 py-2 rounded-xl bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border">
+                                class="w-full sm:w-auto sm:min-w-56 px-3 py-2 rounded-xl bg-lightbox-soft/80 dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border">
                                 <label for="role_select_self"
-                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    class="block text-[10px] font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-500 mb-2">
                                     Rol de usuario
                                 </label>
                                 <select id="role_select_self" wire:model.live="selectedRole" wire:change="updateRole"
-                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    class="w-full rounded-xl bg-lightbox-main dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border text-sm font-bold text-lightbox-text dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                     <option value="standard">Estándar</option>
                                     <option value="journalist">Periodista</option>
                                     <option value="veteran">Veterano</option>
@@ -101,7 +102,7 @@
                                             class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
                                             role="status" aria-live="polite">
                                             <span
-                                                class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                                class="bg-lightbox-card dark:bg-gray-900 rounded-full shadow-lg border border-lightbox-border dark:border-gray-700 p-0.5">
                                                 <x-icons.saved-animated class="size-6" />
                                             </span>
                                             <span>Rol actualizado.</span>
@@ -119,16 +120,16 @@
                     aria-label="Reportar usuario">
                     <div class="absolute inset-0 bg-black/50" @click="openReport = false" aria-hidden="true"></div>
                     <div
-                        class="relative w-full max-w-lg bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-2xl shadow-xl p-6">
+                        class="relative w-full max-w-lg bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-2xl shadow-xl p-6">
                         <div class="flex items-start justify-between gap-4 mb-4">
                             <div>
-                                <h3 class="text-lg font-black text-gray-900 dark:text-white">Reportar usuario</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <h3 class="text-lg font-black text-lightbox-text dark:text-white">Reportar usuario</h3>
+                                <p class="text-sm text-lightbox-muted dark:text-gray-400">
                                     Elige un motivo para reportar a <span class="font-bold">{{ $user->name }}</span>.
                                 </p>
                             </div>
                             <button type="button" @click="openReport = false"
-                                class="p-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                                class="p-2 rounded-xl border border-lightbox-border dark:border-darkbox-border bg-lightbox-main dark:bg-darkbox-card text-lightbox-text dark:text-gray-200 hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 aria-label="Cerrar modal">
                                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                             </button>
@@ -137,11 +138,11 @@
                         <div class="space-y-3">
                             <div>
                                 <label for="report_reason"
-                                    class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">
+                                    class="block text-xs font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-500 mb-2">
                                     Motivo
                                 </label>
                                 <select id="report_reason" wire:model.live="reportReason"
-                                    class="w-full rounded-xl bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-sm font-bold text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    class="w-full rounded-xl bg-lightbox-main dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border text-sm font-bold text-lightbox-text dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                     <option value="">Selecciona un motivo</option>
                                     <option value="Spam o publicidad">Spam o publicidad</option>
                                     <option value="Suplantación de identidad">Suplantación de identidad</option>
@@ -156,7 +157,7 @@
 
                             <div class="flex items-center justify-end gap-2 pt-2">
                                 <button type="button" @click="openReport = false"
-                                    class="px-4 py-2 rounded-xl border border-gray-200 dark:border-darkbox-border bg-white dark:bg-darkbox-card text-sm font-black text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                    class="px-4 py-2 rounded-xl border border-lightbox-border dark:border-darkbox-border bg-lightbox-main dark:bg-darkbox-card text-sm font-black text-lightbox-text dark:text-gray-200 hover:bg-lightbox-soft dark:hover:bg-darkbox-main transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500">
                                     Cancelar
                                 </button>
                                 <button type="button" wire:click="submitReport"
@@ -178,7 +179,7 @@
                                         class="inline-flex items-center gap-2 text-emerald-500 font-bold text-xs"
                                         role="status" aria-live="polite">
                                         <span
-                                            class="bg-white dark:bg-gray-900 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 p-0.5">
+                                            class="bg-lightbox-card dark:bg-gray-900 rounded-full shadow-lg border border-lightbox-border dark:border-gray-700 p-0.5">
                                             <x-icons.saved-animated class="size-6" />
                                         </span>
                                         <span>Reporte enviado.</span>
@@ -253,22 +254,23 @@
                         </div>
 
                         @if ($canViewPrivateData)
-                            @if (Auth::user()->id === $user->id)
+                            @if (Auth::id() === $user->id)
                                 <div
                                     class="w-full max-w-md mx-auto sm:mx-0 bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border p-3.5 rounded-2xl">
-                                    <div class="flex justify-between items-end mb-2 px-1">
-                                        <span
-                                            class="text-xs font-black uppercase tracking-widest text-gray-500">Progreso
-                                            XP</span>
-                                        <span
-                                            class="text-xs font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{{ $user->xp }}
-                                            / 1,000</span>
-                                    </div>
-                                    <div class="h-2 w-full bg-gray-200 dark:bg-darkbox-card rounded-full overflow-hidden"
-                                        role="progressbar" aria-valuenow="{{ $user->xp }}" aria-valuemin="0"
-                                        aria-valuemax="1000">
-                                        <div class="h-full bg-cyan-500 rounded-full transition-all duration-500"
-                                            style="width: {{ min(($user->xp / 1000) * 100, 100) }}%"></div>
+                                    <div class="space-y-1.5 whitespace-nowrap w-full">
+                                        <div
+                                            class="flex justify-between text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider px-1">
+                                            <span>XP: {{ $user->xp ?? 0 }}</span>
+                                        </div>
+                                        <div class="w-full bg-lightbox-border dark:bg-darkbox-main rounded-full h-1.5 overflow-hidden border border-transparent dark:border-darkbox-border"
+                                            role="progressbar"
+                                            aria-valuenow="{{ $user->rank_progress_percentage }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                            aria-label="Progreso de experiencia hacia el siguiente rango">
+                                            <div class="bg-gradient-to-r from-cyan-500 to-teal-400 h-full rounded-full transition-all duration-700"
+                                                style="width: {{ $user->rank_progress_percentage }}%"></div>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
@@ -408,29 +410,39 @@
                     <div x-data="{ activeTab: 'activity' }" class="xl:col-span-8 flex flex-col gap-8">
 
                         {{-- NAVEGACIÓN DE PESTAÑAS --}}
-                        <div class="flex gap-2 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl p-1.5 shrink-0 w-fit shadow-sm"
+                        <div class="grid grid-cols-2 sm:flex gap-2 bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-xl p-1.5 shrink-0 w-full sm:w-fit shadow-sm"
                             role="tablist">
                             <button type="button" @click="activeTab = 'activity'"
                                 :class="activeTab === 'activity' ?
                                     'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
-                                class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
+                                class="px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center justify-center gap-2"
                                 role="tab">
-                                Actividad
+                                <span>Actividad Reciente</span>
+                                <span
+                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-xs font-black tabular-nums text-gray-600 dark:text-gray-300"
+                                    aria-label="Total de actividad">
+                                    {{ $recentActivity->count() }}
+                                </span>
                             </button>
                             <button type="button" @click="activeTab = 'library'"
                                 :class="activeTab === 'library' ?
                                     'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
-                                class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
+                                class="px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center justify-center gap-2"
                                 role="tab">
-                                Biblioteca
+                                <span>Biblioteca</span>
+                                <span
+                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-xs font-black tabular-nums text-gray-600 dark:text-gray-300"
+                                    aria-label="Total de juegos en biblioteca">
+                                    {{ $games->count() }}
+                                </span>
                             </button>
                             <button type="button" @click="activeTab = 'reviews'"
                                 :class="activeTab === 'reviews' ?
                                     'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
-                                class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center gap-2"
+                                class="px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center justify-center gap-2"
                                 role="tab">
                                 <span>Reseñas</span>
                                 <span
@@ -443,9 +455,14 @@
                                 :class="activeTab === 'screenshots' ?
                                     'bg-gray-100 dark:bg-darkbox-main text-cyan-600 dark:text-cyan-400' :
                                     'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
-                                class="px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none"
+                                class="px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs uppercase tracking-widest transition-all focus:outline-none inline-flex items-center justify-center gap-2"
                                 role="tab">
-                                Capturas
+                                <span>Capturas</span>
+                                <span
+                                    class="min-w-7 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border text-xs font-black tabular-nums text-gray-600 dark:text-gray-300"
+                                    aria-label="Total de capturas">
+                                    {{ $screenshots->count() }}
+                                </span>
                             </button>
                         </div>
 
@@ -476,29 +493,48 @@
                                     @endphp
 
                                     <article
-                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
-                                        <div class="flex items-center gap-2 mb-6">
-                                            <span
-                                                class="text-xs {{ $activityStyle['bg'] }} {{ $activityStyle['text'] }} border {{ $activityStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
-                                                {{ $activityLabel }}
-                                            </span>
-                                            <time class="text-xs font-bold text-gray-400 uppercase tracking-widest">
-                                                {{ $activityAt?->diffForHumans() ?? '—' }}
-                                            </time>
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-4 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex items-start justify-between gap-3 mb-4 sm:mb-6">
+                                            <div class="flex flex-wrap items-center gap-2 min-w-0">
+                                                <span
+                                                    class="text-xs {{ $activityStyle['bg'] }} {{ $activityStyle['text'] }} border {{ $activityStyle['border'] }} px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
+                                                    {{ $activityLabel }}
+                                                </span>
+                                                <time
+                                                    class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                                    {{ $activityAt?->diffForHumans() ?? '—' }}
+                                                </time>
+                                            </div>
+
+                                            @if (!$isImage && $activity->rating)
+                                                <div class="shrink-0 flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                                    aria-label="Nota: {{ $activity->rating }}">
+                                                    <span
+                                                        class="text-sm font-black text-cyan-700 dark:text-cyan-400 tabular-nums"
+                                                        aria-hidden="true">
+                                                        {{ $activity->rating }}
+                                                    </span>
+                                                    <i class="fa-solid fa-star text-xs text-cyan-500"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            @endif
                                         </div>
 
-                                        <div class="flex flex-col sm:flex-row gap-6">
-                                            <a href="{{ route('games.show', $activity->game?->slug) }}"
-                                                class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
-                                                @if ($isImage)
+                                        <div class="flex items-start gap-4 sm:gap-6">
+                                            @if ($isImage)
+                                                {{-- CAPTURA: ABRE MODAL DE DETALLE --}}
+                                                <button type="button" x-data
+                                                    @click="$dispatch('open-image-detail', { imageId: {{ $activity->id }} })"
+                                                    aria-label="Ver captura de {{ $activity->game?->title ?? 'juego' }}"
+                                                    class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
                                                     <div
-                                                        class="relative w-full sm:w-28 h-48 sm:h-36 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-darkbox-border bg-gray-100 dark:bg-darkbox-main">
+                                                        class="relative w-24 h-24 sm:w-28 sm:h-36 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-darkbox-border bg-gray-100 dark:bg-darkbox-main">
                                                         <img src="{{ Storage::url($activity->image_path) }}"
                                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                                             alt="Captura de {{ $activity->game?->title ?? 'juego' }}" />
                                                         @if ($activity->is_spoiler)
                                                             <div
-                                                                class="absolute inset-0 bg-gray-950/90 backdrop-blur-xl flex items-center justify-center">
+                                                                class="absolute inset-0 bg-gray-950 flex items-center justify-center">
                                                                 <span
                                                                     class="text-xs font-black uppercase tracking-widest text-white bg-cyan-600 px-3 py-1 rounded-lg">
                                                                     Spoiler
@@ -506,52 +542,45 @@
                                                             </div>
                                                         @endif
                                                     </div>
-                                                @else
+                                                </button>
+                                            @else
+                                                <a href="{{ route('games.show', $activity->game?->slug) }}"
+                                                    class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
                                                     <img src="{{ $activity->game?->cover_url ?? 'https://via.placeholder.com/300x400' }}"
-                                                        class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+                                                        class="w-20 h-28 sm:w-28 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
                                                         alt="Portada de {{ $activity->game?->title ?? 'juego' }}">
-                                                @endif
-                                            </a>
+                                                </a>
+                                            @endif
 
-                                            <div class="flex-1 flex flex-col justify-between space-y-3">
-                                                <div>
-                                                    <div class="flex justify-between items-start gap-4 mb-2">
-                                                        <h3
-                                                            class="text-xl font-black text-gray-900 dark:text-white leading-tight">
-                                                            <a href="{{ route('games.show', $activity->game?->slug) }}"
-                                                                class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
-                                                                {{ $activity->game?->title ?? 'Juego' }}
-                                                            </a>
-                                                        </h3>
-                                                        <div class="shrink-0 flex items-center gap-2">
-                                                            @livewire('utils.like-button', ['model' => $activity], key('profile-activity-like-' . $activity->id))
-
-                                                            @livewire('utils.report-button', ['model' => $activity], key('profile-activity-report-' . $activity->id))
-
-                                                            @if (!$isImage && $activity->rating)
-                                                                <div
-                                                                    class="shrink-0 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
-                                                                    <span
-                                                                        class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
-                                                                        {{ $activity->rating }}
-                                                                    </span>
-                                                                    <i class="fa-solid fa-star text-yellow-500 text-xs"
-                                                                        aria-hidden="true"></i>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+                                            <div class="min-w-0 flex-1 flex flex-col gap-3">
+                                                <div class="min-w-0">
+                                                    <h3
+                                                        class="text-base sm:text-xl font-black text-gray-900 dark:text-white leading-tight line-clamp-2">
+                                                        <a href="{{ route('games.show', $activity->game?->slug) }}"
+                                                            class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
+                                                            {{ $activity->game?->title ?? 'Juego' }}
+                                                        </a>
+                                                    </h3>
 
                                                     @if (!$isImage)
-                                                        <p
-                                                            class="text-sm text-gray-600 dark:text-gray-400 italic line-clamp-3">
-                                                            “{{ $activity->review }}”
+                                                        <p class="mt-2 text-md text-gray-600 dark:text-gray-400">
+                                                            {{ $activity->review }}
                                                         </p>
                                                     @else
-                                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                                                             Subió una captura.
                                                         </p>
                                                     @endif
+                                                </div>
+
+                                                <div class="flex flex-wrap items-center justify-end gap-2">
+                                                    <div class="scale-90 sm:scale-100 origin-left">
+                                                        @livewire('utils.like-button', ['model' => $activity], key('profile-activity-like-' . $activity->id))
+                                                    </div>
+
+                                                    <div class="scale-90 sm:scale-100 origin-left">
+                                                        @livewire('utils.report-button', ['model' => $activity], key('profile-activity-report-' . $activity->id))
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -599,11 +628,11 @@
                             <section class="flex flex-col gap-6" aria-label="Reseñas del usuario">
                                 @forelse ($reviews as $review)
                                     <article
-                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+                                        class="bg-white dark:bg-darkbox-card border border-gray-200 dark:border-darkbox-border rounded-3xl p-4 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-start justify-between gap-4 mb-5">
                                             <div class="min-w-0">
                                                 <h3
-                                                    class="text-lg sm:text-xl font-black text-gray-900 dark:text-white leading-tight">
+                                                    class="text-base sm:text-xl font-black text-gray-900 dark:text-white leading-tight line-clamp-2">
                                                     <a href="{{ route('games.show', $review->game?->slug) }}"
                                                         class="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:underline">
                                                         {{ $review->game?->title ?? 'Juego' }}
@@ -625,43 +654,51 @@
                                                 </time>
                                             </div>
 
-                                            <div class="shrink-0 flex items-center gap-2">
-                                                @auth
-                                                    @if (Auth::id() === $review->user_id)
-                                                        @livewire('utils.review-owner-actions', ['review' => $review], key('review-owner-actions-profile-' . $review->id))
-                                                    @endif
-                                                @endauth
-
-                                                @livewire('utils.like-button', ['model' => $review], key('profile-review-like-' . $review->id))
-
-                                                @livewire('utils.report-button', ['model' => $review], key('profile-review-report-' . $review->id))
-
-                                                @if ($review->rating)
-                                                    <div
-                                                        class="bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1 rounded-lg border border-yellow-200 dark:border-yellow-800/50 flex items-center gap-1.5">
-                                                        <span
-                                                            class="font-black text-yellow-700 dark:text-yellow-500 text-sm tabular-nums">
-                                                            {{ $review->rating }}
-                                                        </span>
-                                                        <i class="fa-solid fa-star text-yellow-500 text-xs"
-                                                            aria-hidden="true"></i>
-                                                    </div>
-                                                @endif
-                                            </div>
+                                            @if ($review->rating)
+                                                <div class="shrink-0 flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                                    aria-label="Nota: {{ $review->rating }}">
+                                                    <span
+                                                        class="text-sm font-black text-cyan-700 dark:text-cyan-400 tabular-nums"
+                                                        aria-hidden="true">
+                                                        {{ $review->rating }}
+                                                    </span>
+                                                    <i class="fa-solid fa-star text-xs text-cyan-500"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            @endif
                                         </div>
 
-                                        <div class="flex flex-col sm:flex-row gap-6">
+                                        <div class="flex items-start gap-4 sm:gap-6">
                                             <a href="{{ route('games.show', $review->game?->slug) }}"
                                                 class="shrink-0 group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-xl h-fit">
                                                 <img src="{{ $review->game?->cover_url ?? 'https://via.placeholder.com/300x400' }}"
-                                                    class="w-full sm:w-28 h-48 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
+                                                    class="w-20 h-28 sm:w-28 sm:h-36 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300"
                                                     alt="Portada de {{ $review->game?->title ?? 'juego' }}">
                                             </a>
 
-                                            <div class="flex-1">
-                                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                            <div class="min-w-0 flex-1 flex flex-col gap-3">
+                                                <p
+                                                    class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-4 sm:line-clamp-none">
                                                     {{ $review->review }}
                                                 </p>
+
+                                                <div class="flex flex-wrap items-center justify-end gap-2">
+                                                    @auth
+                                                        @if (Auth::id() === $review->user_id)
+                                                            <div class="scale-90 sm:scale-100 origin-right">
+                                                                @livewire('utils.review-owner-actions', ['review' => $review], key('review-owner-actions-profile-' . $review->id))
+                                                            </div>
+                                                        @endif
+                                                    @endauth
+
+                                                    <div class="scale-90 sm:scale-100 origin-right">
+                                                        @livewire('utils.like-button', ['model' => $review], key('profile-review-like-' . $review->id))
+                                                    </div>
+
+                                                    <div class="scale-90 sm:scale-100 origin-right">
+                                                        @livewire('utils.report-button', ['model' => $review], key('profile-review-report-' . $review->id))
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </article>

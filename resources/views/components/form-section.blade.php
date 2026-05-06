@@ -9,7 +9,7 @@
     <div class="mt-5 md:mt-0 md:col-span-2">
         <form wire:submit="{{ $submit }}">
             <div
-                class="px-4 py-5 bg-[#151821] border border-gray-800 sm:p-6 shadow-xl text-gray-400 {{ isset($actions) ? 'sm:rounded-t-[2rem]' : 'sm:rounded-[2rem]' }}">
+                class="px-4 py-5 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border sm:p-6 shadow-xl text-lightbox-text dark:text-gray-300 transition-colors duration-300 {{ isset($actions) ? 'sm:rounded-t-[2rem]' : 'sm:rounded-[2rem]' }}">
                 <div class="grid grid-cols-6 gap-6">
                     {{ $form }}
                 </div>
@@ -17,7 +17,7 @@
 
             @if (isset($actions))
                 <div
-                    class="flex items-center justify-end px-4 py-3 bg-[#0f1117] border border-t-0 border-gray-800 text-end sm:px-6 shadow-xl sm:rounded-b-[2rem]">
+                    class="flex items-center justify-end px-4 py-3 bg-lightbox-soft dark:bg-darkbox-main border border-t-0 border-lightbox-border dark:border-darkbox-border text-end sm:px-6 shadow-xl sm:rounded-b-[2rem] transition-colors duration-300">
                     {{ $actions }}
                 </div>
             @endif

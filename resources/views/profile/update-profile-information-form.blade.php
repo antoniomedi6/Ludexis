@@ -41,7 +41,7 @@
 
                     <div class="flex flex-col gap-2">
                         <button type="button" x-on:click.prevent="$refs.photo.click()"
-                            class="bg-gray-100 dark:bg-darkbox-card hover:bg-gray-200 dark:hover:bg-darkbox-main text-gray-900 dark:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-widest transition-colors border border-gray-200 dark:border-darkbox-border focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                            class="bg-lightbox-main dark:bg-darkbox-card hover:bg-lightbox-soft dark:hover:bg-darkbox-main text-lightbox-text dark:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-widest transition-colors border border-lightbox-border dark:border-darkbox-border focus:outline-none focus:ring-2 focus:ring-cyan-500">
                             <i class="fa-solid fa-camera mr-2" aria-hidden="true"></i>
                             {{ __('Seleccionar Nueva Foto') }}
                         </button>
@@ -68,7 +68,7 @@
                 <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
                     aria-hidden="true"></i>
                 <x-input id="name" type="text"
-                    class="block w-full bg-gray-50 dark:bg-darkbox-main border-gray-200 dark:border-darkbox-border text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
+                    class="block w-full bg-lightbox-main dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border text-lightbox-text dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
                     wire:model="state.name" required autocomplete="name" />
             </div>
             <x-input-error for="name" class="mt-2 text-red-500 text-xs font-bold" />
@@ -84,7 +84,7 @@
                 <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
                     aria-hidden="true"></i>
                 <x-input id="email" type="email"
-                    class="block w-full bg-gray-50 dark:bg-darkbox-main border-gray-200 dark:border-darkbox-border text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
+                    class="block w-full bg-lightbox-main dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border text-lightbox-text dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
                     wire:model="state.email" required
                     autocomplete="{{ $this->user->hasOfficialEmail() ? 'username' : 'off' }}" autocapitalize="none"
                     autocorrect="off" spellcheck="false" />
@@ -96,18 +96,18 @@
                     Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) &&
                     !$this->user->hasVerifiedEmail())
                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">
-                    {{ __('Tu dirección de correo electrónico no está verificada.') }}
+                    {{ __('Tu direcci?n de correo electr?nico no est? verificada.') }}
 
                     <button type="button"
                         class="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest hover:text-cyan-500 dark:hover:text-cyan-300 ml-1 underline focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded"
                         wire:click.prevent="sendEmailVerification">
-                        {{ __('Haz clic aquí para reenviar el correo de verificación.') }}
+                        {{ __('Haz clic aqu? para reenviar el correo de verificaci?n.') }}
                     </button>
                 </p>
 
                 @if ($this->verificationLinkSent)
                     <p class="mt-2 font-black text-[10px] uppercase tracking-widest text-emerald-500">
-                        {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.') }}
+                        {{ __('Se ha enviado un nuevo enlace de verificaci?n a tu direcci?n de correo electr?nico.') }}
                     </p>
                 @endif
             @endif
@@ -122,7 +122,7 @@
         </x-action-message>
 
         <button wire:loading.attr="disabled" wire:target="photo" type="submit"
-            class="inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-darkbox-card disabled:opacity-50">
+            class="inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-lightbox-soft dark:focus:ring-offset-darkbox-main disabled:opacity-50">
             <i class="fa-solid fa-floppy-disk mr-2" aria-hidden="true"></i> {{ __('Guardar') }}
         </button>
     </x-slot>

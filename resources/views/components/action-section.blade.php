@@ -6,7 +6,7 @@
 
     <div class="mt-5 md:mt-0 md:col-span-2">
         <div
-            class="px-4 py-5 sm:p-6 bg-[#151821] border border-gray-800 shadow-xl sm:rounded-[2rem] text-gray-400 font-medium">
+            class="px-4 py-5 sm:p-6 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border shadow-xl sm:rounded-[2rem] text-lightbox-text dark:text-gray-300 font-medium transition-colors duration-300">
             {{ $content }}
         </div>
     </div>

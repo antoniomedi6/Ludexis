@@ -10,14 +10,6 @@
         <section
             class="relative border-b border-gray-200 dark:border-gray-800 overflow-hidden transition-colors duration-300 z-10"
             aria-labelledby="hero-heading">
-            {{-- Fondo con imagen y gradiente --}}
-            <div class="absolute inset-0 bg-cover bg-center opacity-10 dark:opacity-20"
-                style="background-image: url('https://images.igdb.com/igdb/image/upload/t_1080p/sc7fwa.jpg');"
-                aria-hidden="true"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-gray-50 via-gray-50/90 to-transparent dark:from-gray-950 dark:via-gray-950/90 dark:to-transparent transition-colors duration-300"
-                aria-hidden="true">
-            </div>
-
             <div
                 class="relative max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28 flex flex-col md:flex-row items-center justify-between gap-12">
 
@@ -56,7 +48,7 @@
                 <div class="hidden md:flex gap-5 transform rotate-3 scale-105 relative z-10" aria-hidden="true">
                     <div
                         class="w-36 h-52 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border-4 border-white dark:border-gray-800 transform -translate-y-6 transition-transform hover:scale-105 hover:-translate-y-8 duration-500">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4ksi.jpg"
+                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1q1f.jpg"
                             alt="Portada de juego de ejemplo 1" class="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div

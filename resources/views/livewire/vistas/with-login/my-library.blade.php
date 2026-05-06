@@ -7,10 +7,10 @@
             {{-- Buscador Principal --}}
             <div class="relative w-full md:w-64 shrink-0">
                 <label for="search" class="sr-only">Buscar juego en la biblioteca</label>
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-sm"
                     aria-hidden="true"></i>
                 <input id="search" type="search" wire:model.live.debounce.300ms="search" placeholder="Buscar juego..."
-                    class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    class="w-full bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border hover:bg-lightbox-soft dark:hover:bg-darkbox-card hover:border-cyan-300 dark:hover:border-cyan-600 text-lightbox-text dark:text-white text-sm rounded-xl pl-10 pr-4 py-3 font-bold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
             </div>
 
             <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
@@ -19,18 +19,18 @@
                 <div class="relative w-full sm:w-auto" x-data="{ filtersOpen: false }">
                     <button type="button" @click="filtersOpen = !filtersOpen" aria-haspopup="true"
                         :aria-expanded="filtersOpen.toString()"
-                        class="w-full sm:w-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white px-5 py-3 rounded-xl text-sm font-black flex items-center justify-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        class="w-full sm:w-auto bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border hover:bg-lightbox-soft dark:hover:bg-darkbox-card hover:border-cyan-300 dark:hover:border-cyan-600 text-lightbox-text dark:text-white px-5 py-3 rounded-xl text-sm font-black flex items-center justify-center gap-3 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i class="fa-solid fa-filter text-cyan-700 dark:text-cyan-500" aria-hidden="true"></i> Filtros
                     </button>
 
                     <div x-show="filtersOpen" @click.away="filtersOpen = false" x-transition.opacity
                         @keydown.escape.window="filtersOpen = false"
-                        class="absolute right-0 top-full mt-3 w-full sm:w-80 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl z-[100] p-6 flex flex-col gap-6"
+                        class="absolute right-0 top-full mt-3 w-full sm:w-80 bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border rounded-2xl shadow-2xl z-[100] p-6 flex flex-col gap-6"
                         role="dialog" aria-label="Panel de filtros" x-cloak style="display: none;">
 
                         <div
-                            class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-4">
-                            <h2 class="font-black text-gray-900 dark:text-white text-lg tracking-tight">Filtros</h2>
+                            class="flex items-center justify-between border-b border-lightbox-border dark:border-darkbox-border pb-4">
+                            <h2 class="font-black text-lightbox-text dark:text-white text-lg tracking-tight">Filtros</h2>
                             <button type="button" wire:click="$set('filterBy', '')" @click="filtersOpen = false"
                                 class="text-sm font-black text-cyan-700 dark:text-cyan-500 uppercase tracking-widest hover:underline focus:outline-none">Limpiar</button>
                         </div>
@@ -43,7 +43,7 @@
                                     Estado del juego
                                 </label>
                                 <select id="filter-status" wire:model.live="filterBy"
-                                    class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-3 text-sm font-bold text-gray-900 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none cursor-pointer">
+                                    class="w-full bg-lightbox-main dark:bg-gray-800 border border-lightbox-border dark:border-gray-700 rounded-xl px-3 py-3 text-sm font-bold text-lightbox-text dark:text-white hover:bg-lightbox-soft dark:hover:bg-gray-700 focus:ring-2 focus:ring-cyan-500 focus:outline-none cursor-pointer transition-colors">
                                     <option value="">Todos los juegos</option>
                                     <option value="playing">Jugando</option>
                                     <option value="completed">Completados</option>
@@ -58,19 +58,19 @@
                 </div>
 
                 {{-- Ordenación Global --}}
-                <div class="relative w-full sm:w-56 shrink-0">
+                <div class="relative group w-full sm:w-56 shrink-0">
                     <label for="order-library" class="sr-only">Ordenar biblioteca</label>
-                    <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-colors duration-300"
+                    <i class="fa-solid fa-sort absolute left-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-sm transition-colors duration-300"
                         aria-hidden="true"></i>
 
                     <select id="order-library" wire:model.live="orderBy"
-                        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-[#1f2937] text-gray-900 dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                        class="bg-lightbox-card dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border hover:bg-lightbox-soft dark:hover:bg-darkbox-card text-lightbox-text dark:text-white text-sm rounded-xl pl-10 pr-10 py-3 font-bold appearance-none cursor-pointer w-full transition-colors duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
                         <option value="updated_at">Última actualización</option>
                         <option value="rating">Mi Puntuación</option>
                         <option value="time">Horas jugadas</option>
                     </select>
 
-                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none transition-colors duration-300"
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-lightbox-muted dark:text-gray-400 text-xs pointer-events-none transition-colors duration-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-500"
                         aria-hidden="true"></i>
                 </div>
 
@@ -80,7 +80,7 @@
 
     {{-- LISTADO DE JUEGOS --}}
     @if (count($userGames) > 0)
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6 w-full items-stretch"
+        <div class="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-6 w-full items-stretch"
             role="list">
             @foreach ($userGames as $item)
                 @php
@@ -94,7 +94,7 @@
 
                 <div role="listitem">
                     <a href="{{ route('games.show', $item->slug) }}"
-                        class="h-full block group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-none hover:border-cyan-300 dark:hover:border-cyan-500/50 focus:outline-none focus:ring-4 focus:ring-cyan-500 transition-all duration-500 flex flex-col {{ $isAbandoned || $isPending ? 'opacity-80 hover:opacity-100' : '' }}">
+                        class="h-full block group bg-lightbox-card dark:bg-gray-900 border border-lightbox-border dark:border-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-none hover:bg-lightbox-soft dark:hover:bg-gray-900 hover:border-cyan-300 dark:hover:border-cyan-500/50 focus:outline-none focus:ring-4 focus:ring-cyan-500 transition-all duration-500 flex flex-col {{ $isAbandoned || $isPending ? 'opacity-80 hover:opacity-100' : '' }}">
 
                         {{-- PORTADA Y BADGES --}}
                         <div class="relative aspect-[4/3] w-full overflow-hidden shrink-0">
@@ -164,20 +164,23 @@
 
                         {{-- INFO DEL JUEGO --}}
                         <div
-                            class="p-4 sm:p-6 flex-1 flex flex-col justify-center border-t border-gray-50 dark:border-gray-800/50">
+                            class="p-2 md:p-6 flex-1 flex flex-col justify-center border-t border-gray-50 dark:border-gray-800/50">
                             <h3
-                                class="text-base sm:text-xl font-black text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300 break-words">
+                                class="text-xs md:text-xl font-black text-gray-900 dark:text-white leading-tight mb-1 md:mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300 break-words line-clamp-2">
                                 {{ $item->title }}
                             </h3>
                             <p
-                                class="text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors duration-300 mt-auto pt-2
+                                class="text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1 sm:gap-1.5 transition-colors duration-300 mt-auto pt-1 sm:pt-2
                                 {{ $status === 'finish' || $status === 'completed' ? 'text-green-600 dark:text-green-500' : '' }}
                                 {{ $status === 'playing' ? 'text-cyan-600 dark:text-cyan-500' : '' }}
                                 {{ $status === 'abandoned' ? 'text-red-600 dark:text-red-500' : '' }}
                                 {{ $status === 'pending' || $status === 'paused' ? 'text-yellow-600 dark:text-yellow-500' : '' }}
                                 {{ $status === 'multiplayer' ? 'text-blue-600 dark:text-blue-500' : '' }}">
                                 <i class="fa-regular fa-clock" aria-hidden="true"></i>
-                                {{ $hours }} hrs jugadas
+                                <span>
+                                    {{ $hours }} h<span class="hidden sm:inline">rs</span><span
+                                        class="hidden lg:inline"> jugadas</span>
+                                </span>
                             </p>
                         </div>
                     </a>

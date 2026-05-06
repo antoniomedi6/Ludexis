@@ -1,5 +1,10 @@
 <x-miscomponentes.page-layout :fullWidth="false">
 
+    {{-- LOADING --}}
+    <x-miscomponentes.loading-spinner wire:target="setFilter">
+        Actualizando cronología
+    </x-miscomponentes.loading-spinner>
+
     {{-- RESPLANDOR DE FONDO --}}
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-screen bg-cyan-200/40 dark:bg-cyan-900/20 rounded-full blur-3xl opacity-70 pointer-events-none z-0"
         aria-hidden="true">
@@ -18,17 +23,17 @@
                 Tu Cronología
             </h2>
 
-            <div class="bg-gray-100 dark:bg-gray-900 p-1.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm inline-flex relative z-20"
+            <div class="w-full max-w-md bg-lightbox-soft dark:bg-gray-900 p-1.5 rounded-2xl border border-lightbox-border dark:border-gray-800 shadow-sm flex relative z-20"
                 role="group" aria-label="Filtros de vista">
                 <button type="button" wire:click="setFilter('current_year')"
                     aria-pressed="{{ $filterOption === 'current_year' ? 'true' : 'false' }}"
-                    class="relative px-8 py-2.5 rounded-xl text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'current_year' ? 'text-cyan-700 dark:text-cyan-400 bg-white dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
+                    class="relative flex-1 min-w-0 px-3 sm:px-8 py-2.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'current_year' ? 'text-cyan-700 dark:text-cyan-400 bg-lightbox-card dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-cyan-700 dark:hover:text-white hover:bg-lightbox-card/90 dark:hover:bg-gray-800 hover:shadow-sm' }}">
                     Resumen Anual
                 </button>
 
                 <button type="button" wire:click="setFilter('current_month')"
                     aria-pressed="{{ $filterOption === 'current_month' ? 'true' : 'false' }}"
-                    class="relative px-8 py-2.5 rounded-xl text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'current_month' ? 'text-cyan-700 dark:text-cyan-400 bg-white dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
+                    class="relative flex-1 min-w-0 px-3 sm:px-8 py-2.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 {{ $filterOption === 'current_month' ? 'text-cyan-700 dark:text-cyan-400 bg-lightbox-card dark:bg-gray-800 shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-cyan-700 dark:hover:text-white hover:bg-lightbox-card/90 dark:hover:bg-gray-800 hover:shadow-sm' }}">
                     Vista Mensual
                 </button>
             </div>

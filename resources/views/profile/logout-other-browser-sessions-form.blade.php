@@ -18,7 +18,7 @@
                 @foreach ($this->sessions as $session)
                     <div class="flex items-center">
                         <div
-                            class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border shrink-0">
+                            class="flex items-center justify-center w-12 h-12 rounded-full bg-lightbox-soft dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border shrink-0">
                             @if ($session->agent->isDesktop())
                                 <i class="fa-solid fa-desktop text-gray-500 dark:text-gray-400 text-lg"
                                     aria-hidden="true"></i>
@@ -29,13 +29,13 @@
                         </div>
 
                         <div class="ms-4 flex-1">
-                            <div class="text-sm font-bold text-gray-900 dark:text-white">
+                            <div class="text-sm font-bold text-lightbox-text dark:text-white">
                                 {{ $session->agent->platform() ? $session->agent->platform() : __('Desconocido') }} -
                                 {{ $session->agent->browser() ? $session->agent->browser() : __('Desconocido') }}
                             </div>
 
                             <div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
+                                <div class="text-xs text-lightbox-muted dark:text-gray-400 font-medium mt-1">
                                     {{ $session->ip_address }},
 
                                     @if ($session->is_current_device)
@@ -55,7 +55,7 @@
 
         <div class="flex items-center mt-6">
             <button wire:click="confirmLogout" wire:loading.attr="disabled"
-                class="inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-darkbox-card disabled:opacity-50">
+                class="inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-lightbox-soft dark:focus:ring-offset-darkbox-main disabled:opacity-50">
                 <i class="fa-solid fa-right-from-bracket mr-2" aria-hidden="true"></i> {{ __('Cerrar otras sesiones') }}
             </button>
 
@@ -80,7 +80,7 @@
                         <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
                             aria-hidden="true"></i>
                         <x-input type="password"
-                            class="mt-1 block w-full sm:w-3/4 bg-gray-50 dark:bg-darkbox-main border-gray-200 dark:border-darkbox-border text-gray-900 dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
+                            class="mt-1 block w-full sm:w-3/4 bg-lightbox-main dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border text-lightbox-text dark:text-white rounded-xl pl-11 pr-4 py-3 text-sm focus:border-cyan-500 focus:ring-cyan-500 transition placeholder-gray-400 dark:placeholder-gray-600"
                             autocomplete="current-password" placeholder="{{ __('Tu contraseña') }}" x-ref="password"
                             wire:model="password" wire:keydown.enter="logoutOtherBrowserSessions" />
                     </div>
@@ -90,12 +90,12 @@
 
             <x-slot name="footer">
                 <button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled"
-                    class="px-6 py-3 bg-white dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border text-gray-700 dark:text-gray-300 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50">
+                    class="px-6 py-3 bg-lightbox-main dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border text-lightbox-text dark:text-gray-300 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-lightbox-soft dark:hover:bg-darkbox-card transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-lightbox-card dark:focus:ring-offset-darkbox-card disabled:opacity-50">
                     {{ __('Cancelar') }}
                 </button>
 
                 <button wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled"
-                    class="ms-3 inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-darkbox-card disabled:opacity-50">
+                    class="ms-3 inline-flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.2)] hover:shadow-[0_0_25px_rgba(8,145,178,0.4)] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-lightbox-card dark:focus:ring-offset-darkbox-card disabled:opacity-50">
                     {{ __('Cerrar Sesiones') }}
                 </button>
             </x-slot>

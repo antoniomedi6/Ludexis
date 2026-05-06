@@ -58,12 +58,16 @@ class GameRegistryCard extends Component
 
     public function toggleStatus()
     {
-        $this->authorize('delete', $this->gameUser);
         if ($this->gameUser) {
+            $this->authorize('delete', $this->gameUser);
+
             $this->gameUser->delete();
             $this->gameUser = null;
         }
-        $this->form->reset();
+
+        $this->form->cancelForm();
+        $this->form->game_id = $this->game->id;
+        $this->form->user_id = Auth::id();
 
         app(GameScoreService::class)->recalculate($this->game->refresh());
 

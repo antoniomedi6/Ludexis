@@ -25,14 +25,14 @@
             <span
                 class="text-xs font-black tracking-widest uppercase transition-colors duration-300 relative z-10
             {{ $isLiked ? 'text-cyan-400' : 'text-gray-600 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400' }}">
-                {{ $likesCount > 0 ? $likesCount : 'Like' }}
+                {{ $likesCount }}
             </span>
         </button>
 
         {{-- Vista para usuarios no autenticados --}}
     @else
         <span
-            class="group relative flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm bg-white dark:bg-darkbox-card border-gray-200 dark:border-gray-800">
+            class="group relative cursor-not-allowed flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-sm bg-white dark:bg-darkbox-card border-gray-200 dark:border-gray-800">
 
             <div class="relative flex items-center justify-center">
                 <div class="absolute inset-0 bg-cyan-400 blur-md transition-opacity duration-300 {{ $isLiked ? 'opacity-40' : 'opacity-0' }}"
@@ -47,7 +47,7 @@
 
             <span
                 class="text-xs font-black tracking-widest uppercase transition-colors duration-300 relative z-10 text-gray-600 dark:text-gray-400">
-                {{ $likesCount > 0 ? $likesCount : 'Like' }}
+                {{ $likesCount }}
             </span>
         </span>
     @endauth

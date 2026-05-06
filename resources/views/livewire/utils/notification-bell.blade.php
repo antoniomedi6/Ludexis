@@ -2,7 +2,7 @@
     @keydown.escape.window="open = false">
     {{-- DISPARADOR --}}
     <button type="button" @click="open = !open"
-        class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gray-50 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-lightbox-main dark:bg-darkbox-main border border-lightbox-border dark:border-darkbox-border text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-soft dark:hover:bg-darkbox-card transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
         :aria-expanded="open ? 'true' : 'false'" aria-haspopup="true"
         aria-label="Actividad de seguimiento{{ $badgeCount > 0 ? ', ' . $badgeCount . ' solicitudes pendientes' : '' }}">
         <span class="sr-only">Abrir o cerrar panel de solicitudes y seguidores</span>
@@ -16,13 +16,13 @@
 
     {{-- PANEL --}}
     <div x-show="open" x-cloak
-        class="absolute right-0 top-full z-50 mt-2 flex w-80 max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-darkbox-border bg-white shadow-xl dark:bg-darkbox-card sm:w-96"
+        class="absolute right-0 top-full z-50 mt-2 flex w-80 max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border border-lightbox-border dark:border-darkbox-border bg-lightbox-card shadow-xl dark:bg-darkbox-card sm:w-96"
         role="dialog" aria-label="Solicitudes y seguidores recientes">
-        <div class="shrink-0 border-b border-gray-100 px-4 py-3 dark:border-darkbox-border">
-            <h2 class="text-sm font-black tracking-tight text-gray-900 dark:text-white">Seguimiento</h2>
+        <div class="shrink-0 border-b border-lightbox-border px-4 py-3 dark:border-darkbox-border">
+            <h2 class="text-sm font-black tracking-tight text-lightbox-text dark:text-white">Seguimiento</h2>
         </div>
 
-        <div class="max-h-80 divide-y divide-gray-100 overflow-y-auto dark:divide-darkbox-border sm:max-h-96">
+        <div class="max-h-80 divide-y divide-lightbox-border overflow-y-auto dark:divide-darkbox-border sm:max-h-96">
             @if ($pendingFollowers->isNotEmpty())
                 <div class="p-3" role="region" aria-label="Solicitudes pendientes">
                     <h3 class="text-xs font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Solicitudes</h3>
@@ -61,7 +61,7 @@
                         @foreach ($recentFollowers as $follower)
                             <li wire:key="recent-{{ $follower->id }}">
                                 <a href="{{ route('profile', ['userId' => $follower->id]) }}" wire:navigate
-                                    class="flex gap-3 items-center rounded-lg p-1 -m-1 hover:bg-gray-50 dark:hover:bg-darkbox-main/80 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-cyan-500">
+                                    class="flex gap-3 items-center rounded-lg p-1 -m-1 hover:bg-lightbox-soft dark:hover:bg-darkbox-main/80 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-cyan-500">
                                     <img src="{{ $follower->profile_photo_url }}" alt=""
                                         class="w-9 h-9 rounded-full object-cover shrink-0 border border-gray-200 dark:border-darkbox-border"
                                         width="36" height="36">

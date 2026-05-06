@@ -170,20 +170,20 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
                     x-transition:leave-end="opacity-0 -translate-x-4 scale-95"
-                    class="absolute bottom-full mb-4 left-4 w-48 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] z-[100] transition-all duration-300 lg:fixed lg:bottom-6 lg:mb-0"
+                    class="absolute bottom-full mb-4 left-4 w-48 bg-lightbox-card dark:bg-darkbox-card border border-lightbox-border dark:border-darkbox-border rounded-2xl shadow-xl dark:shadow-2xl z-[100] transition-all duration-300 lg:fixed lg:bottom-6 lg:mb-0"
                     :class="showNav ? 'lg:left-[17rem]' : 'lg:left-[7rem]'" role="menu" aria-orientation="vertical"
                     aria-labelledby="user-menu-button">
 
                     <div class="p-2 flex flex-col gap-1">
                         <a href="{{ route('profile', Auth::id()) }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-main dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-main dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-user text-sm w-4 text-center" aria-hidden="true"></i>
                             {{ __('Mi Perfil') }}
                         </a>
 
                         <a href="{{ route('profile.show') }}" wire:navigate @click="closeNavOnMobile()"
-                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-main dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                            class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-lightbox-main dark:hover:bg-darkbox-main transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
                             role="menuitem">
                             <i class="fa-solid fa-gear text-sm w-4 text-center" aria-hidden="true"></i>
                             {{ __('Opciones') }}
@@ -192,7 +192,7 @@
                         <form method="POST" action="{{ route('logout') }}" class="w-full">
                             @csrf
                             <button type="submit"
-                                class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                                class="flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-black uppercase tracking-widest text-lightbox-muted dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors duration-300 w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
                                 role="menuitem">
                                 <i class="fa-solid fa-right-from-bracket text-sm w-4 text-center" aria-hidden="true"></i>
                                 {{ __('Cerrar Sesión') }}
@@ -223,7 +223,8 @@
                     </div>
 
                     <div x-show="showNav" x-cloak class="space-y-1.5 whitespace-nowrap w-full" aria-hidden="true">
-                        <div class="flex justify-between text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+                        <div
+                            class="flex justify-between text-[10px] text-lightbox-muted dark:text-gray-500 font-bold uppercase tracking-wider">
                             <span>XP: {{ Auth::user()->xp ?? 0 }}</span>
                         </div>
                         <div

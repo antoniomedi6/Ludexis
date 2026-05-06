@@ -14,7 +14,6 @@
                     {{ $totalCount }} {{ $totalCount === 1 ? 'Reseña' : 'Reseñas' }}
                 </span>
             </div>
-
             @if ($totalCount > 0 || $filter !== 'all')
                 <div class="flex flex-wrap gap-2">
                     <x-miscomponentes.filter-select wire:model.live="filter" accent="cyan">
@@ -25,11 +24,18 @@
                     </x-miscomponentes.filter-select>
 
                     <x-miscomponentes.filter-select wire:model.live="sort" accent="cyan">
+                        <option value="top_week">Relevantes</option>
                         <option value="newest">Más recientes</option>
                         <option value="highest">Mayor nota</option>
                         <option value="lowest">Menor nota</option>
                         <option value="oldest">Más antiguas</option>
                     </x-miscomponentes.filter-select>
+
+                    <span wire:loading.flex wire:target="filter,sort" class="items-center justify-center pl-1"
+                        aria-live="polite">
+                        <span class="sr-only">Aplicando filtros...</span>
+                        <x-icons.animate-spin class="size-4 text-cyan-600 dark:text-cyan-400" />
+                    </span>
                 </div>
             @endif
         </div>
@@ -45,63 +51,73 @@
             <div class="space-y-4" role="feed" aria-label="Lista de opiniones">
                 @foreach ($reviews as $item)
                     <article
-                        class="bg-white dark:bg-darkbox-card p-4 md:p-5 rounded-2xl border shadow-sm flex flex-col gap-3 group transition-colors duration-300
+                        class="bg-white dark:bg-darkbox-card p-6 rounded-2xl border shadow-md dark:shadow-lg hover:border-cyan-400 dark:hover:border-cyan-500/50 transition-all duration-300 flex flex-col sm:flex-row gap-6
                         {{ Auth::check() && Auth::id() === $item->user_id ? 'border-cyan-400 dark:border-cyan-600 ring-1 ring-cyan-500/10' : 'border-gray-200 dark:border-darkbox-border' }}">
 
-                        <div class="flex justify-between items-start">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ $item->user->profile_photo_url }}" alt="Avatar de {{ $item->user->name }}"
-                                    loading="lazy"
-                                    class="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-darkbox-border" />
-                                <div>
-                                    <div class="flex items-center gap-2">
-                                        <h4 class="font-bold text-sm text-gray-900 dark:text-white leading-none">
-                                            {{ $item->user->name }}
-                                        </h4>
-                                        <span
-                                            class="text-xs bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 px-1.5 py-0.5 rounded font-black uppercase tracking-widest border border-cyan-200 dark:border-cyan-800/50 shadow-sm">
-                                            {{ $item->user->roleLabel() }}
-                                        </span>
-                                        @if (Auth::check() && Auth::id() === $item->user_id)
-                                            <span
-                                                class="text-[9px] bg-cyan-500 text-white px-1.5 py-0.5 rounded-sm font-black uppercase tracking-widest shadow-sm">
-                                                Tu reseña
-                                            </span>
+                        <div class="flex-1 flex flex-col gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-3">
+                                    <a href="{{ route('profile', $item->user) }}"
+                                        class="group focus:outline-none focus:ring-4 focus:ring-cyan-500 rounded-full">
+                                        <img src="{{ $item->user->profile_photo_url }}"
+                                            alt="Avatar de {{ $item->user->name }}" loading="lazy"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-darkbox-border" />
+                                    </a>
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <a href="{{ route('profile', $item->user->id) }}"
+                                                class="group focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                                                <h4
+                                                    class="font-bold text-sm text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
+                                                    {{ $item->user->name }}
+                                                </h4>
+                                            </a>
+                                            @if (Auth::check() && Auth::id() === $item->user_id)
+                                                <span
+                                                    class="text-[9px] bg-cyan-500 text-white px-1.5 py-0.5 rounded-sm font-black uppercase tracking-widest shadow-sm">
+                                                    Tu reseña
+                                                </span>
+                                            @endif
+                                            <time datetime="{{ $item->updated_at }}"
+                                                class="text-xxs text-gray-500 font-bold widest">
+                                                {{ $item->updated_at->diffForHumans() }}
+                                            </time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    @auth
+                                        @if (Auth::id() === $item->user_id)
+                                            @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-specific-' . $item->id))
                                         @endif
-                                    </div>
-                                    <div class="block mt-1 text-xs text-gray-500 font-bold uppercase tracking-widest">
-                                        {{ $item->updated_at->diffForHumans() }}
+                                    @endauth
+
+                                    <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
+                                        aria-label="Nota: {{ $item->rating }}">
+                                        <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
+                                            aria-hidden="true">{{ $item->rating }}</span>
+                                        <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-2">
-                                @auth
-                                    @if (Auth::id() === $item->user_id)
-                                        @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-specific-' . $item->id))
-                                    @endif
-                                @endauth
 
-                                <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
-                                    aria-label="Nota: {{ $item->rating }}">
-                                    <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
-                                        aria-hidden="true">{{ $item->rating }}</span>
-                                    <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
-                                </div>
+                            <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                {{ $item->review }}
                             </div>
-                        </div>
 
-                        <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {{ $item->review }}
-                        </div>
-
-                        <div class="mt-2 flex justify-start items-center gap-2 flex-wrap">
-                            @auth
-                                <div class="scale-90 origin-left">
-                                    @livewire('utils.like-button', ['model' => $item], key('like-btn-specific-' . $item->id))
+                            <div class="mt-auto flex justify-between items-center gap-2 flex-wrap">
+                                <span
+                                    class="text-xxs bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 px-1.5 py-0.5 rounded font-black uppercase tracking-widest border border-cyan-200 dark:border-cyan-800/50 shadow-sm">
+                                    {{ $item->user->roleLabel() }}
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="scale-90 origin-left">
+                                        @livewire('utils.like-button', ['model' => $item], key('like-btn-specific-' . $item->id))
+                                    </div>
+                                    <div class="scale-90 origin-left">
+                                        @livewire('utils.report-button', ['model' => $item], key('report-btn-specific-' . $item->id))
+                                    </div>
                                 </div>
-                            @endauth
-                            <div class="scale-90 origin-left">
-                                @livewire('utils.report-button', ['model' => $item], key('report-btn-specific-' . $item->id))
                             </div>
                         </div>
                     </article>
@@ -138,24 +154,32 @@
                         {{ $totalCount }} {{ $totalCount === 1 ? 'Reseña' : 'Reseñas' }}
                     </span>
                 </div>
+                @auth
+                    @if ($totalCount > 0 || $filter !== 'all')
+                        <div class="flex flex-wrap gap-2">
+                            <x-miscomponentes.filter-select wire:model.live="filter" accent="indigo">
+                                <option value="all">Todas las notas</option>
+                                <option value="positive">Positivas (7-10)</option>
+                                <option value="mixed">Mixtas (4-6)</option>
+                                <option value="negative">Negativas (1-3)</option>
+                            </x-miscomponentes.filter-select>
 
-                @if ($totalCount > 0 || $filter !== 'all')
-                    <div class="flex flex-wrap gap-2">
-                        <x-miscomponentes.filter-select wire:model.live="filter" accent="indigo">
-                            <option value="all">Todas las notas</option>
-                            <option value="positive">Positivas (7-10)</option>
-                            <option value="mixed">Mixtas (4-6)</option>
-                            <option value="negative">Negativas (1-3)</option>
-                        </x-miscomponentes.filter-select>
+                            <x-miscomponentes.filter-select wire:model.live="sort" accent="indigo">
+                                <option value="top_week">Relevantes</option>
+                                <option value="newest">Más recientes</option>
+                                <option value="highest">Mayor nota</option>
+                                <option value="lowest">Menor nota</option>
+                                <option value="oldest">Más antiguas</option>
+                            </x-miscomponentes.filter-select>
 
-                        <x-miscomponentes.filter-select wire:model.live="sort" accent="indigo">
-                            <option value="newest">Más recientes</option>
-                            <option value="highest">Mayor nota</option>
-                            <option value="lowest">Menor nota</option>
-                            <option value="oldest">Más antiguas</option>
-                        </x-miscomponentes.filter-select>
-                    </div>
-                @endif
+                            <span wire:loading.flex wire:target="filter,sort" class="items-center justify-center pl-1"
+                                aria-live="polite">
+                                <span class="sr-only">Aplicando filtros...</span>
+                                <x-icons.animate-spin class="size-4 text-indigo-600 dark:text-indigo-400" />
+                            </span>
+                        </div>
+                    @endif
+                @endauth
             </div>
 
             @if ($reviews->isEmpty())
@@ -184,30 +208,34 @@
                             <div class="flex-1 flex flex-col gap-3">
                                 <div class="flex justify-between items-start">
                                     <div class="flex items-center gap-3">
-                                        <img src="{{ $item->user->profile_photo_url }}"
-                                            alt="Avatar de {{ $item->user->name }}" loading="lazy"
-                                            class="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-darkbox-border" />
+                                        <a href="{{ route('profile', $item->user) }}"
+                                            class="group focus:outline-none focus:ring-4 focus:ring-indigo-500 rounded-full">
+                                            <img src="{{ $item->user->profile_photo_url }}"
+                                                alt="Avatar de {{ $item->user->name }}" loading="lazy"
+                                                class="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-darkbox-border" />
+                                        </a>
                                         <div>
                                             <div class="flex items-center gap-2">
-                                                <h3
-                                                    class="font-bold text-sm text-gray-900 dark:text-white transition-colors duration-300">
-                                                    {{ $item->user->name }}
+                                                <a href="{{ route('profile', $item->user->id) }}"
+                                                    class="group focus:outline-none focus:ring-4 focus:ring-indigo-500">
+                                                    <h3
+                                                        class="font-bold text-sm text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                                                        {{ $item->user->name }}
+                                                    </h3>
+                                                </a>
                                                 </h3>
-                                                <span
-                                                    class="text-xs bg-indigo-100 text-indigo-700 dark:bg-indigo-600 dark:text-white px-1.5 py-0.5 rounded font-black uppercase shadow-sm transition-colors duration-300">
-                                                    {{ $item->user->roleLabel() }}
-                                                </span>
                                                 @if (Auth::check() && Auth::id() === $item->user_id)
                                                     <span
                                                         class="text-[9px] bg-indigo-500 text-white px-1.5 py-0.5 rounded-sm font-black uppercase tracking-widest shadow-sm">
                                                         Tu reseña
                                                     </span>
                                                 @endif
+                                                <time datetime="{{ $item->updated_at }}"
+                                                    class="text-xxs text-gray-500 font-bold widest">
+                                                    {{ $item->updated_at->diffForHumans() }}
+                                                </time>
                                             </div>
-                                            <time datetime="{{ $item->updated_at }}"
-                                                class="block mt-1 text-xs text-gray-500 font-bold uppercase tracking-widest">
-                                                {{ $item->updated_at->diffForHumans() }}
-                                            </time>
+
                                             <p
                                                 class="text-xs text-gray-600 dark:text-gray-400 font-bold uppercase mt-0.5 transition-colors duration-300">
                                                 Sobre <a href="{{ route('games.show', $item->game->slug) }}"
@@ -216,16 +244,17 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2">
-                                            @if (Auth::id() === $item->user_id)
-                                                @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-global-' . $item->id))
-                                            @endif
+                                        @if (Auth::id() === $item->user_id)
+                                            @livewire('utils.review-owner-actions', ['review' => $item], key('review-owner-actions-preview-global-' . $item->id))
+                                        @endif
 
                                         @if ($item->rating > 0)
                                             <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-darkbox-main px-2.5 py-1 rounded-lg border border-gray-200 dark:border-darkbox-border"
                                                 aria-label="Valoración: {{ $item->rating }}">
                                                 <span class="text-sm font-black text-cyan-700 dark:text-cyan-400"
                                                     aria-hidden="true">{{ $item->rating }}</span>
-                                                <i class="fa-solid fa-star text-xs text-cyan-500" aria-hidden="true"></i>
+                                                <i class="fa-solid fa-star text-xs text-cyan-500"
+                                                    aria-hidden="true"></i>
                                             </div>
                                         @endif
                                     </div>
