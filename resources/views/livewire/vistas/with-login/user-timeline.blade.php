@@ -164,13 +164,6 @@
                                             class="text-2xl font-black text-gray-900 dark:text-white leading-tight uppercase">
                                             {{ $item->game?->title ?? 'Juego desconocido' }}
                                         </h4>
-
-                                        <div
-                                            class="flex items-center gap-3 text-sm text-cyan-700 dark:text-cyan-400 font-bold pt-2 {{ $globalIndex % 2 == 0 ? 'justify-start' : 'md:justify-end' }}">
-                                            <i class="fa-solid fa-clock" aria-hidden="true"></i>
-                                            <span>{{ $item->hours_played }}
-                                                {{ Str::plural('hora', $item->hours_played) }} registradas</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

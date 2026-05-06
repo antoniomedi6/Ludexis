@@ -215,10 +215,11 @@
                             <img src="{{ $user->profile_photo_url }}" alt="Avatar de {{ $user->name }}"
                                 class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-darkbox-main object-cover shadow-xl bg-gray-100 dark:bg-darkbox-main">
 
-                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-yellow-500 text-black text-xs font-black uppercase tracking-widest rounded-full border-2 border-white dark:border-darkbox-main shadow-md whitespace-nowrap"
-                                title="Rol Oficial">
-                                <i class="fa-solid fa-crown mr-1" aria-hidden="true"></i>
-                                {{ $user->roleLabel() }}
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-white dark:bg-darkbox-card text-xs font-black uppercase tracking-widest rounded-full border-2 border-gray-200 dark:border-darkbox-border shadow-md whitespace-nowrap"
+                                title="Rango de biblioteca">
+                                <i class="fa-solid fa-crown mr-1 {{ $user->rank_details['color'] }}"
+                                    aria-hidden="true"></i>
+                                <span class="{{ $user->rank_details['color'] }}">{{ $user->rank_details['name'] }}</span>
                             </div>
                         </div>
                     </div>

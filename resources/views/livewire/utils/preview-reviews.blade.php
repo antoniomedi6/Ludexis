@@ -107,8 +107,8 @@
 
                             <div class="mt-auto flex justify-between items-center gap-2 flex-wrap">
                                 <span
-                                    class="text-xxs bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 px-1.5 py-0.5 rounded font-black uppercase tracking-widest border border-cyan-200 dark:border-cyan-800/50 shadow-sm">
-                                    {{ $item->user->roleLabel() }}
+                                    class="text-xxs bg-gray-100 dark:bg-darkbox-main px-1.5 py-0.5 rounded font-black uppercase tracking-widest border border-gray-200 dark:border-darkbox-border shadow-sm {{ $item->user->rank_details['color'] }}">
+                                    {{ $item->user->rank_details['name'] }}
                                 </span>
                                 <div class="flex items-center gap-2">
                                     <div class="scale-90 origin-left">

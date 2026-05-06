@@ -146,12 +146,10 @@
                                                 alt="Portada de {{ $item->game->title }}">
                                         </a>
 
-                                        @if ($item->user->role && $item->user->role !== 'user')
-                                            <span
-                                                class="sm:hidden text-center text-xxs bg-gray-100 dark:bg-darkbox-main text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkbox-border px-2 py-0.5 rounded-md font-black uppercase">
-                                                {{ $item->user->roleLabel() }}
-                                            </span>
-                                        @endif
+                                        <span
+                                            class="sm:hidden text-center text-xxs bg-gray-100 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border px-2 py-0.5 rounded-md font-black uppercase {{ $item->user->rank_details['color'] }}">
+                                            {{ $item->user->rank_details['name'] }}
+                                        </span>
                                     </div>
 
                                     <div class="min-w-0 flex-1 flex flex-col gap-3">
@@ -172,14 +170,12 @@
 
                                         <footer
                                             class="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-gray-100 dark:border-darkbox-border">
-                                            @if ($item->user->role && $item->user->role !== 'user')
-                                                <div class="hidden sm:block sm:w-auto min-w-0">
-                                                    <span
-                                                        class="shrink-0 text-xs bg-gray-100 dark:bg-darkbox-main text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkbox-border px-2 py-0.5 rounded-md font-black uppercase tracking-widest">
-                                                        {{ $item->user->roleLabel() }}
-                                                    </span>
-                                                </div>
-                                            @endif
+                                            <div class="hidden sm:block sm:w-auto min-w-0">
+                                                <span
+                                                    class="shrink-0 text-xs bg-gray-100 dark:bg-darkbox-main border border-gray-200 dark:border-darkbox-border px-2 py-0.5 rounded-md font-black uppercase tracking-widest {{ $item->user->rank_details['color'] }}">
+                                                    {{ $item->user->rank_details['name'] }}
+                                                </span>
+                                            </div>
 
                                             <div
                                                 class="flex w-full sm:w-auto flex-wrap items-center justify-end gap-2 text-gray-500 dark:text-gray-400 sm:ml-auto">

@@ -216,8 +216,9 @@
                                 class="font-bold text-sm leading-tight text-gray-900 dark:text-white truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
                                 {{ Auth::user()->name }}
                             </h2>
-                            <span class="text-[10px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
-                                {{ Auth::user()->roleLabel() }}
+                            <span
+                                class="text-[10px] font-black uppercase tracking-wider {{ Auth::user()->rank_details['color'] }}">
+                                {{ Auth::user()->rank_details['name'] }}
                             </span>
                         </div>
                     </div>

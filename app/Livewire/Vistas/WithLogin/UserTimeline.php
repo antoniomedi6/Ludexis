@@ -38,19 +38,16 @@ class UserTimeline extends Component
                 'month_name' => $date->translatedFormat('F'),
                 'year' => $date->format('Y'),
                 'activities' => $monthActivities,
-                'total_hours' => $monthActivities->sum('hours_played'),
                 'unique_games_count' => $monthActivities->pluck('game_id')->unique()->count(),
                 'covers' => $monthActivities->map(fn($a) => $a->game->cover_url ?? null)
                     ->filter()
                     ->unique()
                     ->take(5),
                 'top_game' => $monthActivities->groupBy('game_id')
-                    ->map(fn($group) => [
-                        'game' => $group->first()->game,
-                        'hours' => $group->sum('hours_played')
-                    ])
-                    ->sortByDesc('hours')
-                    ->first()['game'] ?? null,
+                    ->sortByDesc(fn ($group) => $group->count())
+                    ->first()
+                    ?->first()
+                    ->game ?? null,
             ];
         });
 
