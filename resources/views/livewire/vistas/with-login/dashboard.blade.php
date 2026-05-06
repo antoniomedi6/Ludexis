@@ -27,7 +27,7 @@
                         <i class="fa-solid fa-trophy absolute -bottom-4 -right-4 text-6xl text-green-50 dark:text-green-900/20 transition-colors duration-300 group-hover:scale-110"
                             aria-hidden="true"></i>
                         <span
-                            class="text-4xl font-black text-green-600 dark:text-green-400 mb-1 relative z-10 transition-colors duration-300">{{ $userGames->where('status', 'completed')->count() }}</span>
+                            class="text-4xl font-black text-green-600 dark:text-green-400 mb-1 relative z-10 transition-colors duration-300">{{ $completedGamesCount }}</span>
                         <span
                             class="text-xs font-black uppercase tracking-widest text-gray-500 relative z-10 transition-colors duration-300">Completados
                             al 100%</span>
@@ -40,7 +40,6 @@
                         <span
                             class="text-4xl font-black text-gray-900 dark:text-white mb-1 relative z-10 transition-colors duration-300">
                             @php
-                                $totalHours = $userGames->sum('pivot.hours');
                                 $formattedHours =
                                     $totalHours >= 1000 ? number_format($totalHours / 1000, 1) . 'k' : $totalHours;
                             @endphp

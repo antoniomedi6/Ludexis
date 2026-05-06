@@ -39,6 +39,17 @@ class Dashboard extends Component
             }
         }
 
-        return view('livewire.vistas.with-login.dashboard', compact('userGames', 'genreStats'));
+        $completedGamesCount = $userGames->where('pivot.status', 'completed')->count();
+
+        $totalHours = $userGames->sum(
+            fn ($game) => (int) ($game->pivot->hours_finish ?? 0) + (int) ($game->pivot->hours_completed ?? 0)
+        );
+
+        return view('livewire.vistas.with-login.dashboard', compact(
+            'userGames',
+            'genreStats',
+            'completedGamesCount',
+            'totalHours',
+        ));
     }
 }
