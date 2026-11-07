@@ -114,5 +114,5 @@ La aplicación queda disponible en `http://localhost:8000`.
 
 **Antonio Medina Cazorla**, desarrollador web full stack (Almería).
 
-- LinkedIn: [antonio-medina-cazorla](https://www.linkedin.com/in/antonio-medina-cazorla-05837932b)
+- LinkedIn: [antoniomedinacazorla](https://www.linkedin.com/in/antoniomedinacazorla)
 - GitHub: [antoniomedi6](https://github.com/antoniomedi6)
