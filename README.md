@@ -26,6 +26,24 @@ Ludexis es mi Proyecto Intermodular del Grado Superior en Desarrollo de Aplicaci
 
 Hoy, quien juega a videojuegos tiene la información repartida en varias webs: una para llevar la colección, otra para leer reseñas y otra para hablar con amigos. Ludexis lo junta todo en un mismo sitio: llevas tu biblioteca, publicas reseñas y capturas, y sigues la actividad de otros jugadores.
 
+## Capturas
+
+<p align="center">
+  <img src="docs/capturas/02-dashboard.jpg" alt="Dashboard" width="900">
+</p>
+
+| Ficha de juego | Catálogo |
+| --- | --- |
+| <img src="docs/capturas/06-ficha-de-juego.jpg" alt="Ficha de juego"> | <img src="docs/capturas/05-catalogo.jpg" alt="Catálogo"> |
+
+| Mi biblioteca | Feed social |
+| --- | --- |
+| <img src="docs/capturas/04-mi-biblioteca.jpg" alt="Mi biblioteca"> | <img src="docs/capturas/07-feed-social.jpg" alt="Feed social"> |
+
+| Galería | Perfil |
+| --- | --- |
+| <img src="docs/capturas/09-galeria.jpg" alt="Galería"> | <img src="docs/capturas/08-perfil.jpg" alt="Perfil"> |
+
 ## Funcionalidades
 
 ### Biblioteca y listas
